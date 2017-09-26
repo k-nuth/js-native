@@ -1,0 +1,39 @@
+{
+  "name": "bitprim-js-native",
+  "version": "0.1.0",
+  "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
+
+  "main": "index.js",
+  
+  "scripts": {
+    // "test": "mocha --reporter spec",
+    "installdeps": "conan install .",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitprim/bitprim-js-native.git"
+  },
+
+  "keywords": [
+    "bitcoin",
+    "cash",
+    "litecoin",
+    "money",
+    "bitprim"
+  ],
+  "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://bitprim.org)",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/bitprim/bitprim-js-native/issues"
+  },
+  "homepage": "https://github.com/bitprim/bitprim-js-native#readme",
+
+
+  "engines": {
+    "node": ">=4.2.4"
+  },
+
+
+}
