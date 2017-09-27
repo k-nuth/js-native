@@ -1,6 +1,6 @@
 {
   "name": "bitprim-native",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
 
   "main": "index.js",
@@ -28,14 +28,16 @@
     "node": ">=4.2.4"
   },
 
-
-
   "binary": {
     "module_name" : "bitprim-native",
     "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path" : "./{module_name}/v{version}/{configuration}/",
+    
+    
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
+    
+    "host": "https://github.com/bitprim/bitprim-js-native/releases/download/",
+    
+    "remote_path": "{version}"
   },
 
   "dependencies"  : {

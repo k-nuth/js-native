@@ -7,6 +7,10 @@
       'product_dir': '<(module_path)',
 
       "sources": [ "bitprim_addon.cc" ],
+      
+      'variables': {
+        'setup_py': '<(DEPTH)/setup.py',
+      },
 
       # 'actions': [
       #   {
@@ -42,27 +46,43 @@
 
 
       'actions': [
+        # {
+        #     'action_name': 'installconan',
+        #     'message': 'Install Conan',
+        #     'inputs': [''],
+        #     'outputs': [''],
+        #     'action': ['python', '-m pip install conan'],
+        #     # 'action': ['python', '--version'],
+        # },
+        # {
+        #     'action_name': 'runconan',
+        #     'message': 'run Conan',
+        #     'inputs': [''],
+        #     'outputs': [''],
+        #     'action': ['python', '-m conans.conan', 'install ..'],
+        # },
+        # {
+        #     'action_name': 'movedir',
+        #     'message': 'Move Dirs',
+        #     'inputs': [''],
+        #     'outputs': [''],
+        #     # 'action': ['python', '../setup.py'],
+        #     'action': ['python', '-c "\\texec(\\"import os \\nprint(os.getcwd()) \\")"'],
+        # },
+
         {
-            'action_name': 'installconan',
-            'message': 'Install Conan',
-            'inputs': [''],
-            'outputs': [''],
-            'action': ['python -m pip install conan'],
+          'action_name': 'Setup',
+          'inputs': [
+            '>(setup_py)',
+          ],
+          # 'outputs': ['>(nmf_pnacl)'],
+          'outputs': [''],
+          'action': [
+            'python',
+            '>@(_inputs)', 
+          ],
         },
-        {
-            'action_name': 'runconan',
-            'message': 'run Conan',
-            'inputs': [''],
-            'outputs': [''],
-            'action': ['conan install ..'],
-        },
-        {
-            'action_name': 'movedir',
-            'message': 'Move Dirs',
-            'inputs': [''],
-            'outputs': [''],
-            'action': ['python ../setup.py'],
-        },
+
       ],
 
 
@@ -78,7 +98,7 @@
       # "libraries": [ "C:\\development\\bitprim\\bitprim-node-cint\\build\\bitprim-node-cint.lib"]
       # # "libraries": [ "-LC:\\development\\bitprim\\bitprim-node-cint\\build", "-lbitprim-node-cint"  ]
 
-      "include_dirs": ["deps/include"],
+      
 
       'configurations': {
         'Debug': {
@@ -99,8 +119,9 @@
 
       'conditions': [
         ['OS=="linux"', {
+          "include_dirs": ["../deps/include"],
           'libraries': [
-            '-L./deps/lib/', 
+            '-L../deps/lib/', 
             '-lbitprim-node-cint', 
             '-lbitprim-node', 
             '-lbitprim-blockchain', 
@@ -147,6 +168,7 @@
         #   ]
         # }],
         ['OS=="win"', {
+          "include_dirs": ["deps/include"],
           'libraries': [
               # '../deps/qt-4.8.0/win32/ia32/lib/QtCore4.lib',
               # '../deps/qt-4.8.0/win32/ia32/lib/QtGui4.lib',
