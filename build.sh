@@ -28,8 +28,7 @@ node test.js
 # rm -rf node_modules
 npm cache clean
 npm install
-node-pre-gyp configure
-node-pre-gyp build package
+node-pre-gyp configure build package
 
 export NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
 set NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38

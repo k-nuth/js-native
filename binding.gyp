@@ -119,8 +119,9 @@
 
       'conditions': [
         ['OS=="linux"', {
-          "include_dirs": ["../deps/include"],
+          "include_dirs": ["./deps/include", "../deps/include"],
           'libraries': [
+            '-L./deps/lib/', 
             '-L../deps/lib/', 
             '-lbitprim-node-cint', 
             '-lbitprim-node', 

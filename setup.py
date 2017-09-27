@@ -13,10 +13,16 @@
 
 import pip
 import shutil
+import os
 from conans.client.conan_api import (Conan, default_manifest_folder)
 
 def install(package):
     pip.main(['install', package])
+
+def find(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
 
 def run_conan(reference, reference_fallback):
     c = Conan.factory()
@@ -31,11 +37,34 @@ def run_conan(reference, reference_fallback):
     try:
         # c.install(reference, verify=None, manifests=None)
         c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+        print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
+        pepe = find('nodecint.h', os.getcwd())
+        print(pepe)
+        print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
+
     except:
         c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
+        print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
+        pepe = find('nodecint.h', os.getcwd())
+        print(pepe)
         shutil.move('./deps/', '..')
+        pepe = find('nodecint.h', os.getcwd())
+        print(pepe)
+        print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
 
 if __name__ == '__main__':
+
+    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+    print(os.path.dirname(os.path.abspath(__file__)))
+    print(os.getcwd())
+    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+
+    pepe = find('nodecint.h', os.getcwd())
+    print(pepe)
+
+    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+
+
     install('conan')
     run_conan('.', '..')
 
