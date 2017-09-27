@@ -18,7 +18,7 @@ from conans.client.conan_api import (Conan, default_manifest_folder)
 def install(package):
     pip.main(['install', package])
 
-def run_conan(reference):
+def run_conan(reference, reference_fallback):
     c = Conan.factory()
 
     try:
@@ -27,11 +27,16 @@ def run_conan(reference):
     except:
         print ("Conan Remote exists, ignoring exception")
 
-    # c.install(reference, verify=None, manifests=None)
-    c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+
+    try:
+        # c.install(reference, verify=None, manifests=None)
+        c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+    except:
+        c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
+        shutil.move('./deps/', '..')
 
 if __name__ == '__main__':
     install('conan')
-    run_conan('.')
+    run_conan('.', '..')
 
     # shutil.move('./deps/', '..')
