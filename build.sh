@@ -63,4 +63,4 @@ npm publish
 
 # --------------------------------------------------------------------------------
 
-npm view level dist.tarball
+npm view bitprim-native dist.tarball
