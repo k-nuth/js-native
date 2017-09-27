@@ -32,12 +32,14 @@ node-pre-gyp configure
 node-pre-gyp build package
 
 export NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
+set NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
 
 node-pre-gyp-github publish
 
 node-pre-gyp clean
 node-gyp clean
 
+npm install
 npm publish
 
 
