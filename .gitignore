@@ -8,3 +8,8 @@ conaninfo.txt
 debug.log
 deps/
 error.log
+
+
+lib/
+node_modules/
+package.1.json

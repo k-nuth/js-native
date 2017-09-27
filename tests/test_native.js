@@ -1,4 +1,9 @@
 // test_native.js
+// npm install bitprim-native --msvs_version=2015
+// Para saber donde estan los comprimidos en el sitio de npm:
+//      npm view bitprim-native dist.tarball
+//         https://registry.npmjs.org/bitprim-native/-/bitprim-native-0.0.15.tgz
+
 
 function sleep( sleepDuration ){
     var now = new Date().getTime();

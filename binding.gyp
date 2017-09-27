@@ -1,9 +1,74 @@
 {
   "targets": [
     {
-      "target_name": "bitprim",
+      # "target_name": "bitprim",
+      "target_name": "<(module_name)",
+
+      'product_dir': '<(module_path)',
+
       "sources": [ "bitprim_addon.cc" ],
 
+      # 'actions': [
+      #   {
+      #       'action_name': 'build_ftgl',
+      #       'message': 'Building FTGL...',
+      #       'inputs': ['ftgl/src/FTGL/ftgl.h'],
+      #       'outputs': ['ftgl/src/.libs/libftgl.a'],
+      #       'action': [''eval', 'cd ftgl && ./configure --with-pic && make -C src''],
+      #   },
+      # ],
+
+      # 'actions': [
+      #   {
+      #     'variables': {
+      #       'core_library_files': [
+      #         'src/runtime.js',
+      #         'src/v8natives.js',
+      #         'src/macros.py',
+      #       ],
+      #     },
+      #     'action_name': 'js2c',
+      #     'inputs': [
+      #       'tools/js2c.py',
+      #       '<@(core_library_files)',
+      #     ],
+      #     'outputs': [
+      #       '<(INTERMEDIATE_DIR)/libraries.cc',
+      #       '<(INTERMEDIATE_DIR)/libraries-empty.cc',
+      #     ],
+      #     'action': ['python', 'tools/js2c.py', '<@(_outputs)', 'CORE', '<@(core_library_files)'],
+      #   },
+      # ],
+
+
+      'actions': [
+        {
+            'action_name': 'installconan',
+            'message': 'Install Conan',
+            'inputs': [''],
+            'outputs': [''],
+            'action': ['python -m pip install conan'],
+        },
+        {
+            'action_name': 'runconan',
+            'message': 'run Conan',
+            'inputs': [''],
+            'outputs': [''],
+            'action': ['conan install ..'],
+        },
+        {
+            'action_name': 'movedir',
+            'message': 'Move Dirs',
+            'inputs': [''],
+            'outputs': [''],
+            'action': ['python ../setup.py'],
+        },
+      ],
+
+
+      'defines': [
+          'BITPRIM_LIB_STATIC',
+      ],
       # # Linux OLD
       # "include_dirs": ["/home/fernando/dev/bitprim/bitprim-node-cint/include"],
       # "libraries": [ "-lbitprim-node-cint", "-L/home/fernando/dev/bitprim/bitprim-node-cint/cmake-build-debug" ]
@@ -13,13 +78,29 @@
       # "libraries": [ "C:\\development\\bitprim\\bitprim-node-cint\\build\\bitprim-node-cint.lib"]
       # # "libraries": [ "-LC:\\development\\bitprim\\bitprim-node-cint\\build", "-lbitprim-node-cint"  ]
 
-      "include_dirs": ["deps/include/"],
+      "include_dirs": ["deps/include"],
+
+      'configurations': {
+        'Debug': {
+          'msvs_settings': {
+            'VCCLCompilerTool': {
+                'RuntimeLibrary': '3' # /MDd
+            },
+          },
+        },
+        'Release': {
+          'msvs_settings': {
+            'VCCLCompilerTool': {
+              'RuntimeLibrary': '2' # /MD
+            },
+          },
+        },
+      },
 
       'conditions': [
         ['OS=="linux"', {
           'libraries': [
-            '-L../deps/lib/', 
-            '-lbitprim-node-cint',
+            '-L./deps/lib/', 
             '-lbitprim-node-cint', 
             '-lbitprim-node', 
             '-lbitprim-blockchain', 
@@ -70,6 +151,34 @@
               # '../deps/qt-4.8.0/win32/ia32/lib/QtCore4.lib',
               # '../deps/qt-4.8.0/win32/ia32/lib/QtGui4.lib',
               # '../deps/qt-4.8.0/win32/ia32/lib/QtTest4.lib'
+            '../deps/lib/bitprim-node-cint.lib', 
+            '../deps/lib/bitprim-node.lib', 
+            '../deps/lib/bitprim-blockchain.lib', 
+            '../deps/lib/bitprim-network.lib', 
+            '../deps/lib/bitprim-consensus.lib', 
+            '../deps/lib/bitprim-database.lib', 
+            '../deps/lib/bitprim-core.lib',
+            '../deps/lib/libboost_atomic-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_chrono-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_date_time-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_filesystem-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_iostreams-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_locale-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_log-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_log_setup-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_program_options-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_random-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_regex-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_system-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_unit_test_framework-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_prg_exec_monitor-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_test_exec_monitor-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_thread-vc140-mt-1_64.lib', 
+            '../deps/lib/libboost_timer-vc140-mt-1_64.lib', 
+            '../deps/lib/secp256k1.lib', 
+            # '../deps/lib/libbz2', 
+            # '../deps/lib/libgmp', 
+            # '../deps/lib/libz',
           ]
         }]
       ],

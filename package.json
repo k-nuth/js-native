@@ -1,15 +1,10 @@
 {
-  "name": "bitprim-js-native",
-  "version": "0.1.0",
+  "name": "bitprim-native",
+  "version": "0.0.21",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
 
   "main": "index.js",
-  
-  "scripts": {
-    // "test": "mocha --reporter spec",
-    "installdeps": "conan install .",
-    "install": "node-gyp rebuild"
-  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bitprim/bitprim-js-native.git"
@@ -24,16 +19,36 @@
   ],
   "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://bitprim.org)",
   "license": "MIT",
-  "gypfile": true,
   "bugs": {
     "url": "https://github.com/bitprim/bitprim-js-native/issues"
   },
   "homepage": "https://github.com/bitprim/bitprim-js-native#readme",
-
-
+  
   "engines": {
     "node": ">=4.2.4"
   },
 
 
+
+  "binary": {
+    "module_name" : "bitprim-native",
+    "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path" : "./{module_name}/v{version}/{configuration}/",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
+  },
+
+  "dependencies"  : {
+    "nan": "2.x",
+    "node-pre-gyp": "0.6.x"
+  },
+  "bundledDependencies":["node-pre-gyp"],
+  "devDependencies": {
+    "aws-sdk": "2.x"
+  },
+  "scripts": {
+    "install" : "node-pre-gyp install --fallback-to-build",
+    "test": "node index.js",
+    "prepublish": "npm ls"
+  }  
 }

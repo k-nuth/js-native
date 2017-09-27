@@ -19,8 +19,18 @@ node-gyp configure
 node-gyp build
 node test.js
 
+----------------------------------------
+
+# rm -rf node_modules
+npm cache clean
+npm install
+node-pre-gyp configure
+node-pre-gyp build package
+npm publish
 
 
+
+----------------------------------------
 
 # https://medium.com/@jdaudier/how-to-create-and-publish-your-first-node-js-module-444e7585b738
 # https://github.com/arturadib/node-qt
