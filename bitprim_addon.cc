@@ -5,6 +5,8 @@
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
+#include "header.h"
+
 namespace bitprim_ns {
 
 using v8::FunctionCallbackInfo;
@@ -94,7 +96,7 @@ void bitprim_executor_construct(FunctionCallbackInfo<Value> const& args) {
 //    printf("xxxxx 5\n");
 }
 
-void bitprim_executor_destruct(const FunctionCallbackInfo<Value>& args) {
+void bitprim_executor_destruct(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -114,7 +116,7 @@ void bitprim_executor_destruct(const FunctionCallbackInfo<Value>& args) {
 }
 
 
-void bitprim_executor_stop(const FunctionCallbackInfo<Value>& args) {
+void bitprim_executor_stop(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -134,7 +136,7 @@ void bitprim_executor_stop(const FunctionCallbackInfo<Value>& args) {
 }
 
 
-void bitprim_executor_initchain(const FunctionCallbackInfo<Value>& args) {
+void bitprim_executor_initchain(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -156,7 +158,7 @@ void bitprim_executor_initchain(const FunctionCallbackInfo<Value>& args) {
     args.GetReturnValue().Set(num);
 }
 
-//void bitprim_executor_run(const FunctionCallbackInfo<Value>& args) {
+//void bitprim_executor_run(FunctionCallbackInfo<Value> const& args) {
 //    Isolate* isolate = args.GetIsolate();
 //
 //    // Check the number of arguments passed.
@@ -178,7 +180,7 @@ void bitprim_executor_initchain(const FunctionCallbackInfo<Value>& args) {
 //    args.GetReturnValue().Set(num);
 //}
 
-void bitprim_executor_run_wait(const FunctionCallbackInfo<Value>& args) {
+void bitprim_executor_run_wait(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -249,6 +251,7 @@ void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64
     // printf("chain_fetch_last_height_handler - 3\n");
 
     callback->Reset();
+    //callback->Dispose();
 
     // printf("chain_fetch_last_height_handler - 4\n");
 
@@ -258,7 +261,7 @@ void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64
 }
 
 // void chain_fetch_last_height(chain_t chain, void* ctx, last_height_fetch_handler_t handler);
-void bitprim_chain_fetch_last_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -287,7 +290,7 @@ void bitprim_chain_fetch_last_height(const FunctionCallbackInfo<Value>& args) {
 }
 
 
-// void bitprim_chain_get_last_height(const FunctionCallbackInfo<Value>& args) {
+// void bitprim_chain_get_last_height(FunctionCallbackInfo<Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     // Check the number of arguments passed.
@@ -344,10 +347,11 @@ void chain_fetch_block_height_handler(chain_t chain, void* ctx, int error, uint6
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -421,10 +425,11 @@ void chain_fetch_block_header_by_height_handler(chain_t chain, void* ctx, int er
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_header_by_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -439,7 +444,7 @@ void bitprim_chain_fetch_block_header_by_height(const FunctionCallbackInfo<Value
     }
     
     if ( ! args[1]->IsNumber()) {
-            isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 1")));
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 1")));
         return;
     }
 
@@ -484,10 +489,11 @@ void chain_fetch_block_header_by_hash_handler(chain_t chain, void* ctx, int erro
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_header_by_hash(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -555,10 +561,11 @@ void chain_fetch_block_by_height_handler(chain_t chain, void* ctx, int error, bl
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_by_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -614,10 +621,11 @@ void chain_fetch_block_by_hash_handler(chain_t chain, void* ctx, int error, bloc
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_by_hash(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -687,10 +695,11 @@ void chain_fetch_merkle_block_by_height_handler(chain_t chain, void* ctx, int er
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_merkle_block_by_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -748,10 +757,11 @@ void chain_fetch_merkle_block_by_hash_handler(chain_t chain, void* ctx, int erro
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_merkle_block_by_hash(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -823,10 +833,11 @@ void chain_fetch_compact_block_by_height_handler(chain_t chain, void* ctx, int e
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_compact_block_by_height(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -883,10 +894,11 @@ void chain_fetch_compact_block_by_hash_handler(chain_t chain, void* ctx, int err
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_compact_block_by_hash(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -957,10 +969,11 @@ void chain_fetch_transaction_handler(chain_t chain, void* ctx, int error, transa
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_transaction(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -1033,10 +1046,11 @@ void chain_fetch_transaction_position_handler(chain_t chain, void* ctx, int erro
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_transaction_position(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -1112,10 +1126,11 @@ void chain_fetch_spend_handler(chain_t chain, void* ctx, int error, input_point_
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_spend(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -1175,10 +1190,11 @@ void chain_fetch_history_handler(chain_t chain, void* ctx, int error, history_co
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_history(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // Check the number of arguments passed.
@@ -1251,10 +1267,11 @@ void chain_fetch_stealth_handler(chain_t chain, void* ctx, int error, stealth_co
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_stealth(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
 
@@ -1325,10 +1342,11 @@ void chain_fetch_block_locator_handler(chain_t chain, void* ctx, int error, get_
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_fetch_block_locator(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_fetch_block_locator(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
 
@@ -1392,10 +1410,11 @@ void chain_organize_block_handler(chain_t chain, void* ctx, int error) {
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_organize_block(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_organize_block(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
 
@@ -1455,10 +1474,11 @@ void chain_organize_transaction_handler(chain_t chain, void* ctx, int error) {
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
     callback->Reset();
+    //callback->Dispose();
     delete callback;
 }
 
-void bitprim_chain_organize_transaction(const FunctionCallbackInfo<Value>& args) {
+void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
 
@@ -1719,6 +1739,22 @@ void init(Local<Object> exports) {
     
     NODE_SET_METHOD(exports, "chain_organize_block", bitprim_chain_organize_block);
     NODE_SET_METHOD(exports, "chain_organize_transaction", bitprim_chain_organize_transaction);
+
+
+
+    NODE_SET_METHOD(exports, "chain_header_destruct", bitprim_chain_header_destruct);
+    NODE_SET_METHOD(exports, "chain_header_get_version", bitprim_chain_header_get_version);
+    NODE_SET_METHOD(exports, "chain_header_set_version", bitprim_chain_header_set_version);
+    NODE_SET_METHOD(exports, "chain_header_get_previous_block_hash", bitprim_chain_header_get_previous_block_hash);
+    // NODE_SET_METHOD(exports, "chain_header_get_merkle", bitprim_chain_header_get_merkle);
+    // NODE_SET_METHOD(exports, "chain_header_get_hash", bitprim_chain_header_get_hash);
+    NODE_SET_METHOD(exports, "chain_header_get_timestamp", bitprim_chain_header_get_timestamp);
+    // NODE_SET_METHOD(exports, "chain_header_set_timestamp", bitprim_chain_header_set_timestamp);
+     NODE_SET_METHOD(exports, "chain_header_get_bits", bitprim_chain_header_get_bits);
+    // NODE_SET_METHOD(exports, "chain_header_set_bits", bitprim_chain_header_set_bits);
+     NODE_SET_METHOD(exports, "chain_header_get_nonce", bitprim_chain_header_get_nonce);
+    // NODE_SET_METHOD(exports, "chain_header_set_nonce", bitprim_chain_header_set_nonce);
+   
 
 }
 

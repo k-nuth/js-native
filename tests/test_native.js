@@ -13,6 +13,25 @@ var toType = function(obj) {
 
 // ------------------------------------------------------------------------------------------------
 
+function timestampToDate(unix_timestamp) {
+    // Create a new JavaScript Date object based on the timestamp
+    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
+    var date = new Date(unix_timestamp*1000);
+    // Hours part from the timestamp
+    var hours = date.getHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + date.getMinutes();
+    // Seconds part from the timestamp
+    var seconds = "0" + date.getSeconds();
+
+    // Will display time in 10:30:23 format
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime
+} 
+
+
+
 function byteToHexString(uint8arr) {
     if (!uint8arr) {
         return '';
@@ -47,8 +66,11 @@ function reverse(s){
 }
 
 function toHash(s) {
-    // return hexStringToByte(reverse(s))
     return hexStringToByte(s).reverse();
+}
+
+function fromHash(arr) {
+    return byteToHexString(arr.reverse());
 }
 
 
@@ -163,13 +185,64 @@ bitprim.chain_fetch_block_height(chain, hash_arr, function (err, height) {
 //-----------------------------------
 
 
+// function arrayBufferToString(buffer){
+//     var arr = new Uint8Array(buffer);
+//     var str = String.fromCharCode.apply(String, arr);
+//     if(/[\u0080-\uffff]/.test(str)){
+//         throw new Error("this string seems to contain (still encoded) multibytes");
+//     }
+//     return str;
+// }
+
+
 bitprim.chain_fetch_block_header_by_height(chain, 2300, function (err, header, height) {
     if (err == 0) {
         console.log(`chain_fetch_block_header_by_height is OK, err:  ${err}, height: ${height}`)
+
+        var version = bitprim.chain_header_get_version(header);
+        console.log(`chain_fetch_block_header_by_height, version: ${version}`)
+
+        var previous_block_hash = bitprim.chain_header_get_previous_block_hash(header);
+        console.log(`chain_fetch_block_header_by_height, previous_block_hash: ${previous_block_hash}`)
+        
+        // var previous_block_hash_pepe = new Uint8Array(previous_block_hash)
+        // console.log(`chain_fetch_block_header_by_height, previous_block_hash_pepe: ${previous_block_hash_pepe}`)
+
+        var previous_block_hash_str = fromHash(previous_block_hash)
+        console.log(`chain_fetch_block_header_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
+
+        var timestamp = bitprim.chain_header_get_timestamp(header);
+        console.log(`chain_fetch_block_header_by_height, timestamp: ${timestamp}`)
+
+        var timestamp_date = timestampToDate(timestamp)
+        console.log(`chain_fetch_block_header_by_height, timestamp_date: ${timestamp_date}`)
+
+
+        var bits = bitprim.chain_header_get_bits(header);
+        console.log(`chain_fetch_block_header_by_height, bits: ${bits}`)
+
+        var nonce = bitprim.chain_header_get_nonce(header);
+        console.log(`chain_fetch_block_header_by_height, nonce: ${nonce}`)
+
+        
+
+
+        bitprim.chain_header_destruct(header);
     } else {
         console.log(`chain_fetch_block_header_by_height failed, err: ${err}, height: ${height}`)
     }
 })
+
+
+bitprim.chain_fetch_block_header_by_hash(chain, toHash('000000005845885b0f3e66a5a7377c408c7c42bad7528f44862f7b7e741bdb9e'), function (err, header, height) {
+    if (err == 0) {
+        console.log(`*********** chain_fetch_block_header_by_hash is OK, err:  ${err}, height: ${height}`)
+    } else {
+        console.log(`*********** chain_fetch_block_header_by_hash failed, err: ${err}, height: ${height}`)
+    }
+})
+
+
 
 bitprim.chain_fetch_block_header_by_hash(chain, hash_arr, function (err, header, height) {
     if (err == 0) {
