@@ -119,10 +119,15 @@
 
       'conditions': [
         ['OS=="linux"', {
-          "include_dirs": ["./deps/include", "../deps/include"],
+
+          # "include_dirs": ["./deps/include", "../deps/include"],
+          "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          
           'libraries': [
             '-L./deps/lib/', 
-            '-L../deps/lib/', 
+            '-L../deps/lib/',
+            '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+
             '-lbitprim-node-cint', 
             '-lbitprim-node', 
             '-lbitprim-blockchain', 
