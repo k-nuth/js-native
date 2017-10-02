@@ -211,35 +211,32 @@ void bitprim_executor_get_chain(FunctionCallbackInfo<Value> const& args) {
 
 // ---------------------------------------------
 
-
 void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64_t h) {
     Isolate* isolate = Isolate::GetCurrent();
 
-    printf("chain_fetch_last_height_handler - 1\n");
-
-    printf("chain_fetch_last_height_handler - error:   %d\n", error);
-    printf("chain_fetch_last_height_handler - h:       %d\n", h);
+    // printf("chain_fetch_last_height_handler - 1\n");
+    // printf("chain_fetch_last_height_handler - error:   %d\n", error);
+    // printf("chain_fetch_last_height_handler - h:       %d\n", h);
 
     unsigned int const argc = 2;
     Local<Value> argv[argc] = { Number::New(isolate, error), Number::New(isolate, h) };
 
-    printf("chain_fetch_last_height_handler - 2n");
+    // printf("chain_fetch_last_height_handler - 2n");
 
     Persistent<Function>* callback = static_cast<Persistent<Function>*>(ctx);
 
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
-    printf("chain_fetch_last_height_handler - 3\n");
+    // printf("chain_fetch_last_height_handler - 3\n");
 
     callback->Reset();
 
-    printf("chain_fetch_last_height_handler - 4\n");
+    // printf("chain_fetch_last_height_handler - 4\n");
 
     delete callback;
 
-    printf("chain_fetch_last_height_handler - 5\n");
+    // printf("chain_fetch_last_height_handler - 5\n");
 }
-
 
 // void chain_fetch_last_height(chain_t chain, void* ctx, last_height_fetch_handler_t handler);
 void bitprim_chain_fetch_last_height(const FunctionCallbackInfo<Value>& args) {
@@ -270,6 +267,7 @@ void bitprim_chain_fetch_last_height(const FunctionCallbackInfo<Value>& args) {
     chain_fetch_last_height(chain, callback, chain_fetch_last_height_handler);
 }
 
+
 // void bitprim_chain_get_last_height(const FunctionCallbackInfo<Value>& args) {
 //     Isolate* isolate = args.GetIsolate();
 
@@ -293,6 +291,287 @@ void bitprim_chain_fetch_last_height(const FunctionCallbackInfo<Value>& args) {
 //     args.GetReturnValue().Set(num);
 // }
 // ---------------------------------------------
+
+
+
+
+// BITPRIM_EXPORT
+// void chain_fetch_last_height(chain_t chain, void* ctx, last_height_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_last_height(chain_t chain, uint64_t /*size_t*/* height);
+
+
+
+
+
+
+
+// ---------------------------------------------
+
+// void chain_fetch_block_height(chain_t chain, void* ctx, hash_t hash, block_height_fetch_handler_t handler);
+// int chain_get_block_height(chain_t chain, hash_t hash, uint64_t /*size_t*/* height);
+// typedef void (*block_height_fetch_handler_t)(chain_t, void*, int, uint64_t /*size_t*/ h);
+
+void chain_fetch_block_height_handler(chain_t chain, void* ctx, int error, uint64_t h) {
+    Isolate* isolate = Isolate::GetCurrent();
+
+    unsigned int const argc = 2;
+    Local<Value> argv[argc] = { Number::New(isolate, error), Number::New(isolate, h) };
+
+    Persistent<Function>* callback = static_cast<Persistent<Function>*>(ctx);
+
+    Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
+
+    callback->Reset();
+    delete callback;
+}
+
+void bitprim_chain_fetch_block_height(const FunctionCallbackInfo<Value>& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    // Check the number of arguments passed.
+    if (args.Length() != 3) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+        return;
+    }
+
+    
+    // if ( ! args[1]->IsString()) {
+    if ( ! args[1]->IsUint8Array()) {
+            isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+        return;
+    }
+
+    if ( ! args[2]->IsFunction()) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+        return;
+    }    
+
+    void* vptr = v8::External::Cast(*args[0])->Value();
+    chain_t chain = (chain_t)vptr;
+
+
+    // v8::String::Utf8Value tx_hex(args[1]->ToString());
+
+    v8::Local<v8::Array> arr = v8::Local<v8::Array>::Cast(args[1]);
+    uint32_t arr_length = arr->Length();
+    // v8::String::Utf8Value key(arr->Get(0));
+    // v8::String::Utf8Value value(arr->Get(1));
+
+    for (uint32_t i = 0; i < arr_length; ++i) {
+        v8::Local<v8::Value> element = arr->Get(i);
+    }
+
+    Persistent<Function>* callback = new Persistent<Function>;
+    callback->Reset(isolate, args[2].As<Function>());
+
+    chain_fetch_block_height(chain, callback, chain_fetch_block_height_handler);
+}
+
+
+
+
+
+
+
+// // Block Header ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_block_header_by_height(chain_t chain, void* ctx, uint64_t /*size_t*/ height, block_header_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_block_header_by_height(chain_t chain, uint64_t /*size_t*/ height, header_t* out_header, uint64_t /*size_t*/* out_height);
+
+// BITPRIM_EXPORT
+// void chain_fetch_block_header_by_hash(chain_t chain, void* ctx, hash_t hash, block_header_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_block_header_by_hash(chain_t chain, hash_t hash, header_t* out_header, uint64_t /*size_t*/* out_height);
+
+
+// // Block ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_block_by_height(chain_t chain, void* ctx, uint64_t /*size_t*/ height, block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_block_by_height(chain_t chain, uint64_t /*size_t*/ height, block_t* out_block, uint64_t /*size_t*/* out_height);
+
+// BITPRIM_EXPORT
+// void chain_fetch_block_by_hash(chain_t chain, void* ctx, hash_t hash, block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_block_by_hash(chain_t chain, hash_t hash, block_t* out_block, uint64_t /*size_t*/* out_height);
+
+
+// // Merkle Block ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_merkle_block_by_height(chain_t chain, void* ctx, uint64_t /*size_t*/ height, merkle_block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_merkle_block_by_height(chain_t chain, uint64_t /*size_t*/ height, merkle_block_t* out_block, uint64_t /*size_t*/* out_height);
+
+// BITPRIM_EXPORT
+// void chain_fetch_merkle_block_by_hash(chain_t chain, void* ctx, hash_t hash, merkle_block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_merkle_block_by_hash(chain_t chain, hash_t hash, merkle_block_t* out_block, uint64_t /*size_t*/* out_height);
+
+
+// // Compact Block ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_compact_block_by_height(chain_t chain, void* ctx, uint64_t /*size_t*/ height, compact_block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_compact_block_by_height(chain_t chain, uint64_t /*size_t*/ height, compact_block_t* out_block, uint64_t /*size_t*/* out_height);
+
+// BITPRIM_EXPORT
+// void chain_fetch_compact_block_by_hash(chain_t chain, void* ctx, hash_t hash, compact_block_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_compact_block_by_hash(chain_t chain, hash_t hash, compact_block_t* out_block, uint64_t /*size_t*/* out_height);
+
+// // Transaction ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_transaction(chain_t chain, void* ctx, hash_t hash, int require_confirmed, transaction_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_transaction(chain_t chain, hash_t hash, int require_confirmed, transaction_t* out_transaction, uint64_t /*size_t*/* out_height, uint64_t /*size_t*/* out_index);
+
+// BITPRIM_EXPORT
+// void chain_fetch_transaction_position(chain_t chain, void* ctx, hash_t hash, int require_confirmed, transaction_index_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_transaction_position(chain_t chain, hash_t hash, int require_confirmed, uint64_t /*size_t*/* out_position, uint64_t /*size_t*/* out_height);
+
+
+// // Output  ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_output(chain_t chain, void* ctx, hash_t hash, uint32_t index, int require_confirmed, output_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_output(chain_t chain, hash_t hash, uint32_t index, int require_confirmed, output_t* out_output);
+
+// // Spend ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_spend(chain_t chain, void* ctx, output_point_t op, spend_fetch_handler_t handler);
+
+// // History ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_history(chain_t chain, void* ctx, payment_address_t address, uint64_t /*size_t*/ limit, uint64_t /*size_t*/ from_height, history_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_history(chain_t chain, payment_address_t address, uint64_t /*size_t*/ limit, uint64_t /*size_t*/ from_height, history_compact_list_t* out_history);
+
+
+// // Stealth ---------------------------------------------------------------------
+// BITPRIM_EXPORT
+// void chain_fetch_stealth(chain_t chain, void* ctx, binary_t filter, uint64_t from_height, stealth_fetch_handler_t handler);
+
+// //BITPRIM_EXPORT
+// //void chain_fetch_stealth(const binary& filter, uint64_t /*size_t*/ from_height, stealth_fetch_handler handler);
+
+
+
+// BITPRIM_EXPORT
+// void chain_fetch_block_locator(chain_t chain, void* ctx, block_indexes_t heights, block_locator_fetch_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_get_block_locator(chain_t chain, block_indexes_t heights, get_headers_ptr_t* out_headers);
+
+
+// // ------------------------------------------------------------------
+// //virtual void fetch_block_locator(const chain::block::indexes& heights, block_locator_fetch_handler handler) const = 0;
+// //virtual void fetch_locator_block_hashes(get_blocks_const_ptr locator, const hash_digest& threshold, size_t limit, inventory_fetch_handler handler) const = 0;
+// //virtual void fetch_locator_block_headers(get_headers_const_ptr locator, const hash_digest& threshold, size_t limit, locator_block_headers_fetch_handler handler) const = 0;
+// //
+// //// Transaction Pool.
+// ////-------------------------------------------------------------------------
+// //
+// //virtual void fetch_template(merkle_block_fetch_handler handler) const = 0;
+// //virtual void fetch_mempool(size_t count_limit, uint64_t minimum_fee, inventory_fetch_handler handler) const = 0;
+// //
+// //// Filters.
+// ////-------------------------------------------------------------------------
+// //
+// //virtual void filter_blocks(get_data_ptr message, result_handler handler) const = 0;
+// //virtual void filter_transactions(get_data_ptr message, result_handler handler) const = 0;
+// // ------------------------------------------------------------------
+
+
+
+// // Subscribers.
+// //-------------------------------------------------------------------------
+
+// //virtual void subscribe_blockchain(reorganize_handler&& handler) = 0;
+// //virtual void subscribe_transaction(transaction_handler&& handler) = 0;
+
+
+// BITPRIM_EXPORT
+// void chain_subscribe_blockchain(chain_t chain, void* ctx, reorganize_handler_t handler);
+
+
+// BITPRIM_EXPORT
+// void chain_subscribe_transaction(chain_t chain, void* ctx, transaction_handler_t handler);
+
+
+// // Organizers.
+// //-------------------------------------------------------------------------
+
+// //virtual void organize(block_const_ptr block, result_handler handler) = 0;
+// //virtual void organize(transaction_const_ptr tx, result_handler handler) = 0;
+
+// BITPRIM_EXPORT
+// void chain_organize_block(chain_t chain, void* ctx, block_t block, result_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_organize_block_sync(chain_t chain, block_t block);
+
+// BITPRIM_EXPORT
+// void chain_organize_transaction(chain_t chain, void* ctx, transaction_t transaction, result_handler_t handler);
+
+// BITPRIM_EXPORT
+// int chain_organize_transaction_sync(chain_t chain, transaction_t transaction);
+
+
+
+// // ------------------------------------------------
+
+// BITPRIM_EXPORT
+// transaction_t hex_to_tx(char const* tx_hex);
+
+
+// BITPRIM_EXPORT
+// void chain_validate_tx(chain_t chain, void* ctx, transaction_t tx, validate_tx_handler_t handler);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Persistent<Function> callback;
 
