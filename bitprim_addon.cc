@@ -6,6 +6,7 @@
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
 #include "header.h"
+#include "block.h"
 
 namespace bitprim_ns {
 
@@ -1320,70 +1321,70 @@ void bitprim_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
     
 
 
-// // Block Locator ---------------------------------------------------------------------
+// // // Block Locator ---------------------------------------------------------------------
 
-// void chain_fetch_block_locator(chain_t chain, void* ctx, block_indexes_t heights, block_locator_fetch_handler_t handler);
-// int chain_get_block_locator(chain_t chain, block_indexes_t heights, get_headers_ptr_t* out_headers);
-// typedef void (*block_locator_fetch_handler_t)(chain_t, void*, int, get_headers_ptr_t);
+// // void chain_fetch_block_locator(chain_t chain, void* ctx, block_indexes_t heights, block_locator_fetch_handler_t handler);
+// // int chain_get_block_locator(chain_t chain, block_indexes_t heights, get_headers_ptr_t* out_headers);
+// // typedef void (*block_locator_fetch_handler_t)(chain_t, void*, int, get_headers_ptr_t);
 
-void chain_fetch_block_locator_handler(chain_t chain, void* ctx, int error, get_headers_ptr_t headers) {
+// void chain_fetch_block_locator_handler(chain_t chain, void* ctx, int error, get_headers_ptr_t headers) {
 
-    printf("chain_fetch_block_locator_handler - 1\n");
-    printf("chain_fetch_block_locator_handler - error:   %d\n", error);
-    printf("chain_fetch_block_locator_handler - headers:  %p\n", headers);
+//     printf("chain_fetch_block_locator_handler - 1\n");
+//     printf("chain_fetch_block_locator_handler - error:   %d\n", error);
+//     printf("chain_fetch_block_locator_handler - headers:  %p\n", headers);
     
-    Isolate* isolate = Isolate::GetCurrent();
+//     Isolate* isolate = Isolate::GetCurrent();
 
-    unsigned int const argc = 2;
-    Local<Value> argv[argc] = { Number::New(isolate, error), External::New(isolate, headers)};
+//     unsigned int const argc = 2;
+//     Local<Value> argv[argc] = { Number::New(isolate, error), External::New(isolate, headers)};
 
-    Persistent<Function>* callback = static_cast<Persistent<Function>*>(ctx);
+//     Persistent<Function>* callback = static_cast<Persistent<Function>*>(ctx);
 
-    Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
+//     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
-    callback->Reset();
-    //callback->Dispose();
-    delete callback;
-}
+//     callback->Reset();
+//     //callback->Dispose();
+//     delete callback;
+// }
 
-void bitprim_chain_fetch_block_locator(FunctionCallbackInfo<Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void bitprim_chain_fetch_block_locator(FunctionCallbackInfo<Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
 
-    // chain_t chain, block_indexes_t heights, block_locator_fetch_handler_t handler)
+//     // chain_t chain, block_indexes_t heights, block_locator_fetch_handler_t handler)
 
-    // Check the number of arguments passed.
-    if (args.Length() != 3) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
-        return;
-    }
+//     // Check the number of arguments passed.
+//     if (args.Length() != 3) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 0")));
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 0")));
+//         return;
+//     }
 
-    if ( ! args[1]->IsExternal()) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 1")));
-        return;
-    }
+//     if ( ! args[1]->IsExternal()) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 1")));
+//         return;
+//     }
 
-    if ( ! args[2]->IsFunction()) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 2")));
-        return;
-    }    
+//     if ( ! args[2]->IsFunction()) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 2")));
+//         return;
+//     }    
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    chain_t chain = (chain_t)vptr;
+//     void* vptr = v8::External::Cast(*args[0])->Value();
+//     chain_t chain = (chain_t)vptr;
 
-    void* heights_vptr = v8::External::Cast(*args[1])->Value();
-    block_indexes_t heights = (block_indexes_t)heights_vptr;
+//     void* heights_vptr = v8::External::Cast(*args[1])->Value();
+//     block_indexes_t heights = (block_indexes_t)heights_vptr;
 
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
+//     Persistent<Function>* callback = new Persistent<Function>;
+//     callback->Reset(isolate, args[2].As<Function>());
 
-    chain_fetch_block_locator(chain, callback, heights, chain_fetch_block_locator_handler);
-}
+//     chain_fetch_block_locator(chain, callback, heights, chain_fetch_block_locator_handler);
+// }
 
     
 
@@ -1735,7 +1736,7 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "chain_fetch_spend", bitprim_chain_fetch_spend);
     NODE_SET_METHOD(exports, "chain_fetch_history", bitprim_chain_fetch_history);
     NODE_SET_METHOD(exports, "chain_fetch_stealth", bitprim_chain_fetch_stealth);
-    NODE_SET_METHOD(exports, "chain_fetch_block_locator", bitprim_chain_fetch_block_locator);
+    // NODE_SET_METHOD(exports, "chain_fetch_block_locator", bitprim_chain_fetch_block_locator);
     
     NODE_SET_METHOD(exports, "chain_organize_block", bitprim_chain_organize_block);
     NODE_SET_METHOD(exports, "chain_organize_transaction", bitprim_chain_organize_transaction);
@@ -1746,8 +1747,8 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "chain_header_get_version", bitprim_chain_header_get_version);
     NODE_SET_METHOD(exports, "chain_header_set_version", bitprim_chain_header_set_version);
     NODE_SET_METHOD(exports, "chain_header_get_previous_block_hash", bitprim_chain_header_get_previous_block_hash);
-    // NODE_SET_METHOD(exports, "chain_header_get_merkle", bitprim_chain_header_get_merkle);
-    // NODE_SET_METHOD(exports, "chain_header_get_hash", bitprim_chain_header_get_hash);
+    NODE_SET_METHOD(exports, "chain_header_get_merkle", bitprim_chain_header_get_merkle);
+    NODE_SET_METHOD(exports, "chain_header_get_hash", bitprim_chain_header_get_hash);
     NODE_SET_METHOD(exports, "chain_header_get_timestamp", bitprim_chain_header_get_timestamp);
     // NODE_SET_METHOD(exports, "chain_header_set_timestamp", bitprim_chain_header_set_timestamp);
      NODE_SET_METHOD(exports, "chain_header_get_bits", bitprim_chain_header_get_bits);
@@ -1755,6 +1756,30 @@ void init(Local<Object> exports) {
      NODE_SET_METHOD(exports, "chain_header_get_nonce", bitprim_chain_header_get_nonce);
     // NODE_SET_METHOD(exports, "chain_header_set_nonce", bitprim_chain_header_set_nonce);
    
+
+    NODE_SET_METHOD(exports, "chain_block_destruct", bitprim_chain_block_destruct);
+    NODE_SET_METHOD(exports, "chain_block_get_header", bitprim_chain_block_get_header);
+    NODE_SET_METHOD(exports, "chain_block_transaction_count", bitprim_chain_block_transaction_count);
+    NODE_SET_METHOD(exports, "chain_block_serialized_size", bitprim_chain_block_serialized_size);
+    NODE_SET_METHOD(exports, "chain_block_subsidy", bitprim_chain_block_subsidy);
+    NODE_SET_METHOD(exports, "chain_block_fees", bitprim_chain_block_fees);
+    NODE_SET_METHOD(exports, "chain_block_claim", bitprim_chain_block_claim);
+    NODE_SET_METHOD(exports, "chain_block_reward", bitprim_chain_block_reward);
+    NODE_SET_METHOD(exports, "chain_block_generate_merkle_root", bitprim_chain_block_generate_merkle_root);
+    NODE_SET_METHOD(exports, "chain_block_hash", bitprim_chain_block_hash);
+    NODE_SET_METHOD(exports, "chain_block_is_valid", bitprim_chain_block_is_valid);
+    NODE_SET_METHOD(exports, "chain_block_transaction_nth", bitprim_chain_block_transaction_nth);
+    NODE_SET_METHOD(exports, "chain_block_signature_operations", bitprim_chain_block_signature_operations);
+    NODE_SET_METHOD(exports, "chain_block_signature_operations_bip16_active", bitprim_chain_block_signature_operations_bip16_active);
+    NODE_SET_METHOD(exports, "chain_block_total_inputs", bitprim_chain_block_total_inputs);
+    NODE_SET_METHOD(exports, "chain_block_is_extra_coinbase", bitprim_chain_block_is_extra_coinbase);
+    NODE_SET_METHOD(exports, "chain_block_is_final", bitprim_chain_block_is_final);
+    NODE_SET_METHOD(exports, "chain_block_is_distinct_transaction_set", bitprim_chain_block_is_distinct_transaction_set);
+    NODE_SET_METHOD(exports, "chain_block_is_valid_coinbase_claim", bitprim_chain_block_is_valid_coinbase_claim);
+    NODE_SET_METHOD(exports, "chain_block_is_valid_coinbase_script", bitprim_chain_block_is_valid_coinbase_script);
+    NODE_SET_METHOD(exports, "chain_block_is_internal_double_spend", bitprim_chain_block_is_internal_double_spend);
+    NODE_SET_METHOD(exports, "chain_block_is_valid_merkle_root", bitprim_chain_block_is_valid_merkle_root);
+    
 
 }
 

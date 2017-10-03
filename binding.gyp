@@ -6,7 +6,7 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "header.cc" ],
+      "sources": [ "bitprim_addon.cc", "header.cc", "block.cc" ],
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',
@@ -204,6 +204,7 @@
             '../deps/lib/libboost_thread-vc140-mt-1_64.lib', 
             '../deps/lib/libboost_timer-vc140-mt-1_64.lib', 
             '../deps/lib/secp256k1.lib', 
+            '../deps/lib/mpir.lib', 
             # '../deps/lib/libbz2', 
             # '../deps/lib/libgmp', 
             # '../deps/lib/libz',

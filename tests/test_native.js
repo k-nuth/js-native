@@ -105,7 +105,8 @@ function sleep(sleepDuration) {
 // ------------------------------------------------------------------------------------------------
 
 // const bitprim = require('../build/Release/bitprim')
-const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')
+// const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')
+const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
 
 
 function wait_until_block(chain, desired_height) {
@@ -157,7 +158,7 @@ function wait_until_block(chain, desired_height) {
 
 const executor = bitprim.executor_construct("", process.stdout, process.stderr);
 // const executor = bitprim.executor_construct("", null, null)
-// bitprim.executor_initchain(executor)
+bitprim.executor_initchain(executor)
 bitprim.executor_run_wait(executor)
 
 const chain = bitprim.executor_get_chain(executor)
@@ -199,30 +200,36 @@ bitprim.chain_fetch_block_header_by_height(chain, 2300, function (err, header, h
     if (err == 0) {
         console.log(`chain_fetch_block_header_by_height is OK, err:  ${err}, height: ${height}`)
 
-        var version = bitprim.chain_header_get_version(header);
-        console.log(`chain_fetch_block_header_by_height, version: ${version}`)
+        // var version = bitprim.chain_header_get_version(header);
+        // console.log(`chain_fetch_block_header_by_height, version: ${version}`)
 
-        var previous_block_hash = bitprim.chain_header_get_previous_block_hash(header);
-        console.log(`chain_fetch_block_header_by_height, previous_block_hash: ${previous_block_hash}`)
-        
-        // var previous_block_hash_pepe = new Uint8Array(previous_block_hash)
-        // console.log(`chain_fetch_block_header_by_height, previous_block_hash_pepe: ${previous_block_hash_pepe}`)
+        // var previous_block_hash = bitprim.chain_header_get_previous_block_hash(header);
+        // // console.log(`chain_fetch_block_header_by_height, previous_block_hash: ${previous_block_hash}`)
+        // var previous_block_hash_str = fromHash(previous_block_hash)
+        // console.log(`chain_fetch_block_header_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
 
-        var previous_block_hash_str = fromHash(previous_block_hash)
-        console.log(`chain_fetch_block_header_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
+        // var merkle = bitprim.chain_header_get_merkle(header);
+        // // console.log(`chain_fetch_block_header_by_height, merkle: ${merkle}`)
+        // var merkle_str = fromHash(merkle)
+        // console.log(`chain_fetch_block_header_by_height, merkle_str: ${merkle_str}`)
 
-        var timestamp = bitprim.chain_header_get_timestamp(header);
-        console.log(`chain_fetch_block_header_by_height, timestamp: ${timestamp}`)
+        // var hash = bitprim.chain_header_get_hash(header);
+        // // console.log(`chain_fetch_block_header_by_height, hash: ${hash}`)
+        // var hash_str = fromHash(hash)
+        // console.log(`chain_fetch_block_header_by_height, hash_str: ${hash_str}`)
 
-        var timestamp_date = timestampToDate(timestamp)
-        console.log(`chain_fetch_block_header_by_height, timestamp_date: ${timestamp_date}`)
+        // var timestamp = bitprim.chain_header_get_timestamp(header);
+        // console.log(`chain_fetch_block_header_by_height, timestamp: ${timestamp}`)
+
+        // var timestamp_date = timestampToDate(timestamp)
+        // console.log(`chain_fetch_block_header_by_height, timestamp_date: ${timestamp_date}`)
 
 
-        var bits = bitprim.chain_header_get_bits(header);
-        console.log(`chain_fetch_block_header_by_height, bits: ${bits}`)
+        // var bits = bitprim.chain_header_get_bits(header);
+        // console.log(`chain_fetch_block_header_by_height, bits: ${bits}`)
 
-        var nonce = bitprim.chain_header_get_nonce(header);
-        console.log(`chain_fetch_block_header_by_height, nonce: ${nonce}`)
+        // var nonce = bitprim.chain_header_get_nonce(header);
+        // console.log(`chain_fetch_block_header_by_height, nonce: ${nonce}`)
 
         
 
@@ -255,13 +262,124 @@ bitprim.chain_fetch_block_header_by_hash(chain, hash_arr, function (err, header,
 //-----------------------------------
 
 
+// bitprim.chain_fetch_block_by_height(chain, 2300, function (err, block, height) {
+//     if (err == 0) {
+//         console.log(`chain_fetch_block_by_height is OK, err:  ${err}, height: ${height}`)
+//     } else {
+//         console.log(`chain_fetch_block_by_height failed, err: ${err}, height: ${height}`)
+//     }
+// })
+
+
 bitprim.chain_fetch_block_by_height(chain, 2300, function (err, block, height) {
     if (err == 0) {
         console.log(`chain_fetch_block_by_height is OK, err:  ${err}, height: ${height}`)
+
+        var tx_count = bitprim.chain_block_transaction_count(block);
+        console.log(`chain_fetch_block_by_height, tx_count: ${tx_count}`)
+
+        var serialized_size = bitprim.chain_block_serialized_size(block, 0);
+        console.log(`chain_fetch_block_by_height, serialized_size: ${serialized_size}`)
+
+        var subsidy = bitprim.chain_block_subsidy(2300);
+        console.log(`chain_fetch_block_by_height, subsidy: ${subsidy}`)
+
+        var fees = bitprim.chain_block_fees(block);
+        console.log(`chain_fetch_block_by_height, fees: ${fees}`)
+        
+        var claim = bitprim.chain_block_claim(block);
+        console.log(`chain_fetch_block_by_height, claim: ${claim}`)
+        
+        
+        var reward = bitprim.chain_block_reward(block, 2300);
+        console.log(`chain_fetch_block_by_height, reward: ${reward}`)
+
+
+        var merkle_root = fromHash(bitprim.chain_block_generate_merkle_root(block))
+        console.log(`chain_fetch_block_by_height, merkle_root: ${merkle_root}`)
+
+        var hash = fromHash(bitprim.chain_block_hash(block))
+        console.log(`chain_fetch_block_by_height, hash: ${hash}`)
+
+        var is_valid = bitprim.chain_block_is_valid(block);
+        console.log(`chain_fetch_block_by_height, is_valid: ${is_valid}`)
+
+        var tx_nth = bitprim.chain_block_transaction_nth(block, 0);
+        // console.log(`chain_fetch_block_by_height, tx_nth: ${tx_nth}`)
+
+        var sigops = bitprim.chain_block_signature_operations(block);
+        console.log(`chain_fetch_block_by_height, sigops: ${sigops}`)
+
+        var sigops2 = bitprim.chain_block_signature_operations_bip16_active(block, true);
+        console.log(`chain_fetch_block_by_height, sigops2: ${sigops2}`)
+
+        var total_inputs = bitprim.chain_block_total_inputs(block, true);
+        console.log(`chain_fetch_block_by_height, total_inputs: ${total_inputs}`)
+
+        var is_extra_coinbase = bitprim.chain_block_is_extra_coinbase(block);
+        console.log(`chain_fetch_block_by_height, is_extra_coinbase: ${is_extra_coinbase}`)
+
+        var is_final = bitprim.chain_block_is_final(block, 2300, 0);
+        console.log(`chain_fetch_block_by_height, is_final: ${is_final}`)
+
+        var is_distinct_transaction_set = bitprim.chain_block_is_distinct_transaction_set(block);
+        console.log(`chain_fetch_block_by_height, is_distinct_transaction_set: ${is_distinct_transaction_set}`)
+
+        var is_valid_coinbase_claim = bitprim.chain_block_is_valid_coinbase_claim(block, 2300);
+        console.log(`chain_fetch_block_by_height, is_valid_coinbase_claim: ${is_valid_coinbase_claim}`)
+
+        var is_valid_coinbase_script = bitprim.chain_block_is_valid_coinbase_script(block, 2300);
+        console.log(`chain_fetch_block_by_height, is_valid_coinbase_script: ${is_valid_coinbase_script}`)
+
+        var is_internal_double_spend = bitprim.chain_block_is_internal_double_spend(block);
+        console.log(`chain_fetch_block_by_height, is_internal_double_spend: ${is_internal_double_spend}`)
+
+        var is_valid_merkle_root = bitprim.chain_block_is_valid_merkle_root(block);
+        console.log(`chain_fetch_block_by_height, is_valid_merkle_root: ${is_valid_merkle_root}`)
+        
+
+
+
+        var header = bitprim.chain_block_get_header(block);
+
+        var version = bitprim.chain_header_get_version(header);
+        console.log(`chain_fetch_block_by_height, version: ${version}`)
+        
+        var previous_block_hash = bitprim.chain_header_get_previous_block_hash(header);
+        // console.log(`chain_fetch_block_by_height, previous_block_hash: ${previous_block_hash}`)
+        var previous_block_hash_str = fromHash(previous_block_hash)
+        console.log(`chain_fetch_block_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
+        
+        var merkle = bitprim.chain_header_get_merkle(header);
+        // console.log(`chain_fetch_block_by_height, merkle: ${merkle}`)
+        var merkle_str = fromHash(merkle)
+        console.log(`chain_fetch_block_by_height, merkle_str: ${merkle_str}`)
+        
+        var hash = bitprim.chain_header_get_hash(header);
+        // console.log(`chain_fetch_block_by_height, hash: ${hash}`)
+        var hash_str = fromHash(hash)
+        console.log(`chain_fetch_block_by_height, hash_str: ${hash_str}`)
+        
+        var timestamp = bitprim.chain_header_get_timestamp(header);
+        console.log(`chain_fetch_block_by_height, timestamp: ${timestamp}`)
+        
+        var timestamp_date = timestampToDate(timestamp)
+        console.log(`chain_fetch_block_by_height, timestamp_date: ${timestamp_date}`)
+        
+        
+        var bits = bitprim.chain_header_get_bits(header);
+        console.log(`chain_fetch_block_by_height, bits: ${bits}`)
+        
+        var nonce = bitprim.chain_header_get_nonce(header);
+        console.log(`chain_fetch_block_by_height, nonce: ${nonce}`)
+        
+
     } else {
         console.log(`chain_fetch_block_by_height failed, err: ${err}, height: ${height}`)
     }
 })
+
+
 
 bitprim.chain_fetch_block_by_hash(chain, hash_arr, function (err, block, height) {
     if (err == 0) {
