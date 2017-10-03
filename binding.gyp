@@ -6,7 +6,7 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "header.cc", "block.cc" ],
+      "sources": [ "bitprim_addon.cc", "header.cc", "block.cc", "transaction.cc" ],
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',

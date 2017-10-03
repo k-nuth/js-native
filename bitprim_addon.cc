@@ -7,6 +7,7 @@
 
 #include "header.h"
 #include "block.h"
+#include "transaction.h"
 
 namespace bitprim_ns {
 
@@ -1781,6 +1782,31 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_is_valid_merkle_root", bitprim_chain_block_is_valid_merkle_root);
     
 
+
+    NODE_SET_METHOD(exports, "chain_transaction_destruct", bitprim_chain_transaction_destruct);
+    NODE_SET_METHOD(exports, "chain_transaction_version", bitprim_chain_transaction_version);
+    // NODE_SET_METHOD(exports, "chain_transaction_set_version", bitprim_chain_transaction_set_version);
+    NODE_SET_METHOD(exports, "chain_transaction_hash", bitprim_chain_transaction_hash);
+    NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type", bitprim_chain_transaction_hash_sighash_type);
+    NODE_SET_METHOD(exports, "chain_transaction_locktime", bitprim_chain_transaction_locktime);
+    NODE_SET_METHOD(exports, "chain_transaction_serialized_size", bitprim_chain_transaction_serialized_size);
+    NODE_SET_METHOD(exports, "chain_transaction_fees", bitprim_chain_transaction_fees);
+    NODE_SET_METHOD(exports, "chain_transaction_signature_operations", bitprim_chain_transaction_signature_operations);
+    NODE_SET_METHOD(exports, "chain_transaction_signature_operations_bip16_active", bitprim_chain_transaction_signature_operations_bip16_active);
+    NODE_SET_METHOD(exports, "chain_transaction_total_input_value", bitprim_chain_transaction_total_input_value);
+    NODE_SET_METHOD(exports, "chain_transaction_total_output_value", bitprim_chain_transaction_total_output_value);
+    NODE_SET_METHOD(exports, "chain_transaction_is_coinbase", bitprim_chain_transaction_is_coinbase);
+    NODE_SET_METHOD(exports, "chain_transaction_is_null_non_coinbase", bitprim_chain_transaction_is_null_non_coinbase);
+    NODE_SET_METHOD(exports, "chain_transaction_is_oversized_coinbase", bitprim_chain_transaction_is_oversized_coinbase);
+    NODE_SET_METHOD(exports, "chain_transaction_is_mature", bitprim_chain_transaction_is_mature);
+    NODE_SET_METHOD(exports, "chain_transaction_is_overspent", bitprim_chain_transaction_is_overspent);
+    NODE_SET_METHOD(exports, "chain_transaction_is_double_spend", bitprim_chain_transaction_is_double_spend);
+    NODE_SET_METHOD(exports, "chain_transaction_is_missing_previous_outputs", bitprim_chain_transaction_is_missing_previous_outputs);
+    NODE_SET_METHOD(exports, "chain_transaction_is_final", bitprim_chain_transaction_is_final);
+    NODE_SET_METHOD(exports, "chain_transaction_is_locktime_conflict", bitprim_chain_transaction_is_locktime_conflict);
+    NODE_SET_METHOD(exports, "chain_transaction_outputs", bitprim_chain_transaction_outputs);
+    NODE_SET_METHOD(exports, "chain_transaction_inputs", bitprim_chain_transaction_inputs);
+        
 }
 
 NODE_MODULE(bitprim, init)
