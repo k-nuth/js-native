@@ -6,7 +6,12 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "header.cc", "block.cc", "transaction.cc" ],
+      "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
+                   "chain/merkle_block.cc", 
+                   "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/tools.cc",
+                   "chain/script.cc", "chain/input_list.cc", "chain/output_list.cc", "chain/transaction_list.cc",
+                   "chain/block_list.cc"
+                ],
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',
