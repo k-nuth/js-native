@@ -7,10 +7,16 @@
       'product_dir': '<(module_path)',
 
       "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
-                   "chain/merkle_block.cc", 
+                   "chain/merkle_block.cc", "chain/point.cc", 
                    "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/tools.cc",
                    "chain/script.cc", "chain/input_list.cc", "chain/output_list.cc", "chain/transaction_list.cc",
-                   "chain/block_list.cc"
+                   "chain/block_list.cc",
+                   "chain/history_compact_list.cc",
+                   "chain/history_compact.cc",
+                   "chain/payment_address.cc",
+                   "chain/stealth_compact.cc",
+                   "chain/stealth_compact_list.cc",
+                   "wallet/word_list.cc",
                 ],
       
       'variables': {

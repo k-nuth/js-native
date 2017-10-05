@@ -18,6 +18,13 @@
 #include "chain/output_list.h"
 #include "chain/transaction_list.h"
 #include "chain/block_list.h"
+#include "chain/point.h"
+#include "chain/history_compact_list.h"
+#include "chain/history_compact.h"
+#include "chain/payment_address.h"
+#include "chain/stealth_compact.h"
+#include "chain/stealth_compact_list.h"
+#include "wallet/word_list.h"
 
 namespace bitprim_ns {
 
@@ -289,28 +296,12 @@ void init(Local<Object> exports) {
 
     NODE_SET_METHOD(exports, "chain_merkle_block_destruct", bitprim_chain_merkle_block_destruct);
     NODE_SET_METHOD(exports, "chain_merkle_block_get_header", bitprim_chain_merkle_block_get_header);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_transaction_count", bitprim_chain_merkle_block_transaction_count);
     NODE_SET_METHOD(exports, "chain_merkle_block_serialized_size", bitprim_chain_merkle_block_serialized_size);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_subsidy", bitprim_chain_merkle_block_subsidy);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_fees", bitprim_chain_merkle_block_fees);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_claim", bitprim_chain_merkle_block_claim);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_reward", bitprim_chain_merkle_block_reward);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_generate_merkle_root", bitprim_chain_merkle_block_generate_merkle_root);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_hash", bitprim_chain_merkle_block_hash);
     NODE_SET_METHOD(exports, "chain_merkle_block_is_valid", bitprim_chain_merkle_block_is_valid);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_transaction_nth", bitprim_chain_merkle_block_transaction_nth);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_signature_operations", bitprim_chain_merkle_block_signature_operations);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_signature_operations_bip16_active", bitprim_chain_merkle_block_signature_operations_bip16_active);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_total_inputs", bitprim_chain_merkle_block_total_inputs);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_extra_coinbase", bitprim_chain_merkle_block_is_extra_coinbase);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_final", bitprim_chain_merkle_block_is_final);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_distinct_transaction_set", bitprim_chain_merkle_block_is_distinct_transaction_set);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_valid_coinbase_claim", bitprim_chain_merkle_block_is_valid_coinbase_claim);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_valid_coinbase_script", bitprim_chain_merkle_block_is_valid_coinbase_script);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_internal_double_spend", bitprim_chain_merkle_block_is_internal_double_spend);
-    // NODE_SET_METHOD(exports, "chain_merkle_block_is_valid_merkle_root", bitprim_chain_merkle_block_is_valid_merkle_root);
 
-
+    NODE_SET_METHOD(exports, "chain_merkle_block_hash_count", bitprim_chain_merkle_block_hash_count);
+    NODE_SET_METHOD(exports, "chain_merkle_block_total_transaction_count", bitprim_chain_merkle_block_total_transaction_count);
+    NODE_SET_METHOD(exports, "chain_merkle_block_reset", bitprim_chain_merkle_block_reset);
 
     NODE_SET_METHOD(exports, "chain_transaction_destruct", bitprim_chain_transaction_destruct);
     NODE_SET_METHOD(exports, "chain_transaction_version", bitprim_chain_transaction_version);
@@ -385,6 +376,37 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_list_push_back", bitprim_chain_block_list_push_back);
     NODE_SET_METHOD(exports, "chain_block_list_count", bitprim_chain_block_list_count);
     NODE_SET_METHOD(exports, "chain_block_list_nth", bitprim_chain_block_list_nth);
+
+    NODE_SET_METHOD(exports, "chain_point_get_hash", bitprim_chain_point_get_hash);
+    NODE_SET_METHOD(exports, "chain_point_is_valid", bitprim_chain_point_is_valid);
+    NODE_SET_METHOD(exports, "chain_point_get_index", bitprim_chain_point_get_index);
+    NODE_SET_METHOD(exports, "chain_point_get_checksum", bitprim_chain_point_get_checksum);
+
+    NODE_SET_METHOD(exports, "chain_history_compact_list_destruct", bitprim_chain_history_compact_list_destruct);
+    NODE_SET_METHOD(exports, "chain_history_compact_list_count", bitprim_chain_history_compact_list_count);
+    NODE_SET_METHOD(exports, "chain_history_compact_list_nth", bitprim_chain_history_compact_list_nth);
+    
+    NODE_SET_METHOD(exports, "chain_history_compact_get_point_kind", bitprim_chain_history_compact_get_point_kind);
+    NODE_SET_METHOD(exports, "chain_history_compact_get_point", bitprim_chain_history_compact_get_point);
+    NODE_SET_METHOD(exports, "chain_history_compact_get_height", bitprim_chain_history_compact_get_height);
+    NODE_SET_METHOD(exports, "chain_history_compact_get_value_or_previous_checksum", bitprim_chain_history_compact_get_value_or_previous_checksum);
+
+    NODE_SET_METHOD(exports, "chain_payment_address_destruct", bitprim_chain_payment_address_destruct);
+    NODE_SET_METHOD(exports, "chain_payment_address_encoded", bitprim_chain_payment_address_encoded);
+    NODE_SET_METHOD(exports, "chain_payment_address_version", bitprim_chain_payment_address_version);
+    NODE_SET_METHOD(exports, "chain_payment_address_construct_from_string", bitprim_chain_payment_address_construct_from_string);
+
+    NODE_SET_METHOD(exports, "chain_stealth_compact_get_ephemeral_public_key_hash", bitprim_chain_stealth_compact_get_ephemeral_public_key_hash);
+    NODE_SET_METHOD(exports, "chain_stealth_compact_get_transaction_hash", bitprim_chain_stealth_compact_get_transaction_hash);
+    NODE_SET_METHOD(exports, "chain_stealth_compact_get_public_key_hash", bitprim_chain_stealth_compact_get_public_key_hash);
+
+    NODE_SET_METHOD(exports, "chain_stealth_compact_list_destruct", bitprim_chain_stealth_compact_list_destruct);
+    NODE_SET_METHOD(exports, "chain_stealth_compact_list_count", bitprim_chain_stealth_compact_list_count);
+    NODE_SET_METHOD(exports, "chain_stealth_compact_list_nth", bitprim_chain_stealth_compact_list_nth);
+
+    NODE_SET_METHOD(exports, "wallet_word_list_construct", bitprim_wallet_word_list_construct);
+    NODE_SET_METHOD(exports, "wallet_word_list_destruct", bitprim_wallet_word_list_destruct);
+    NODE_SET_METHOD(exports, "wallet_word_list_push_back", bitprim_wallet_word_list_push_back);
 }
 
 NODE_MODULE(bitprim, init)

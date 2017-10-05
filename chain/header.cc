@@ -147,8 +147,6 @@ void bitprim_chain_header_get_merkle(v8::FunctionCallbackInfo<v8::Value> const& 
     args.GetReturnValue().Set(hash);
 }
 
-
-// void bitprim_chain_header_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_header_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
