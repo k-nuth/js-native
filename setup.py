@@ -27,11 +27,22 @@ def find(name, path):
 def run_conan(reference, reference_fallback):
     c = Conan.factory()
 
+    print(reference)
+    print(reference_fallback)
+
     try:
         # c.remote_add(remote, url, verify_ssl, args.insert)
         c.remote_add('bitprim', 'https://api.bintray.com/conan/bitprim/bitprim')
     except:
         print ("Conan Remote exists, ignoring exception")
+
+
+    # # c.install(reference, verify=None, manifests=None)
+    # c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+    # print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
+    # pepe = find('nodecint.h', os.getcwd())
+    # print(pepe)
+    # print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
 
 
     try:
@@ -43,6 +54,8 @@ def run_conan(reference, reference_fallback):
         print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
 
     except:
+        print('EXCEPTION --------------------------')
+
         c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
         print('876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
         pepe = find('nodecint.h', os.getcwd())
@@ -54,15 +67,15 @@ def run_conan(reference, reference_fallback):
 
 if __name__ == '__main__':
 
-    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
-    print(os.path.dirname(os.path.abspath(__file__)))
-    print(os.getcwd())
-    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+    # print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+    # print(os.path.dirname(os.path.abspath(__file__)))
+    # print(os.getcwd())
+    # print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 
-    pepe = find('nodecint.h', os.getcwd())
-    print(pepe)
+    # pepe = find('nodecint.h', os.getcwd())
+    # print(pepe)
 
-    print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
+    # print('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*')
 
 
     install('conan')
