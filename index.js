@@ -42,6 +42,9 @@
 var binary = require('node-pre-gyp');
 var path = require('path')
 var bitprim_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+
+console.log(`bitprim_path: ${bitprim_path}`)
+
 var bitprim = require(bitprim_path);
 
 // require('assert').equal(bitprim.hello(),"hello");

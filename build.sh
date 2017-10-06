@@ -4,6 +4,16 @@
 # Ubuntu
 # -------------------------------
 # sudo apt-get update
+
+# curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+# sudo apt-get install -y nodejs
+
+
 # sudo apt-get install nodejs
 # sudo apt-get install nodejs-legacy
 # sudo apt-get install npm
@@ -33,7 +43,14 @@ node-pre-gyp configure build package
 export NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
 set NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
 
+
+export NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
+set NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
+
+
+
 node-pre-gyp-github publish
+node-pre-gyp-github publish --release
 
 node-pre-gyp clean
 node-gyp clean

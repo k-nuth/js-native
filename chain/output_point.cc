@@ -70,7 +70,7 @@ void bitprim_chain_output_point_construct_from_hash_index(v8::FunctionCallbackIn
     uint32_t index = args[1]->IntegerValue();
 
     output_point_t res = output_point_construct_from_hash_index(hash, index);
-    return to_py_obj(res);
+    args.GetReturnValue().Set(External::New(isolate, res));
 }
 
 void bitprim_chain_output_point_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -87,9 +87,9 @@ void bitprim_chain_output_point_destruct(v8::FunctionCallbackInfo<v8::Value> con
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    output_point_t op = (output_point_t)vptr;
 
-    output_point_destruct(output);
+    output_point_destruct(op);
 }
 
 void bitprim_chain_output_point_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -106,9 +106,9 @@ void bitprim_chain_output_point_get_hash(v8::FunctionCallbackInfo<v8::Value> con
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_point_t p = (output_point_t)vptr;
+    output_point_t op = (output_point_t)vptr;
 
-    hash_t res = output_point_get_hash(p);
+    hash_t res = output_point_get_hash(op);
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
     memcpy(tmp->GetContents().Data(), res.hash, 32);
     args.GetReturnValue().Set(Uint8Array::New(tmp, 0, 32));
@@ -128,9 +128,9 @@ void bitprim_chain_output_point_get_index(v8::FunctionCallbackInfo<v8::Value> co
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_point_t p = (output_point_t)vptr;
+    output_point_t op = (output_point_t)vptr;
 
-    uint32_t res = output_point_get_index(output);
+    uint32_t res = output_point_get_index(op);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 

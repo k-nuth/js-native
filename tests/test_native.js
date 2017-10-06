@@ -103,7 +103,8 @@ function sleep(sleepDuration) {
 
 // const bitprim = require('../build/Release/bitprim')
 // const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')
-const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+// const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+const bitprim = require('bitprim-native')
 
 
 function wait_until_block(chain, desired_height) {

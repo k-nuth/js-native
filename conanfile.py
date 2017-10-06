@@ -22,13 +22,14 @@ class BitprimJs(ConanFile):
     requires = (("bitprim-node-cint/0.3@bitprim/testing"))
     # requires = (("bitprim-node-cint/0.2@bitprim/stable"))
 
+    # conan install bitprim-node-cint/0.3@bitprim/testing -o gmp:host=auto --build=gmp
+
     default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
     build_policy = "gmp"
 
     # default_options = "bitprim-node-cint:shared=False" #, "OpenSSL:shared=True"
 
     # conan install bitprim-node-cint/0.2@bitprim/testing -o shared=True
-    # conan install -o Pkg:shared=True -o OtherPkg:option=value
 
     def imports(self):
         self.copy("*.h", "./deps/include/bitprim", "include/bitprim")

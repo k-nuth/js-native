@@ -8,7 +8,8 @@
 
       "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
                    "chain/merkle_block.cc", "chain/point.cc", 
-                   "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/tools.cc",
+                   "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/output_point.cc", 
+                   "chain/tools.cc",
                    "chain/script.cc", "chain/input_list.cc", "chain/output_list.cc", "chain/transaction_list.cc",
                    "chain/block_list.cc",
                    "chain/history_compact_list.cc",
@@ -21,6 +22,7 @@
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',
+        'install_py': '<(DEPTH)/install.py',
       },
 
       # 'actions': [
@@ -82,6 +84,18 @@
         # },
 
         {
+          'action_name': 'Install',
+          'inputs': [
+            '>(install_py)',
+          ],
+          # 'outputs': ['>(nmf_pnacl)'],
+          'outputs': [''],
+          'action': [
+            'python',
+            '>@(_inputs)', 
+          ],
+        },
+        {
           'action_name': 'Setup',
           'inputs': [
             '>(setup_py)',
@@ -93,7 +107,6 @@
             '>@(_inputs)', 
           ],
         },
-
       ],
 
 
@@ -131,13 +144,13 @@
       'conditions': [
         ['OS=="linux"', {
 
-          # "include_dirs": ["./deps/include", "../deps/include"],
-          "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          "include_dirs": ["./deps/include", "../deps/include"],
+          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
 
             '-lbitprim-node-cint', 
             '-lbitprim-node', 
