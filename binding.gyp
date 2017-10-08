@@ -183,8 +183,45 @@
           ],
         }],
         ['OS=="mac"', {
+
+          "include_dirs": ["./deps/include", "../deps/include"],
+          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          
           'libraries': [
+            '-L./deps/lib/', 
+            '-L../deps/lib/',
+            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+
+            '-lbitprim-node-cint', 
+            '-lbitprim-node', 
+            '-lbitprim-blockchain', 
+            '-lbitprim-network', 
+            '-lbitprim-consensus', 
+            '-lbitprim-database', 
+            '-lbitprim-core',
+            '-lboost_atomic', 
+            '-lboost_chrono', 
+            '-lboost_date_time', 
+            '-lboost_filesystem', 
+            '-lboost_iostreams', 
+            '-lboost_locale', 
+            '-lboost_log', 
+            '-lboost_log_setup', 
+            '-lboost_program_options', 
+            '-lboost_random', 
+            '-lboost_regex', 
+            '-lboost_system', 
+            '-lboost_unit_test_framework', 
+            '-lboost_prg_exec_monitor', 
+            '-lboost_test_exec_monitor', 
+            '-lboost_thread', 
+            '-lboost_timer', 
+            '-lsecp256k1', 
+            '-lbz2', 
+            '-lgmp', 
+            '-lz',
           ],
+
         }],
         # ['OS=="linux"', {
         #   'cflags': [
