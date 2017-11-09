@@ -9,7 +9,8 @@ def find(name, path):
             return os.path.join(root, name)
 
 def run_conan(reference, reference_fallback):
-    c = Conan.factory()
+    # New API in Conan 0.28
+    c, _, _ = Conan.factory()
 
     print(reference)
     print(reference_fallback)
