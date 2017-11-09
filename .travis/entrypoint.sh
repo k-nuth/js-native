@@ -4,12 +4,12 @@
 
 echo "Fer 1"
 
-sudo apt-get install -y curl
+# sudo apt-get install -y curl
 
 echo "Fer 2"
 
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-# wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
 # curl -sL https://deb.nodesource.com/setup_6.x | bash -
 #   or
