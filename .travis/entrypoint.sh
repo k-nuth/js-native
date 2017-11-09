@@ -2,22 +2,39 @@
 
 # nvm install 8
 
-# sudo apt-get install curl
-# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
+echo "Fer 1"
+
+sudo apt-get install -y curl
+
+echo "Fer 2"
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+# wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
 # curl -sL https://deb.nodesource.com/setup_6.x | bash -
 #   or
-# wget -qO- https://deb.nodesource.com/setup_6.x | bash -
+# wget -qO- https://deb.nodesource.com/setup_8.x | bash -
 #
 
+echo "Fer 3"
+
 sudo apt-get install -y nodejs
+
+echo "Fer 4"
 
 # sudo apt-get install nodejs
 # sudo apt-get install nodejs-legacy
 
+
+echo "Fer 5"
+
 sudo apt-get install npm
+
+echo "Fer 6"
+
 npm install npm@latest -g
+
+echo "Fer 7"
 
 
 npm install -g node-gyp
