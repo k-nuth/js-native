@@ -24,8 +24,8 @@ class BitprimJs(ConanFile):
 
     # conan install bitprim-node-cint/0.3@bitprim/testing -o gmp:host=auto --build=gmp
 
-    default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
-    build_policy = "gmp"
+    # default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
+    # build_policy = "gmp"
 
     # default_options = "bitprim-node-cint:shared=False" #, "OpenSSL:shared=True"
 
