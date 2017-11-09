@@ -2,8 +2,15 @@
 
 # nvm install 8
 
-sudo apt-get install curl
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+# sudo apt-get install curl
+# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+# curl -sL https://deb.nodesource.com/setup_6.x | bash -
+#   or
+# wget -qO- https://deb.nodesource.com/setup_6.x | bash -
+#
+
 sudo apt-get install -y nodejs
 
 # sudo apt-get install nodejs
