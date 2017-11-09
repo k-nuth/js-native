@@ -181,7 +181,13 @@ script:
 
   #   fi  
 
+  - pwd
   - cd ${TRAVIS_BUILD_DIR}
+  - pwd
+  - ls -ltra
+
+  - conan install .
+
   # - npm cache clean
   - npm install
   - node-pre-gyp configure build package
