@@ -1,5 +1,6 @@
 #!/bin/bash
 
+nvm install 8
 npm install -g node-gyp
 npm install -g node-pre-gyp
 npm install -g aws-sdk
