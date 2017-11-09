@@ -30,8 +30,6 @@ function timestampToDate(unix_timestamp) {
     return formattedTime
 } 
 
-
-
 function byteToHexString(uint8arr) {
     if (!uint8arr) {
         return '';
@@ -46,7 +44,6 @@ function byteToHexString(uint8arr) {
 
     return hexStr.toUpperCase();
 }
-
 
 function hexStringToByte(str) {
     if (!str) {
@@ -106,7 +103,8 @@ function sleep(sleepDuration) {
 
 // const bitprim = require('../build/Release/bitprim')
 // const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')
-const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+// const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+const bitprim = require('bitprim-native')
 
 
 function wait_until_block(chain, desired_height) {
@@ -434,6 +432,76 @@ var tx_hash_arr = toHash('2c8e87226737f9a782e568bf744cf6757cd0f593184df80a61ab0e
 bitprim.chain_fetch_transaction(chain, tx_hash_arr, true, function (err, tx, index, height) {
     if (err == 0) {
         console.log(`chain_fetch_transaction is OK, err:  ${err}, index: ${index}, height: ${height}`)
+
+        
+        var version = bitprim.chain_transaction_version(tx)
+        console.log(`chain_fetch_transaction, version: ${version}`)
+
+        // bitprim.chain_transaction_set_version(tx)
+        var hash = bitprim.chain_transaction_hash(tx)
+        console.log(`chain_fetch_transaction, hash: ${hash}`)
+        
+        var hash_sighash_type = bitprim.chain_transaction_hash_sighash_type(tx, 0)
+        console.log(`chain_fetch_transaction, hash_sighash_type: ${hash_sighash_type}`)
+
+        var locktime = bitprim.chain_transaction_locktime(tx)
+        console.log(`chain_fetch_transaction, locktime: ${locktime}`)
+
+        var serialized_size = bitprim.chain_transaction_serialized_size(tx, true)
+        console.log(`chain_fetch_transaction, serialized_size: ${serialized_size}`)
+
+        var fees = bitprim.chain_transaction_fees(tx)
+        console.log(`chain_fetch_transaction, fees: ${fees}`)
+
+        var signature_operations = bitprim.chain_transaction_signature_operations(tx)
+        console.log(`chain_fetch_transaction, signature_operations: ${signature_operations}`)
+
+        var signature_operations_bip16_active = bitprim.chain_transaction_signature_operations_bip16_active(tx, true)
+        console.log(`chain_fetch_transaction, signature_operations_bip16_active: ${signature_operations_bip16_active}`)
+
+        var total_input_value = bitprim.chain_transaction_total_input_value(tx)
+        console.log(`chain_fetch_transaction, total_input_value: ${total_input_value}`)
+
+        var total_output_value = bitprim.chain_transaction_total_output_value(tx)
+        console.log(`chain_fetch_transaction, total_output_value: ${total_output_value}`)
+
+        var is_coinbase = bitprim.chain_transaction_is_coinbase(tx)
+        console.log(`chain_fetch_transaction, is_coinbase: ${is_coinbase}`)
+
+        var is_null_non_coinbase = bitprim.chain_transaction_is_null_non_coinbase(tx)
+        console.log(`chain_fetch_transaction, is_null_non_coinbase: ${is_null_non_coinbase}`)
+
+        var is_oversized_coinbase = bitprim.chain_transaction_is_oversized_coinbase(tx)
+        console.log(`chain_fetch_transaction, is_oversized_coinbase: ${is_oversized_coinbase}`)
+
+        var is_mature = bitprim.chain_transaction_is_mature(tx, 0)
+        console.log(`chain_fetch_transaction, is_mature: ${is_mature}`)
+
+        var is_overspent = bitprim.chain_transaction_is_overspent(tx)
+        console.log(`chain_fetch_transaction, is_overspent: ${is_overspent}`)
+
+        var is_double_spend = bitprim.chain_transaction_is_double_spend(tx, true)
+        console.log(`chain_fetch_transaction, is_double_spend: ${is_double_spend}`)
+
+        var is_missing_previous_outputs = bitprim.chain_transaction_is_missing_previous_outputs(tx)
+        console.log(`chain_fetch_transaction, is_missing_previous_outputs: ${is_missing_previous_outputs}`)
+
+        var is_final = bitprim.chain_transaction_is_final(tx)
+        console.log(`chain_fetch_transaction, is_final: ${is_final}`)
+
+        var is_locktime_conflict = bitprim.chain_transaction_is_locktime_conflict(tx)
+        console.log(`chain_fetch_transaction, is_locktime_conflict: ${is_locktime_conflict}`)
+
+        var outputs = bitprim.chain_transaction_outputs(tx)
+        // console.log(`chain_fetch_transaction, outputs: ${outputs}`)
+
+        var inputs = bitprim.chain_transaction_inputs(tx)
+        // console.log(`chain_fetch_transaction, inputs: ${inputs}`)
+        
+
+        bitprim.chain_transaction_destruct(tx)
+        
+
     } else {
         console.log(`chain_fetch_transaction failed, err: ${err}, index: ${index}, height: ${height}`)
     }

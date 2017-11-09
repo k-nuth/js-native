@@ -6,10 +6,23 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "header.cc", "block.cc", "transaction.cc" ],
+      "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
+                   "chain/merkle_block.cc", "chain/point.cc", 
+                   "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/output_point.cc", 
+                   "chain/tools.cc",
+                   "chain/script.cc", "chain/input_list.cc", "chain/output_list.cc", "chain/transaction_list.cc",
+                   "chain/block_list.cc",
+                   "chain/history_compact_list.cc",
+                   "chain/history_compact.cc",
+                   "chain/payment_address.cc",
+                   "chain/stealth_compact.cc",
+                   "chain/stealth_compact_list.cc",
+                   "wallet/word_list.cc",
+                ],
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',
+        'install_py': '<(DEPTH)/install.py',
       },
 
       # 'actions': [
@@ -71,6 +84,18 @@
         # },
 
         {
+          'action_name': 'Install',
+          'inputs': [
+            '>(install_py)',
+          ],
+          # 'outputs': ['>(nmf_pnacl)'],
+          'outputs': [''],
+          'action': [
+            'python',
+            '>@(_inputs)', 
+          ],
+        },
+        {
           'action_name': 'Setup',
           'inputs': [
             '>(setup_py)',
@@ -82,7 +107,6 @@
             '>@(_inputs)', 
           ],
         },
-
       ],
 
 
@@ -120,13 +144,13 @@
       'conditions': [
         ['OS=="linux"', {
 
-          # "include_dirs": ["./deps/include", "../deps/include"],
-          "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          "include_dirs": ["./deps/include", "../deps/include"],
+          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
 
             '-lbitprim-node-cint', 
             '-lbitprim-node', 
@@ -159,8 +183,45 @@
           ],
         }],
         ['OS=="mac"', {
+
+          "include_dirs": ["./deps/include", "../deps/include"],
+          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          
           'libraries': [
+            '-L./deps/lib/', 
+            '-L../deps/lib/',
+            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+
+            '-lbitprim-node-cint', 
+            '-lbitprim-node', 
+            '-lbitprim-blockchain', 
+            '-lbitprim-network', 
+            '-lbitprim-consensus', 
+            '-lbitprim-database', 
+            '-lbitprim-core',
+            '-lboost_atomic', 
+            '-lboost_chrono', 
+            '-lboost_date_time', 
+            '-lboost_filesystem', 
+            '-lboost_iostreams', 
+            '-lboost_locale', 
+            '-lboost_log', 
+            '-lboost_log_setup', 
+            '-lboost_program_options', 
+            '-lboost_random', 
+            '-lboost_regex', 
+            '-lboost_system', 
+            '-lboost_unit_test_framework', 
+            '-lboost_prg_exec_monitor', 
+            '-lboost_test_exec_monitor', 
+            '-lboost_thread', 
+            '-lboost_timer', 
+            '-lsecp256k1', 
+            '-lbz2', 
+            '-lgmp', 
+            '-lz',
           ],
+
         }],
         # ['OS=="linux"', {
         #   'cflags': [
@@ -176,9 +237,6 @@
         ['OS=="win"', {
           "include_dirs": ["deps/include"],
           'libraries': [
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtCore4.lib',
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtGui4.lib',
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtTest4.lib'
             '../deps/lib/bitprim-node-cint.lib', 
             '../deps/lib/bitprim-node.lib', 
             '../deps/lib/bitprim-blockchain.lib', 
