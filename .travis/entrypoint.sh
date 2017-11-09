@@ -11,6 +11,16 @@ echo "Fer 2"
 # curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 wget -qO- https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
+wget -O setup_8.x.sh https://deb.nodesource.com/setup_8.x 
+
+ls -ltra
+
+chmod +x setup_8.x.sh
+./setup_8.x.sh
+
+
+
+
 # curl -sL https://deb.nodesource.com/setup_6.x | bash -
 #   or
 # wget -qO- https://deb.nodesource.com/setup_8.x | bash -
