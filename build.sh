@@ -3,11 +3,26 @@
 
 # Ubuntu
 # -------------------------------
+# Requerimientos: Se necesita Python 2.7 y GCC
+
 # sudo apt-get update
 # sudo apt-get install nodejs
 # sudo apt-get install nodejs-legacy
 # sudo apt-get install npm
 # npm install npm@latest -g
+
+# sudo apt-get install curl
+# curl -sL https://deb.nodesource.com/setup_0.10 | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+# curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+# sudo apt-get remove -y nodejs
+
+# sudo apt-get install -y nodejs
 
 # node-gyp Installation
 # -------------------------------
@@ -17,7 +32,8 @@
 # sudo -H npm install -g node-pre-gyp-github
 
 # https://github.com/bchr02/node-pre-gyp-github
-
+# https://nodejs.org/es/download/package-manager/#distribuciones-de-linux-basadas-en-debian-y-ubuntu
+# https://github.com/nodesource/distributions/tree/master/deb
 
 node-gyp configure
 node-gyp build
@@ -65,3 +81,10 @@ npm publish
 # --------------------------------------------------------------------------------
 
 npm view bitprim-native dist.tarball
+
+
+
+
+# --------------------------------------
+
+npm config set msvs_version 2015
