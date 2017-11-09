@@ -1,6 +1,17 @@
 #!/bin/bash
 
-nvm install 8
+# nvm install 8
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# sudo apt-get install nodejs
+# sudo apt-get install nodejs-legacy
+
+sudo apt-get install npm
+npm install npm@latest -g
+
+
 npm install -g node-gyp
 npm install -g node-pre-gyp
 npm install -g aws-sdk
