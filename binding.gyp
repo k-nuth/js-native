@@ -237,9 +237,6 @@
         ['OS=="win"', {
           "include_dirs": ["deps/include"],
           'libraries': [
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtCore4.lib',
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtGui4.lib',
-              # '../deps/qt-4.8.0/win32/ia32/lib/QtTest4.lib'
             '../deps/lib/bitprim-node-cint.lib', 
             '../deps/lib/bitprim-node.lib', 
             '../deps/lib/bitprim-blockchain.lib', 
