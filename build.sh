@@ -48,6 +48,9 @@ export NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
 set NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
 
 
+export NODE_PRE_GYP_GITHUB_TOKEN=57f55e57d3410226f5c0983fccab220e43f762d1
+set NODE_PRE_GYP_GITHUB_TOKEN=57f55e57d3410226f5c0983fccab220e43f762d1
+
 
 node-pre-gyp-github publish
 node-pre-gyp-github publish --release
