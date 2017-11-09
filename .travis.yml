@@ -186,6 +186,7 @@ script:
   - pwd
   - ls -ltra
 
+  - conan remote add bitprim https://api.bintray.com/conan/bitprim/bitprim
   - conan install .
 
   # - npm cache clean
