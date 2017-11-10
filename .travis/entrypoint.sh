@@ -53,23 +53,29 @@ conan user
 
 echo "Fer 7A"
 
-npm set init.author.name "Fernando Pelliccioni"
+# npm set init.author.name "Fernando Pelliccioni"
 
-echo "Fer 7B"
+# echo "Fer 7B"
 
-npm set init.author.email "fpelliccioni@gmail.com"
+# npm set init.author.email "fpelliccioni@gmail.com"
 
-echo "Fer 7C"
+# echo "Fer 7C"
 
-npm set init.author.url "http://bitprim.org"
+# npm set init.author.url "http://bitprim.org"
 
-echo "Fer 7D"
+# echo "Fer 7D"
 
-npm adduser <<!
-$NPM_USERNAME
-$NPM_PASSWORD
-$NPM_EMAIL
-!
+# npm adduser <<!
+# $NPM_USERNAME
+# $NPM_PASSWORD
+# $NPM_EMAIL
+# !
+
+
+cat ~/.npmrc
+# echo _auth = $NPM_AUTH_TOKEN > ~/.npmrc
+echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
+cat ~/.npmrc
 
 echo "Fer 7E"
 
