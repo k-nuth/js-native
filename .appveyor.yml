@@ -86,7 +86,7 @@ build_script:
   - python --version
   - conan user
   - conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
-  - conan install .
+  # - conan install .
 
   - npm install
   - node-pre-gyp configure build package
