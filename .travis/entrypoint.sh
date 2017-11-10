@@ -93,13 +93,13 @@ conan install .
 # npm cache clean
 npm install
 node-pre-gyp configure build package
-# node-pre-gyp-github publish
-node-pre-gyp-github publish --release
+# node-pre-gyp-github publish  || true
+node-pre-gyp-github publish --release  || true
 
 node-pre-gyp clean
 node-gyp clean
 
 npm install
 
-npm publish
+npm publish || true
 
