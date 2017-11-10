@@ -40,6 +40,10 @@ sudo -H npm install -g node-pre-gyp
 sudo -H npm install -g aws-sdk
 sudo -H npm install -g node-pre-gyp-github
 
+npm cache clean
+
+
+
 # sudo pip install --upgrade conan_package_tools
 # pip install --upgrade --user conan_package_tools
 pip install conan --upgrade --user
