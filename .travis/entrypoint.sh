@@ -9,14 +9,12 @@ echo "Fer 1"
 echo "Fer 2"
 
 # curl -sL http://deb.nodesource.com/setup_8.x | sudo -E bash -
-# wget -qO- http://deb.nodesource.com/setup_8.x | sudo -E bash -
+wget -qO- http://deb.nodesource.com/setup_8.x | sudo -E bash -
 
-wget -O setup_8.x.sh http://deb.nodesource.com/setup_8.x 
-
-ls -ltra
-
-chmod +x setup_8.x.sh
-./setup_8.x.sh
+# wget -O setup_8.x.sh http://deb.nodesource.com/setup_8.x 
+# ls -ltra
+# chmod +x setup_8.x.sh
+# ./setup_8.x.sh
 
 
 echo "Fer 3"
