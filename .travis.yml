@@ -26,7 +26,7 @@ linux: &linux
    os: linux
    sudo: required
   #  language: python
-   language: node_js
+  #  language: node_js
   # node_js:
   #   - "7"
    services:
@@ -48,17 +48,17 @@ matrix:
         # env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6 NODEJS_VERSION=8
         env: NODEJS_VERSION=8
         compiler: gcc
-        node_js: "8"
+        # node_js: "8"
 
       - <<: *linux
         env: NODEJS_VERSION=7
         compiler: gcc
-        node_js: "7"
+        # node_js: "7"
 
       - <<: *linux
         env: NODEJS_VERSION=6
         compiler: gcc
-        node_js: "6"
+        # node_js: "6"
      
       # - <<: *osx
       #   osx_image: xcode7.3
