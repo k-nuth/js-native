@@ -126,8 +126,8 @@ install:
         npm install -g aws-sdk
         npm install -g node-pre-gyp-github
 
-        pip install conan_package_tools --upgrade --user
-        pip install conan --upgrade --user
+        # pip install conan_package_tools --upgrade
+        pip install conan --upgrade
         conan user
       fi
     fi    
