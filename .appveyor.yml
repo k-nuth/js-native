@@ -89,7 +89,10 @@ build_script:
   # - conan install .
 
   - npm install
-  - node-pre-gyp configure build package
+  # - node-pre-gyp configure build package
+  - node-pre-gyp configure --verbose
+  - node-pre-gyp build --verbose
+  - node-pre-gyp package --verbose
   - node-pre-gyp-github publish --release  || true
   
     # - cd %APPVEYOR_BUILD_FOLDER% 
