@@ -1,6 +1,16 @@
 #!/bin/bash
 
-# nvm install 8
+echo "Fer 0"
+
+npm set init.author.name "Fernando Pelliccioni"
+npm set init.author.email "fpelliccioni@gmail.com"
+npm set init.author.url "http://bitprim.org"
+
+npm adduser <<!
+$NPM_USERNAME
+$NPM_PASSWORD
+$NPM_EMAIL
+!
 
 echo "Fer 1"
 
@@ -64,5 +74,6 @@ node-pre-gyp clean
 node-gyp clean
 
 npm install
+
 npm publish
 

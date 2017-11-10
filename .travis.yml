@@ -152,7 +152,7 @@ script:
       if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
         cd ${TRAVIS_BUILD_DIR}
         chmod a+x .travis/entrypoint.sh
-        /usr/bin/docker run --rm -ti -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${TRAVIS_BUILD_DIR}:/home/conan/project -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh lasote/conangcc63 /bin/bash -c /tmp/entrypoint.sh
+        /usr/bin/docker run --rm -ti -e NPM_USERNAME=$NPM_USERNAME -e NPM_PASSWORD=$NPM_PASSWORD -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${TRAVIS_BUILD_DIR}:/home/conan/project -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh lasote/conangcc63 /bin/bash -c /tmp/entrypoint.sh
 
         # node-pre-gyp configure build package
         # node-pre-gyp-github publish
