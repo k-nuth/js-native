@@ -8,14 +8,10 @@ echo "Fer 1"
 
 echo "Fer 2"
 
-# curl -sL http://deb.nodesource.com/setup_8.x | sudo -E bash -
-wget -qO- http://deb.nodesource.com/setup_8.x | sudo -E bash -
+node_setup="http://deb.nodesource.com/setup_$NODEJS_VERSION.x"
 
-# wget -O setup_8.x.sh http://deb.nodesource.com/setup_8.x 
-# ls -ltra
-# chmod +x setup_8.x.sh
-# ./setup_8.x.sh
-
+# wget -qO- http://deb.nodesource.com/setup_8.x | sudo -E bash -
+wget -qO- $node_setup | sudo -E bash -
 
 echo "Fer 3"
 
@@ -29,7 +25,7 @@ echo "Fer 4"
 
 echo "Fer 5"
 
-sudo apt-get install -y  npm
+# sudo apt-get install -y  npm
 
 echo "Fer 6"
 
@@ -44,7 +40,7 @@ sudo -H npm install -g aws-sdk
 sudo -H npm install -g node-pre-gyp-github
 
 # sudo pip install --upgrade conan_package_tools
-pip install --upgrade --user conan_package_tools
+# pip install --upgrade --user conan_package_tools
 pip install conan --upgrade --user
 conan user
 
@@ -61,6 +57,12 @@ conan install .
 # npm cache clean
 npm install
 node-pre-gyp configure build package
-node-pre-gyp-github publish
-# node-pre-gyp-github publish --release
+# node-pre-gyp-github publish
+node-pre-gyp-github publish --release
+
+node-pre-gyp clean
+node-gyp clean
+
+npm install
+npm publish
 

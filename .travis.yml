@@ -45,14 +45,20 @@ matrix:
       #   env: PUSH_TO_REPOS=true
    
       - <<: *linux
-        env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6
+        # env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6 NODEJS_VERSION=8
+        env: NODEJS_VERSION=8
         compiler: gcc
         node_js: "8"
 
       - <<: *linux
-        env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6
+        env: NODEJS_VERSION=7
         compiler: gcc
         node_js: "7"
+
+      - <<: *linux
+        env: NODEJS_VERSION=6
+        compiler: gcc
+        node_js: "6"
      
       # - <<: *osx
       #   osx_image: xcode7.3
@@ -146,7 +152,7 @@ script:
       if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
         cd ${TRAVIS_BUILD_DIR}
         chmod a+x .travis/entrypoint.sh
-        /usr/bin/docker run --rm -ti -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -e TRAVIS_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION -v ${TRAVIS_BUILD_DIR}:/home/conan/project -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh lasote/conangcc63 /bin/bash -c /tmp/entrypoint.sh
+        /usr/bin/docker run --rm -ti -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${TRAVIS_BUILD_DIR}:/home/conan/project -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh lasote/conangcc63 /bin/bash -c /tmp/entrypoint.sh
 
         # node-pre-gyp configure build package
         # node-pre-gyp-github publish
