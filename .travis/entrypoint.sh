@@ -23,25 +23,25 @@ sudo apt-get install -y nodejs
 
 echo "Fer 4"
 
-# sudo apt-get install nodejs
-# sudo apt-get install nodejs-legacy
+# sudo apt-get install -y  nodejs
+# sudo apt-get install -y  nodejs-legacy
 
 
 echo "Fer 5"
 
-sudo apt-get install npm
+sudo apt-get install -y  npm
 
 echo "Fer 6"
 
-npm install npm@latest -g
+sudo -H npm install npm@latest -g
 
 echo "Fer 7"
 
 
-npm install -g node-gyp
-npm install -g node-pre-gyp
-npm install -g aws-sdk
-npm install -g node-pre-gyp-github
+sudo -H npm install -g node-gyp
+sudo -H npm install -g node-pre-gyp
+sudo -H npm install -g aws-sdk
+sudo -H npm install -g node-pre-gyp-github
 
 # sudo pip install --upgrade conan_package_tools
 pip install --upgrade --user conan_package_tools
