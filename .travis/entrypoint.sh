@@ -60,7 +60,7 @@ conan install .
 
 # npm cache clean
 npm install
-node-pre-gyp configure build package
-node-pre-gyp-github publish
+# node-pre-gyp configure build package
+# node-pre-gyp-github publish
 # node-pre-gyp-github publish --release
 

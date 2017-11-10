@@ -147,6 +147,10 @@ script:
         cd ${TRAVIS_BUILD_DIR}
         chmod a+x .travis/entrypoint.sh
         /usr/bin/docker run --rm -ti -e TRAVIS_PYTHON_VERSION=$TRAVIS_PYTHON_VERSION -v ${TRAVIS_BUILD_DIR}:/home/conan/project -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh lasote/conangcc63 /bin/bash -c /tmp/entrypoint.sh
+
+        node-pre-gyp configure build package
+        node-pre-gyp-github publish
+
       else
         python --version
         conan user
