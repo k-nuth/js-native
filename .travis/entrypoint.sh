@@ -2,15 +2,6 @@
 
 echo "Fer 0"
 
-npm set init.author.name "Fernando Pelliccioni"
-npm set init.author.email "fpelliccioni@gmail.com"
-npm set init.author.url "http://bitprim.org"
-
-npm adduser <<!
-$NPM_USERNAME
-$NPM_PASSWORD
-$NPM_EMAIL
-!
 
 echo "Fer 1"
 
@@ -54,13 +45,30 @@ sudo -H npm install -g node-pre-gyp-github
 pip install conan --upgrade --user
 conan user
 
+
+
+echo "Fer 7A"
+
+npm set init.author.name "Fernando Pelliccioni"
+npm set init.author.email "fpelliccioni@gmail.com"
+npm set init.author.url "http://bitprim.org"
+
+npm adduser <<!
+$NPM_USERNAME
+$NPM_PASSWORD
+$NPM_EMAIL
+!
+
+echo "Fer 7B"
+
+
 conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
 
 pwd
 
 cd /home/conan/project
 
-ls -ltra
+# ls -ltra
 
 conan install .
 
