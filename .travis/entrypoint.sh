@@ -50,8 +50,16 @@ conan user
 echo "Fer 7A"
 
 npm set init.author.name "Fernando Pelliccioni"
+
+echo "Fer 7B"
+
 npm set init.author.email "fpelliccioni@gmail.com"
+
+echo "Fer 7C"
+
 npm set init.author.url "http://bitprim.org"
+
+echo "Fer 7D"
 
 npm adduser <<!
 $NPM_USERNAME
@@ -59,7 +67,7 @@ $NPM_PASSWORD
 $NPM_EMAIL
 !
 
-echo "Fer 7B"
+echo "Fer 7E"
 
 
 conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
