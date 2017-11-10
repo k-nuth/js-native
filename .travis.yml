@@ -25,7 +25,7 @@ branches:
 linux: &linux
    os: linux
    sudo: required
-  #  language: python
+   language: generic
   #  language: node_js
   # node_js:
   #   - "7"
