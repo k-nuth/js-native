@@ -82,8 +82,8 @@ before_build:
 build_script:
   - node --version
   - npm --version
-
   - python --version
+  - cl /version
   - conan user
   - conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
   # - conan install .
