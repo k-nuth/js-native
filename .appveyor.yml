@@ -44,7 +44,7 @@ environment:
 install:
 
   # Get the latest stable version of Node.js or io.js
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version x64
   # - npm install
   - npm --version
   - npm install -g node-gyp
