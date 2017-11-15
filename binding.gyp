@@ -144,7 +144,7 @@
       'conditions': [
         ['OS=="linux"', {
 
-          "include_dirs": ["./deps/include", "../deps/include"],
+          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
           # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
           
           'libraries': [
@@ -184,7 +184,7 @@
         }],
         ['OS=="mac"', {
 
-          "include_dirs": ["./deps/include", "../deps/include"],
+          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
           # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
           
           'libraries': [
@@ -235,7 +235,7 @@
         #   ]
         # }],
         ['OS=="win"', {
-          "include_dirs": ["deps/include"],
+          "include_dirs": ["<!(node -e \"require('nan')\")", "deps/include"],
           'libraries': [
             '../deps/lib/bitprim-node-cint.lib', 
             '../deps/lib/bitprim-node.lib', 

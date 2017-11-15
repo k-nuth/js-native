@@ -1,4 +1,5 @@
-#include <node.h>
+// #include <node.h>
+#include <nan.h>
 
 #include <bitprim/nodecint/executor_c.h>
 #include <bitprim/nodecint/chain/chain.h>
@@ -257,6 +258,10 @@ void init(Local<Object> exports) {
     // NODE_SET_METHOD(exports, "chain_fetch_block_locator", bitprim_chain_fetch_block_locator);
     NODE_SET_METHOD(exports, "chain_organize_block", bitprim_chain_organize_block);
     NODE_SET_METHOD(exports, "chain_organize_transaction", bitprim_chain_organize_transaction);
+
+
+    NODE_SET_METHOD(exports, "chain_subscribe_blockchain", bitprim_chain_subscribe_blockchain);
+
 
     NODE_SET_METHOD(exports, "chain_header_destruct", bitprim_chain_header_destruct);
     NODE_SET_METHOD(exports, "chain_header_get_version", bitprim_chain_header_get_version);

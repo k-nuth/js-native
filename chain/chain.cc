@@ -1,8 +1,13 @@
-#include <node.h>
+// #include <node.h>
+// #include <libuv.h>
+
+#include <nan.h>
 
 #include <bitprim/nodecint/chain/chain.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
+
+#include <tuple>
 
 #include "chain.h"
 #include "tools.h"
@@ -28,11 +33,20 @@ using v8::Function;
 // int chain_get_last_height(chain_t chain, uint64_t /*size_t*/* height);
 
 void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64_t h) {
+    printf("chain_fetch_last_height_handler - 1\n");
     Isolate* isolate = Isolate::GetCurrent();
+
+    v8::Locker locker(isolate);
+    printf("chain_fetch_last_height_handler - 2\n");
+	v8::HandleScope scope(isolate);
+    printf("chain_fetch_last_height_handler - 3\n");
+
 
     // printf("chain_fetch_last_height_handler - 1\n");
     // printf("chain_fetch_last_height_handler - error:   %d\n", error);
     // printf("chain_fetch_last_height_handler - h:       %d\n", h);
+
+    // printf("chain_fetch_last_height_handler - isolate:       %p\n", isolate);
 
     unsigned int const argc = 2;
     Local<Value> argv[argc] = { Number::New(isolate, error), Number::New(isolate, h) };
@@ -40,6 +54,9 @@ void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64
     // printf("chain_fetch_last_height_handler - 2n");
 
     Persistent<Function>* callback = static_cast<Persistent<Function>*>(ctx);
+    // Isolate* isolate2 = callback->GetIsolate();
+    // Isolate* isolate2 = (*callback)->GetIsolate();
+    // printf("chain_fetch_last_height_handler - isolate2:       %p\n", isolate2);
 
     Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
@@ -1300,6 +1317,171 @@ void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args)
 
 // BITPRIM_EXPORT
 // void chain_subscribe_transaction(chain_t chain, void* ctx, transaction_handler_t handler);
+
+
+// int chain_subscribe_blockchain_handler(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
+    
+//     //TODO(fernando): hardcoded error code, libbitcoin::error::service_stopped
+//     // if (exec->actual.stopped() || error == 1) {
+//     if (executor_stopped(exec) != 0 || error == 1) {
+//         return 0;
+//     }
+
+//     PyGILState_STATE gstate;
+//     gstate = PyGILState_Ensure();
+
+//     PyObject* py_callback = ctx;
+    
+//     PyObject* py_blocks_incoming = blocks_incoming != NULL ? to_py_obj(blocks_incoming) : Py_None;
+//     PyObject* py_blocks_replaced = blocks_replaced != NULL ? to_py_obj(blocks_replaced) : Py_None;
+//     PyObject* arglist = Py_BuildValue("(iKOO)", error, fork_height, py_blocks_incoming, py_blocks_replaced);
+
+//     PyObject* ret = PyObject_CallObject(py_callback, arglist);
+//     Py_DECREF(arglist);    
+    
+//     if (ret != NULL) {
+//         int truthy = PyObject_IsTrue(ret);
+//         Py_DECREF(ret);
+        
+//         PyGILState_Release(gstate);
+            
+//         return truthy == 1 ? 1 : 0;
+
+//     }
+
+//     PyGILState_Release(gstate);
+//     return 0;
+// }
+
+
+int chain_subscribe_blockchain_handler(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
+    printf("chain_subscribe_blockchain_handler - 0\n");
+    printf("chain_subscribe_blockchain_handler - error:   %d\n", error);
+    printf("chain_subscribe_blockchain_handler - fork_height:   %d\n", fork_height);
+    printf("chain_subscribe_blockchain_handler - blocks_incoming:   %p\n", blocks_incoming);
+    printf("chain_subscribe_blockchain_handler - blocks_replaced:   %p\n", blocks_replaced);
+
+    printf("chain_subscribe_blockchain_handler - 1\n");
+
+    auto* ctx_cpp = static_cast<std::tuple<Isolate*, Persistent<Function>*>*>(ctx);
+    printf("chain_subscribe_blockchain_handler - ctx_cpp:   %p\n", ctx_cpp);
+
+
+    Isolate* isolate = std::get<0>(*ctx_cpp);
+    // Isolate* isolate = Isolate::GetCurrent();
+
+    printf("chain_subscribe_blockchain_handler - 2\n");
+
+    printf("chain_subscribe_blockchain_handler - isolate:   %p\n", isolate);
+    // printf("chain_subscribe_blockchain_handler - isolate2:   %p\n", isolate2);
+
+	v8::HandleScope scope(isolate);
+    printf("chain_subscribe_blockchain_handler - 4\n");
+    v8::Locker locker(isolate);
+    printf("chain_subscribe_blockchain_handler - 3\n");
+
+
+    Persistent<Function>* callback = std::get<1>(*ctx_cpp);
+
+
+    unsigned int const argc = 4;
+    // Local<Value> argv[argc] = { Number::New(isolate, error), 
+    //                             Number::New(isolate, fork_height), 
+    //                             blocks_incoming == nullptr ? Null(isolate) : External::New(isolate, blocks_incoming), 
+    //                             blocks_replaced == nullptr ? Null(isolate) : External::New(isolate, blocks_replaced)};
+
+    Local<Value> argv[argc] = { Number::New(isolate, error), 
+                                Number::New(isolate, fork_height), 
+                                External::New(isolate, blocks_incoming), 
+                                External::New(isolate, blocks_replaced)};
+
+    printf("chain_subscribe_blockchain_handler - 5\n");
+                                
+
+//     PyObject* arglist = Py_BuildValue("(iKOO)", error, fork_height, py_blocks_incoming, py_blocks_replaced);
+
+
+    printf("chain_subscribe_blockchain_handler - 6\n");
+
+    Local<Value> res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
+
+    printf("chain_subscribe_blockchain_handler - 7\n");
+
+    bool res2 = res->BooleanValue(); 
+
+    printf("chain_subscribe_blockchain_handler - res2:   %d\n", res2);
+    
+    if ( ! res2) {
+        printf("chain_subscribe_blockchain_handler - 8\n");
+        callback->Reset();
+        printf("chain_subscribe_blockchain_handler - 9\n");
+
+        //callback->Dispose();
+        delete callback;
+        printf("chain_subscribe_blockchain_handler - 10\n");
+
+    }
+
+    printf("chain_subscribe_blockchain_handler - 11\n");
+
+    return res2 ? 1 : 0;
+}
+
+void asyncmsg(uv_async_t* handle) {
+  printf("==> asyncmsg \n");
+//   Nan::HandleScope scope;
+//   v8::Isolate* isolate = v8::Isolate::GetCurrent();
+//   Local<Value> argv[] = { v8::String::NewFromUtf8(isolate, "Hello world") };
+//   cbPeriodic->Call(1, argv);
+}
+
+void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    // printf("bitprim_chain_subscribe_blockchain - isolate:   %p\n", isolate);
+
+    // chain_t chain, transaction_t transaction, result_handler_t handler
+
+    if (args.Length() != 3) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 0")));
+        return;
+    }
+
+    if ( ! args[1]->IsExternal()) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 1")));
+        return;
+    }
+
+    if ( ! args[2]->IsFunction()) {
+        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments, 2")));
+        return;
+    }    
+
+
+    uv_async_t async; // keep this instance around for as long as we might need to do the periodic callback
+    async.data;
+    uv_loop_t* loop = uv_default_loop();
+    uv_async_init(loop, &async, asyncmsg);
+
+    executor_t exec = (executor_t)v8::External::Cast(*args[0])->Value();
+
+    chain_t chain = (chain_t)v8::External::Cast(*args[1])->Value();
+
+    // std::tuple<Isolate*, Persistent<Function>*>
+    Persistent<Function>* callback = new Persistent<Function>;
+    callback->Reset(isolate, args[2].As<Function>());
+
+    auto* context = new std::tuple<Isolate*, Persistent<Function>*>(isolate, callback);
+    printf("bitprim_chain_subscribe_blockchain - context:   %p\n", context);
+
+    chain_subscribe_blockchain(exec, chain, context, chain_subscribe_blockchain_handler);
+}
+
 
 
 

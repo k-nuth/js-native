@@ -2,12 +2,10 @@
   "name": "bitprim-native",
   "version": "0.0.36",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bitprim/bitprim-js-native.git"
   },
-
   "keywords": [
     "bitcoin",
     "cash",
@@ -21,36 +19,30 @@
     "url": "https://github.com/bitprim/bitprim-js-native/issues"
   },
   "homepage": "https://github.com/bitprim/bitprim-js-native#readme",
-  
   "engines": {
     "node": ">=4.2.4"
   },
-
   "main": "index.js",
-
   "binary": {
-    "module_name" : "bitprim-native",
-    "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    
-    
+    "module_name": "bitprim-native",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    
     "host": "https://github.com/bitprim/bitprim-js-native/releases/download/",
-    
     "remote_path": "{version}"
   },
-
-  "dependencies"  : {
-    "nan": "2.x",
+  "dependencies": {
+    "nan": "^2.7.0",
     "node-pre-gyp": "0.6.x"
   },
-  "bundledDependencies":["node-pre-gyp"],
+  "bundledDependencies": [
+    "node-pre-gyp"
+  ],
   "devDependencies": {
     "aws-sdk": "2.x"
   },
   "scripts": {
-    "install" : "node-pre-gyp install --fallback-to-build",
+    "install": "node-pre-gyp install --fallback-to-build",
     "test": "node index.js",
     "prepublish": "npm ls"
-  }  
+  }
 }

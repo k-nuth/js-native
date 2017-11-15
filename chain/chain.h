@@ -23,6 +23,8 @@ void bitprim_chain_fetch_stealth(v8::FunctionCallbackInfo<v8::Value> const& args
 void bitprim_chain_organize_block(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_organize_transaction(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+void bitprim_chain_subscribe_blockchain(v8::FunctionCallbackInfo<v8::Value> const& args);
+
 }  // namespace bitprim_ns
 
 #endif //BITPRIM_JS_CHAIN_CHAIN_H_
