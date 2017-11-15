@@ -70,56 +70,69 @@ function fromHash(arr) {
     return byteToHexString(arr.reverse());
 }
 
+
+
 // ------------------------------------------------------------------------------------------------
+
+
 function sleep(sleepDuration) {
     var now = new Date().getTime();
     while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
 }
+
 // ------------------------------------------------------------------------------------------------
-
-
-var express = require('express')
-, app = express()
-
-
 
 // const bitprim = require('../build/Release/bitprim')
 // const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+
 // const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
 const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
+
+
 // const bitprim = require('bitprim-native')
 
 
+function wait_until_block(chain, desired_height) {
 
-// const app = express()
-const port = 8080
+    var height = 0
 
-process.stdin.resume();//so the program will not close instantly
+    bitprim.chain_fetch_last_height(chain, function (e, h) {
+        if (e == 0) {
+            // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
+            height = h
+        } else {
+            // console.log(`chain_fetch_last_height failed, err: ${e}, height: ${h}`)
+        }
+    })
 
-process.on("SIGINT", function () {
-    console.log("captured SIGINT...");
-    process.exit();
-});
+    // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
+    // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
 
-app.get('/', (request, response) => {
-    response.send(`<!DOCTYPE html>
-    <html>
-     <head>
-      <title>Server-sent events test</title>
-      <style>html,body,#test{height:98%;}</style>
-     </head>
-     <body>
-     </body>
-    </html>`)
-})
 
-app.listen(port, (err) => {
-    if (err) {
-        return console.log('something bad happened', err)
+    while (height < desired_height) {
+        bitprim.chain_fetch_last_height(chain, function (e, h) {
+            if (e == 0) {
+                // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
+                height = h
+            } else {
+                // console.log(`chain_fetch_last_height failed, err: ${e}, height: ${h}`)
+            }
+        })
+    
+
+        // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
+        
+        if (height < desired_height) {
+            // printf("wait_until_block - 2\n");
+            sleep(1000)
+            // printf("wait_until_block - 3\n");
+        }
     }
 
-    console.log(`server is listening on ${port}`)
-})
+    // printf("wait_until_block - 4\n");
+}
+
+
 
 
 
@@ -135,14 +148,8 @@ const chain = bitprim.executor_get_chain(executor)
 
 bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
     if (e == 0) {
-        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
-        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
-
-        if (fork_height % 100 == 0) {
-            console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
-        }
+        console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
     } else {
-        // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
         console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
     }
 
@@ -150,8 +157,11 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 })
 
 
+// wait_until_block(chain, 2300)
+wait_until_block(chain, 230000)
 
 
+var hash_arr = toHash('0000000091a5fdf4b5f5fe07ed869bf82049b3d61a403f2771b5cbd1937dad09')
 
 //-----------------------------------
 
@@ -159,7 +169,7 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 //-----------------------------------
 
 
-// console.log('... BEFORE EXIT ...')
+console.log('... BEFORE EXIT ...')
 
-// bitprim.executor_destruct(executor)
+bitprim.executor_destruct(executor)
 
