@@ -56,17 +56,8 @@ npm cache clean
 npm install
 node-pre-gyp configure build package
 
-export NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
-set NODE_PRE_GYP_GITHUB_TOKEN=f45fa0b589039bb0b12214c85c5be69406516f38
-
-
-export NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
-set NODE_PRE_GYP_GITHUB_TOKEN=9c3abb8b86fb4d9963468c0fe62e67eeb1aa4fff
-
-
-export NODE_PRE_GYP_GITHUB_TOKEN=57f55e57d3410226f5c0983fccab220e43f762d1
-set NODE_PRE_GYP_GITHUB_TOKEN=57f55e57d3410226f5c0983fccab220e43f762d1
-
+export NODE_PRE_GYP_GITHUB_TOKEN=xxx
+set NODE_PRE_GYP_GITHUB_TOKEN=xxx
 
 node-pre-gyp-github publish
 node-pre-gyp-github publish --release
