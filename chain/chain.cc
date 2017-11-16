@@ -282,12 +282,6 @@ void bitprim_chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> cons
 // int chain_get_block_header_by_hash(chain_t chain, hash_t hash, header_t* out_header, uint64_t /*size_t*/* out_height);
 
 void chain_fetch_block_header_by_hash_handler(chain_t chain, void* ctx, int error, header_t header, uint64_t h) {
-
-    // printf("chain_fetch_block_header_by_hash_handler - 1\n");
-    // printf("chain_fetch_block_header_by_hash_handler - error:   %d\n", error);
-    // printf("chain_fetch_block_header_by_hash_handler - header:  %p\n", header);
-    // printf("chain_fetch_block_header_by_hash_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -353,12 +347,6 @@ void bitprim_chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const&
 
 
 void chain_fetch_block_by_height_handler(chain_t chain, void* ctx, int error, block_t block, uint64_t h) {
-
-    // printf("chain_fetch_block_by_height_handler - 1\n");
-    // printf("chain_fetch_block_by_height_handler - error:   %d\n", error);
-    // printf("chain_fetch_block_by_height_handler - block:  %p\n", block);
-    // printf("chain_fetch_block_by_height_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -412,12 +400,6 @@ void bitprim_chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args
 // void chain_fetch_block_by_hash(chain_t chain, void* ctx, hash_t hash, block_fetch_handler_t handler);
 // int chain_get_block_by_hash(chain_t chain, hash_t hash, block_t* out_block, uint64_t /*size_t*/* out_height);
 void chain_fetch_block_by_hash_handler(chain_t chain, void* ctx, int error, block_t block, uint64_t h) {
-
-    // printf("chain_fetch_block_by_hash_handler - 1\n");
-    // printf("chain_fetch_block_by_hash_handler - error:   %d\n", error);
-    // printf("chain_fetch_block_by_hash_handler - block:  %p\n", block);
-    // printf("chain_fetch_block_by_hash_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -486,11 +468,6 @@ void bitprim_chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) 
 
 void chain_fetch_merkle_block_by_height_handler(chain_t chain, void* ctx, int error, merkle_block_t merkle_block, uint64_t h) {
 
-    // printf("chain_fetch_merkle_block_by_height_handler - 1\n");
-    // printf("chain_fetch_merkle_block_by_height_handler - error:   %d\n", error);
-    // printf("chain_fetch_merkle_block_by_height_handler - merkle_block:  %p\n", merkle_block);
-    // printf("chain_fetch_merkle_block_by_height_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -546,12 +523,6 @@ void bitprim_chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> cons
 // int chain_get_merkle_block_by_hash(chain_t chain, hash_t hash, merkle_block_t* out_merkle_block, uint64_t /*size_t*/* out_height);
 
 void chain_fetch_merkle_block_by_hash_handler(chain_t chain, void* ctx, int error, merkle_block_t merkle_block, uint64_t h) {
-
-    // printf("chain_fetch_merkle_block_by_hash_handler - 1\n");
-    // printf("chain_fetch_merkle_block_by_hash_handler - error:   %d\n", error);
-    // printf("chain_fetch_merkle_block_by_hash_handler - merkle_block:  %p\n", merkle_block);
-    // printf("chain_fetch_merkle_block_by_hash_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -621,12 +592,6 @@ void bitprim_chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const&
 
 
 void chain_fetch_compact_block_by_height_handler(chain_t chain, void* ctx, int error, compact_block_t compact_block, uint64_t h) {
-
-    // printf("chain_fetch_compact_block_by_height_handler - 1\n");
-    // printf("chain_fetch_compact_block_by_height_handler - error:   %d\n", error);
-    // printf("chain_fetch_compact_block_by_height_handler - compact_block:  %p\n", compact_block);
-    // printf("chain_fetch_compact_block_by_height_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -681,12 +646,6 @@ void bitprim_chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> con
 // int chain_get_compact_block_by_hash(chain_t chain, hash_t hash, compact_block_t* out_compact_block, uint64_t /*size_t*/* out_height);
 
 void chain_fetch_compact_block_by_hash_handler(chain_t chain, void* ctx, int error, compact_block_t compact_block, uint64_t h) {
-
-    // printf("chain_fetch_compact_block_by_hash_handler - 1\n");
-    // printf("chain_fetch_compact_block_by_hash_handler - error:   %d\n", error);
-    // printf("chain_fetch_compact_block_by_hash_handler - compact_block:  %p\n", compact_block);
-    // printf("chain_fetch_compact_block_by_hash_handler - h:       %d\n", h);
-
     Isolate* isolate = Isolate::GetCurrent();
 
     unsigned int const argc = 3;
@@ -755,11 +714,11 @@ void bitprim_chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const
 
 void chain_fetch_transaction_handler(chain_t chain, void* ctx, int error, transaction_t transaction, uint64_t i, uint64_t h) {
 
-    printf("chain_fetch_transaction_handler - 1\n");
-    printf("chain_fetch_transaction_handler - error:   %d\n", error);
-    printf("chain_fetch_transaction_handler - transaction:  %p\n", transaction);
-    printf("chain_fetch_transaction_handler - i:       %d\n", i);
-    printf("chain_fetch_transaction_handler - h:       %d\n", h);
+    // printf("chain_fetch_transaction_handler - 1\n");
+    // printf("chain_fetch_transaction_handler - error:   %d\n", error);
+    // printf("chain_fetch_transaction_handler - transaction:  %p\n", transaction);
+    // printf("chain_fetch_transaction_handler - i:       %d\n", i);
+    // printf("chain_fetch_transaction_handler - h:       %d\n", h);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -832,10 +791,10 @@ void bitprim_chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_transaction_position_handler(chain_t chain, void* ctx, int error, uint64_t i, uint64_t h) {
 
-    printf("chain_fetch_transaction_position_handler - 1\n");
-    printf("chain_fetch_transaction_position_handler - error:   %d\n", error);
-    printf("chain_fetch_transaction_position_handler - i:       %d\n", i);
-    printf("chain_fetch_transaction_position_handler - h:       %d\n", h);
+    // printf("chain_fetch_transaction_position_handler - 1\n");
+    // printf("chain_fetch_transaction_position_handler - error:   %d\n", error);
+    // printf("chain_fetch_transaction_position_handler - i:       %d\n", i);
+    // printf("chain_fetch_transaction_position_handler - h:       %d\n", h);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -912,9 +871,9 @@ void bitprim_chain_fetch_transaction_position(FunctionCallbackInfo<Value> const&
 
 void chain_fetch_spend_handler(chain_t chain, void* ctx, int error, input_point_t input_point) {
 
-    printf("chain_fetch_spend_handler - 1\n");
-    printf("chain_fetch_spend_handler - error:   %d\n", error);
-    printf("chain_fetch_spend_handler - input_point:  %p\n", input_point);
+    // printf("chain_fetch_spend_handler - 1\n");
+    // printf("chain_fetch_spend_handler - error:   %d\n", error);
+    // printf("chain_fetch_spend_handler - input_point:  %p\n", input_point);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -975,9 +934,9 @@ void bitprim_chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_history_handler(chain_t chain, void* ctx, int error, history_compact_list_t history) {
 
-    printf("chain_fetch_history_handler - 1\n");
-    printf("chain_fetch_history_handler - error:   %d\n", error);
-    printf("chain_fetch_history_handler - history:  %p\n", history);
+    // printf("chain_fetch_history_handler - 1\n");
+    // printf("chain_fetch_history_handler - error:   %d\n", error);
+    // printf("chain_fetch_history_handler - history:  %p\n", history);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -1051,9 +1010,9 @@ void bitprim_chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_stealth_handler(chain_t chain, void* ctx, int error, stealth_compact_list_t stealth) {
 
-    printf("chain_fetch_stealth_handler - 1\n");
-    printf("chain_fetch_stealth_handler - error:   %d\n", error);
-    printf("chain_fetch_stealth_handler - stealth:  %p\n", stealth);
+    // printf("chain_fetch_stealth_handler - 1\n");
+    // printf("chain_fetch_stealth_handler - error:   %d\n", error);
+    // printf("chain_fetch_stealth_handler - stealth:  %p\n", stealth);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -1192,8 +1151,8 @@ void bitprim_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
 
 void chain_organize_block_handler(chain_t chain, void* ctx, int error) {
 
-    printf("chain_organize_block_handler - 1\n");
-    printf("chain_organize_block_handler - error:   %d\n", error);
+    // printf("chain_organize_block_handler - 1\n");
+    // printf("chain_organize_block_handler - error:   %d\n", error);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -1254,8 +1213,8 @@ void bitprim_chain_organize_block(FunctionCallbackInfo<Value> const& args) {
 
 void chain_organize_transaction_handler(chain_t chain, void* ctx, int error) {
 
-    printf("chain_organize_transaction_handler - 1\n");
-    printf("chain_organize_transaction_handler - error:   %d\n", error);
+    // printf("chain_organize_transaction_handler - 1\n");
+    // printf("chain_organize_transaction_handler - error:   %d\n", error);
     
     Isolate* isolate = Isolate::GetCurrent();
 
@@ -1376,15 +1335,7 @@ bool chain_subscribe_blockchain_handler(Persistent<Function>* callback, int erro
                                 
     Local<Value> res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
 
-    bool res2 = res->BooleanValue(); 
-
-    if ( ! res2) {
-        callback->Reset();
-        //callback->Dispose();
-        delete callback;
-    }
-
-    return res2 ? 1 : 0;
+    return res->BooleanValue(); 
 }
 
 using subs_blk_data_t = std::tuple<Persistent<Function>*, int, uint64_t, block_list_t, block_list_t>;
@@ -1399,6 +1350,8 @@ void chain_subscribe_blockchain_async(uv_async_t* async) {
     //     return ???????;
     // }
 
+
+
     Persistent<Function>* callback;
     int error;
     uint64_t fork_height;
@@ -1407,16 +1360,30 @@ void chain_subscribe_blockchain_async(uv_async_t* async) {
 
     std::tie(callback, error, fork_height, blocks_incoming, blocks_replaced) = *context;
 
+    // printf("chain_subscribe_blockchain_async - callback:   %p\n", callback);
+
     bool res = chain_subscribe_blockchain_handler(callback, error, fork_height, blocks_incoming, blocks_replaced);
 
     if ( ! res) {
+        // printf("chain_subscribe_blockchain_async - res:   %d\n", res);
 
-        printf("chain_subscribe_blockchain_async - res:   %d\n", res);
+        // printf("chain_subscribe_blockchain_async - async (before uv_close):   %p\n", async);
+
+        uv_close((uv_handle_t*) async, NULL);
+
+        // printf("chain_subscribe_blockchain_async - async (after uv_close):   %p\n", async);
+
         std::get<0>(*context) = nullptr;
+
+        // printf("chain_subscribe_blockchain_async - closing 1\n");
         
         callback->Reset();
         //callback->Dispose();
+        // printf("chain_subscribe_blockchain_async - closing 2\n");
+
         delete callback;
+
+        // printf("chain_subscribe_blockchain_async - closing 3\n");
     }
 }
 
@@ -1449,11 +1416,6 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
     // printf("chain_subscribe_blockchain_dispatcher - async:   %p\n", async);
     if (async == nullptr) return 0;
 
-    // Persistent<Function>* callback = static_cast<Persistent<Function>*>(async->data);
-    // // printf("chain_subscribe_blockchain_dispatcher - callback:        %p\n", callback);
-    // if (callback == nullptr) return 0;
-
-
     auto* context = static_cast<subs_blk_data_t*>(async->data);
     // printf("chain_subscribe_blockchain_dispatcher - context:   %p\n", context);
     if (context == nullptr) {
@@ -1461,7 +1423,7 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
         return 0;
     }
 
-    printf("chain_subscribe_blockchain_dispatcher - std::get<0>(*context):        %p\n", std::get<0>(*context));
+    // printf("chain_subscribe_blockchain_dispatcher - std::get<0>(*context):        %p\n", std::get<0>(*context));
 
     if (std::get<0>(*context) == nullptr) {
         delete context;
@@ -1488,7 +1450,7 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
     int res = uv_async_send(async);
 
     if (res != 0) {
-        printf("chain_subscribe_blockchain_dispatcher - res:   %d\n", res);
+        // printf("chain_subscribe_blockchain_dispatcher - res:   %d\n", res);
         return 0;
     }
 

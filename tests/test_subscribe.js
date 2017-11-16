@@ -85,8 +85,8 @@ var express = require('express')
 
 // const bitprim = require('../build/Release/bitprim')
 // const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
-const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
-// const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
+// const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
+const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
 // const bitprim = require('bitprim-native')
 
 
@@ -98,6 +98,7 @@ process.stdin.resume();//so the program will not close instantly
 
 process.on("SIGINT", function () {
     console.log("captured SIGINT...");
+    // bitprim.executor_destruct(executor)
     process.exit();
 });
 
@@ -133,25 +134,32 @@ bitprim.executor_run_wait(executor)
 
 const chain = bitprim.executor_get_chain(executor)
 
-bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
-    if (e == 0) {
-        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
-        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+setInterval(function() {
+    console.log('-*-*-*-*-*-*-*-*-*-* Subscribing to block notification -*-*-*-*-*-*-*-*-*-* ')
 
-        if (fork_height % 100 == 0) {
-            console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+    bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+        if (e == 0) {
+            // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+            // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+    
+            if (fork_height % 100 == 0) {
+                console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+            }
+        } else {
+            // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+            console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
         }
-    } else {
-        // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
-        console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
-    }
+    
+        if (fork_height % 1000 == 0) {
+            console.log('-*-*-*-*-*-*-*-*-*-* Ending Block notification -*-*-*-*-*-*-*-*-*-* ')
+            return false;
+        }
+    
+        return true
+    })
 
-    if (fork_height >= 1000) {
-        return false;
-    }
+}, 10000);
 
-    return true
-})
 
 
 
