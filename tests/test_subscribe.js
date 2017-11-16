@@ -58,7 +58,7 @@ function hexStringToByte(str) {
     return new Uint8Array(a);
 }
 
-function reverse(s){
+function reverse(s) {
     return s.split("").reverse().join("");
 }
 
@@ -134,31 +134,85 @@ bitprim.executor_run_wait(executor)
 
 const chain = bitprim.executor_get_chain(executor)
 
-setInterval(function() {
-    console.log('-*-*-*-*-*-*-*-*-*-* Subscribing to block notification -*-*-*-*-*-*-*-*-*-* ')
 
-    bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
-        if (e == 0) {
-            // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
-            // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+function print_blocks(block_list) {
+    var n = bitprim.chain_block_list_count(block_list)
     
-            if (fork_height % 100 == 0) {
-                console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
-            }
-        } else {
-            // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
-            console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
-        }
-    
-        if (fork_height % 1000 == 0) {
-            console.log('-*-*-*-*-*-*-*-*-*-* Ending Block notification -*-*-*-*-*-*-*-*-*-* ')
-            return false;
-        }
-    
-        return true
-    })
+    for (var i = 0; i < n; ++i) {
+        var blk = bitprim.chain_block_list_nth(block_list, i)
+        var blk_hash = bitprim.chain_block_hash(blk)
+        console.log(`print_blocks, blk_hash: ${blk_hash}`)
+    }    
+}
 
-}, 10000);
+
+bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+    if (e == 0) {
+        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+        // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+
+        if (fork_height % 100 == 0) {
+            console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+        }
+    } else {
+        // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+        console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
+    }
+
+    if (blocks_incoming) {
+        print_blocks(blocks_incoming)
+        bitprim.chain_block_list_destruct(blocks_incoming)
+    }
+
+    if (blocks_replaced) {
+        print_blocks(blocks_replaced)
+        bitprim.chain_block_list_destruct(blocks_replaced)
+    }
+
+    return true
+})
+
+// setInterval(function() {
+//     console.log('-*-*-*-*-*-*-*-*-*-* Subscribing to block notification -*-*-*-*-*-*-*-*-*-* ')
+
+//     bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+//         if (e == 0) {
+//             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+//             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+    
+//             if (fork_height % 100 == 0) {
+//                 console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
+//             }
+//         } else {
+//             // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
+//             console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
+//         }
+    
+//         if (fork_height % 1000 == 0) {
+//             console.log('-*-*-*-*-*-*-*-*-*-* Ending Block notification -*-*-*-*-*-*-*-*-*-* ')
+//             return false;
+//         }
+    
+//         if (blocks_incoming) {
+//             var n = bitprim.chain_block_list_count(blocks_incoming)
+
+//             for (var i = 0; i < n; ++i) {
+//                 var blk = bitprim.chain_block_list_nth(blocks_incoming, i)
+//                 var blk_hash = bitprim.chain_block_hash(blk)
+//                 console.log(`chain_subscribe_blockchain failed, blk_hash: ${blk_hash}`)
+//             }
+
+//             bitprim.chain_block_list_destruct(blocks_incoming)
+//         }
+
+//         if (blocks_replaced) {
+//             bitprim.chain_block_list_destruct(blocks_replaced)
+//         }
+
+//         return true
+//     })
+
+// }, 10000);
 
 
 
