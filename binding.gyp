@@ -184,6 +184,9 @@
         }],
         ['OS=="mac"', {
 
+          "cflags": [
+            "-std=c++11",
+          ],
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
           # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
           
