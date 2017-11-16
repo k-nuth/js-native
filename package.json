@@ -31,6 +31,7 @@
     "remote_path": "{version}"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "nan": "^2.7.0",
     "node-pre-gyp": "0.6.x"
   },

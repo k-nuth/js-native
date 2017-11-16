@@ -85,8 +85,8 @@ var express = require('express')
 
 // const bitprim = require('../build/Release/bitprim')
 // const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
-// const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
-const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
+const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
+// const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
 // const bitprim = require('bitprim-native')
 
 
@@ -144,6 +144,10 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
     } else {
         // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
         console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
+    }
+
+    if (fork_height >= 1000) {
+        return false;
     }
 
     return true

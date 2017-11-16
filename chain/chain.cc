@@ -4,6 +4,7 @@
 #include <nan.h>
 
 #include <bitprim/nodecint/chain/chain.h>
+#include <bitprim/nodecint/executor_c.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
@@ -1354,123 +1355,12 @@ void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args)
 // }
 
 
-// int chain_subscribe_blockchain_handler(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
-//     printf("chain_subscribe_blockchain_handler - 0\n");
-//     printf("chain_subscribe_blockchain_handler - error:   %d\n", error);
-//     printf("chain_subscribe_blockchain_handler - fork_height:   %d\n", fork_height);
-//     printf("chain_subscribe_blockchain_handler - blocks_incoming:   %p\n", blocks_incoming);
-//     printf("chain_subscribe_blockchain_handler - blocks_replaced:   %p\n", blocks_replaced);
-
-//     printf("chain_subscribe_blockchain_handler - 1\n");
-
-//     auto* ctx_cpp = static_cast<std::tuple<Isolate*, Persistent<Function>*>*>(ctx);
-//     printf("chain_subscribe_blockchain_handler - ctx_cpp:   %p\n", ctx_cpp);
-
-
-//     Isolate* isolate = std::get<0>(*ctx_cpp);
-//     // Isolate* isolate = Isolate::GetCurrent();
-
-//     printf("chain_subscribe_blockchain_handler - 2\n");
-
-//     printf("chain_subscribe_blockchain_handler - isolate:   %p\n", isolate);
-//     // printf("chain_subscribe_blockchain_handler - isolate2:   %p\n", isolate2);
-
-// 	v8::HandleScope scope(isolate);
-//     printf("chain_subscribe_blockchain_handler - 4\n");
-//     v8::Locker locker(isolate);
-//     printf("chain_subscribe_blockchain_handler - 3\n");
-
-
-//     Persistent<Function>* callback = std::get<1>(*ctx_cpp);
-
-
-//     unsigned int const argc = 4;
-//     // Local<Value> argv[argc] = { Number::New(isolate, error), 
-//     //                             Number::New(isolate, fork_height), 
-//     //                             blocks_incoming == nullptr ? Null(isolate) : External::New(isolate, blocks_incoming), 
-//     //                             blocks_replaced == nullptr ? Null(isolate) : External::New(isolate, blocks_replaced)};
-
-//     Local<Value> argv[argc] = { Number::New(isolate, error), 
-//                                 Number::New(isolate, fork_height), 
-//                                 External::New(isolate, blocks_incoming), 
-//                                 External::New(isolate, blocks_replaced)};
-
-//     printf("chain_subscribe_blockchain_handler - 5\n");
-                                
-
-// //     PyObject* arglist = Py_BuildValue("(iKOO)", error, fork_height, py_blocks_incoming, py_blocks_replaced);
-
-
-//     printf("chain_subscribe_blockchain_handler - 6\n");
-
-//     Local<Value> res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
-
-//     printf("chain_subscribe_blockchain_handler - 7\n");
-
-//     bool res2 = res->BooleanValue(); 
-
-//     printf("chain_subscribe_blockchain_handler - res2:   %d\n", res2);
-    
-//     if ( ! res2) {
-//         printf("chain_subscribe_blockchain_handler - 8\n");
-//         callback->Reset();
-//         printf("chain_subscribe_blockchain_handler - 9\n");
-
-//         //callback->Dispose();
-//         delete callback;
-//         printf("chain_subscribe_blockchain_handler - 10\n");
-
-//     }
-
-//     printf("chain_subscribe_blockchain_handler - 11\n");
-
-//     return res2 ? 1 : 0;
-// }
-
-
-// void asyncmsg(uv_async_t* handle) {
-//   printf("==> asyncmsg \n");
-// //   Nan::HandleScope scope;
-// //   v8::Isolate* isolate = v8::Isolate::GetCurrent();
-// //   Local<Value> argv[] = { v8::String::NewFromUtf8(isolate, "Hello world") };
-// //   cbPeriodic->Call(1, argv);
-// }
-
-
-// executor_t exec, chain_t chain, void* ctx, 
-int chain_subscribe_blockchain_handler(Persistent<Function>* callback, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
-    // printf("chain_subscribe_blockchain_handler - 0\n");
-    
-    // printf("chain_subscribe_blockchain_handler - callback:        %p\n", callback);
-    // printf("chain_subscribe_blockchain_handler - error:           %d\n", error);
-    // printf("chain_subscribe_blockchain_handler - fork_height:     %d\n", fork_height);
-    // printf("chain_subscribe_blockchain_handler - blocks_incoming: %p\n", blocks_incoming);
-    // printf("chain_subscribe_blockchain_handler - blocks_replaced: %p\n", blocks_replaced);
-
-    // printf("chain_subscribe_blockchain_handler - 1\n");
-
+bool chain_subscribe_blockchain_handler(Persistent<Function>* callback, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
     Isolate* isolate = Isolate::GetCurrent();
-    // printf("chain_subscribe_blockchain_handler - 2\n");
-    // printf("chain_subscribe_blockchain_handler - isolate:   %p\n", isolate);
-
 	v8::HandleScope scope(isolate);
-    // printf("chain_subscribe_blockchain_handler - 4\n");
     v8::Locker locker(isolate);
-    // printf("chain_subscribe_blockchain_handler - 3\n");
-
 
     unsigned int const argc = 4;
-    // Local<Value> argv[argc] = { Number::New(isolate, error), 
-    //                             Number::New(isolate, fork_height), 
-    //                             blocks_incoming == nullptr ? Null(isolate) : External::New(isolate, blocks_incoming), 
-    //                             blocks_replaced == nullptr ? Null(isolate) : External::New(isolate, blocks_replaced)};
-
-    // Local<Value> argv[argc] = { Number::New(isolate, error), 
-    //                             Number::New(isolate, fork_height), 
-    //                             External::New(isolate, blocks_incoming), 
-    //                             External::New(isolate, blocks_replaced)};
-
-
     Local<Value> argv[argc] = { Number::New(isolate, error), 
                                 Number::New(isolate, fork_height), 
                                 Null(isolate), 
@@ -1483,35 +1373,16 @@ int chain_subscribe_blockchain_handler(Persistent<Function>* callback, int error
     if (blocks_replaced != nullptr) {
         argv[3] = External::New(isolate, blocks_replaced);
     }
-
-    // printf("chain_subscribe_blockchain_handler - 5\n");
                                 
-
-//     PyObject* arglist = Py_BuildValue("(iKOO)", error, fork_height, py_blocks_incoming, py_blocks_replaced);
-
-
-    // printf("chain_subscribe_blockchain_handler - 6\n");
-
     Local<Value> res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext()->Global(), argc, argv);
-
-    // printf("chain_subscribe_blockchain_handler - 7\n");
 
     bool res2 = res->BooleanValue(); 
 
-    // printf("chain_subscribe_blockchain_handler - res2:   %d\n", res2);
-    
     if ( ! res2) {
-        // printf("chain_subscribe_blockchain_handler - 8\n");
         callback->Reset();
-        // printf("chain_subscribe_blockchain_handler - 9\n");
-
         //callback->Dispose();
         delete callback;
-        // printf("chain_subscribe_blockchain_handler - 10\n");
-
     }
-
-    // printf("chain_subscribe_blockchain_handler - 11\n");
 
     return res2 ? 1 : 0;
 }
@@ -1519,9 +1390,6 @@ int chain_subscribe_blockchain_handler(Persistent<Function>* callback, int error
 using subs_blk_data_t = std::tuple<Persistent<Function>*, int, uint64_t, block_list_t, block_list_t>;
 
 void chain_subscribe_blockchain_async(uv_async_t* async) {
-
-    // printf("chain_subscribe_blockchain_async - 0\n");
-    // printf("chain_subscribe_blockchain_async - async:   %p\n", async);
 
     if (async == nullptr) return;
 
@@ -1539,25 +1407,45 @@ void chain_subscribe_blockchain_async(uv_async_t* async) {
 
     std::tie(callback, error, fork_height, blocks_incoming, blocks_replaced) = *context;
 
-    // printf("chain_subscribe_blockchain_async - callback:        %p\n", callback);
-    // printf("chain_subscribe_blockchain_async - error:           %d\n", error);
-    // printf("chain_subscribe_blockchain_async - fork_height:     %d\n", fork_height);
-    // printf("chain_subscribe_blockchain_async - blocks_incoming: %p\n", blocks_incoming);
-    // printf("chain_subscribe_blockchain_async - blocks_replaced: %p\n", blocks_replaced);
+    bool res = chain_subscribe_blockchain_handler(callback, error, fork_height, blocks_incoming, blocks_replaced);
 
+    if ( ! res) {
 
-    int res = chain_subscribe_blockchain_handler(callback, error, fork_height, blocks_incoming, blocks_replaced);
-
-    // printf("chain_subscribe_blockchain_async - res: %d\n", res);
-
+        printf("chain_subscribe_blockchain_async - res:   %d\n", res);
+        std::get<0>(*context) = nullptr;
+        
+        callback->Reset();
+        //callback->Dispose();
+        delete callback;
+    }
 }
 
+void clean_stuff(uv_async_t* async) {
+    if (async == nullptr) return;
+
+    auto* context = static_cast<subs_blk_data_t*>(async->data);
+    if (context == nullptr) {
+        delete async;
+        return;
+    }
+
+    if (std::get<0>(*context) == nullptr) {
+        delete context;
+        async->data = nullptr;
+        delete async;
+        return;
+    }
+}
 
 int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
-    // printf("==> chain_subscribe_blockchain_dispatcher \n");
-
-
     uv_async_t* async = static_cast<uv_async_t*>(ctx);
+
+    //TODO(fernando): hardcoded error code, libbitcoin::error::service_stopped
+    if (executor_stopped(exec) != 0 || error == 1) {
+        clean_stuff(async);
+        return 0;
+    }
+
     // printf("chain_subscribe_blockchain_dispatcher - async:   %p\n", async);
     if (async == nullptr) return 0;
 
@@ -1568,15 +1456,24 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
 
     auto* context = static_cast<subs_blk_data_t*>(async->data);
     // printf("chain_subscribe_blockchain_dispatcher - context:   %p\n", context);
-    // if (context == nullptr) {
-    //     return ???????;
-    // }
+    if (context == nullptr) {
+        delete async;
+        return 0;
+    }
+
+    printf("chain_subscribe_blockchain_dispatcher - std::get<0>(*context):        %p\n", std::get<0>(*context));
+
+    if (std::get<0>(*context) == nullptr) {
+        delete context;
+        async->data = nullptr;
+        delete async;
+        return 0;
+    }
 
     std::get<1>(*context) = error;
     std::get<2>(*context) = fork_height;
     std::get<3>(*context) = blocks_incoming;
     std::get<4>(*context) = blocks_replaced;
-
 
     // printf("chain_subscribe_blockchain_dispatcher - error:           %d\n", error);
     // printf("chain_subscribe_blockchain_dispatcher - fork_height:     %d\n", fork_height);
@@ -1596,15 +1493,11 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
     }
 
     return 1;
-    
 }
-
-
-
 
 void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    printf("bitprim_chain_subscribe_blockchain - isolate:   %p\n", isolate);
+    // printf("bitprim_chain_subscribe_blockchain - isolate:   %p\n", isolate);
 
     if (args.Length() != 3) {
         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -1626,27 +1519,6 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
         return;
     }    
 
-
-    // uv_async_t async; // keep this instance around for as long as we might need to do the periodic callback
-    // async.data;
-    // uv_loop_t* loop = uv_default_loop();
-    // uv_async_init(loop, &async, asyncmsg);
-
-    // executor_t exec = (executor_t)v8::External::Cast(*args[0])->Value();
-
-    // chain_t chain = (chain_t)v8::External::Cast(*args[1])->Value();
-
-    // // std::tuple<Isolate*, Persistent<Function>*>
-    // Persistent<Function>* callback = new Persistent<Function>;
-    // callback->Reset(isolate, args[2].As<Function>());
-
-    // auto* context = new std::tuple<Isolate*, Persistent<Function>*>(isolate, callback);
-    // printf("bitprim_chain_subscribe_blockchain - context:   %p\n", context);
-
-    // chain_subscribe_blockchain(exec, chain, context, chain_subscribe_blockchain_dispatcher);
-
-
-
     executor_t exec = (executor_t)v8::External::Cast(*args[0])->Value();
     chain_t chain = (chain_t)v8::External::Cast(*args[1])->Value();
 
@@ -1657,19 +1529,13 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
     uv_loop_t* loop = uv_default_loop();
     uv_async_init(loop, async, chain_subscribe_blockchain_async);
 
-    // async->data = callback;
-
     auto* context = new subs_blk_data_t(callback, 0, 0, nullptr, nullptr);
-    // printf("chain_subscribe_blockchain_dispatcher - context:   %p\n", context);
-
     async->data = context;
 
-
-    printf("bitprim_chain_subscribe_blockchain - callback: %p\n", callback);
-    printf("bitprim_chain_subscribe_blockchain - async:    %p\n", async);
+    // printf("bitprim_chain_subscribe_blockchain - callback: %p\n", callback);
+    // printf("bitprim_chain_subscribe_blockchain - async:    %p\n", async);
 
     chain_subscribe_blockchain(exec, chain, async, chain_subscribe_blockchain_dispatcher);
-
 }
 
 
