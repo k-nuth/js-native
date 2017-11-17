@@ -29,6 +29,10 @@ environment:
     matrix:
       - WINDOWS_SDK_VERSION: "v7.1"
         APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+        nodejs_version: "5"
+
+      - WINDOWS_SDK_VERSION: "v7.1"
+        APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
         nodejs_version: "8"
 
       - WINDOWS_SDK_VERSION: "v7.1"
@@ -41,10 +45,6 @@ environment:
 
       - WINDOWS_SDK_VERSION: "v7.1"
         APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-        nodejs_version: "5"
-
-      - WINDOWS_SDK_VERSION: "v7.1"
-        APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
         nodejs_version: "4"
   
 
@@ -54,6 +54,8 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version x64
   # - npm install
+  - npm --version
+  - npm -g install npm@next
   - npm --version
   - npm install -g node-gyp
   - npm install -g node-pre-gyp
