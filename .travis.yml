@@ -187,7 +187,7 @@ script:
         conan install .
 
         npm install
-        node-pre-gyp configure build package
+        node-pre-gyp configure build package --verbose
         node-pre-gyp-github publish --release  || true
 
         # node-pre-gyp clean

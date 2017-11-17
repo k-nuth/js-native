@@ -1365,25 +1365,13 @@ void chain_subscribe_blockchain_async(uv_async_t* async) {
     bool res = chain_subscribe_blockchain_handler(callback, error, fork_height, blocks_incoming, blocks_replaced);
 
     if ( ! res) {
-        // printf("chain_subscribe_blockchain_async - res:   %d\n", res);
-
-        // printf("chain_subscribe_blockchain_async - async (before uv_close):   %p\n", async);
-
         uv_close((uv_handle_t*) async, NULL);
-
-        // printf("chain_subscribe_blockchain_async - async (after uv_close):   %p\n", async);
 
         std::get<0>(*context) = nullptr;
 
-        // printf("chain_subscribe_blockchain_async - closing 1\n");
-        
         callback->Reset();
         //callback->Dispose();
-        // printf("chain_subscribe_blockchain_async - closing 2\n");
-
         delete callback;
-
-        // printf("chain_subscribe_blockchain_async - closing 3\n");
     }
 }
 
