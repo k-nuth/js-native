@@ -5,4 +5,4 @@ bitprim-database: v0.3.0-5-gfbeeb68
 bitprim-blockchain: v0.3.0-3-g3aebb72
 bitprim-network: v0.3.0-5-gdb58e899
 bitprim-node: v0.3.0-3-g34b568e
-bitprim-node-cint: v0.6.0-60-g4181575
+bitprim-node-cint: v0.7.0
