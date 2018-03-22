@@ -19,10 +19,9 @@ class BitprimJs(ConanFile):
 
     # TODO(fernando): queda pendiente seleccionar el default Shared=False
     
-    requires = (("bitprim-node-cint/0.3@bitprim/stable"))
-    # requires = (("bitprim-node-cint/0.2@bitprim/stable"))
+    requires = (("bitprim-node-cint/0.8@bitprim/stable"))
 
-    # conan install bitprim-node-cint/0.3@bitprim/stable -o gmp:host=auto --build=gmp
+    # conan install bitprim-node-cint/0.8@bitprim/stable -o gmp:host=auto --build=gmp
 
     # default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
     # build_policy = "gmp"
