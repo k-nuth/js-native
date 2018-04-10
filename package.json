@@ -1,6 +1,6 @@
 {
   "name": "bitprim-native",
-  "version": "0.0.74",
+  "version": "0.0.75",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
   "repository": {
     "type": "git",
