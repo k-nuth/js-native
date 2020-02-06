@@ -13,22 +13,22 @@ class KnuthJs(ConanFile):
     # default_options = "shared=False"
 
     generators = "cmake"
-    # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "kth-node-cintConfig.cmake.in", "include/*", "test/*", "console/*"
-    # package_files = "build/lkth-node-cint.so"
+    # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "kth-Config.cmake.in", "include/*", "test/*", "console/*"
+    # package_files = "build/lkth-c-api.so"
     # build_policy = "missing"
 
-    # TODO(fernando): queda pendiente seleccionar el default Shared=False
+    # TODO(fernando): use Shared=False as default
     
-    requires = (("kth-node-cint/0.8@kth/stable"))
+    requires = (("c-api/0.1.0@kth/stable"))
 
-    # conan install kth-node-cint/0.8@kth/stable -o gmp:host=auto --build=gmp
+    # conan install c-api/0.8@kth/stable -o gmp:host=auto --build=gmp
 
     # default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
     # build_policy = "gmp"
 
-    # default_options = "kth-node-cint:shared=False" #, "OpenSSL:shared=True"
+    # default_options = "c-api:shared=False" #, "OpenSSL:shared=True"
 
-    # conan install kth-node-cint/0.2@kth/stable -o shared=True
+    # conan install c-api/0.2@kth/stable -o shared=True
 
     def imports(self):
         self.copy("*.h", "./deps/include/kth", "include/kth")

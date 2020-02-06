@@ -54,7 +54,7 @@ cd py-api
 echo "Travis branch: ${TRAVIS_BRANCH}"
 git checkout ${TRAVIS_BRANCH}
 
-replace_versions kth-node-cint $KTH_BUILD_NUMBER
+replace_versions c-api $KTH_BUILD_NUMBER
 increment_py_version
 
 cat versions.txt

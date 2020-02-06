@@ -115,12 +115,12 @@
       ],
       # # Linux OLD
       # "include_dirs": ["/home/fernando/dev/k-nuth/node-cint/include"],
-      # "libraries": [ "-lkth-node-cint", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
+      # "libraries": [ "-lkth-c-api", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
 
       # # Windows OLD
-      # "include_dirs": ["C:\\development\\kth\\kth-node-cint\\include", "C:\\development\\kth\\kth-domain\\include"],
-      # "libraries": [ "C:\\development\\kth\\kth-node-cint\\build\\kth-node-cint.lib"]
-      # # "libraries": [ "-LC:\\development\\kth\\kth-node-cint\\build", "-lkth-node-cint"  ]
+      # "include_dirs": ["C:\\development\\kth\\c-api\\include", "C:\\development\\kth\\kth-domain\\include"],
+      # "libraries": [ "C:\\development\\kth\\c-api\\build\\c-api.lib"]
+      # # "libraries": [ "-LC:\\development\\kth\\c-api\\build", "-lkth-c-api"  ]
 
       
 
@@ -145,14 +145,14 @@
         ['OS=="linux"', {
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/kth-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/c-api/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/kth-node-cint/build/lib', 
+            # '-L/home/fernando/dev/c-api/build/lib', 
 
-            '-lkth-node-cint', 
+            '-lkth-c-api', 
             '-lkth-node', 
             '-lkth-blockchain', 
             '-lkth-network', 
@@ -188,14 +188,14 @@
             "-std=c++11",
           ],
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/kth-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/c-api/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/kth-node-cint/build/lib', 
+            # '-L/home/fernando/dev/c-api/build/lib', 
 
-            '-lkth-node-cint', 
+            '-lkth-c-api', 
             '-lkth-node', 
             '-lkth-blockchain', 
             '-lkth-network', 
@@ -240,13 +240,14 @@
         ['OS=="win"', {
           "include_dirs": ["<!(node -e \"require('nan')\")", "deps/include"],
           'libraries': [
-            '../deps/lib/kth-node-cint.lib', 
+            '../deps/lib/kth-c-api.lib', 
             '../deps/lib/kth-node.lib', 
             '../deps/lib/kth-blockchain.lib', 
             '../deps/lib/kth-network.lib', 
             '../deps/lib/kth-consensus.lib', 
             '../deps/lib/kth-database.lib', 
             '../deps/lib/kth-domain.lib',
+            '../deps/lib/kth-infrastructure.lib',
             '../deps/lib/libboost_atomic.lib', 
             '../deps/lib/libboost_chrono.lib', 
             '../deps/lib/libboost_date_time.lib', 

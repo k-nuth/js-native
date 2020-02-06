@@ -5,4 +5,4 @@ kth-database: v0.3.0-5-gfbeeb68
 kth-blockchain: v0.3.0-3-g3aebb72
 kth-network: v0.3.0-5-gdb58e899
 kth-node: v0.3.0-3-g34b568e
-kth-node-cint: 
+c-api: 
