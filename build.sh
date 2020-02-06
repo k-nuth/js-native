@@ -1,3 +1,7 @@
+# Copyright (c) 2016-2020 Knuth Project developers.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #  Windows: Se necesita Python 2.7 y MSVC
 # -------------------------------
 
@@ -81,7 +85,7 @@ npm publish
 
 # npm set init.author.name "Fernando Pelliccioni"
 # npm set init.author.email "fpelliccioni@gmail.com"
-# npm set init.author.url "http://bitprim.org"
+# npm set init.author.url "http://kth.cash"
 
 # npm login
 
@@ -91,7 +95,7 @@ npm publish
 
 # --------------------------------------------------------------------------------
 
-npm view bitprim-native dist.tarball
+npm view kth-native dist.tarball
 
 
 

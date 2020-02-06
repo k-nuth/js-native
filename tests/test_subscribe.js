@@ -1,8 +1,12 @@
+// Copyright (c) 2016-2020 Knuth Project developers.
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 // test_native.js
-// npm install bitprim-native --msvs_version=2015
+// npm install kth-native --msvs_version=2015
 // Para saber donde estan los comprimidos en el sitio de npm:
-//      npm view bitprim-native dist.tarball
-//         https://registry.npmjs.org/bitprim-native/-/bitprim-native-0.0.15.tgz
+//      npm view kth-native dist.tarball
+//         https://registry.npmjs.org/kth-native/-/kth-native-0.0.15.tgz
 
 
 // ------------------------------------------------------------------------------------------------
@@ -83,11 +87,11 @@ var express = require('express')
 
 
 
-// const bitprim = require('../build/Release/bitprim')
-// const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
-// const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
-const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
-// const bitprim = require('bitprim-native')
+// const kth = require('../build/Release/kth')
+// const kth = require('../lib/binding/Release/node-v48-win32-x64/kth-native')
+// const kth = require('../lib/binding/Release/node-v57-win32-x64/kth-native')         // Windows Fernando
+const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-native')         // Linux Fernando
+// const kth = require('kth-native')
 
 
 
@@ -98,7 +102,7 @@ process.stdin.resume();//so the program will not close instantly
 
 process.on("SIGINT", function () {
     console.log("captured SIGINT...");
-    // bitprim.executor_destruct(executor)
+    // kth.executor_destruct(executor)
     process.exit();
 });
 
@@ -127,26 +131,26 @@ app.listen(port, (err) => {
 
 
 
-const executor = bitprim.executor_construct("", process.stdout, process.stderr);
-// const executor = bitprim.executor_construct("", null, null)
-bitprim.executor_initchain(executor)
-bitprim.executor_run_wait(executor)
+const executor = kth.executor_construct("", process.stdout, process.stderr);
+// const executor = kth.executor_construct("", null, null)
+kth.executor_initchain(executor)
+kth.executor_run_wait(executor)
 
-const chain = bitprim.executor_get_chain(executor)
+const chain = kth.executor_get_chain(executor)
 
 
 function print_blocks(block_list) {
-    var n = bitprim.chain_block_list_count(block_list)
+    var n = kth.chain_block_list_count(block_list)
     
     for (var i = 0; i < n; ++i) {
-        var blk = bitprim.chain_block_list_nth(block_list, i)
-        var blk_hash = bitprim.chain_block_hash(blk)
+        var blk = kth.chain_block_list_nth(block_list, i)
+        var blk_hash = kth.chain_block_hash(blk)
         console.log(`print_blocks, blk_hash: ${blk_hash}`)
     }    
 }
 
 
-bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
     if (e == 0) {
         // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
         // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
@@ -161,12 +165,12 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 
     if (blocks_incoming) {
         print_blocks(blocks_incoming)
-        bitprim.chain_block_list_destruct(blocks_incoming)
+        kth.chain_block_list_destruct(blocks_incoming)
     }
 
     if (blocks_replaced) {
         print_blocks(blocks_replaced)
-        bitprim.chain_block_list_destruct(blocks_replaced)
+        kth.chain_block_list_destruct(blocks_replaced)
     }
 
     return true
@@ -175,7 +179,7 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 // setInterval(function() {
 //     console.log('-*-*-*-*-*-*-*-*-*-* Subscribing to block notification -*-*-*-*-*-*-*-*-*-* ')
 
-//     bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+//     kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
 //         if (e == 0) {
 //             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
 //             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
@@ -194,19 +198,19 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 //         }
     
 //         if (blocks_incoming) {
-//             var n = bitprim.chain_block_list_count(blocks_incoming)
+//             var n = kth.chain_block_list_count(blocks_incoming)
 
 //             for (var i = 0; i < n; ++i) {
-//                 var blk = bitprim.chain_block_list_nth(blocks_incoming, i)
-//                 var blk_hash = bitprim.chain_block_hash(blk)
+//                 var blk = kth.chain_block_list_nth(blocks_incoming, i)
+//                 var blk_hash = kth.chain_block_hash(blk)
 //                 console.log(`chain_subscribe_blockchain failed, blk_hash: ${blk_hash}`)
 //             }
 
-//             bitprim.chain_block_list_destruct(blocks_incoming)
+//             kth.chain_block_list_destruct(blocks_incoming)
 //         }
 
 //         if (blocks_replaced) {
-//             bitprim.chain_block_list_destruct(blocks_replaced)
+//             kth.chain_block_list_destruct(blocks_replaced)
 //         }
 
 //         return true
@@ -227,5 +231,5 @@ bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, bl
 
 // console.log('... BEFORE EXIT ...')
 
-// bitprim.executor_destruct(executor)
+// kth.executor_destruct(executor)
 

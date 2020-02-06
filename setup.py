@@ -1,3 +1,7 @@
+# Copyright (c) 2016-2020 Knuth Project developers.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 import shutil
 import os
 import re
@@ -46,7 +50,7 @@ def run_conan(reference, reference_fallback):
 
     try:
         # c.remote_add(remote, url, verify_ssl, args.insert)
-        c.remote_add('bitprim', 'https://api.bintray.com/conan/bitprim/bitprim')
+        c.remote_add('kth', 'https://api.bintray.com/conan/k-nuth/kth')
     except:
         print ("Conan Remote exists, ignoring exception")
 

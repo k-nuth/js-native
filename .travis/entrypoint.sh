@@ -61,7 +61,7 @@ echo "Fer 7A"
 
 # echo "Fer 7C"
 
-# npm set init.author.url "http://bitprim.org"
+# npm set init.author.url "http://kth.cash"
 
 # echo "Fer 7D"
 
@@ -80,7 +80,7 @@ cat ~/.npmrc
 echo "Fer 7E"
 
 
-conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
+conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
 
 pwd
 
