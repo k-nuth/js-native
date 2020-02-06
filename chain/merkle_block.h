@@ -5,13 +5,13 @@
 
 namespace kth_native {
 
-void bitprim_chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth_native
 

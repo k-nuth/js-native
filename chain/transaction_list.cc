@@ -28,7 +28,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_transaction_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_transaction_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 0) {
@@ -40,7 +40,7 @@ void bitprim_chain_transaction_list_construct_default(v8::FunctionCallbackInfo<v
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_chain_transaction_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_transaction_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -59,7 +59,7 @@ void bitprim_chain_transaction_list_destruct(v8::FunctionCallbackInfo<v8::Value>
     chain_transaction_list_destruct(transaction_list);
 }
 
-void bitprim_chain_transaction_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_transaction_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -86,7 +86,7 @@ void bitprim_chain_transaction_list_push_back(v8::FunctionCallbackInfo<v8::Value
     chain_transaction_list_push_back(transaction_list, transaction);
 }
 
-void bitprim_chain_transaction_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_transaction_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -106,7 +106,7 @@ void bitprim_chain_transaction_list_count(v8::FunctionCallbackInfo<v8::Value> co
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_transaction_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_transaction_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {

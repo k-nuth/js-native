@@ -28,7 +28,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -51,7 +51,7 @@ void bitprim_chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCal
     args.GetReturnValue().Set(hash);
 }
 
-void bitprim_chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -74,7 +74,7 @@ void bitprim_chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo
     args.GetReturnValue().Set(hash);
 }
 
-void bitprim_chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {

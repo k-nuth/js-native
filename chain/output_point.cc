@@ -29,7 +29,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_output_point_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_point_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 0) {
@@ -41,7 +41,7 @@ void bitprim_chain_output_point_construct(v8::FunctionCallbackInfo<v8::Value> co
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_chain_output_point_construct_from_hash_index(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_point_construct_from_hash_index(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -73,7 +73,7 @@ void bitprim_chain_output_point_construct_from_hash_index(v8::FunctionCallbackIn
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_chain_output_point_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_point_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -92,7 +92,7 @@ void bitprim_chain_output_point_destruct(v8::FunctionCallbackInfo<v8::Value> con
     output_point_destruct(op);
 }
 
-void bitprim_chain_output_point_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_point_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -114,7 +114,7 @@ void bitprim_chain_output_point_get_hash(v8::FunctionCallbackInfo<v8::Value> con
     args.GetReturnValue().Set(Uint8Array::New(tmp, 0, 32));
 }
 
-void bitprim_chain_output_point_get_index(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_point_get_index(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {

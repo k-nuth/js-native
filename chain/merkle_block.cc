@@ -27,7 +27,7 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-void bitprim_chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -46,7 +46,7 @@ void bitprim_chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> con
     chain_merkle_block_destruct(merkle_block);
 }
 
-void bitprim_chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -69,7 +69,7 @@ void bitprim_chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> c
     
 }
 
-void bitprim_chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -96,7 +96,7 @@ void bitprim_chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Val
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -122,7 +122,7 @@ void bitprim_chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> con
 
 
 
-void bitprim_chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -142,7 +142,7 @@ void bitprim_chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> c
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -162,7 +162,7 @@ void bitprim_chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {

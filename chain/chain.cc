@@ -74,7 +74,7 @@ void chain_fetch_last_height_handler(chain_t chain, void* ctx, int error, uint64
 }
 
 // void chain_fetch_last_height(chain_t chain, void* ctx, last_height_fetch_handler_t handler);
-void bitprim_chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -102,7 +102,7 @@ void bitprim_chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
 }
 
 
-// void bitprim_chain_get_last_height(FunctionCallbackInfo<Value> const& args) {
+// void kth_chain_get_last_height(FunctionCallbackInfo<Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -162,7 +162,7 @@ void chain_fetch_block_height_handler(chain_t chain, void* ctx, int error, uint6
     delete callback;
 }
 
-void bitprim_chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -239,7 +239,7 @@ void chain_fetch_block_header_by_height_handler(chain_t chain, void* ctx, int er
     delete callback;
 }
 
-void bitprim_chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -296,7 +296,7 @@ void chain_fetch_block_header_by_hash_handler(chain_t chain, void* ctx, int erro
     delete callback;
 }
 
-void bitprim_chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -361,7 +361,7 @@ void chain_fetch_block_by_height_handler(chain_t chain, void* ctx, int error, bl
     delete callback;
 }
 
-void bitprim_chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -414,7 +414,7 @@ void chain_fetch_block_by_hash_handler(chain_t chain, void* ctx, int error, bloc
     delete callback;
 }
 
-void bitprim_chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -482,7 +482,7 @@ void chain_fetch_merkle_block_by_height_handler(chain_t chain, void* ctx, int er
     delete callback;
 }
 
-void bitprim_chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -537,7 +537,7 @@ void chain_fetch_merkle_block_by_hash_handler(chain_t chain, void* ctx, int erro
     delete callback;
 }
 
-void bitprim_chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -606,7 +606,7 @@ void chain_fetch_compact_block_by_height_handler(chain_t chain, void* ctx, int e
     delete callback;
 }
 
-void bitprim_chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -660,7 +660,7 @@ void chain_fetch_compact_block_by_hash_handler(chain_t chain, void* ctx, int err
     delete callback;
 }
 
-void bitprim_chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -734,7 +734,7 @@ void chain_fetch_transaction_handler(chain_t chain, void* ctx, int error, transa
     delete callback;
 }
 
-void bitprim_chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 4) {
@@ -810,7 +810,7 @@ void chain_fetch_transaction_position_handler(chain_t chain, void* ctx, int erro
     delete callback;
 }
 
-void bitprim_chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 4) {
@@ -889,7 +889,7 @@ void chain_fetch_spend_handler(chain_t chain, void* ctx, int error, input_point_
     delete callback;
 }
 
-void bitprim_chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
@@ -952,7 +952,7 @@ void chain_fetch_history_handler(chain_t chain, void* ctx, int error, history_co
     delete callback;
 }
 
-void bitprim_chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 5) {
@@ -1028,7 +1028,7 @@ void chain_fetch_stealth_handler(chain_t chain, void* ctx, int error, stealth_co
     delete callback;
 }
 
-void bitprim_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // chain_t chain, binary_t filter, uint64_t from_height, stealth_fetch_handler_t handler
@@ -1101,7 +1101,7 @@ void bitprim_chain_fetch_stealth(FunctionCallbackInfo<Value> const& args) {
 //     delete callback;
 // }
 
-// void bitprim_chain_fetch_block_locator(FunctionCallbackInfo<Value> const& args) {
+// void kth_chain_fetch_block_locator(FunctionCallbackInfo<Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 
@@ -1168,7 +1168,7 @@ void chain_organize_block_handler(chain_t chain, void* ctx, int error) {
     delete callback;
 }
 
-void bitprim_chain_organize_block(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_organize_block(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // chain_t chain, block_t block, result_handler_t handler
@@ -1230,7 +1230,7 @@ void chain_organize_transaction_handler(chain_t chain, void* ctx, int error) {
     delete callback;
 }
 
-void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     // chain_t chain, transaction_t transaction, result_handler_t handler
@@ -1445,9 +1445,9 @@ int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* 
     return 1;
 }
 
-void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
+void kth_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    // printf("bitprim_chain_subscribe_blockchain - isolate:   %p\n", isolate);
+    // printf("kth_chain_subscribe_blockchain - isolate:   %p\n", isolate);
 
     if (args.Length() != 3) {
         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -1482,8 +1482,8 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
     auto* context = new subs_blk_data_t(callback, 0, 0, nullptr, nullptr);
     async->data = context;
 
-    // printf("bitprim_chain_subscribe_blockchain - callback: %p\n", callback);
-    // printf("bitprim_chain_subscribe_blockchain - async:    %p\n", async);
+    // printf("kth_chain_subscribe_blockchain - callback: %p\n", callback);
+    // printf("kth_chain_subscribe_blockchain - async:    %p\n", async);
 
     chain_subscribe_blockchain(exec, chain, async, chain_subscribe_blockchain_dispatcher);
 }
@@ -1540,62 +1540,62 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
 //     // printf("chain_validate_tx_callback - 4\n");
 // }
 
-// void bitprim_chain_validate_tx(FunctionCallbackInfo<Value> const& args) {
+// void kth_chain_validate_tx(FunctionCallbackInfo<Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
-//     // printf("bitprim_chain_validate_tx - 1\n");
+//     // printf("kth_chain_validate_tx - 1\n");
 //     if (args.Length() != 3) {
 //         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
 //         return;
 //     }
 
-//     // printf("bitprim_chain_validate_tx - 2\n");
+//     // printf("kth_chain_validate_tx - 2\n");
 
 //     if ( ! args[0]->IsExternal()) {
 //         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
 //         return;
 //     }
 
-//     // printf("bitprim_chain_validate_tx - 3\n");
+//     // printf("kth_chain_validate_tx - 3\n");
 
 //     if ( ! args[1]->IsString()) {
 //         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
 //         return;
 //     }
 
-//     // printf("bitprim_chain_validate_tx - 4\n");
+//     // printf("kth_chain_validate_tx - 4\n");
 
 //     if ( ! args[2]->IsFunction()) {
 //         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
 //         return;
 //     }
 
-//     // printf("bitprim_chain_validate_tx - 5\n");
+//     // printf("kth_chain_validate_tx - 5\n");
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
 //     chain_t chain = (chain_t)vptr;
 
-//     // printf("bitprim_chain_validate_tx - 6\n");
+//     // printf("kth_chain_validate_tx - 6\n");
 
 
 //     v8::String::Utf8Value tx_hex(args[1]->ToString());
 
-//     // printf("bitprim_chain_validate_tx - 7\n");
+//     // printf("kth_chain_validate_tx - 7\n");
 
 
 //     callback.Reset(isolate, args[2].As<Function>());
 
-//     // printf("bitprim_chain_validate_tx - 8\n");
+//     // printf("kth_chain_validate_tx - 8\n");
 
 //     auto tx = hex_to_tx(*tx_hex);
 
-//     // printf("bitprim_chain_validate_tx - 9\n");
+//     // printf("kth_chain_validate_tx - 9\n");
 
 //     // printf("tx: %p\n", tx);
 
 //     chain_validate_tx(chain, tx, chain_validate_tx_callback);
 
-//     // printf("bitprim_chain_validate_tx - 10\n");
+//     // printf("kth_chain_validate_tx - 10\n");
 
 //     //TODO: free tx
 // }

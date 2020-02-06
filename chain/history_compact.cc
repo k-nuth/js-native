@@ -27,7 +27,7 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-void bitprim_chain_history_compact_get_point_kind(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_history_compact_get_point_kind(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -47,7 +47,7 @@ void bitprim_chain_history_compact_get_point_kind(v8::FunctionCallbackInfo<v8::V
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_history_compact_get_point(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_history_compact_get_point(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -67,7 +67,7 @@ void bitprim_chain_history_compact_get_point(v8::FunctionCallbackInfo<v8::Value>
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_chain_history_compact_get_height(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_history_compact_get_height(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -87,7 +87,7 @@ void bitprim_chain_history_compact_get_height(v8::FunctionCallbackInfo<v8::Value
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_history_compact_get_value_or_previous_checksum(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_history_compact_get_value_or_previous_checksum(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {

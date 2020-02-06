@@ -28,7 +28,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -47,7 +47,7 @@ void bitprim_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& ar
     chain_output_destruct(output);
 }
 
-void bitprim_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -67,7 +67,7 @@ void bitprim_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& ar
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void bitprim_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -94,7 +94,7 @@ void bitprim_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> co
 }
 
 
-void bitprim_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -114,7 +114,7 @@ void bitprim_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args)
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -142,7 +142,7 @@ void bitprim_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Valu
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -163,12 +163,12 @@ void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args
 }
 
 
-//void bitprim_chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
-//void bitprim_chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void kth_chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void kth_chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 
 
-// void bitprim_chain_output_is_final(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void kth_chain_output_is_final(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -189,7 +189,7 @@ void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args
     
 // }
 
-// void bitprim_chain_output_sequence(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void kth_chain_output_sequence(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -209,7 +209,7 @@ void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args
 //     args.GetReturnValue().Set(Number::New(isolate, res));
 // }
 
-// void bitprim_chain_output_previous_output(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void kth_chain_output_previous_output(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {

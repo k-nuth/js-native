@@ -27,7 +27,7 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-void bitprim_chain_stealth_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -46,7 +46,7 @@ void bitprim_chain_stealth_compact_list_destruct(v8::FunctionCallbackInfo<v8::Va
     stealth_compact_list_destruct(stealth_compact_list);
 }
 
-void bitprim_chain_stealth_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -66,7 +66,7 @@ void bitprim_chain_stealth_compact_list_count(v8::FunctionCallbackInfo<v8::Value
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_stealth_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_stealth_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -93,7 +93,7 @@ void bitprim_chain_stealth_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> 
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-// void bitprim_chain_stealth_compact_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void kth_chain_stealth_compact_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 2) {

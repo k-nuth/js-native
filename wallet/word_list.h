@@ -5,9 +5,9 @@
 
 namespace kth_native {
 
-void bitprim_wallet_word_list_construct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_wallet_word_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_wallet_word_list_construct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_wallet_word_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth_native
 

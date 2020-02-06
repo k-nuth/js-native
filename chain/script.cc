@@ -29,7 +29,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -48,7 +48,7 @@ void bitprim_chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& ar
     chain_script_destruct(script);
 }
 
-void bitprim_chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -68,7 +68,7 @@ void bitprim_chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& ar
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void bitprim_chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -88,7 +88,7 @@ void bitprim_chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void bitprim_chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -108,7 +108,7 @@ void bitprim_chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Valu
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -135,7 +135,7 @@ void bitprim_chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> co
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -162,7 +162,7 @@ void bitprim_chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& a
     args.GetReturnValue().Set(String::NewFromUtf8(isolate, res)); // NewFromOneByte 
 }
 
-void bitprim_chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -190,7 +190,7 @@ void bitprim_chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void bitprim_chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {

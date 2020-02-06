@@ -5,11 +5,11 @@
 
 namespace kth_native {
 
-void bitprim_chain_block_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_block_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args);
-void bitprim_chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_block_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_block_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args);
+void kth_chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth_native
 

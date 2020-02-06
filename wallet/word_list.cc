@@ -28,7 +28,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_wallet_word_list_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_wallet_word_list_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 0) {
@@ -40,7 +40,7 @@ void bitprim_wallet_word_list_construct(v8::FunctionCallbackInfo<v8::Value> cons
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_wallet_word_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_wallet_word_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -59,7 +59,7 @@ void bitprim_wallet_word_list_destruct(v8::FunctionCallbackInfo<v8::Value> const
     word_list_destruct(word_list);
 }
 
-void bitprim_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {

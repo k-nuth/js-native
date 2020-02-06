@@ -28,7 +28,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void bitprim_chain_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -47,7 +47,7 @@ void bitprim_chain_payment_address_construct_from_string(v8::FunctionCallbackInf
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void bitprim_chain_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -66,7 +66,7 @@ void bitprim_chain_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> 
     chain_payment_address_destruct(payment_address);
 }
 
-void bitprim_chain_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -86,7 +86,7 @@ void bitprim_chain_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> c
     args.GetReturnValue().Set(String::NewFromUtf8(isolate, res));
 }
 
-void bitprim_chain_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void kth_chain_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
