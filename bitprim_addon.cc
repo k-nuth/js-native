@@ -1,8 +1,8 @@
 // #include <node.h>
 #include <nan.h>
 
-#include <knuth/nodecint/executor_c.h>
-#include <knuth/nodecint/chain/chain.h>
+#include <kth/c-api/executor_c.h>
+#include <kth/c-api/chain/chain.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
@@ -414,6 +414,6 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "wallet_word_list_push_back", kth_wallet_word_list_push_back);
 }
 
-NODE_MODULE(bitprim, init)
+NODE_MODULE(kth, init)
 
 }  // namespace kth_native

@@ -14,39 +14,39 @@
 // process.chdir(oldDir);
 
 
-// const bitprim = require(__dirname + '../build/Release/bitprim')
+// const kth = require(__dirname + '../build/Release/kth')
 
 
-// var bitprim = null;
+// var kth = null;
 
 // // Load the precompiled binary for windows.
 // if (process.platform == "win32" && process.arch == "x64") {
-//     bitprim = require('./lib/binding/Release/node-v48-win32-x64/bitprim-native.node');
+//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-native.node');
 
-//     // bitprim = require('./bin/winx64/bitprim.node');
-//     // bitprim = require(__dirname + './build/Release/bitprim.node')
-//     // bitprim = require('./build/Release/bitprim.node')
+//     // kth = require('./bin/winx64/kth.node');
+//     // kth = require(__dirname + './build/Release/kth.node')
+//     // kth = require('./build/Release/kth.node')
 // } else if (process.platform == "win32" && process.arch == "ia32") {
-//     bitprim = require('./lib/binding/Release/node-v48-win32-x64/bitprim-native.node');
-//     // bitprim = require('./bin/winx86/bitprim.node');  
-//     // bitprim = require(__dirname + './build/Release/bitprim.node')
-//     // bitprim = require('./build/Release/bitprim.node')
+//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-native.node');
+//     // kth = require('./bin/winx86/kth.node');  
+//     // kth = require(__dirname + './build/Release/kth.node')
+//     // kth = require('./build/Release/kth.node')
 // } else {
 // 	// Load the new built binary for other platforms.
-//     bitprim = require('./build/Release/bitprim.node');  
-//     // bitprim = require(__dirname + './build/Release/bitprim.node')
-//     // bitprim = require('./build/Release/bitprim.node')
+//     kth = require('./build/Release/kth.node');  
+//     // kth = require(__dirname + './build/Release/kth.node')
+//     // kth = require('./build/Release/kth.node')
 // }
 
 
 var binary = require('node-pre-gyp');
 var path = require('path')
-var bitprim_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
 
-console.log(`bitprim_path: ${bitprim_path}`)
+console.log(`kth_path: ${kth_path}`)
 
-var bitprim = require(bitprim_path);
+var kth = require(kth_path);
 
-// require('assert').equal(bitprim.hello(),"hello");
+// require('assert').equal(kth.hello(),"hello");
 
-module.exports = bitprim;
+module.exports = kth;

@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/point.h>
+#include <kth/c-api/chain/point.h>
 
 #include "point.h"
 #include "tools.h"

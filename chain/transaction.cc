@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/transaction.h>
+#include <kth/c-api/chain/transaction.h>
 
 #include "transaction.h"
 

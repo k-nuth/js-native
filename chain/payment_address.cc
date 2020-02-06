@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/payment_address.h>
+#include <kth/c-api/chain/payment_address.h>
 
 #include "payment_address.h"
 

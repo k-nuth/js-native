@@ -31,8 +31,8 @@ class KnuthJs(ConanFile):
     # conan install kth-node-cint/0.2@kth/stable -o shared=True
 
     def imports(self):
-        self.copy("*.h", "./deps/include/bitprim", "include/bitprim")
-        self.copy("*.hpp", dst="./deps/include/bitprim", src="include/bitprim")
+        self.copy("*.h", "./deps/include/kth", "include/kth")
+        self.copy("*.hpp", dst="./deps/include/kth", src="include/kth")
         self.copy("*.lib", dst="./deps/lib", src="lib")
         self.copy("*.a", dst="./deps/lib", src="lib")
         self.copy("*.dylib", dst="./deps/lib", src="lib")

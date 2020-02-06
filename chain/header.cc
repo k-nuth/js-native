@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/header.h>
+#include <kth/c-api/chain/header.h>
 
 #include "header.h"
 

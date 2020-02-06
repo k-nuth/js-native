@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/stealth_compact.h>
+#include <kth/c-api/chain/stealth_compact.h>
 
 #include "stealth_compact.h"
 

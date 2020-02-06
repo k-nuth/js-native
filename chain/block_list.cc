@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/block_list.h>
+#include <kth/c-api/chain/block_list.h>
 
 #include "block_list.h"
 

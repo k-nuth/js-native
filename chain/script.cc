@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/script.h>
+#include <kth/c-api/chain/script.h>
 
 #include "script.h"
 #include "tools.h"

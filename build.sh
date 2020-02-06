@@ -91,7 +91,7 @@ npm publish
 
 # --------------------------------------------------------------------------------
 
-npm view bitprim-native dist.tarball
+npm view kth-native dist.tarball
 
 
 

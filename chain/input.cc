@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/input.h>
+#include <kth/c-api/chain/input.h>
 
 #include "input.h"
 

@@ -1,5 +1,5 @@
 {
-  "name": "bitprim-native",
+  "name": "kth-native",
   "version": "0.0.120",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
   "repository": {
@@ -11,7 +11,7 @@
     "cash",
     "litecoin",
     "money",
-    "bitprim"
+    "kth"
   ],
   "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://kth.cash)",
   "license": "MIT",
@@ -24,7 +24,7 @@
   },
   "main": "index.js",
   "binary": {
-    "module_name": "bitprim-native",
+    "module_name": "kth-native",
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com/k-nuth/js-native/releases/download/",

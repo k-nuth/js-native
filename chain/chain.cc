@@ -3,8 +3,8 @@
 
 #include <nan.h>
 
-#include <knuth/nodecint/chain/chain.h>
-#include <knuth/nodecint/executor_c.h>
+#include <kth/c-api/chain/chain.h>
+#include <kth/c-api/executor_c.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 

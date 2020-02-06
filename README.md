@@ -1,4 +1,4 @@
-# bitprim
+# kth
 
 Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications
 

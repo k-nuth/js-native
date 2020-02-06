@@ -1,6 +1,6 @@
 #include <node.h>
 
-#include <knuth/nodecint/primitives.h>
+#include <kth/c-api/primitives.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 

@@ -13,8 +13,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
-const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
+// const kth = require('../lib/binding/Release/node-v57-win32-x64/kth-native')         // Windows Fernando
+const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-native')         // Linux Fernando
 
 var express = require('express')
 , app = express()
@@ -31,7 +31,7 @@ process.stdin.resume();//so the program will not close instantly
 
 process.on("SIGINT", function () {
     console.log("captured SIGINT...");
-    // bitprim.executor_destruct(executor)
+    // kth.executor_destruct(executor)
     process.exit();
 });
 
@@ -40,16 +40,16 @@ process.on("exit", function () {
     // exec.close()
 });
 
-const executor = bitprim.executor_construct("", process.stdout, process.stderr);
-// const executor = bitprim.executor_construct("", null, null)
-bitprim.executor_initchain(executor)
-bitprim.executor_run_wait(executor)
+const executor = kth.executor_construct("", process.stdout, process.stderr);
+// const executor = kth.executor_construct("", null, null)
+kth.executor_initchain(executor)
+kth.executor_run_wait(executor)
 
-const chain = bitprim.executor_get_chain(executor)
+const chain = kth.executor_get_chain(executor)
 
 var last_height = 0
 
-bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
     if (e == 0) {
         for (clientId in clients) {
             clients[clientId].write("event: time\n" + "data: " + fork_height + "\n\n");

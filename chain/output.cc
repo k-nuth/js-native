@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <knuth/nodecint/chain/output.h>
+#include <kth/c-api/chain/output.h>
 
 #include "output.h"
 

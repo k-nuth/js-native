@@ -1,8 +1,8 @@
 // test_native.js
-// npm install bitprim-native --msvs_version=2015
+// npm install kth-native --msvs_version=2015
 // Para saber donde estan los comprimidos en el sitio de npm:
-//      npm view bitprim-native dist.tarball
-//         https://registry.npmjs.org/bitprim-native/-/bitprim-native-0.0.15.tgz
+//      npm view kth-native dist.tarball
+//         https://registry.npmjs.org/kth-native/-/kth-native-0.0.15.tgz
 
 
 // ------------------------------------------------------------------------------------------------
@@ -82,21 +82,21 @@ function sleep(sleepDuration) {
 
 // ------------------------------------------------------------------------------------------------
 
-// const bitprim = require('../build/Release/bitprim')
-// const bitprim = require('../lib/binding/Release/node-v48-win32-x64/bitprim-native')
+// const kth = require('../build/Release/kth')
+// const kth = require('../lib/binding/Release/node-v48-win32-x64/kth-native')
 
-// const bitprim = require('../lib/binding/Release/node-v57-win32-x64/bitprim-native')         // Windows Fernando
-const bitprim = require('../lib/binding/Release/node-v48-linux-x64/bitprim-native')         // Linux Fernando
+// const kth = require('../lib/binding/Release/node-v57-win32-x64/kth-native')         // Windows Fernando
+const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-native')         // Linux Fernando
 
 
-// const bitprim = require('bitprim-native')
+// const kth = require('kth-native')
 
 
 function wait_until_block(chain, desired_height) {
 
     var height = 0
 
-    bitprim.chain_fetch_last_height(chain, function (e, h) {
+    kth.chain_fetch_last_height(chain, function (e, h) {
         if (e == 0) {
             // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
             height = h
@@ -110,7 +110,7 @@ function wait_until_block(chain, desired_height) {
 
 
     while (height < desired_height) {
-        bitprim.chain_fetch_last_height(chain, function (e, h) {
+        kth.chain_fetch_last_height(chain, function (e, h) {
             if (e == 0) {
                 // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
                 height = h
@@ -139,14 +139,14 @@ function wait_until_block(chain, desired_height) {
 
 
 
-const executor = bitprim.executor_construct("", process.stdout, process.stderr);
-// const executor = bitprim.executor_construct("", null, null)
-bitprim.executor_initchain(executor)
-bitprim.executor_run_wait(executor)
+const executor = kth.executor_construct("", process.stdout, process.stderr);
+// const executor = kth.executor_construct("", null, null)
+kth.executor_initchain(executor)
+kth.executor_run_wait(executor)
 
-const chain = bitprim.executor_get_chain(executor)
+const chain = kth.executor_get_chain(executor)
 
-bitprim.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
     if (e == 0) {
         console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
     } else {
@@ -171,5 +171,5 @@ var hash_arr = toHash('0000000091a5fdf4b5f5fe07ed869bf82049b3d61a403f2771b5cbd19
 
 console.log('... BEFORE EXIT ...')
 
-bitprim.executor_destruct(executor)
+kth.executor_destruct(executor)
 
