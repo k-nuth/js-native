@@ -5,7 +5,7 @@ class KnuthJs(ConanFile):
     name = "js"
     version = "0.1"
     license = "http://www.boost.org/users/license.html"
-    url = "https://github.com/k-nuth/js"
+    url = "https://github.com/k-nuth/js-native"
     description = "Bitcoin Full Node Library with Javascript interface"
     settings = "os", "compiler", "build_type", "arch"
     

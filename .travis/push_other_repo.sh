@@ -46,11 +46,11 @@ cd temp
 
 
 # --------------------------------------------------------------------------------------------------------------------
-# py-api
+# js-api
 # --------------------------------------------------------------------------------------------------------------------
-git clone https://github.com/k-nuth/py-api.git
+git clone https://github.com/k-nuth/js-api.git
 
-cd py-api
+cd js-api
 echo "Travis branch: ${TRAVIS_BRANCH}"
 git checkout ${TRAVIS_BRANCH}
 
@@ -63,7 +63,7 @@ cat version.py
 git add . versions.txt
 git add . version.py
 git commit --message "Travis py-native build: $KTH_BUILD_NUMBER, $TRAVIS_BUILD_NUMBER" || true
-git remote add origin-commit https://${GH_TOKEN}@github.com/k-nuth/py-api.git > /dev/null 2>&1
+git remote add origin-commit https://${GH_TOKEN}@github.com/k-nuth/js-api.git > /dev/null 2>&1
 git push --quiet --set-upstream origin-commit ${TRAVIS_BRANCH}  || true
 
 cd ..
