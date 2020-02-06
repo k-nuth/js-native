@@ -13,7 +13,7 @@
     "money",
     "bitprim"
   ],
-  "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://bitprim.org)",
+  "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://kth.cash)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/k-nuth/js-native/issues"

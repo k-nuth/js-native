@@ -81,7 +81,7 @@ npm publish
 
 # npm set init.author.name "Fernando Pelliccioni"
 # npm set init.author.email "fpelliccioni@gmail.com"
-# npm set init.author.url "http://bitprim.org"
+# npm set init.author.url "http://kth.cash"
 
 # npm login
 

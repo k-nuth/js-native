@@ -1281,7 +1281,7 @@ void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args)
 
 // int chain_subscribe_blockchain_handler(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
     
-//     //TODO(fernando): hardcoded error code, libbitcoin::error::service_stopped
+//     //TODO(fernando): hardcoded error code, kth::error::service_stopped
 //     // if (exec->actual.stopped() || error == 1) {
 //     if (executor_stopped(exec) != 0 || error == 1) {
 //         return 0;
@@ -1395,7 +1395,7 @@ void clean_stuff(uv_async_t* async) {
 int chain_subscribe_blockchain_dispatcher(executor_t exec, chain_t chain, void* ctx, int error, uint64_t fork_height, block_list_t blocks_incoming, block_list_t blocks_replaced) {
     uv_async_t* async = static_cast<uv_async_t*>(ctx);
 
-    //TODO(fernando): hardcoded error code, libbitcoin::error::service_stopped
+    //TODO(fernando): hardcoded error code, kth::error::service_stopped
     if (executor_stopped(exec) != 0 || error == 1) {
         clean_stuff(async);
         return 0;

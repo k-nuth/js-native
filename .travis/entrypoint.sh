@@ -61,7 +61,7 @@ echo "Fer 7A"
 
 # echo "Fer 7C"
 
-# npm set init.author.url "http://bitprim.org"
+# npm set init.author.url "http://kth.cash"
 
 # echo "Fer 7D"
 

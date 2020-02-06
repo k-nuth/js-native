@@ -1,12 +1,12 @@
 {
   "targets": [
     {
-      # "target_name": "bitprim",
+      # "target_name": "kth",
       "target_name": "<(module_name)",
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
+      "sources": [ "kth_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
                    "chain/merkle_block.cc", "chain/point.cc", 
                    "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/output_point.cc", 
                    "chain/tools.cc",
@@ -118,9 +118,9 @@
       # "libraries": [ "-lkth-node-cint", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
 
       # # Windows OLD
-      # "include_dirs": ["C:\\development\\bitprim\\kth-node-cint\\include", "C:\\development\\bitprim\\kth-domain\\include"],
-      # "libraries": [ "C:\\development\\bitprim\\kth-node-cint\\build\\kth-node-cint.lib"]
-      # # "libraries": [ "-LC:\\development\\bitprim\\kth-node-cint\\build", "-lkth-node-cint"  ]
+      # "include_dirs": ["C:\\development\\kth\\kth-node-cint\\include", "C:\\development\\kth\\kth-domain\\include"],
+      # "libraries": [ "C:\\development\\kth\\kth-node-cint\\build\\kth-node-cint.lib"]
+      # # "libraries": [ "-LC:\\development\\kth\\kth-node-cint\\build", "-lkth-node-cint"  ]
 
       
 
