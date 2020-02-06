@@ -1,21 +1,6 @@
-#
-# Copyright (c) 2017 Bitprim developers (see AUTHORS)
-#
-# This file is part of Bitprim.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# Copyright (c) 2016-2020 Knuth Project developers.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 branches:
   only:
@@ -111,12 +96,12 @@ matrix:
       # - <<: *osx
       #   osx_image: xcode7.3
       #   env: CONAN_APPLE_CLANG_VERSIONS=7.3 TRAVIS_PYTHON_VERSION=3.6 PYTHON_FULL_VERSION=3.6.2
-      #   python: "3.6"
+      #   python: "3.7"
 
       # - <<: *osx
       #   osx_image: xcode8.3
       #   env: CONAN_APPLE_CLANG_VERSIONS=8.1 TRAVIS_PYTHON_VERSION=3.6 PYTHON_FULL_VERSION=3.6.2
-      #   python: "3.6"
+      #   python: "3.7"
 
 install:
 
@@ -160,8 +145,8 @@ script:
   - set -e
 
   - git fetch --unshallow || true
-  - export BITPRIM_BUILD_NUMBER="$(git describe)"
-  - echo "${BITPRIM_BUILD_NUMBER}"
+  - export KTH_BUILD_NUMBER="$(git describe)"
+  - echo "${KTH_BUILD_NUMBER}"
 
   - |
     if [[ "${PUSH_TO_REPOS}" == "true" ]]; then
@@ -183,7 +168,7 @@ script:
       else
         python --version
         conan user
-        conan remote add bitprim_temp https://api.bintray.com/conan/bitprim/bitprim
+        conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
         conan install .
 
         npm install
@@ -215,7 +200,7 @@ script:
   # - pwd
   # - ls -ltra
 
-  # - conan remote add bitprim https://api.bintray.com/conan/bitprim/bitprim
+  # - conan remote add kth https://api.bintray.com/conan/k-nuth/kth
   # - conan install .
 
   # # - npm cache clean
@@ -228,10 +213,9 @@ script:
 
 notifications:
   email: 
-    - ci@bitprim.org
-    - dev@bitprim.org
-    - fernando@bitprim.org
-  slack: bitprim:CGkcy3Bjx7UUIxu9FSZTpaxE
+    - ci@kth.cash
+    - dev@kth.cash
+    - fernando@kth.cash
   webhooks:
     urls: https://webhooks.gitter.im/e/a19dd2b03bf676d2b622
     on_success: change

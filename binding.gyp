@@ -1,23 +1,27 @@
+# Copyright (c) 2016-2020 Knuth Project developers.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 {
   "targets": [
     {
-      # "target_name": "bitprim",
+      # "target_name": "kth",
       "target_name": "<(module_name)",
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "bitprim_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
-                   "chain/merkle_block.cc", "chain/point.cc", 
-                   "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/output_point.cc", 
-                   "chain/tools.cc",
-                   "chain/script.cc", "chain/input_list.cc", "chain/output_list.cc", "chain/transaction_list.cc",
-                   "chain/block_list.cc",
-                   "chain/history_compact_list.cc",
-                   "chain/history_compact.cc",
-                   "chain/payment_address.cc",
-                   "chain/stealth_compact.cc",
-                   "chain/stealth_compact_list.cc",
-                   "wallet/word_list.cc",
+      "sources": [ "kth_main_module.cpp", "chain/chain.cpp", "chain/header.cpp", "chain/block.cpp", 
+                   "chain/merkle_block.cpp", "chain/point.cpp", 
+                   "chain/transaction.cpp", "chain/input.cpp", "chain/output.cpp", "chain/output_point.cpp", 
+                   "chain/tools.cpp",
+                   "chain/script.cpp", "chain/input_list.cpp", "chain/output_list.cpp", "chain/transaction_list.cpp",
+                   "chain/block_list.cpp",
+                   "chain/history_compact_list.cpp",
+                   "chain/history_compact.cpp",
+                   "chain/payment_address.cpp",
+                   "chain/stealth_compact.cpp",
+                   "chain/stealth_compact_list.cpp",
+                   "wallet/word_list.cpp",
                 ],
       
       'variables': {
@@ -50,8 +54,8 @@
       #       '<@(core_library_files)',
       #     ],
       #     'outputs': [
-      #       '<(INTERMEDIATE_DIR)/libraries.cc',
-      #       '<(INTERMEDIATE_DIR)/libraries-empty.cc',
+      #       '<(INTERMEDIATE_DIR)/libraries.cpp',
+      #       '<(INTERMEDIATE_DIR)/libraries-empty.cpp',
       #     ],
       #     'action': ['python', 'tools/js2c.py', '<@(_outputs)', 'CORE', '<@(core_library_files)'],
       #   },
@@ -111,16 +115,16 @@
 
 
       'defines': [
-          'BITPRIM_LIB_STATIC',
+          'KTH_LIB_STATIC',
       ],
       # # Linux OLD
-      # "include_dirs": ["/home/fernando/dev/bitprim/bitprim-node-cint/include"],
-      # "libraries": [ "-lbitprim-node-cint", "-L/home/fernando/dev/bitprim/bitprim-node-cint/cmake-build-debug" ]
+      # "include_dirs": ["/home/fernando/dev/k-nuth/node-cint/include"],
+      # "libraries": [ "-lkth-c-api", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
 
       # # Windows OLD
-      # "include_dirs": ["C:\\development\\bitprim\\bitprim-node-cint\\include", "C:\\development\\bitprim\\bitprim-core\\include"],
-      # "libraries": [ "C:\\development\\bitprim\\bitprim-node-cint\\build\\bitprim-node-cint.lib"]
-      # # "libraries": [ "-LC:\\development\\bitprim\\bitprim-node-cint\\build", "-lbitprim-node-cint"  ]
+      # "include_dirs": ["C:\\development\\kth\\c-api\\include", "C:\\development\\kth\\kth-domain\\include"],
+      # "libraries": [ "C:\\development\\kth\\c-api\\build\\c-api.lib"]
+      # # "libraries": [ "-LC:\\development\\kth\\c-api\\build", "-lkth-c-api"  ]
 
       
 
@@ -145,20 +149,20 @@
         ['OS=="linux"', {
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/c-api/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/c-api/build/lib', 
 
-            '-lbitprim-node-cint', 
-            '-lbitprim-node', 
-            '-lbitprim-blockchain', 
-            '-lbitprim-network', 
-            '-lbitprim-consensus', 
-            '-lbitprim-database', 
-            '-lbitprim-core',
+            '-lkth-c-api', 
+            '-lkth-node', 
+            '-lkth-blockchain', 
+            '-lkth-network', 
+            '-lkth-consensus', 
+            '-lkth-database', 
+            '-lkth-domain',
             '-lboost_atomic', 
             '-lboost_chrono', 
             '-lboost_date_time', 
@@ -188,20 +192,20 @@
             "-std=c++11",
           ],
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/c-api/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/c-api/build/lib', 
 
-            '-lbitprim-node-cint', 
-            '-lbitprim-node', 
-            '-lbitprim-blockchain', 
-            '-lbitprim-network', 
-            '-lbitprim-consensus', 
-            '-lbitprim-database', 
-            '-lbitprim-core',
+            '-lkth-c-api', 
+            '-lkth-node', 
+            '-lkth-blockchain', 
+            '-lkth-network', 
+            '-lkth-consensus', 
+            '-lkth-database', 
+            '-lkth-domain',
             '-lboost_atomic', 
             '-lboost_chrono', 
             '-lboost_date_time', 
@@ -240,13 +244,14 @@
         ['OS=="win"', {
           "include_dirs": ["<!(node -e \"require('nan')\")", "deps/include"],
           'libraries': [
-            '../deps/lib/bitprim-node-cint.lib', 
-            '../deps/lib/bitprim-node.lib', 
-            '../deps/lib/bitprim-blockchain.lib', 
-            '../deps/lib/bitprim-network.lib', 
-            '../deps/lib/bitprim-consensus.lib', 
-            '../deps/lib/bitprim-database.lib', 
-            '../deps/lib/bitprim-core.lib',
+            '../deps/lib/kth-c-api.lib', 
+            '../deps/lib/kth-node.lib', 
+            '../deps/lib/kth-blockchain.lib', 
+            '../deps/lib/kth-network.lib', 
+            '../deps/lib/kth-consensus.lib', 
+            '../deps/lib/kth-database.lib', 
+            '../deps/lib/kth-domain.lib',
+            '../deps/lib/kth-infrastructure.lib',
             '../deps/lib/libboost_atomic.lib', 
             '../deps/lib/libboost_chrono.lib', 
             '../deps/lib/libboost_date_time.lib', 

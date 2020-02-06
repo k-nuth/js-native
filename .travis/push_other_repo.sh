@@ -36,8 +36,8 @@ function increment_py_version {
 set -e
 set -x
 
-git config --global user.email "ci@bitprim.org"
-git config --global user.name "Bitprim CI"
+git config --global user.email "ci@kth.cash"
+git config --global user.name "Knuth CI"
 
 mkdir temp
 cd temp
@@ -46,15 +46,15 @@ cd temp
 
 
 # --------------------------------------------------------------------------------------------------------------------
-# bitprim-py
+# js-api
 # --------------------------------------------------------------------------------------------------------------------
-git clone https://github.com/bitprim/bitprim-py.git
+git clone https://github.com/k-nuth/js-api.git
 
-cd bitprim-py
+cd js-api
 echo "Travis branch: ${TRAVIS_BRANCH}"
 git checkout ${TRAVIS_BRANCH}
 
-replace_versions bitprim-node-cint $BITPRIM_BUILD_NUMBER
+replace_versions c-api $KTH_BUILD_NUMBER
 increment_py_version
 
 cat versions.txt
@@ -62,8 +62,8 @@ cat version.py
 
 git add . versions.txt
 git add . version.py
-git commit --message "Travis bitprim-py-native build: $BITPRIM_BUILD_NUMBER, $TRAVIS_BUILD_NUMBER" || true
-git remote add origin-commit https://${GH_TOKEN}@github.com/bitprim/bitprim-py.git > /dev/null 2>&1
+git commit --message "Travis py-native build: $KTH_BUILD_NUMBER, $TRAVIS_BUILD_NUMBER" || true
+git remote add origin-commit https://${GH_TOKEN}@github.com/k-nuth/js-api.git > /dev/null 2>&1
 git push --quiet --set-upstream origin-commit ${TRAVIS_BRANCH}  || true
 
 cd ..
