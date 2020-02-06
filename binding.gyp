@@ -6,7 +6,7 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "kth_addon.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
+      "sources": [ "kth_main_module.cc", "chain/chain.cc", "chain/header.cc", "chain/block.cc", 
                    "chain/merkle_block.cc", "chain/point.cc", 
                    "chain/transaction.cc", "chain/input.cc", "chain/output.cc", "chain/output_point.cc", 
                    "chain/tools.cc",
