@@ -7,7 +7,7 @@
 
 #include "payment_address.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -106,4 +106,4 @@ void bitprim_chain_payment_address_version(v8::FunctionCallbackInfo<v8::Value> c
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-namespace bitprim_ns {
+namespace kth_native {
 
 void bitprim_chain_header_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_header_get_version(v8::FunctionCallbackInfo<v8::Value> const& args);
@@ -18,6 +18,6 @@ void bitprim_chain_header_set_bits(v8::FunctionCallbackInfo<v8::Value> const& ar
 void bitprim_chain_header_get_nonce(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_header_set_nonce(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-}  // namespace bitprim_ns
+}  // namespace kth_native
 
 #endif //KTH_JS_CHAIN_HEADER_H_

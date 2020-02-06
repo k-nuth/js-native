@@ -8,7 +8,7 @@
 #include "script.h"
 #include "tools.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -218,4 +218,4 @@ void bitprim_chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> co
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

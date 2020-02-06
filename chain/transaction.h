@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-namespace bitprim_ns {
+namespace kth_native {
 
 void bitprim_chain_transaction_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_transaction_version(v8::FunctionCallbackInfo<v8::Value> const& args);
@@ -29,6 +29,6 @@ void bitprim_chain_transaction_is_locktime_conflict(v8::FunctionCallbackInfo<v8:
 void bitprim_chain_transaction_outputs(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_transaction_inputs(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-}  // namespace bitprim_ns
+}  // namespace kth_native
 
 #endif //KTH_JS_CHAIN_TRANSACTION_H_

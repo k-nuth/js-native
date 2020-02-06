@@ -13,7 +13,7 @@
 #include "chain.h"
 #include "tools.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -1639,4 +1639,4 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
 //-------------------
 
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

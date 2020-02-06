@@ -7,7 +7,7 @@
 
 #include "history_compact.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -107,4 +107,4 @@ void bitprim_chain_history_compact_get_value_or_previous_checksum(v8::FunctionCa
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

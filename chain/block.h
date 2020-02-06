@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-namespace bitprim_ns {
+namespace kth_native {
 
 void bitprim_chain_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args);
@@ -28,6 +28,6 @@ void bitprim_chain_block_is_valid_coinbase_script(v8::FunctionCallbackInfo<v8::V
 void bitprim_chain_block_is_internal_double_spend(v8::FunctionCallbackInfo<v8::Value> const& args);
 void bitprim_chain_block_is_valid_merkle_root(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-}  // namespace bitprim_ns
+}  // namespace kth_native
 
 #endif //KTH_JS_CHAIN_BLOCK_H_

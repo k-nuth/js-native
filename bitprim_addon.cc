@@ -27,7 +27,7 @@
 #include "chain/stealth_compact_list.h"
 #include "wallet/word_list.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -416,4 +416,4 @@ void init(Local<Object> exports) {
 
 NODE_MODULE(bitprim, init)
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

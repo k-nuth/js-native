@@ -7,7 +7,7 @@
 
 #include "stealth_compact.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -97,4 +97,4 @@ void bitprim_chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<
     args.GetReturnValue().Set(hash);
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

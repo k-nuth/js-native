@@ -8,7 +8,7 @@
 #include "output_point.h"
 #include "tools.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -134,4 +134,4 @@ void bitprim_chain_output_point_get_index(v8::FunctionCallbackInfo<v8::Value> co
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

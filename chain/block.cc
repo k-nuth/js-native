@@ -7,7 +7,7 @@
 
 #include "block.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -549,4 +549,4 @@ void bitprim_chain_block_is_valid_merkle_root(v8::FunctionCallbackInfo<v8::Value
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

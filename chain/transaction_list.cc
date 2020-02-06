@@ -7,7 +7,7 @@
 
 #include "transaction_list.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -133,4 +133,4 @@ void bitprim_chain_transaction_list_nth(v8::FunctionCallbackInfo<v8::Value> cons
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

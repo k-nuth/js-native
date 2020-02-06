@@ -7,7 +7,7 @@
 
 #include "merkle_block.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -181,4 +181,4 @@ void bitprim_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const&
     chain_merkle_block_reset(merkle_block);
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

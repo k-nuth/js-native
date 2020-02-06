@@ -7,7 +7,7 @@
 
 #include "output_list.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -102,4 +102,4 @@ void bitprim_chain_output_list_nth(v8::FunctionCallbackInfo<v8::Value> const& ar
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

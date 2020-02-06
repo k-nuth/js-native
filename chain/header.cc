@@ -7,7 +7,7 @@
 
 #include "header.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -254,4 +254,4 @@ void bitprim_chain_header_get_nonce(v8::FunctionCallbackInfo<v8::Value> const& a
 
 
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

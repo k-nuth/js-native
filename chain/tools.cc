@@ -6,7 +6,7 @@
 
 #include "tools.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 hash_t to_native_hash(v8::Local<v8::Uint8Array> const& arr) {
     //precondition: arr->Length() == 32
@@ -19,4 +19,4 @@ hash_t to_native_hash(v8::Local<v8::Uint8Array> const& arr) {
     return hash;
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

@@ -7,7 +7,7 @@
 
 #include "input.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -205,4 +205,4 @@ void bitprim_chain_input_previous_output(v8::FunctionCallbackInfo<v8::Value> con
 //void bitprim_chain_input_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
 //void bitprim_chain_input_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

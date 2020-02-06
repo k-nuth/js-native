@@ -7,7 +7,7 @@
 
 #include "output.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -230,4 +230,4 @@ void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args
 // }
 
 
-}  // namespace bitprim_ns
+}  // namespace kth_native

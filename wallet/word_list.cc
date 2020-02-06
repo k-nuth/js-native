@@ -7,7 +7,7 @@
 
 #include "word_list.h"
 
-namespace bitprim_ns {
+namespace kth_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -85,4 +85,4 @@ void bitprim_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> cons
     word_list_add_word(word_list, *word);
 }
 
-}  // namespace bitprim_ns
+}  // namespace kth_native
