@@ -1,12 +1,12 @@
 from conans import ConanFile, CMake
 # import os
 
-class KnuthJs(ConanFile):
+class KnuthJsNative(ConanFile):
     name = "js"
     version = "0.1"
     license = "http://www.boost.org/users/license.html"
     url = "https://github.com/k-nuth/js-native"
-    description = "Bitcoin Full Node Library with Javascript interface"
+    description = "Bitcoin full node as a Javascript library"
     settings = "os", "compiler", "build_type", "arch"
     
     # options = {"shared": [True, False]}

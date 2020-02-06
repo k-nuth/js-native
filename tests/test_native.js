@@ -1,3 +1,7 @@
+// Copyright (c) 2016-2020 Knuth Project developers.
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 // test_native.js
 // npm install kth-native --msvs_version=2015
 // Para saber donde estan los comprimidos en el sitio de npm:
