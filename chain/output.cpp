@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/output.h>
 
-#include "output.h"
+#include "output.hpp"
 
 namespace kth_native {
 

@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/merkle_block.h>
 
-#include "merkle_block.h"
+#include "merkle_block.hpp"
 
 namespace kth_native {
 

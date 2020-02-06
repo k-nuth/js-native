@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/block.h>
 
-#include "block.h"
+#include "block.hpp"
 
 namespace kth_native {
 

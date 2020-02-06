@@ -5,8 +5,8 @@
 
 #include <kth/c-api/chain/output_point.h>
 
-#include "output_point.h"
-#include "tools.h"
+#include "output_point.hpp"
+#include "tools.hpp"
 
 namespace kth_native {
 

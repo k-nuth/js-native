@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/payment_address.h>
 
-#include "payment_address.h"
+#include "payment_address.hpp"
 
 namespace kth_native {
 

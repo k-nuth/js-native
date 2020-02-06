@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/input.h>
 
-#include "input.h"
+#include "input.hpp"
 
 namespace kth_native {
 

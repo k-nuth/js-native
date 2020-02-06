@@ -5,8 +5,8 @@
 
 #include <kth/c-api/chain/point.h>
 
-#include "point.h"
-#include "tools.h"
+#include "point.hpp"
+#include "tools.hpp"
 
 namespace kth_native {
 

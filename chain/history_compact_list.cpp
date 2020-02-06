@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/history_compact_list.h>
 
-#include "history_compact_list.h"
+#include "history_compact_list.hpp"
 
 namespace kth_native {
 

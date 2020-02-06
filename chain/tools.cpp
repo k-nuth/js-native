@@ -4,7 +4,7 @@
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
-#include "tools.h"
+#include "tools.hpp"
 
 namespace kth_native {
 

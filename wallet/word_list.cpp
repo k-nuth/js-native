@@ -5,7 +5,7 @@
 
 #include <kth/c-api/wallet/word_list.h>
 
-#include "word_list.h"
+#include "word_list.hpp"
 
 namespace kth_native {
 

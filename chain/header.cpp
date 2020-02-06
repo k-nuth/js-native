@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/header.h>
 
-#include "header.h"
+#include "header.hpp"
 
 namespace kth_native {
 

@@ -5,8 +5,8 @@
 
 #include <kth/c-api/chain/script.h>
 
-#include "script.h"
-#include "tools.h"
+#include "script.hpp"
+#include "tools.hpp"
 
 namespace kth_native {
 

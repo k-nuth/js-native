@@ -10,8 +10,8 @@
 
 #include <tuple>
 
-#include "chain.h"
-#include "tools.h"
+#include "chain.hpp"
+#include "tools.hpp"
 
 namespace kth_native {
 

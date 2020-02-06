@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/stealth_compact.h>
 
-#include "stealth_compact.h"
+#include "stealth_compact.hpp"
 
 namespace kth_native {
 

@@ -5,7 +5,7 @@
 
 #include <kth/c-api/chain/transaction_list.h>
 
-#include "transaction_list.h"
+#include "transaction_list.hpp"
 
 namespace kth_native {
 
