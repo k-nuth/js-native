@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/script.h>
+#include <knuth/nodecint/chain/script.h>
 
 #include "script.h"
 #include "tools.h"

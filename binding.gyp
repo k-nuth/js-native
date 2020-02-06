@@ -111,16 +111,16 @@
 
 
       'defines': [
-          'BITPRIM_LIB_STATIC',
+          'KTH_LIB_STATIC',
       ],
       # # Linux OLD
-      # "include_dirs": ["/home/fernando/dev/bitprim/bitprim-node-cint/include"],
-      # "libraries": [ "-lbitprim-node-cint", "-L/home/fernando/dev/bitprim/bitprim-node-cint/cmake-build-debug" ]
+      # "include_dirs": ["/home/fernando/dev/k-nuth/node-cint/include"],
+      # "libraries": [ "-lkth-node-cint", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
 
       # # Windows OLD
-      # "include_dirs": ["C:\\development\\bitprim\\bitprim-node-cint\\include", "C:\\development\\bitprim\\bitprim-core\\include"],
-      # "libraries": [ "C:\\development\\bitprim\\bitprim-node-cint\\build\\bitprim-node-cint.lib"]
-      # # "libraries": [ "-LC:\\development\\bitprim\\bitprim-node-cint\\build", "-lbitprim-node-cint"  ]
+      # "include_dirs": ["C:\\development\\bitprim\\kth-node-cint\\include", "C:\\development\\bitprim\\kth-domain\\include"],
+      # "libraries": [ "C:\\development\\bitprim\\kth-node-cint\\build\\kth-node-cint.lib"]
+      # # "libraries": [ "-LC:\\development\\bitprim\\kth-node-cint\\build", "-lkth-node-cint"  ]
 
       
 
@@ -145,20 +145,20 @@
         ['OS=="linux"', {
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/kth-node-cint/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/kth-node-cint/build/lib', 
 
-            '-lbitprim-node-cint', 
-            '-lbitprim-node', 
-            '-lbitprim-blockchain', 
-            '-lbitprim-network', 
-            '-lbitprim-consensus', 
-            '-lbitprim-database', 
-            '-lbitprim-core',
+            '-lkth-node-cint', 
+            '-lkth-node', 
+            '-lkth-blockchain', 
+            '-lkth-network', 
+            '-lkth-consensus', 
+            '-lkth-database', 
+            '-lkth-domain',
             '-lboost_atomic', 
             '-lboost_chrono', 
             '-lboost_date_time', 
@@ -188,20 +188,20 @@
             "-std=c++11",
           ],
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/bitprim-node-cint/include"],
+          # "include_dirs": ["/home/fernando/dev/kth-node-cint/include"],
           
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',
-            # '-L/home/fernando/dev/bitprim-node-cint/build/lib', 
+            # '-L/home/fernando/dev/kth-node-cint/build/lib', 
 
-            '-lbitprim-node-cint', 
-            '-lbitprim-node', 
-            '-lbitprim-blockchain', 
-            '-lbitprim-network', 
-            '-lbitprim-consensus', 
-            '-lbitprim-database', 
-            '-lbitprim-core',
+            '-lkth-node-cint', 
+            '-lkth-node', 
+            '-lkth-blockchain', 
+            '-lkth-network', 
+            '-lkth-consensus', 
+            '-lkth-database', 
+            '-lkth-domain',
             '-lboost_atomic', 
             '-lboost_chrono', 
             '-lboost_date_time', 
@@ -240,13 +240,13 @@
         ['OS=="win"', {
           "include_dirs": ["<!(node -e \"require('nan')\")", "deps/include"],
           'libraries': [
-            '../deps/lib/bitprim-node-cint.lib', 
-            '../deps/lib/bitprim-node.lib', 
-            '../deps/lib/bitprim-blockchain.lib', 
-            '../deps/lib/bitprim-network.lib', 
-            '../deps/lib/bitprim-consensus.lib', 
-            '../deps/lib/bitprim-database.lib', 
-            '../deps/lib/bitprim-core.lib',
+            '../deps/lib/kth-node-cint.lib', 
+            '../deps/lib/kth-node.lib', 
+            '../deps/lib/kth-blockchain.lib', 
+            '../deps/lib/kth-network.lib', 
+            '../deps/lib/kth-consensus.lib', 
+            '../deps/lib/kth-database.lib', 
+            '../deps/lib/kth-domain.lib',
             '../deps/lib/libboost_atomic.lib', 
             '../deps/lib/libboost_chrono.lib', 
             '../deps/lib/libboost_date_time.lib', 

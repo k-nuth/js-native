@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/transaction.h>
+#include <knuth/nodecint/chain/transaction.h>
 
 #include "transaction.h"
 

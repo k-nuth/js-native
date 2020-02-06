@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_PAYMENT_ADDRESS_H_
-#define BITPRIM_JS_CHAIN_PAYMENT_ADDRESS_H_
+#ifndef KTH_JS_CHAIN_PAYMENT_ADDRESS_H_
+#define KTH_JS_CHAIN_PAYMENT_ADDRESS_H_
 
 #include <node.h>
 
@@ -12,4 +12,4 @@ void bitprim_chain_payment_address_construct_from_string(v8::FunctionCallbackInf
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_PAYMENT_ADDRESS_H_
+#endif //KTH_JS_CHAIN_PAYMENT_ADDRESS_H_

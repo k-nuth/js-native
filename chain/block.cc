@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/block.h>
+#include <knuth/nodecint/chain/block.h>
 
 #include "block.h"
 

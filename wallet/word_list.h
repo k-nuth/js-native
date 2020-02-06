@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_WALLET_WORD_LIST_H_
-#define BITPRIM_JS_WALLET_WORD_LIST_H_
+#ifndef KTH_JS_WALLET_WORD_LIST_H_
+#define KTH_JS_WALLET_WORD_LIST_H_
 
 #include <node.h>
 
@@ -11,4 +11,4 @@ void bitprim_wallet_word_list_push_back(v8::FunctionCallbackInfo<v8::Value> cons
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_WALLET_WORD_LIST_H_
+#endif //KTH_JS_WALLET_WORD_LIST_H_

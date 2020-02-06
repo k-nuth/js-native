@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_OUTPUT_H_
-#define BITPRIM_JS_CHAIN_OUTPUT_H_
+#ifndef KTH_JS_CHAIN_OUTPUT_H_
+#define KTH_JS_CHAIN_OUTPUT_H_
 
 #include <node.h>
 
@@ -16,4 +16,4 @@ void bitprim_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_OUTPUT_H_
+#endif //KTH_JS_CHAIN_OUTPUT_H_

@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_MERKLE_BLOCK_H_
-#define BITPRIM_JS_CHAIN_MERKLE_BLOCK_H_
+#ifndef KTH_JS_CHAIN_MERKLE_BLOCK_H_
+#define KTH_JS_CHAIN_MERKLE_BLOCK_H_
 
 #include <node.h>
 
@@ -15,4 +15,4 @@ void bitprim_chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const&
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_MERKLE_BLOCK_H_
+#endif //KTH_JS_CHAIN_MERKLE_BLOCK_H_

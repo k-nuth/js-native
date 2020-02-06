@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_CHAIN_H_
-#define BITPRIM_JS_CHAIN_CHAIN_H_
+#ifndef KTH_JS_CHAIN_CHAIN_H_
+#define KTH_JS_CHAIN_CHAIN_H_
 
 #include <node.h>
 
@@ -27,4 +27,4 @@ void bitprim_chain_subscribe_blockchain(v8::FunctionCallbackInfo<v8::Value> cons
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_CHAIN_H_
+#endif //KTH_JS_CHAIN_CHAIN_H_

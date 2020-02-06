@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_HISTORY_COMPACT_H_
-#define BITPRIM_JS_CHAIN_HISTORY_COMPACT_H_
+#ifndef KTH_JS_CHAIN_HISTORY_COMPACT_H_
+#define KTH_JS_CHAIN_HISTORY_COMPACT_H_
 
 #include <node.h>
 
@@ -12,4 +12,4 @@ void bitprim_chain_history_compact_get_value_or_previous_checksum(v8::FunctionCa
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_HISTORY_COMPACT_H_
+#endif //KTH_JS_CHAIN_HISTORY_COMPACT_H_

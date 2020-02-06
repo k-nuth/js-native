@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/wallet/word_list.h>
+#include <knuth/nodecint/wallet/word_list.h>
 
 #include "word_list.h"
 

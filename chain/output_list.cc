@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/output_list.h>
+#include <knuth/nodecint/chain/output_list.h>
 
 #include "output_list.h"
 

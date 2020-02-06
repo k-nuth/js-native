@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_TRANSACTION_H_
-#define BITPRIM_JS_CHAIN_TRANSACTION_H_
+#ifndef KTH_JS_CHAIN_TRANSACTION_H_
+#define KTH_JS_CHAIN_TRANSACTION_H_
 
 #include <node.h>
 
@@ -31,4 +31,4 @@ void bitprim_chain_transaction_inputs(v8::FunctionCallbackInfo<v8::Value> const&
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_TRANSACTION_H_
+#endif //KTH_JS_CHAIN_TRANSACTION_H_

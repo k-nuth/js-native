@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/history_compact_list.h>
+#include <knuth/nodecint/chain/history_compact_list.h>
 
 #include "history_compact_list.h"
 

@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_STEALTH_COMPACT_H_
-#define BITPRIM_JS_CHAIN_STEALTH_COMPACT_H_
+#ifndef KTH_JS_CHAIN_STEALTH_COMPACT_H_
+#define KTH_JS_CHAIN_STEALTH_COMPACT_H_
 
 #include <node.h>
 
@@ -11,4 +11,4 @@ void bitprim_chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_STEALTH_COMPACT_H_
+#endif //KTH_JS_CHAIN_STEALTH_COMPACT_H_

@@ -1,6 +1,6 @@
 #include <node.h>
 
-#include <bitprim/nodecint/primitives.h>
+#include <knuth/nodecint/primitives.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 

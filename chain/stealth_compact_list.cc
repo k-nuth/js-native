@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/stealth_compact_list.h>
+#include <knuth/nodecint/chain/stealth_compact_list.h>
 
 #include "stealth_compact_list.h"
 

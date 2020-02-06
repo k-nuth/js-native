@@ -46,7 +46,7 @@ def run_conan(reference, reference_fallback):
 
     try:
         # c.remote_add(remote, url, verify_ssl, args.insert)
-        c.remote_add('bitprim', 'https://api.bintray.com/conan/bitprim/bitprim')
+        c.remote_add('bitprim', 'https://api.bintray.com/conan/k-nuth/kth')
     except:
         print ("Conan Remote exists, ignoring exception")
 

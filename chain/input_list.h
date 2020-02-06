@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_INPUT_LIST_H_
-#define BITPRIM_JS_CHAIN_INPUT_LIST_H_
+#ifndef KTH_JS_CHAIN_INPUT_LIST_H_
+#define KTH_JS_CHAIN_INPUT_LIST_H_
 
 #include <node.h>
 
@@ -11,4 +11,4 @@ void bitprim_chain_input_list_nth(v8::FunctionCallbackInfo<v8::Value> const& arg
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_INPUT_LIST_H_
+#endif //KTH_JS_CHAIN_INPUT_LIST_H_

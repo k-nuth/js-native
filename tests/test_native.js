@@ -408,7 +408,7 @@ bitprim.chain_fetch_merkle_block_by_hash(chain, hash_arr, function (err, merkle_
 
 
 //-----------------------------------
-// TODO(bitprim): implement compact blocks.
+// TODO(kth): implement compact blocks.
 // bitprim.chain_fetch_compact_block_by_height(chain, 2300, function (err, compact_block, height) {
 //     if (err == 0) {
 //         console.log(`chain_fetch_compact_block_by_height is OK, err:  ${err}, height: ${height}`)

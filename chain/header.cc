@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/header.h>
+#include <knuth/nodecint/chain/header.h>
 
 #include "header.h"
 

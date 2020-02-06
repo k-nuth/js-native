@@ -1,8 +1,8 @@
 // #include <node.h>
 #include <nan.h>
 
-#include <bitprim/nodecint/executor_c.h>
-#include <bitprim/nodecint/chain/chain.h>
+#include <knuth/nodecint/executor_c.h>
+#include <knuth/nodecint/chain/chain.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
@@ -247,7 +247,7 @@ void init(Local<Object> exports) {
     NODE_SET_METHOD(exports, "chain_fetch_block_by_hash", bitprim_chain_fetch_block_by_hash);
     NODE_SET_METHOD(exports, "chain_fetch_merkle_block_by_height", bitprim_chain_fetch_merkle_block_by_height);
     NODE_SET_METHOD(exports, "chain_fetch_merkle_block_by_hash", bitprim_chain_fetch_merkle_block_by_hash);
-    // TODO(bitprim): implement compact blocks.
+    // TODO(kth): implement compact blocks.
     // NODE_SET_METHOD(exports, "chain_fetch_compact_block_by_height", bitprim_chain_fetch_compact_block_by_height);
     // NODE_SET_METHOD(exports, "chain_fetch_compact_block_by_hash", bitprim_chain_fetch_compact_block_by_hash);
     NODE_SET_METHOD(exports, "chain_fetch_transaction", bitprim_chain_fetch_transaction);

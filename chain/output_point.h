@@ -1,5 +1,5 @@
-#ifndef BITPRIM_JS_CHAIN_OUTPUT_POINT_H_
-#define BITPRIM_JS_CHAIN_OUTPUT_POINT_H_
+#ifndef KTH_JS_CHAIN_OUTPUT_POINT_H_
+#define KTH_JS_CHAIN_OUTPUT_POINT_H_
 
 #include <node.h>
 
@@ -13,4 +13,4 @@ void bitprim_chain_output_point_get_index(v8::FunctionCallbackInfo<v8::Value> co
 
 }  // namespace bitprim_ns
 
-#endif //BITPRIM_JS_CHAIN_OUTPUT_POINT_H_
+#endif //KTH_JS_CHAIN_OUTPUT_POINT_H_

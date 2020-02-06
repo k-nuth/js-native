@@ -3,8 +3,8 @@
 
 #include <nan.h>
 
-#include <bitprim/nodecint/chain/chain.h>
-#include <bitprim/nodecint/executor_c.h>
+#include <knuth/nodecint/chain/chain.h>
+#include <knuth/nodecint/executor_c.h>
 
 #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 
@@ -864,7 +864,7 @@ void bitprim_chain_fetch_transaction_position(FunctionCallbackInfo<Value> const&
 
 
 // // Spend ---------------------------------------------------------------------
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // void chain_fetch_spend(chain_t chain, void* ctx, output_point_t op, spend_fetch_handler_t handler);
 // typedef void (*spend_fetch_handler_t)(chain_t, void*, int, input_point_t input_point);
 
@@ -1003,7 +1003,7 @@ void bitprim_chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     
 
 // // Stealth ---------------------------------------------------------------------
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // void chain_fetch_stealth(chain_t chain, void* ctx, binary_t filter, uint64_t from_height, stealth_fetch_handler_t handler);
 // typedef void (*stealth_fetch_handler_t)(chain_t chain, void*, int, stealth_compact_list_t stealth);
 
@@ -1272,10 +1272,10 @@ void bitprim_chain_organize_transaction(FunctionCallbackInfo<Value> const& args)
 // // Subscribers.
 // //-------------------------------------------------------------------------
 
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // void chain_subscribe_blockchain(chain_t chain, void* ctx, reorganize_handler_t handler);
 
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // void chain_subscribe_transaction(chain_t chain, void* ctx, transaction_handler_t handler);
 
 
@@ -1493,11 +1493,11 @@ void bitprim_chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args)
 
 // // ------------------------------------------------
 
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // transaction_t hex_to_tx(char const* tx_hex);
 
 
-// BITPRIM_EXPORT
+// KTH_EXPORT
 // void chain_validate_tx(chain_t chain, void* ctx, transaction_t tx, validate_tx_handler_t handler);
 
 

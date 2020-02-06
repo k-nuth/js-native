@@ -3,7 +3,7 @@
 
 #include <node.h>
 
-#include <bitprim/nodecint/chain/merkle_block.h>
+#include <knuth/nodecint/chain/merkle_block.h>
 
 #include "merkle_block.h"
 

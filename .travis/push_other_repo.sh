@@ -48,13 +48,13 @@ cd temp
 # --------------------------------------------------------------------------------------------------------------------
 # bitprim-py
 # --------------------------------------------------------------------------------------------------------------------
-git clone https://github.com/bitprim/bitprim-py.git
+git clone https://github.com/k-nuth/py.git
 
 cd bitprim-py
 echo "Travis branch: ${TRAVIS_BRANCH}"
 git checkout ${TRAVIS_BRANCH}
 
-replace_versions bitprim-node-cint $BITPRIM_BUILD_NUMBER
+replace_versions kth-node-cint $KTH_BUILD_NUMBER
 increment_py_version
 
 cat versions.txt
@@ -62,8 +62,8 @@ cat version.py
 
 git add . versions.txt
 git add . version.py
-git commit --message "Travis bitprim-py-native build: $BITPRIM_BUILD_NUMBER, $TRAVIS_BUILD_NUMBER" || true
-git remote add origin-commit https://${GH_TOKEN}@github.com/bitprim/bitprim-py.git > /dev/null 2>&1
+git commit --message "Travis bitprim-py-native build: $KTH_BUILD_NUMBER, $TRAVIS_BUILD_NUMBER" || true
+git remote add origin-commit https://${GH_TOKEN}@github.com/k-nuth/py.git > /dev/null 2>&1
 git push --quiet --set-upstream origin-commit ${TRAVIS_BRANCH}  || true
 
 cd ..
