@@ -7,16 +7,15 @@
 
 #include <node.h>
 
-#include <kth/c-api/chain/payment_address.h>
+#include <kth/capi/wallet/payment_address.h>
 
 #include "payment_address.hpp"
 
-namespace kth_native {
+namespace kth_js_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
-using v8::Handle;
 using v8::Global;
 
 using v8::Object;
@@ -32,7 +31,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void kth_chain_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -45,13 +44,13 @@ void kth_chain_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8
         return;
     }
 
-    v8::String::Utf8Value str(args[0]->ToString());
+    v8::String::Utf8Value str(isolate, args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
 
-    payment_address_t res = chain_payment_address_construct_from_string(*str);
+    kth_payment_address_t res = kth_wallet_payment_address_construct_from_string(*str);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void kth_chain_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -65,12 +64,12 @@ void kth_chain_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> cons
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    payment_address_t payment_address = (payment_address_t)vptr;
+    kth_payment_address_t payment_address = (kth_payment_address_t)vptr;
 
-    chain_payment_address_destruct(payment_address);
+    kth_wallet_payment_address_destruct(payment_address);
 }
 
-void kth_chain_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -84,13 +83,13 @@ void kth_chain_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    payment_address_t payment_address = (payment_address_t)vptr;
+    kth_payment_address_t payment_address = (kth_payment_address_t)vptr;
 
-    char const* res = chain_payment_address_encoded(payment_address);
+    char const* res = kth_wallet_payment_address_encoded(payment_address);
     args.GetReturnValue().Set(String::NewFromUtf8(isolate, res));
 }
 
-void kth_chain_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -104,10 +103,10 @@ void kth_chain_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    payment_address_t payment_address = (payment_address_t)vptr;
+    kth_payment_address_t payment_address = (kth_payment_address_t)vptr;
 
-    uint8_t res = chain_payment_address_version(payment_address);
+    uint8_t res = kth_wallet_payment_address_version(payment_address);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-}  // namespace kth_native
+}  // namespace kth_js_native

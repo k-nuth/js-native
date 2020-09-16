@@ -10,7 +10,7 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "kth_main_module.cpp", "chain/chain.cpp", "chain/header.cpp", "chain/block.cpp", 
+      "sources": [ "kth_addon.cpp", "chain/chain.cpp", "chain/header.cpp", "chain/block.cpp", 
                    "chain/merkle_block.cpp", "chain/point.cpp", 
                    "chain/transaction.cpp", "chain/input.cpp", "chain/output.cpp", "chain/output_point.cpp", 
                    "chain/tools.cpp",
@@ -116,6 +116,7 @@
 
       'defines': [
           'KTH_LIB_STATIC',
+          'KTH_DB_NEW_FULL',
       ],
       # # Linux OLD
       # "include_dirs": ["/home/fernando/dev/k-nuth/node-cint/include"],
@@ -150,7 +151,24 @@
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
           # "include_dirs": ["/home/fernando/dev/c-api/include"],
+
+          "cflags": [
+            "-std=c++17",
+            "-Wno-deprecated-declarations",
+            "-Wno-unused-result",
+            "-Wno-cast-function-type",
+            ""
+          ],
+
+          "cflags_cc": [
+            "-std=c++17",
+            "-Wno-deprecated-declarations",
+            "-Wno-unused-result",
+            "-Wno-cast-function-type",
+            ""
+          ],
           
+
           'libraries': [
             '-L./deps/lib/', 
             '-L../deps/lib/',

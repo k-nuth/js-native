@@ -7,17 +7,17 @@
 
 #include <node.h>
 
-namespace kth_native {
+namespace kth_js_native {
 
-void kth_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void kth_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
-void kth_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
-void kth_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args);
-void kth_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args);
-void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args);
-//void kth_chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
-//void kth_chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-}  // namespace kth_native
+}  // namespace kth_js_native
 
 #endif //KTH_JS_CHAIN_OUTPUT_H_

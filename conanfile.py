@@ -11,24 +11,15 @@ class KnuthJsNative(ConanFile):
     
     # options = {"shared": [True, False]}
     # default_options = "shared=False"
+    # TODO(fernando): use Shared=False as default
 
     generators = "cmake"
-    # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "kth-Config.cmake.in", "include/*", "test/*", "console/*"
-    # package_files = "build/lkth-c-api.so"
-    # build_policy = "missing"
+    requires = (("c-api/0.4.5@kth/stable"))
 
-    # TODO(fernando): use Shared=False as default
-    
-    requires = (("c-api/0.1.0@kth/stable"))
 
-    # conan install c-api/0.8@kth/stable -o gmp:host=auto --build=gmp
-
-    # default_options = "gmp:host=auto" #, "OpenSSL:shared=True"
-    # build_policy = "gmp"
-
-    # default_options = "c-api:shared=False" #, "OpenSSL:shared=True"
-
-    # conan install c-api/0.2@kth/stable -o shared=True
+    def configure(self):
+        ConanFile.configure(self)
+        self.options["c-api"].db = "full"
 
     def imports(self):
         self.copy("*.h", "./deps/include/kth", "include/kth")

@@ -7,16 +7,15 @@
 
 #include <node.h>
 
-#include <kth/c-api/chain/block_list.h>
+#include <kth/capi/chain/block_list.h>
 
 #include "block_list.hpp"
 
-namespace kth_native {
+namespace kth_js_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
-using v8::Handle;
 using v8::Global;
 
 using v8::Object;
@@ -32,7 +31,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void kth_chain_block_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 0) {
@@ -40,11 +39,11 @@ void kth_chain_block_list_construct_default(v8::FunctionCallbackInfo<v8::Value> 
         return;
     }
 
-    block_list_t res = chain_block_list_construct_default();
+    kth_block_list_t res = kth_chain_block_list_construct_default();
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void kth_chain_block_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -58,12 +57,12 @@ void kth_chain_block_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& ar
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    block_list_t block_list = (block_list_t)vptr;
+    kth_block_list_t block_list = (kth_block_list_t)vptr;
 
-    chain_block_list_destruct(block_list);
+    kth_chain_block_list_destruct(block_list);
 }
 
-void kth_chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -82,15 +81,15 @@ void kth_chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& a
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    block_list_t block_list = (block_list_t)vptr;
+    kth_block_list_t block_list = (kth_block_list_t)vptr;
 
     void* vptr2 = v8::External::Cast(*args[1])->Value();
-    block_t block = (block_t)vptr2;
+    kth_block_t block = (kth_block_t)vptr2;
 
-    chain_block_list_push_back(block_list, block);
+    kth_chain_block_list_push_back(block_list, block);
 }
 
-void kth_chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -104,13 +103,13 @@ void kth_chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args)
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    block_list_t block_list = (block_list_t)vptr;
+    kth_block_list_t block_list = (kth_block_list_t)vptr;
 
-    uint64_t res = chain_block_list_count(block_list);
+    uint64_t res = kth_chain_block_list_count(block_list);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -129,12 +128,12 @@ void kth_chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    block_list_t block_list = (block_list_t)vptr;
+    kth_block_list_t block_list = (kth_block_list_t)vptr;
 
-    uint64_t n = args[1]->IntegerValue();
+    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    block_t res = chain_block_list_nth(block_list, n);
+    kth_block_t res = kth_chain_block_list_nth(block_list, n);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-}  // namespace kth_native
+}  // namespace kth_js_native

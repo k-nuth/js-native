@@ -7,16 +7,15 @@
 
 #include <node.h>
 
-#include <kth/c-api/chain/output.h>
+#include <kth/capi/chain/output.h>
 
 #include "output.hpp"
 
-namespace kth_native {
+namespace kth_js_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
-using v8::Handle;
 using v8::Global;
 
 using v8::Object;
@@ -32,7 +31,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void kth_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -46,12 +45,12 @@ void kth_chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) 
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    chain_output_destruct(output);
+    kth_chain_output_destruct(output);
 }
 
-void kth_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -65,13 +64,13 @@ void kth_chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) 
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    int res = chain_output_is_valid(output);
+    int res = kth_chain_output_is_valid(output);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void kth_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -90,15 +89,15 @@ void kth_chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const&
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    bool wire = args[1]->BooleanValue();
-    uint64_t res = chain_output_serialized_size(output, wire ? 1 : 0);
+    bool wire = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    uint64_t res = kth_chain_output_serialized_size(output, wire ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
 
-void kth_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -112,13 +111,13 @@ void kth_chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    uint64_t res = chain_output_value(output);
+    uint64_t res = kth_chain_output_value(output);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -137,16 +136,16 @@ void kth_chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> c
     // }    
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    // bool bip16_active = args[1]->BooleanValue();
+    // bool bip16_active = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
 
-    // uint64_t res = chain_output_signature_operations(output, bip16_active ? 1 : 0);
-    uint64_t res = chain_output_signature_operations(output);
+    // uint64_t res = kth_chain_output_signature_operations(output, bip16_active ? 1 : 0);
+    uint64_t res = kth_chain_output_signature_operations(output);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -160,19 +159,19 @@ void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    output_t output = (output_t)vptr;
+    kth_output_t output = (kth_output_t)vptr;
 
-    script_t res = chain_output_script(output);
+    kth_script_t res = kth_chain_output_script(output);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
 
-//void kth_chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
-//void kth_chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
+//void chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 
 
-// void kth_chain_output_is_final(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void chain_output_is_final(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -186,14 +185,14 @@ void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     }
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
-//     output_t output = (output_t)vptr;
+//     kth_output_t output = (kth_output_t)vptr;
 
-//     int res = chain_output_is_final(output);
+//     int res = kth_chain_output_is_final(output);
 //     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
     
 // }
 
-// void kth_chain_output_sequence(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void chain_output_sequence(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -207,13 +206,13 @@ void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     }
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
-//     output_t output = (output_t)vptr;
+//     kth_output_t output = (kth_output_t)vptr;
 
-//     uint32_t res = chain_output_sequence(output);
+//     uint32_t res = kth_chain_output_sequence(output);
 //     args.GetReturnValue().Set(Number::New(isolate, res));
 // }
 
-// void kth_chain_output_previous_output(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// void chain_output_previous_output(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     Isolate* isolate = args.GetIsolate();
 
 //     if (args.Length() != 1) {
@@ -227,11 +226,11 @@ void kth_chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
 //     }
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
-//     output_t output = (output_t)vptr;
+//     kth_output_t output = (kth_output_t)vptr;
 
-//     output_point_t res = chain_output_previous_output(output);
+//     kth_outputpoint_t res = kth_chain_output_previous_output(output);
 //     args.GetReturnValue().Set(External::New(isolate, res));
 // }
 
 
-}  // namespace kth_native
+}  // namespace kth_js_native

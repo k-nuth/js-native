@@ -158,12 +158,12 @@ function wait_until_block(chain, desired_height) {
 
 
 
-const executor = kth.executor_construct("", process.stdout, process.stderr);
-// const executor = kth.executor_construct("", null, null)
-kth.executor_initchain(executor)
-kth.executor_run_wait(executor)
+const executor = kth.kth_node_construct("", process.stdout, process.stderr);
+// const executor = kth.kth_node_construct("", null, null)
+kth.kth_node_initchain(executor)
+kth.kth_node_run_wait(executor)
 
-const chain = kth.executor_get_chain(executor)
+const chain = kth.kth_node_get_chain(executor)
 
 wait_until_block(chain, 2300)
 
@@ -277,7 +277,7 @@ kth.chain_fetch_block_by_height(chain, 2300, function (err, block, height) {
     if (err == 0) {
         console.log(`chain_fetch_block_by_height is OK, err:  ${err}, height: ${height}`)
 
-        var tx_count = kth.chain_block_transaction_count(block);
+        var tx_count = kth.kth_chain_block_transaction_count(block);
         console.log(`chain_fetch_block_by_height, tx_count: ${tx_count}`)
 
         var serialized_size = kth.chain_block_serialized_size(block, 0);
@@ -306,7 +306,7 @@ kth.chain_fetch_block_by_height(chain, 2300, function (err, block, height) {
         var is_valid = kth.chain_block_is_valid(block);
         console.log(`chain_fetch_block_by_height, is_valid: ${is_valid}`)
 
-        var tx_nth = kth.chain_block_transaction_nth(block, 0);
+        var tx_nth = kth.kth_chain_block_transaction_nth(block, 0);
         // console.log(`chain_fetch_block_by_height, tx_nth: ${tx_nth}`)
 
         var sigops = kth.chain_block_signature_operations(block);
@@ -315,7 +315,7 @@ kth.chain_fetch_block_by_height(chain, 2300, function (err, block, height) {
         var sigops2 = kth.chain_block_signature_operations_bip16_active(block, true);
         console.log(`chain_fetch_block_by_height, sigops2: ${sigops2}`)
 
-        var total_inputs = kth.chain_block_total_inputs(block, true);
+        var total_inputs = kth.kth_chain_block_total_inputs(block, true);
         console.log(`chain_fetch_block_by_height, total_inputs: ${total_inputs}`)
 
         var is_extra_coinbase = kth.chain_block_is_extra_coinbase(block);
@@ -527,7 +527,7 @@ kth.chain_fetch_transaction_position(chain, tx_hash_arr, true, function (err, in
 
 console.log('... BEFORE EXIT ...')
 
-kth.executor_destruct(executor)
+kth.kth_node_destruct(executor)
 
 
 

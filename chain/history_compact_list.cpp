@@ -7,16 +7,15 @@
 
 #include <node.h>
 
-#include <kth/c-api/chain/history_compact_list.h>
+#include <kth/capi/chain/history_compact_list.h>
 
 #include "history_compact_list.hpp"
 
-namespace kth_native {
+namespace kth_js_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
-using v8::Handle;
 using v8::Global;
 
 using v8::Object;
@@ -32,7 +31,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void kth_chain_history_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_history_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -48,10 +47,10 @@ void kth_chain_history_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value>
     void* vptr = v8::External::Cast(*args[0])->Value();
     history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
 
-    chain_history_compact_list_destruct(history_compact_list);
+    kth_chain_history_compact_list_destruct(history_compact_list);
 }
 
-void kth_chain_history_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_history_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -67,11 +66,11 @@ void kth_chain_history_compact_list_count(v8::FunctionCallbackInfo<v8::Value> co
     void* vptr = v8::External::Cast(*args[0])->Value();
     history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
 
-    uint64_t res = chain_history_compact_list_count(history_compact_list);
+    uint64_t res = kth_chain_history_compact_list_count(history_compact_list);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_history_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_history_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -92,10 +91,10 @@ void kth_chain_history_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> cons
     void* vptr = v8::External::Cast(*args[0])->Value();
     history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
 
-    uint64_t n = args[1]->IntegerValue();
+    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    history_compact_t res = chain_history_compact_list_nth(history_compact_list, n);
+    kth_history_compact_t res = kth_chain_history_compact_list_nth(history_compact_list, n);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-}  // namespace kth_native
+}  // namespace kth_js_native

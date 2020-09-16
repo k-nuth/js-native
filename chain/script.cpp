@@ -7,17 +7,16 @@
 
 #include <node.h>
 
-#include <kth/c-api/chain/script.h>
+#include <kth/capi/chain/script.h>
 
 #include "script.hpp"
 #include "tools.hpp"
 
-namespace kth_native {
+namespace kth_js_native {
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
-using v8::Handle;
 using v8::Global;
 
 using v8::Object;
@@ -33,7 +32,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
-void kth_chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -47,12 +46,12 @@ void kth_chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) 
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    chain_script_destruct(script);
+    kth_chain_script_destruct(script);
 }
 
-void kth_chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -66,13 +65,13 @@ void kth_chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) 
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    int res = chain_script_is_valid(script);
+    int res = kth_chain_script_is_valid(script);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void kth_chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -86,13 +85,13 @@ void kth_chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> co
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    int res = chain_script_is_valid_operations(script);
+    int res = kth_chain_script_is_valid_operations(script);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void kth_chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -106,13 +105,13 @@ void kth_chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> c
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    uint64_t res = chain_script_satoshi_content_size(script);
+    uint64_t res = kth_chain_script_satoshi_content_size(script);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -131,15 +130,15 @@ void kth_chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const&
     }    
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    bool prefix = args[1]->BooleanValue();
+    bool prefix = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
 
-    uint64_t res = chain_script_serialized_size(script, prefix);
+    uint64_t res = kth_chain_script_serialized_size(script, prefix);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -158,15 +157,15 @@ void kth_chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args)
     }        
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    uint32_t active_forks = args[1]->IntegerValue();
+    uint32_t active_forks = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    char const* res = chain_script_to_string(script, active_forks);
+    char const* res = kth_chain_script_to_string(script, active_forks);
     args.GetReturnValue().Set(String::NewFromUtf8(isolate, res)); // NewFromOneByte 
 }
 
-void kth_chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 2) {
@@ -186,40 +185,40 @@ void kth_chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+    kth_script_t script = (kth_script_t)vptr;
 
-    bool embedded = args[1]->BooleanValue();
+    bool embedded = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
 
-    uint64_t res = chain_script_sigops(script, embedded);
+    uint64_t res = kth_chain_script_sigops(script, embedded);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
-void kth_chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
     
-    if (args.Length() != 2) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
-        return;
-    }
+//     if (args.Length() != 2) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+//         return;
+//     }
 
-    if ( ! args[1]->IsExternal()) {
-        isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
-        return;
-    }
+//     if ( ! args[1]->IsExternal()) {
+//         isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+//         return;
+//     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    script_t script = (script_t)vptr;
+//     void* vptr = v8::External::Cast(*args[0])->Value();
+//     kth_script_t script = (kth_script_t)vptr;
 
-    void* vptr2 = v8::External::Cast(*args[1])->Value();
-    script_t prevout_script = (script_t)vptr2;
+//     void* vptr2 = v8::External::Cast(*args[1])->Value();
+//     kth_script_t prevout_script = (kth_script_t)vptr2;
 
-    uint64_t res = chain_script_embedded_sigops(script, prevout_script);
-    args.GetReturnValue().Set(Number::New(isolate, res));
-}
+//     uint64_t res = kth_chain_script_embedded_sigops(script, prevout_script);
+//     args.GetReturnValue().Set(Number::New(isolate, res));
+// }
 
-}  // namespace kth_native
+}  // namespace kth_js_native
