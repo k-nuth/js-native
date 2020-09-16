@@ -161,7 +161,9 @@ install:
         npm install -g node-pre-gyp-github
 
         # pip install conan_package_tools --upgrade
-        pip install conan --upgrade
+        # pip install conan --upgrade
+        pip install kthbuild --upgrade
+        
         conan user
       fi
     fi    
