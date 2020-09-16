@@ -25,13 +25,13 @@
 
 // // Load the precompiled binary for windows.
 // if (process.platform == "win32" && process.arch == "x64") {
-//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-native.node');
+//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-bch-native.node');
 
 //     // kth = require('./bin/winx64/kth.node');
 //     // kth = require(__dirname + './build/Release/kth.node')
 //     // kth = require('./build/Release/kth.node')
 // } else if (process.platform == "win32" && process.arch == "ia32") {
-//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-native.node');
+//     kth = require('./lib/binding/Release/node-v48-win32-x64/kth-bch-native.node');
 //     // kth = require('./bin/winx86/kth.node');  
 //     // kth = require(__dirname + './build/Release/kth.node')
 //     // kth = require('./build/Release/kth.node')

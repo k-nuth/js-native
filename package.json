@@ -1,5 +1,5 @@
 {
-  "name": "kth-native",
+  "name": "kth-bch-native",
   "version": "0.1.0",
   "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
   "repository": {
@@ -24,7 +24,7 @@
   },
   "main": "index.js",
   "binary": {
-    "module_name": "kth-native",
+    "module_name": "kth-bch-native",
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://github.com/k-nuth/js-native/releases/download/",

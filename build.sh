@@ -95,7 +95,7 @@ npm publish
 
 # --------------------------------------------------------------------------------
 
-npm view kth-native dist.tarball
+npm view kth-bch-native dist.tarball
 
 
 

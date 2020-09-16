@@ -3,10 +3,10 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 // test_native.js
-// npm install kth-native --msvs_version=2015
+// npm install kth-bch-native --msvs_version=2015
 // Para saber donde estan los comprimidos en el sitio de npm:
-//      npm view kth-native dist.tarball
-//         https://registry.npmjs.org/kth-native/-/kth-native-0.0.15.tgz
+//      npm view kth-bch-native dist.tarball
+//         https://registry.npmjs.org/kth-bch-native/-/kth-bch-native-0.0.15.tgz
 
 
 // ------------------------------------------------------------------------------------------------
@@ -106,9 +106,9 @@ function sleep(sleepDuration) {
 // ------------------------------------------------------------------------------------------------
 
 // const kth = require('../build/Release/kth')
-// const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-native')
-// const kth = require('../lib/binding/Release/node-v48-win32-x64/kth-native')
-const kth = require('kth-native')
+// const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-bch-native')
+// const kth = require('../lib/binding/Release/node-v48-win32-x64/kth-bch-native')
+const kth = require('kth-bch-native')
 
 
 function wait_until_block(chain, desired_height) {

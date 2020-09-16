@@ -17,8 +17,8 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// const kth = require('../lib/binding/Release/node-v57-win32-x64/kth-native')         // Windows Fernando
-const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-native')         // Linux Fernando
+// const kth = require('../lib/binding/Release/node-v57-win32-x64/kth-bch-native')         // Windows Fernando
+const kth = require('../lib/binding/Release/node-v48-linux-x64/kth-bch-native')         // Linux Fernando
 
 var express = require('express')
 , app = express()
