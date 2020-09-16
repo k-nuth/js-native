@@ -14,7 +14,7 @@ class KnuthJsNative(ConanFile):
     # TODO(fernando): use Shared=False as default
 
     generators = "cmake"
-    requires = (("c-api/0.4.5@kth/stable"))
+    requires = (("c-api/0.4.6@kth/stable"))
 
 
     def configure(self):
