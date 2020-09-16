@@ -30,13 +30,11 @@ matrix:
       #   env: PUSH_TO_REPOS=true
 
       - <<: *linux
-        # env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6 NODEJS_VERSION=8
-        env: NODEJS_VERSION=12
+        env: NODEJS_VERSION=14
         compiler: gcc
-        # node_js: "8"
 
       - <<: *linux
-        env: NODEJS_VERSION=11
+        env: NODEJS_VERSION=12
         compiler: gcc
 
       - <<: *linux
