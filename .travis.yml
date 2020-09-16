@@ -28,53 +28,81 @@ matrix:
    include:
       # - <<: *linux
       #   env: PUSH_TO_REPOS=true
-   
+
       - <<: *linux
         # env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6 NODEJS_VERSION=8
-        env: NODEJS_VERSION=8
+        env: NODEJS_VERSION=12
         compiler: gcc
         # node_js: "8"
 
       - <<: *linux
-        env: NODEJS_VERSION=7
+        env: NODEJS_VERSION=11
         compiler: gcc
 
       - <<: *linux
-        env: NODEJS_VERSION=6
+        env: NODEJS_VERSION=10
         compiler: gcc
 
-      - <<: *linux
-        env: NODEJS_VERSION=5
-        compiler: gcc
+      # - <<: *linux
+      #   # env: C_COMPILER=gcc-6 CXX_COMPILER=g++-6 NODEJS_VERSION=8
+      #   env: NODEJS_VERSION=8
+      #   compiler: gcc
+      #   # node_js: "8"
+
+      # - <<: *linux
+      #   env: NODEJS_VERSION=7
+      #   compiler: gcc
+
+      # - <<: *linux
+      #   env: NODEJS_VERSION=6
+      #   compiler: gcc
+
+      # - <<: *linux
+      #   env: NODEJS_VERSION=5
+      #   compiler: gcc
      
-      - <<: *linux
-        env: NODEJS_VERSION=4
-        compiler: gcc
+      # - <<: *linux
+      #   env: NODEJS_VERSION=4
+      #   compiler: gcc
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
-        node_js: "8"
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
+      #   node_js: "8"
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
-        node_js: "7"
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
+      #   node_js: "7"
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
-        node_js: "6"
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
+      #   node_js: "6"
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
-        node_js: "5"
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
+      #   node_js: "5"
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
-        node_js: "4"
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1  TRAVIS_PYTHON_VERSION=2.7 PYTHON_FULL_VERSION=2.7.13
+      #   node_js: "4"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       # - <<: *osx
