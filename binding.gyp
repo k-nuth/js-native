@@ -10,18 +10,19 @@
 
       'product_dir': '<(module_path)',
 
-      "sources": [ "kth_addon.cpp", "chain/chain.cpp", "chain/header.cpp", "chain/block.cpp", 
-                   "chain/merkle_block.cpp", "chain/point.cpp", 
-                   "chain/transaction.cpp", "chain/input.cpp", "chain/output.cpp", "chain/output_point.cpp", 
-                   "chain/tools.cpp",
-                   "chain/script.cpp", "chain/input_list.cpp", "chain/output_list.cpp", "chain/transaction_list.cpp",
-                   "chain/block_list.cpp",
-                   "chain/history_compact_list.cpp",
-                   "chain/history_compact.cpp",
-                   "chain/payment_address.cpp",
-                   "chain/stealth_compact.cpp",
-                   "chain/stealth_compact_list.cpp",
-                   "wallet/word_list.cpp",
+      "sources": [ "src/kth-native.cpp", "src/node.cpp",
+                   "src/chain/chain.cpp", "src/chain/header.cpp", "src/chain/block.cpp", 
+                   "src/chain/merkle_block.cpp", "src/chain/point.cpp", 
+                   "src/chain/transaction.cpp", "src/chain/input.cpp", "src/chain/output.cpp", "src/chain/output_point.cpp", 
+                   "src/chain/tools.cpp",
+                   "src/chain/script.cpp", "src/chain/input_list.cpp", "src/chain/output_list.cpp", "src/chain/transaction_list.cpp",
+                   "src/chain/block_list.cpp",
+                   "src/chain/history_compact_list.cpp",
+                   "src/chain/history_compact.cpp",
+                   "src/chain/payment_address.cpp",
+                   "src/chain/stealth_compact.cpp",
+                   "src/chain/stealth_compact_list.cpp",
+                   "src/wallet/word_list.cpp",
                 ],
       
       'variables': {
@@ -149,7 +150,7 @@
       'conditions': [
         ['OS=="linux"', {
 
-          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
+          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
           # "include_dirs": ["/home/fernando/dev/c-api/include"],
 
           "cflags": [

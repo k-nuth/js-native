@@ -45,7 +45,7 @@
 
 var binary = require('node-pre-gyp');
 var path = require('path')
-var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json');
 
 console.log(`kth_path: ${kth_path}`)
 
