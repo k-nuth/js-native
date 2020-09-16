@@ -19,3 +19,5 @@ __pycache__/
 
 conanbuildinfo.txt
 package-lock.json
+graph_info.json
+conan.lock
