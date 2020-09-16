@@ -56,7 +56,8 @@ install:
 
 
   - pip --version
-  - pip install conan --upgrade
+  # - pip install conan --upgrade
+  - pip install kthbuild --upgrade
   - python --version
   - conan user # It creates the conan data directory
 
