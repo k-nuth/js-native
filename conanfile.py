@@ -20,6 +20,7 @@ class KnuthJsNative(ConanFile):
     def configure(self):
         ConanFile.configure(self)
         self.options["c-api"].db = "full"
+        self.options["c-api"].microarchitecture = "4fZKi37a595hP"
 
     def imports(self):
         self.copy("*.h", "./deps/include/kth", "include/kth")
