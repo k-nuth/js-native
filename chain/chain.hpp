@@ -9,6 +9,7 @@
 
 namespace kth_js_native {
 
+//TODO(fernando): put in a helper file
 template <typename T, size_t argc> 
 void call_function_and_free(v8::Isolate* isolate, void* ctx, T (&argv)[argc]) {
     auto* callback = static_cast<v8::Persistent<v8::Function>*>(ctx);
@@ -18,6 +19,15 @@ void call_function_and_free(v8::Isolate* isolate, void* ctx, T (&argv)[argc]) {
     //callback->Dispose();
     delete callback;
 }
+
+//TODO(fernando): put in a helper file
+inline
+v8::Persistent<v8::Function>* make_callback(v8::Isolate* isolate, v8::Local<v8::Value> const& arg) {
+    auto* callback = new v8::Persistent<v8::Function>;
+    callback->Reset(isolate, arg.As<v8::Function>());
+    return callback;
+}
+
 
 void chain_fetch_last_height(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_fetch_block_height(v8::FunctionCallbackInfo<v8::Value> const& args);

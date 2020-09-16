@@ -69,10 +69,7 @@ void chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
-    auto* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[1].As<Function>());
-
+    auto callback = make_callback(isolate, args[1]);
     kth_chain_fetch_last_height(chain, callback, chain_fetch_last_height_handler);
 }
 
@@ -144,12 +141,8 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
-
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_block_height(chain, callback, hash, chain_fetch_block_height_handler);
 }
 
@@ -194,10 +187,7 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_block_header_by_height(chain, callback, height, chain_fetch_block_header_by_height_handler);
 }
 
@@ -243,12 +233,8 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_block_header_by_hash(chain, callback, hash, chain_fetch_block_header_by_hash_handler);
 }
     
@@ -295,12 +281,8 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
 
-    
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_block_by_height(chain, callback, height, chain_fetch_block_by_height_handler);
 }
     
@@ -345,12 +327,8 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_block_by_hash(chain, callback, hash, chain_fetch_block_by_hash_handler);
 }
     
@@ -396,13 +374,9 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_merkle_block_by_height(chain, callback, height, chain_fetch_merkle_block_by_height_handler);
 }
     
@@ -449,12 +423,8 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_merkle_block_by_hash(chain, callback, hash, chain_fetch_merkle_block_by_hash_handler);
 }
 
@@ -495,12 +465,8 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
 
-    
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_compact_block_by_height(chain, callback, height, chain_fetch_compact_block_by_height_handler);
 }
     
@@ -546,12 +512,8 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_compact_block_by_hash(chain, callback, hash, chain_fetch_compact_block_by_hash_handler);
 }
     
@@ -610,13 +572,9 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
     bool require_confirmed = args[2]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[3].As<Function>());
-
+    auto callback = make_callback(isolate, args[3]);
     kth_chain_fetch_transaction(chain, callback, hash, require_confirmed, chain_fetch_transaction_handler);
 }
     
@@ -671,18 +629,11 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     kth_hash_t hash = to_native_hash(arr);
     bool require_confirmed = args[2]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[3].As<Function>());
-
+    auto callback = make_callback(isolate, args[3]);
     kth_chain_fetch_transaction_position(chain, callback, hash, require_confirmed, chain_fetch_transaction_position_handler);
 }
-
-
-
 
 
 
@@ -724,13 +675,9 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-
     void* op_vptr = v8::External::Cast(*args[1])->Value();
     kth_outputpoint_t op = (kth_outputpoint_t)op_vptr;
-    
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_fetch_spend(chain, callback, op, chain_fetch_spend_handler);
 }
 
@@ -789,9 +736,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     uint64_t limit = args[2]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     uint64_t from_height = args[3]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[4].As<Function>());
-
+    auto callback = make_callback(isolate, args[4]);
     kth_chain_fetch_history(chain, callback, address, limit, from_height, chain_fetch_history_handler);
 }
 
@@ -973,9 +918,7 @@ void chain_organize_block(FunctionCallbackInfo<Value> const& args) {
     void* block_vptr = v8::External::Cast(*args[1])->Value();
     kth_block_t block = (kth_block_t)block_vptr;
 
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_organize_block(chain, callback, block, chain_organize_block_handler);
 }
 
@@ -1020,9 +963,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     void* transaction_vptr = v8::External::Cast(*args[1])->Value();
     kth_transaction_t transaction = (kth_transaction_t)transaction_vptr;
 
-    Persistent<Function>* callback = new Persistent<Function>;
-    callback->Reset(isolate, args[2].As<Function>());
-
+    auto callback = make_callback(isolate, args[2]);
     kth_chain_organize_transaction(chain, callback, transaction, chain_organize_transaction_handler);
 }
     
