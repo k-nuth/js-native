@@ -48,12 +48,16 @@ void node_construct(FunctionCallbackInfo<Value> const& args) {
 
     if (! args[1]->IsNull()) {
         auto sout_obj = args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
-        sout_fd = sout_obj->Get(isolate->GetCurrentContext(), String::NewFromUtf8(isolate, "fd")).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
+        sout_fd = sout_obj->Get(isolate->GetCurrentContext(), 
+            String::NewFromUtf8(isolate, "fd", v8::NewStringType::kNormal).ToLocalChecked()
+            ).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
     }
 
     if (! args[2]->IsNull()) {
         auto serr_obj = args[2]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
-        serr_fd = serr_obj->Get(isolate->GetCurrentContext(), String::NewFromUtf8(isolate, "fd")).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
+        serr_fd = serr_obj->Get(isolate->GetCurrentContext(), 
+            String::NewFromUtf8(isolate, "fd", v8::NewStringType::kNormal).ToLocalChecked()
+            ).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
     }
 
     kth_bool_t ok;

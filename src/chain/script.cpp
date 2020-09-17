@@ -162,7 +162,9 @@ void chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     uint32_t active_forks = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
     char const* res = kth_chain_script_to_string(script, active_forks);
-    args.GetReturnValue().Set(String::NewFromUtf8(isolate, res)); // NewFromOneByte 
+    args.GetReturnValue().Set(
+        String::NewFromUtf8(isolate, res, v8::NewStringType::kNormal).ToLocalChecked()
+        ); // NewFromOneByte 
 }
 
 void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {

@@ -86,7 +86,9 @@ void wallet_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& a
     kth_payment_address_t payment_address = (kth_payment_address_t)vptr;
 
     char const* res = kth_wallet_payment_address_encoded(payment_address);
-    args.GetReturnValue().Set(String::NewFromUtf8(isolate, res));
+    args.GetReturnValue().Set(
+        String::NewFromUtf8(isolate, res, v8::NewStringType::kNormal).ToLocalChecked()
+        );
 }
 
 void wallet_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
