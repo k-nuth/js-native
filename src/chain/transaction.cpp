@@ -133,9 +133,7 @@ void chain_transaction_hash_sighash_type(v8::FunctionCallbackInfo<v8::Value> con
     kth_transaction_t tx = (kth_transaction_t)vptr;
 
     uint32_t sighash_type = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    
-    // TODO(fernando): there is a typo in the C-API, fixme: kth_chain_transaction_hash_sighash_type
-    kth_hash_t res = kth_chain_transaction_hash_sigkth_hash_type(tx, sighash_type);
+    kth_hash_t res = kth_chain_transaction_hash_sighash_type(tx, sighash_type);
 
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
     memcpy(tmp->GetContents().Data(), res.hash, 32);
