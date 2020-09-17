@@ -102,7 +102,7 @@ process.stdin.resume();//so the program will not close instantly
 
 process.on("SIGINT", function () {
     console.log("captured SIGINT...");
-    // kth.kth_node_destruct(executor)
+    // kth.node_destruct(executor)
     process.exit();
 });
 
@@ -131,12 +131,12 @@ app.listen(port, (err) => {
 
 
 
-const executor = kth.kth_node_construct("", process.stdout, process.stderr);
-// const executor = kth.kth_node_construct("", null, null)
-kth.kth_node_initchain(executor)
-kth.kth_node_run_wait(executor)
+const executor = kth.node_construct("", process.stdout, process.stderr);
+// const executor = kth.node_construct("", null, null)
+kth.node_initchain(executor)
+kth.node_run_wait(executor)
 
-const chain = kth.kth_node_get_chain(executor)
+const chain = kth.node_get_chain(executor)
 
 
 function print_blocks(block_list) {
@@ -231,5 +231,5 @@ kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks
 
 // console.log('... BEFORE EXIT ...')
 
-// kth.kth_node_destruct(executor)
+// kth.node_destruct(executor)
 

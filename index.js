@@ -2,6 +2,20 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+var binary = require('node-pre-gyp');
+var path = require('path')
+var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+
+console.log(`kth_path: ${kth_path}`)
+
+var kth = require(kth_path);
+
+// require('assert').equal(kth.hello(),"hello");
+
+module.exports = kth;
+
+
+
 //
 // Load bindings binary
 //
@@ -41,16 +55,3 @@
 //     // kth = require(__dirname + './build/Release/kth.node')
 //     // kth = require('./build/Release/kth.node')
 // }
-
-
-var binary = require('node-pre-gyp');
-var path = require('path')
-var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json');
-
-console.log(`kth_path: ${kth_path}`)
-
-var kth = require(kth_path);
-
-// require('assert').equal(kth.hello(),"hello");
-
-module.exports = kth;

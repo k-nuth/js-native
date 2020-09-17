@@ -37,13 +37,13 @@
 namespace kth::js_native {
 
 void init(v8::Local<v8::Object> exports) {
-    NODE_SET_METHOD(exports, "kth_node_construct", node_construct);
-    NODE_SET_METHOD(exports, "kth_node_destruct", node_destruct);
-    NODE_SET_METHOD(exports, "kth_node_stop", node_stop);
-    NODE_SET_METHOD(exports, "kth_node_initchain", node_initchain);
-//    NODE_SET_METHOD(exports, "kth_node_run", node_run);
-    NODE_SET_METHOD(exports, "kth_node_run_wait", node_run_wait);
-    NODE_SET_METHOD(exports, "kth_node_get_chain", node_get_chain);
+    NODE_SET_METHOD(exports, "node_construct", node_construct);
+    NODE_SET_METHOD(exports, "node_destruct", node_destruct);
+    NODE_SET_METHOD(exports, "node_stop", node_stop);
+    NODE_SET_METHOD(exports, "node_initchain", node_initchain);
+//    NODE_SET_METHOD(exports, "node_run", node_run);
+    NODE_SET_METHOD(exports, "node_run_wait", node_run_wait);
+    NODE_SET_METHOD(exports, "node_get_chain", node_get_chain);
     
     // NODE_SET_METHOD(exports, "chain_validate_tx", chain_validate_tx);
     // NODE_SET_METHOD(exports, "chain_get_last_height", chain_get_last_height);
