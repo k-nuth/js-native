@@ -91,7 +91,7 @@ void chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_output_t output = (kth_output_t)vptr;
 
-    bool wire = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool wire = args[1]->BooleanValue(isolate);
     uint64_t res = kth_chain_output_serialized_size(output, wire ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
@@ -138,7 +138,7 @@ void chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_output_t output = (kth_output_t)vptr;
 
-    // bool bip16_active = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    // bool bip16_active = args[1]->BooleanValue(isolate);
 
     // uint64_t res = kth_chain_output_signature_operations(output, bip16_active ? 1 : 0);
     uint64_t res = kth_chain_output_signature_operations(output);

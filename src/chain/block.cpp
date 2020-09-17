@@ -346,7 +346,7 @@ void chain_block_signature_operations_bip16_active(v8::FunctionCallbackInfo<v8::
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_t block = (kth_block_t)vptr;
 
-    bool bip16_active = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool bip16_active = args[1]->BooleanValue(isolate);
     
     uint64_t res = kth_chain_block_signature_operations_bip16_active(block, bip16_active ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -374,7 +374,7 @@ void chain_block_total_inputs(v8::FunctionCallbackInfo<v8::Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_t block = (kth_block_t)vptr;
 
-    bool with_coinbase = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool with_coinbase = args[1]->BooleanValue(isolate);
 
     uint64_t res = kth_chain_block_total_inputs(block, with_coinbase ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));

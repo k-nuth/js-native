@@ -569,7 +569,7 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
-    bool require_confirmed = args[2]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool require_confirmed = args[2]->BooleanValue(isolate);
     auto callback = make_callback(isolate, args[3]);
     kth_chain_fetch_transaction(chain, callback, hash, require_confirmed, chain_fetch_transaction_handler);
 }
@@ -626,7 +626,7 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
-    bool require_confirmed = args[2]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool require_confirmed = args[2]->BooleanValue(isolate);
     auto callback = make_callback(isolate, args[3]);
     kth_chain_fetch_transaction_position(chain, callback, hash, require_confirmed, chain_fetch_transaction_position_handler);
 }
@@ -993,7 +993,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 //     }
                                 
 //     auto res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext(), Null(isolate), argc, argv);
-//     return res.ToLocalChecked()->BooleanValue(isolate->GetCurrentContext()).ToChecked(); 
+//     return res.ToLocalChecked()->BooleanValue(isolate); 
 // }
 
 // using subs_blk_data_t = std::tuple<Persistent<Function>*, kth_error_code_t, uint64_t, kth_block_list_t, kth_block_list_t>;

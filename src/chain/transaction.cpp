@@ -181,7 +181,7 @@ void chain_transaction_serialized_size(v8::FunctionCallbackInfo<v8::Value> const
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_transaction_t tx = (kth_transaction_t)vptr;
 
-    bool wire = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool wire = args[1]->BooleanValue(isolate);
     uint64_t res = kth_chain_transaction_serialized_size(tx, wire ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
@@ -247,7 +247,7 @@ void chain_transaction_signature_operations_bip16_active(v8::FunctionCallbackInf
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_transaction_t tx = (kth_transaction_t)vptr;
 
-    bool bip16_active = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool bip16_active = args[1]->BooleanValue(isolate);
 
     uint64_t res = kth_chain_transaction_signature_operations_bip16_active(tx, bip16_active ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -421,7 +421,7 @@ void chain_transaction_is_double_spend(v8::FunctionCallbackInfo<v8::Value> const
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_transaction_t tx = (kth_transaction_t)vptr;
 
-    bool include_unconfirmed = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool include_unconfirmed = args[1]->BooleanValue(isolate);
 
     int res = kth_chain_transaction_is_double_spend(tx, include_unconfirmed ? 1 : 0);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));

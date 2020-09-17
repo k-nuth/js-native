@@ -132,7 +132,7 @@ void chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_script_t script = (kth_script_t)vptr;
 
-    bool prefix = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool prefix = args[1]->BooleanValue(isolate);
 
     uint64_t res = kth_chain_script_serialized_size(script, prefix);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -189,7 +189,7 @@ void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_script_t script = (kth_script_t)vptr;
 
-    bool embedded = args[1]->BooleanValue(isolate->GetCurrentContext()).ToChecked();
+    bool embedded = args[1]->BooleanValue(isolate);
 
     uint64_t res = kth_chain_script_sigops(script, embedded);
     args.GetReturnValue().Set(Number::New(isolate, res));
