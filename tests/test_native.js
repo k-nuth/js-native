@@ -115,84 +115,49 @@ const kth = require('../lib/binding/Release/node-v72-linux-x64/kth-bch-native')
 function chain_fetch_last_height(chain) {
     return new Promise((resolve, reject) => {
         kth.chain_fetch_last_height(chain, function (e, h) {
-            if (e == 0) {
-                resolve(h);
-            } else {
-                reject(e);
-            }
+            resolve({error: e, height: h});
+            // if (e == 0) {
+            //     resolve(h);
+            // } else {
+            //     reject(e);
+            // }
         })    
     });
 }
 
-
-// function wait_until_block(chain, desired_height) {
-
-//     var height = 0
-
-//     kth.chain_fetch_last_height(chain, function (e, h) {
-//         if (e == 0) {
-//             console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
-//             height = h
-//         } else {
-//             console.log(`chain_fetch_last_height failed, err: ${e}, height: ${h}`)
-//         }
-//     })
-
-//     // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
-//     // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
-
-
-//     while (height < desired_height) {
-//         kth.chain_fetch_last_height(chain, function (e, h) {
-//             if (e == 0) {
-//                 console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
-//                 height = h
-//             } else {
-//                 console.log(`chain_fetch_last_height failed, err: ${e}, height: ${h}`)
-//             }
-//         })
-    
-
-//         // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
-        
-//         if (height < desired_height) {
-//             // printf("wait_until_block - 2\n");
-//             sleep(1000)
-//             // printf("wait_until_block - 3\n");
-//         }
-//     }
-
-//     // printf("wait_until_block - 4\n");
-// }
-
-
+function chain_fetch_block_header_by_hash(chain, hash) {
+    return new Promise((resolve, reject) => {
+        kth.chain_fetch_block_header_by_hash(chain, hash, function (e, header, height) {
+            resolve({error: e, header: header, height: height});
+            // if (e == 0) {
+            //     resolve([r, header, height]);
+            // } else {
+            //     resolve([header, height]);
+            //     // reject(e);
+            // }
+        })
+    });
+}
 async function wait_until_block(chain, desired_height) {
 
-    var height = await chain_fetch_last_height(chain);
-    // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${height}`)
-    // console.log(`chain_fetch_last_height failed, err: ${e}, height: ${height}`)
-    console.log(`chain_fetch_last_height is OK, height: ${height}`)
+    var res = await chain_fetch_last_height(chain);
+    console.log(`chain_fetch_last_height is OK, height: ${res.height}`)
 
-    // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
-    // console.log(`chain_fetch_last_height is OK, err:  ${e}, height: ${h}`)
-
-    while (height < desired_height) {
-        var height = await chain_fetch_last_height(chain);
-        console.log(`chain_fetch_last_height is OK, height: ${height}`)
+    while (res.height < desired_height) {
+        var res = await chain_fetch_last_height(chain);
+        console.log(`chain_fetch_last_height is OK, height: ${res.height}`)
         
-        if (height < desired_height) {
+        if (res.height < desired_height) {
             sleep(1000)
         }
     }
-
-    // printf("wait_until_block - 4\n");
 }
 
 
 async function main() {
 
-    var executor = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", process.stdout, process.stderr);
-    // var executor = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", null, null);
+    // var executor = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", process.stdout, process.stderr);
+    var executor = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", null, null);
     // const executor = kth.node_construct("", null, null)
     kth.node_initchain(executor)
     kth.node_run_wait(executor)
@@ -276,24 +241,15 @@ async function main() {
         }
     })
 
+    // Testnet4 Genesis block
+    res = await chain_fetch_block_header_by_hash(chain, toHash('000000001dd410c49a788668ce26751718cc797474d3152a5fc073dd44fd9f7b'));
+    console.log(res);
 
-    kth.chain_fetch_block_header_by_hash(chain, toHash('000000005845885b0f3e66a5a7377c408c7c42bad7528f44862f7b7e741bdb9e'), function (err, header, height) {
-        if (err == 0) {
-            console.log(`*********** chain_fetch_block_header_by_hash is OK, err:  ${err}, height: ${height}`)
-        } else {
-            console.log(`*********** chain_fetch_block_header_by_hash failed, err: ${err}, height: ${height}`)
-        }
-    })
+    res = await chain_fetch_block_header_by_hash(chain, toHash('000000005845885b0f3e66a5a7377c408c7c42bad7528f44862f7b7e741bdb9e'));
+    console.log(res);
 
-
-
-    kth.chain_fetch_block_header_by_hash(chain, hash_arr, function (err, header, height) {
-        if (err == 0) {
-            console.log(`chain_fetch_block_header_by_hash is OK, err:  ${err}, height: ${height}`)
-        } else {
-            console.log(`chain_fetch_block_header_by_hash failed, err: ${err}, height: ${height}`)
-        }
-    })
+    res = await chain_fetch_block_header_by_hash(chain, hash_arr);
+    console.log(res);
 
     //-----------------------------------
 

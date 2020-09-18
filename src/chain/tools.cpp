@@ -5,9 +5,6 @@
 #include <node.h>
 
 #include <kth/capi/primitives.h>
-
-#include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
-
 #include <kth/js-native/chain/tools.hpp>
 
 namespace kth::js_native {

@@ -93,10 +93,10 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_generate_merkle_root", chain_block_generate_merkle_root);
     NODE_SET_METHOD(exports, "chain_block_hash", chain_block_hash);
     NODE_SET_METHOD(exports, "chain_block_is_valid", chain_block_is_valid);
-    NODE_SET_METHOD(exports, "kth_chain_block_transaction_nth", chain_block_transaction_nth);
+    NODE_SET_METHOD(exports, "chain_block_transaction_nth", chain_block_transaction_nth);
     NODE_SET_METHOD(exports, "chain_block_signature_operations", chain_block_signature_operations);
     NODE_SET_METHOD(exports, "chain_block_signature_operations_bip16_active", chain_block_signature_operations_bip16_active);
-    NODE_SET_METHOD(exports, "kth_chain_block_total_inputs", chain_block_total_inputs);
+    NODE_SET_METHOD(exports, "chain_block_total_inputs", chain_block_total_inputs);
     NODE_SET_METHOD(exports, "chain_block_is_extra_coinbase", chain_block_is_extra_coinbase);
     NODE_SET_METHOD(exports, "chain_block_is_final", chain_block_is_final);
     NODE_SET_METHOD(exports, "chain_block_is_distinct_transaction_set", chain_block_is_distinct_transaction_set);

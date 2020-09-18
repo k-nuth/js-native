@@ -209,7 +209,7 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;

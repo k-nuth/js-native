@@ -274,10 +274,9 @@ void chain_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-
 void chain_block_transaction_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 2) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -295,9 +294,7 @@ void chain_block_transaction_nth(v8::FunctionCallbackInfo<v8::Value> const& args
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_t block = (kth_block_t)vptr;
-
     uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    
     kth_transaction_t res = kth_chain_block_transaction_nth(block, n);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
