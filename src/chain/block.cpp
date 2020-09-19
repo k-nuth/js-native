@@ -299,7 +299,6 @@ void chain_block_transaction_nth(v8::FunctionCallbackInfo<v8::Value> const& args
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-
 void chain_block_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
@@ -319,8 +318,6 @@ void chain_block_signature_operations(v8::FunctionCallbackInfo<v8::Value> const&
     uint64_t res = kth_chain_block_signature_operations(block);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
-
-
 
 void chain_block_signature_operations_bip16_active(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
@@ -348,7 +345,6 @@ void chain_block_signature_operations_bip16_active(v8::FunctionCallbackInfo<v8::
     uint64_t res = kth_chain_block_signature_operations_bip16_active(block, bip16_active ? 1 : 0);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
-
 
 void chain_block_total_inputs(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();

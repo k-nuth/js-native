@@ -39,10 +39,12 @@ namespace kth::js_native {
 void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "node_construct", node_construct);
     NODE_SET_METHOD(exports, "node_destruct", node_destruct);
-    NODE_SET_METHOD(exports, "node_stop", node_stop);
-    NODE_SET_METHOD(exports, "node_initchain", node_initchain);
-//    NODE_SET_METHOD(exports, "node_run", node_run);
-    NODE_SET_METHOD(exports, "node_run_wait", node_run_wait);
+    NODE_SET_METHOD(exports, "node_init_run_and_wait_for_signal", node_init_run_and_wait_for_signal);
+    NODE_SET_METHOD(exports, "node_signal_stop", node_signal_stop);
+    // NODE_SET_METHOD(exports, "node_initchain", node_initchain);
+    // NODE_SET_METHOD(exports, "node_run", node_run);
+    // NODE_SET_METHOD(exports, "node_run_wait", node_run_wait);
+    // NODE_SET_METHOD(exports, "node_stop", node_stop);
     NODE_SET_METHOD(exports, "node_get_chain", node_get_chain);
     
     // NODE_SET_METHOD(exports, "chain_validate_tx", chain_validate_tx);
@@ -202,11 +204,6 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_history_compact_get_height", chain_history_compact_get_height);
     NODE_SET_METHOD(exports, "chain_history_compact_get_value_or_previous_checksum", chain_history_compact_get_value_or_previous_checksum);
 
-    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
-    NODE_SET_METHOD(exports, "wallet_payment_address_encoded", wallet_payment_address_encoded);
-    NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
-    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
-
     NODE_SET_METHOD(exports, "chain_stealth_compact_get_ephemeral_public_key_hash", chain_stealth_compact_get_ephemeral_public_key_hash);
     NODE_SET_METHOD(exports, "chain_stealth_compact_get_transaction_hash", chain_stealth_compact_get_transaction_hash);
     NODE_SET_METHOD(exports, "chain_stealth_compact_get_public_key_hash", chain_stealth_compact_get_public_key_hash);
@@ -214,6 +211,11 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_destruct", chain_stealth_compact_list_destruct);
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_count", chain_stealth_compact_list_count);
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_nth", chain_stealth_compact_list_nth);
+
+    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
+    NODE_SET_METHOD(exports, "wallet_payment_address_encoded", wallet_payment_address_encoded);
+    NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
+    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
 
     NODE_SET_METHOD(exports, "wallet_word_list_construct", wallet_word_list_construct);
     NODE_SET_METHOD(exports, "wallet_word_list_destruct", wallet_word_list_destruct);

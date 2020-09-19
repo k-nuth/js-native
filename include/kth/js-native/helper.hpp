@@ -8,6 +8,7 @@
 #include <string>
 
 #include <node.h>
+#include <nan.h>
 
 namespace kth::js_native {
 
@@ -32,11 +33,26 @@ void call_function_and_free(v8::Isolate* isolate, void* ctx, T (&argv)[argc]) {
     delete callback;
 }
 
+struct context_t {
+    v8::Persistent<v8::Function>* callback;
+    uv_async_t* async;
+    void* data;
+};
+
 inline
 v8::Persistent<v8::Function>* make_callback(v8::Isolate* isolate, v8::Local<v8::Value> const& arg) {
     auto* callback = new v8::Persistent<v8::Function>;
     callback->Reset(isolate, arg.As<v8::Function>());
     return callback;
+}
+
+template <typename T> 
+inline 
+T copy_data_and_free(context_t& context) {
+    auto* context_data = static_cast<T*>(context.data);
+    T data = *context_data;
+    delete context_data;
+    return data;
 }
 
 }  // namespace kth::js_native
