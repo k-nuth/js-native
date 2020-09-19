@@ -37,7 +37,7 @@ echo "Fer 7"
 
 sudo -H npm install -g node-gyp
 sudo -H npm install -g node-pre-gyp
-sudo -H npm install -g aws-sdk
+# sudo -H npm install -g aws-sdk
 sudo -H npm install -g node-pre-gyp-github
 
 # npm cache clean
