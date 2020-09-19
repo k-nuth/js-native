@@ -35,7 +35,7 @@ process.stdin.resume();//so the program will not close instantly
 
 process.on("SIGINT", function () {
     console.log("captured SIGINT...");
-    // kth.node_destruct(executor)
+    // kth.node_destruct(node)
     process.exit();
 });
 
@@ -44,16 +44,16 @@ process.on("exit", function () {
     // exec.close()
 });
 
-const executor = kth.node_construct("", process.stdout, process.stderr);
-// const executor = kth.node_construct("", null, null)
-kth.node_initchain(executor)
-kth.node_run_wait(executor)
+const node = kth.node_construct("", process.stdout, process.stderr);
+// const node = kth.node_construct("", null, null)
+kth.node_initchain(node)
+kth.node_run_wait(node)
 
-const chain = kth.node_get_chain(executor)
+const chain = kth.node_get_chain(node)
 
 var last_height = 0
 
-kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
+kth.chain_subscribe_blockchain(node, chain, function (e, fork_height, blocks_incoming, blocks_replaced) {
     if (e == 0) {
         for (clientId in clients) {
             clients[clientId].write("event: time\n" + "data: " + fork_height + "\n\n");
