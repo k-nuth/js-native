@@ -71,17 +71,19 @@ void init(v8::Local<v8::Object> exports) {
 
     // NODE_SET_METHOD(exports, "chain_subscribe_blockchain", chain_subscribe_blockchain);
 
+    NODE_SET_METHOD(exports, "chain_header_to_data", chain_header_to_data);
+    NODE_SET_METHOD(exports, "chain_header_construct", chain_header_construct);
     NODE_SET_METHOD(exports, "chain_header_destruct", chain_header_destruct);
-    NODE_SET_METHOD(exports, "chain_header_get_version", chain_header_get_version);
+    NODE_SET_METHOD(exports, "chain_header_version", chain_header_version);
     NODE_SET_METHOD(exports, "chain_header_set_version", chain_header_set_version);
-    NODE_SET_METHOD(exports, "chain_header_get_previous_block_hash", chain_header_get_previous_block_hash);
-    NODE_SET_METHOD(exports, "chain_header_get_merkle", chain_header_get_merkle);
-    NODE_SET_METHOD(exports, "chain_header_get_hash", chain_header_get_hash);
-    NODE_SET_METHOD(exports, "chain_header_get_timestamp", chain_header_get_timestamp);
+    NODE_SET_METHOD(exports, "chain_header_previous_block_hash", chain_header_previous_block_hash);
+    NODE_SET_METHOD(exports, "chain_header_merkle", chain_header_merkle);
+    NODE_SET_METHOD(exports, "chain_header_hash", chain_header_hash);
+    NODE_SET_METHOD(exports, "chain_header_timestamp", chain_header_timestamp);
+    NODE_SET_METHOD(exports, "chain_header_bits", chain_header_bits);
+    NODE_SET_METHOD(exports, "chain_header_nonce", chain_header_nonce);
     // NODE_SET_METHOD(exports, "chain_header_set_timestamp", chain_header_set_timestamp);
-     NODE_SET_METHOD(exports, "chain_header_get_bits", chain_header_get_bits);
     // NODE_SET_METHOD(exports, "chain_header_set_bits", chain_header_set_bits);
-     NODE_SET_METHOD(exports, "chain_header_get_nonce", chain_header_get_nonce);
     // NODE_SET_METHOD(exports, "chain_header_set_nonce", chain_header_set_nonce);
 
     NODE_SET_METHOD(exports, "chain_block_destruct", chain_block_destruct);

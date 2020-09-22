@@ -225,35 +225,35 @@ async function main() {
 //         if (err == 0) {
 //             console.log(`chain_fetch_block_header_by_height is OK, err:  ${err}, height: ${height}`);
 
-//             // var version = kth.chain_header_get_version(header);
+//             // var version = kth.chain_header_version(header);
 //             // console.log(`chain_fetch_block_header_by_height, version: ${version}`)
 
-//             // var previous_block_hash = kth.chain_header_get_previous_block_hash(header);
+//             // var previous_block_hash = kth.chain_header_previous_block_hash(header);
 //             // // console.log(`chain_fetch_block_header_by_height, previous_block_hash: ${previous_block_hash}`)
 //             // var previous_block_hash_str = fromHash(previous_block_hash)
 //             // console.log(`chain_fetch_block_header_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
 
-//             // var merkle = kth.chain_header_get_merkle(header);
+//             // var merkle = kth.chain_header_merkle(header);
 //             // // console.log(`chain_fetch_block_header_by_height, merkle: ${merkle}`)
 //             // var merkle_str = fromHash(merkle)
 //             // console.log(`chain_fetch_block_header_by_height, merkle_str: ${merkle_str}`)
 
-//             // var hash = kth.chain_header_get_hash(header);
+//             // var hash = kth.chain_header_hash(header);
 //             // // console.log(`chain_fetch_block_header_by_height, hash: ${hash}`)
 //             // var hash_str = fromHash(hash)
 //             // console.log(`chain_fetch_block_header_by_height, hash_str: ${hash_str}`)
 
-//             // var timestamp = kth.chain_header_get_timestamp(header);
+//             // var timestamp = kth.chain_header_timestamp(header);
 //             // console.log(`chain_fetch_block_header_by_height, timestamp: ${timestamp}`)
 
 //             // var timestamp_date = timestampToDate(timestamp)
 //             // console.log(`chain_fetch_block_header_by_height, timestamp_date: ${timestamp_date}`)
 
 
-//             // var bits = kth.chain_header_get_bits(header);
+//             // var bits = kth.chain_header_bits(header);
 //             // console.log(`chain_fetch_block_header_by_height, bits: ${bits}`)
 
-//             // var nonce = kth.chain_header_get_nonce(header);
+//             // var nonce = kth.chain_header_nonce(header);
 //             // console.log(`chain_fetch_block_header_by_height, nonce: ${nonce}`)
 
             
@@ -358,35 +358,35 @@ async function main() {
 
 //             var header = kth.chain_block_get_header(block);
 
-//             var version = kth.chain_header_get_version(header);
+//             var version = kth.chain_header_version(header);
 //             console.log(`chain_fetch_block_by_height, version: ${version}`)
             
-//             var previous_block_hash = kth.chain_header_get_previous_block_hash(header);
+//             var previous_block_hash = kth.chain_header_previous_block_hash(header);
 //             // console.log(`chain_fetch_block_by_height, previous_block_hash: ${previous_block_hash}`)
 //             var previous_block_hash_str = fromHash(previous_block_hash)
 //             console.log(`chain_fetch_block_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
             
-//             var merkle = kth.chain_header_get_merkle(header);
+//             var merkle = kth.chain_header_merkle(header);
 //             // console.log(`chain_fetch_block_by_height, merkle: ${merkle}`)
 //             var merkle_str = fromHash(merkle)
 //             console.log(`chain_fetch_block_by_height, merkle_str: ${merkle_str}`)
             
-//             var hash = kth.chain_header_get_hash(header);
+//             var hash = kth.chain_header_hash(header);
 //             // console.log(`chain_fetch_block_by_height, hash: ${hash}`)
 //             var hash_str = fromHash(hash)
 //             console.log(`chain_fetch_block_by_height, hash_str: ${hash_str}`)
             
-//             var timestamp = kth.chain_header_get_timestamp(header);
+//             var timestamp = kth.chain_header_timestamp(header);
 //             console.log(`chain_fetch_block_by_height, timestamp: ${timestamp}`)
             
 //             var timestamp_date = timestampToDate(timestamp)
 //             console.log(`chain_fetch_block_by_height, timestamp_date: ${timestamp_date}`)
             
             
-//             var bits = kth.chain_header_get_bits(header);
+//             var bits = kth.chain_header_bits(header);
 //             console.log(`chain_fetch_block_by_height, bits: ${bits}`)
             
-//             var nonce = kth.chain_header_get_nonce(header);
+//             var nonce = kth.chain_header_nonce(header);
 //             console.log(`chain_fetch_block_by_height, nonce: ${nonce}`)
             
 

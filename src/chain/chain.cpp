@@ -119,7 +119,7 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
     }
 
     if ( ! args[1]->IsUint8Array()) {
-            throw_exception(isolate, "Wrong arguments, 1");
+        throw_exception(isolate, "Wrong arguments, 1");
         return;
     }
 
