@@ -55,6 +55,36 @@ T copy_data_and_free(context_t& context) {
     return data;
 }
 
+inline
+v8::Local<v8::String> to_string(v8::Isolate* isolate, char const* str) {
+    return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
+}
+
+inline
+v8::Local<v8::Uint8Array> to_byte_array(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
+    v8::Local<ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
+    memcpy(tmp->GetContents().Data(), data, size);
+    v8::Local<v8::Uint8Array> data = v8::Uint8Array::New(tmp, 0, size);
+    return data;
+}
+
+inline
+v8::Local<v8::Uint8Array> to_hash(v8::Isolate* isolate, kth_hash_t const& hash) {
+    return to_byte_array(isolate, hash.hash, 32);
+}
+
+inline
+v8::Local<v8::Uint8Array> to_shorthash(v8::Isolate* isolate, kth_shorthash_t const& hash) {
+    return to_byte_array(isolate, hash.hash, 16);
+}
+
+inline
+kth_bool_t to_bool(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+    bool b = x->BooleanValue(isolate);
+    // return b ? 1 : 0;
+    return b;
+}
+
 }  // namespace kth::js_native
 
 #endif // KTH_JS_NATIVE_HELPER_HPP_
