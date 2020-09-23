@@ -20,6 +20,7 @@ using v8::Local;
 using v8::Global;
 
 using v8::Object;
+using v8::Boolean;
 using v8::String;
 using v8::Value;
 using v8::External;
@@ -30,120 +31,184 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-// // kth_header_t kth_chain_header_factory_from_data(uint32_t version, uint8_t* data, uint64_t n);
-// void chain_header_factory_from_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
-
-// }
-
-// // kth_size_t kth_chain_header_satoshi_fixed_size(uint32_t version);
-// void chain_header_satoshi_fixed_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
-
-// }
-
-// // void kth_chain_header_reset(kth_header_t header);
-// // void chain_header_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {}
-
-// // kth_size_t kth_chain_header_serialized_size(kth_header_t header, uint32_t version);
-// void chain_header_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
-
-// }
-
-// uint8_t const* kth_chain_header_to_data(kth_header_t header, uint32_t version, kth_size_t* out_size);
-void chain_header_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_header_factory_from_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
-        return;
-    }
-
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 1");
-        return;
-    }
-
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
-    uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-
-    kth_size_t size;
-    auto data_c = kth_chain_header_to_data(header, version, &size);
-
-    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, size);
-    memcpy(tmp->GetContents().Data(), data_c, size);
-    Local<Uint8Array> data = Uint8Array::New(tmp, 0, size);
-    args.GetReturnValue().Set(data);
-}
-
-// // kth_header_t kth_chain_header_construct_default(void);
-// void chain_header_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
-// }
-
-// void print_hex(uint8_t const* data, size_t n) {
-//     while (n != 0) {
-//         printf("%02x", *data);
-//         ++data;
-//         --n;
-//     }
-//     printf("\n");
-// }
-
-// kth_header_t kth_chain_header_construct(uint32_t version, uint8_t* previous_block_hash, uint8_t* merkle, uint32_t timestamp, uint32_t bits, uint32_t nonce);
-void chain_header_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
-
-    if (args.Length() != 6) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_factory_from_data function requires 3 arguments.");
         return;
     }
 
     if ( ! args[0]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 0");
+        throw_exception(isolate, "Wrong argument type for argument version (#1). Required to be IsNumber.");
         return;
     }
 
     if ( ! args[1]->IsUint8Array()) {
-        throw_exception(isolate, "Wrong arguments, 1");
+        throw_exception(isolate, "Wrong argument type for argument data (#2). Required to be IsUint8Array.");
         return;
     }
-    
-    if ( ! args[2]->IsUint8Array()) {
-        throw_exception(isolate, "Wrong arguments, 2");
+
+    uint32_t version = args[0]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    v8::Local<v8::Uint8Array> data_arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
+    uint8_t* data = (uint8_t*)data_arr->Buffer()->GetContents().Data();
+    kth_size_t n = data_arr->Length();
+
+    kth_header_t res = kth_chain_header_factory_from_data(version, data, n);
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
+
+void chain_header_satoshi_fixed_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_satoshi_fixed_size function requires 1 arguments.");
         return;
     }
-    
-    if ( ! args[3]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 3");
+
+    if ( ! args[0]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument version (#1). Required to be IsNumber.");
         return;
     }
-    
-    if ( ! args[4]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 4");
+
+    uint32_t version = args[0]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_size_t res = kth_chain_header_satoshi_fixed_size(version);
+    args.GetReturnValue().Set(Number::New(isolate, res));
+}
+
+void chain_header_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_reset function requires 1 arguments.");
         return;
     }
-    
-    if ( ! args[5]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 5");
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
-    }    
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    kth_chain_header_reset(header);
+
+}
+
+void chain_header_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_serialized_size function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument version (#2). Required to be IsNumber.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+    uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_size_t res = kth_chain_header_serialized_size(header, version);
+    args.GetReturnValue().Set(Number::New(isolate, res));
+}
+
+void chain_header_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 3) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_to_data function requires 3 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument version (#2). Required to be IsNumber.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+    uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_size_t size;
+
+    uint8_t const* res = kth_chain_header_to_data(header, version, &size);
+    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+}
+
+void chain_header_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_construct_default function requires 0 arguments.");
+        return;
+    }
+
+
+    kth_header_t res = kth_chain_header_construct_default();
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
+
+void chain_header_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 6) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_construct function requires 6 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument version (#1). Required to be IsNumber.");
+        return;
+    }
+
+    if ( ! args[1]->IsUint8Array()) {
+        throw_exception(isolate, "Wrong argument type for argument previous_block_hash (#2). Required to be IsUint8Array.");
+        return;
+    }
 
     v8::Local<v8::Uint8Array> previous_block_hash_arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
     if (previous_block_hash_arr->Length() != 32) {
-        throw_exception(isolate, "Wrong arguments, 1, number of bytes");
+        throw_exception(isolate, "Wrong argument type for argument previous_block_hash (#2). Required to be 32-byte array.");
         return;
-    }    
+    }
+
+    if ( ! args[2]->IsUint8Array()) {
+        throw_exception(isolate, "Wrong argument type for argument merkle (#3). Required to be IsUint8Array.");
+        return;
+    }
 
     v8::Local<v8::Uint8Array> merkle_arr = v8::Local<v8::Uint8Array>::Cast(args[2]);
     if (merkle_arr->Length() != 32) {
-        throw_exception(isolate, "Wrong arguments, 2, number of bytes");
+        throw_exception(isolate, "Wrong argument type for argument merkle (#3). Required to be 32-byte array.");
         return;
-    }    
+    }
+
+    if ( ! args[3]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument timestamp (#4). Required to be IsNumber.");
+        return;
+    }
+
+    if ( ! args[4]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument bits (#5). Required to be IsNumber.");
+        return;
+    }
+
+    if ( ! args[5]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument nonce (#6). Required to be IsNumber.");
+        return;
+    }
 
     uint32_t version = args[0]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     kth_hash_t previous_block_hash = to_native_hash(previous_block_hash_arr);
@@ -152,243 +217,298 @@ void chain_header_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     uint32_t bits = args[4]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     uint32_t nonce = args[5]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    auto res = kth_chain_header_construct(version, previous_block_hash.hash, merkle.hash, timestamp, bits, nonce);
+    kth_header_t res = kth_chain_header_construct(version, previous_block_hash.hash, merkle.hash, timestamp, bits, nonce);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-// void kth_chain_header_destruct(kth_header_t header);
 void chain_header_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_destruct function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     kth_chain_header_destruct(header);
+
 }
 
-// // int kth_chain_header_is_valid(kth_header_t header);
-// void chain_header_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_header_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
 
-// }
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_is_valid function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    kth_bool_t res = kth_chain_header_is_valid(header);
+    args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
+}
 
 void chain_header_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_version function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     uint32_t res = kth_chain_header_version(header);
-
-    Local<Number> num = Number::New(isolate, res);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
 void chain_header_set_version(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_set_version function requires 2 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
     if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments, 1");
+        throw_exception(isolate, "Wrong argument type for argument version (#2). Required to be IsNumber.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
     uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
     kth_chain_header_set_version(header, version);
-}
 
-void chain_header_previous_block_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
-
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
-        return;
-    }
-
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
-
-    kth_hash_t res = kth_chain_header_previous_block_hash(header);
-
-    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
-    memcpy(tmp->GetContents().Data(), res.hash, 32);
-    Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
-    args.GetReturnValue().Set(hash);
-}
-
-void chain_header_merkle(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
-
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
-        return;
-    }
-
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
-
-    kth_hash_t res = kth_chain_header_merkle(header);
-
-    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
-    memcpy(tmp->GetContents().Data(), res.hash, 32);
-    Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
-    args.GetReturnValue().Set(hash);
-}
-
-void chain_header_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
-
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
-        return;
-    }
-
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
-
-    kth_hash_t res = kth_chain_header_hash(header);
-    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
-    memcpy(tmp->GetContents().Data(), res.hash, 32);
-    Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
-    args.GetReturnValue().Set(hash);
 }
 
 void chain_header_timestamp(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_timestamp function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     uint32_t res = kth_chain_header_timestamp(header);
+    args.GetReturnValue().Set(Number::New(isolate, res));
+}
 
-    Local<Number> num = Number::New(isolate, res);
-    args.GetReturnValue().Set(num);
+void chain_header_set_timestamp(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_set_timestamp function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument timestamp (#2). Required to be IsNumber.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+    uint32_t timestamp = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_chain_header_set_timestamp(header, timestamp);
+
 }
 
 void chain_header_bits(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_bits function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     uint32_t res = kth_chain_header_bits(header);
+    args.GetReturnValue().Set(Number::New(isolate, res));
+}
 
-    Local<Number> num = Number::New(isolate, res);
-    args.GetReturnValue().Set(num);
+void chain_header_proof_str(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_proof_str function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    char const* res = kth_chain_header_proof_str(header);
+    args.GetReturnValue().Set(to_string(isolate, res));
+}
+
+void chain_header_set_bits(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_set_bits function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument bits (#2). Required to be IsNumber.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+    uint32_t bits = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_chain_header_set_bits(header, bits);
+
 }
 
 void chain_header_nonce(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_header_nonce function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_header_t header = (kth_header_t)vptr;
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     uint32_t res = kth_chain_header_nonce(header);
-
-    Local<Number> num = Number::New(isolate, res);
-    args.GetReturnValue().Set(num);
+    args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
+void chain_header_set_nonce(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
 
-void chain_header_proof_str(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_set_nonce function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument nonce (#2). Required to be IsNumber.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+    uint32_t nonce = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_chain_header_set_nonce(header, nonce);
+
 }
 
-// uint32_t kth_chain_header_version(kth_header_t header);
-// void kth_chain_header_set_version(kth_header_t header, uint32_t version);
-// uint32_t kth_chain_header_timestamp(kth_header_t header);
-// void kth_chain_header_set_timestamp(kth_header_t header, uint32_t timestamp);
-// uint32_t kth_chain_header_bits(kth_header_t header);
-// char const* kth_chain_header_proof_str(kth_header_t header);
-// void kth_chain_header_set_bits(kth_header_t header, uint32_t bits);
-// uint32_t kth_chain_header_nonce(kth_header_t header);
-// void kth_chain_header_set_nonce(kth_header_t header, uint32_t nonce);
-// kth_hash_t kth_chain_header_previous_block_hash(kth_header_t header);
-// kth_hash_t kth_chain_header_merkle(kth_header_t header);
-// kth_hash_t kth_chain_header_hash(kth_header_t header);
+void chain_header_previous_block_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
 
-// void chain_header_set_version(v8::FunctionCallbackInfo<v8::Value> const& args);
-// void chain_header_set_timestamp(v8::FunctionCallbackInfo<v8::Value> const& args);
-// void chain_header_set_bits(v8::FunctionCallbackInfo<v8::Value> const& args);
-// void chain_header_set_nonce(v8::FunctionCallbackInfo<v8::Value> const& args);
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_previous_block_hash function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    kth_hash_t res = kth_chain_header_previous_block_hash(header);
+    args.GetReturnValue().Set(to_hash(isolate, res));
+}
+
+void chain_header_merkle(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_merkle function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    kth_hash_t res = kth_chain_header_merkle(header);
+    args.GetReturnValue().Set(to_hash(isolate, res));
+}
+
+void chain_header_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_header_hash function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument header (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
+
+    kth_hash_t res = kth_chain_header_hash(header);
+    args.GetReturnValue().Set(to_hash(isolate, res));
+}
 
 }  // namespace kth::js_native

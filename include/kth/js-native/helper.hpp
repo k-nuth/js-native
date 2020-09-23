@@ -62,10 +62,10 @@ v8::Local<v8::String> to_string(v8::Isolate* isolate, char const* str) {
 
 inline
 v8::Local<v8::Uint8Array> to_byte_array(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
-    v8::Local<ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
+    v8::Local<v8::ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
     memcpy(tmp->GetContents().Data(), data, size);
-    v8::Local<v8::Uint8Array> data = v8::Uint8Array::New(tmp, 0, size);
-    return data;
+    v8::Local<v8::Uint8Array> res = v8::Uint8Array::New(tmp, 0, size);
+    return res;
 }
 
 inline
