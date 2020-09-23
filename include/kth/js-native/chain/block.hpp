@@ -10,7 +10,7 @@
 namespace kth::js_native {
 
 void chain_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_block_header(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_subsidy(v8::FunctionCallbackInfo<v8::Value> const& args);

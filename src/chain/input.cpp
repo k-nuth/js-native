@@ -30,6 +30,40 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+
+// kth_input_t kth_chain_input_construct(kth_outputpoint_t previous_output, kth_script_t script, uint32_t sequence);
+
+void chain_input_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 3) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments, 0");
+        return;
+    }
+
+    if ( ! args[1]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+
+    if ( ! args[2]->IsNumber()) {
+        throw_exception(isolate, "Wrong arguments, 3");
+        return;
+    }
+
+    kth_outputpoint_t previous_output = (kth_outputpoint_t)v8::External::Cast(*args[0])->Value();
+    kth_script_t script = (kth_script_t)v8::External::Cast(*args[1])->Value();
+    uint32_t sequence = args[2]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    auto res = kth_chain_input_construct(previous_output, script, sequence);
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
+
 void chain_input_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
@@ -48,6 +82,39 @@ void chain_input_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     kth_chain_input_destruct(input);
 }
+
+void chain_input_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+
+    void* vptr = v8::External::Cast(*args[0])->Value();
+    kth_input_t input = (kth_input_t)vptr;
+
+    uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_size_t size;
+    auto data_c = kth_chain_input_to_data(input, version, &size);
+
+    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, size);
+    memcpy(tmp->GetContents().Data(), data_c, size);
+    Local<Uint8Array> data = Uint8Array::New(tmp, 0, size);
+    args.GetReturnValue().Set(data);
+}
+
 
 void chain_input_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();

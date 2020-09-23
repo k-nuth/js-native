@@ -11,6 +11,7 @@
       'product_dir': '<(module_path)',
 
       "sources": [ "src/kth-native.cpp", "src/node.cpp",
+                   "src/string_list.cpp",
                    "src/chain/chain.cpp", "src/chain/header.cpp", "src/chain/block.cpp", 
                    "src/chain/merkle_block.cpp", "src/chain/point.cpp", 
                    "src/chain/transaction.cpp", "src/chain/input.cpp", "src/chain/output.cpp", "src/chain/output_point.cpp", 
@@ -22,7 +23,6 @@
                    "src/chain/payment_address.cpp",
                    "src/chain/stealth_compact.cpp",
                    "src/chain/stealth_compact_list.cpp",
-                   "src/wallet/word_list.cpp",
                 ],
       
       'variables': {

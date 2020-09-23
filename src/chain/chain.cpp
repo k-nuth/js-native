@@ -553,7 +553,6 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
         return;
     }
 
-
     if ( ! args[3]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 3");
         return;

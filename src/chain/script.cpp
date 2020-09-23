@@ -32,6 +32,39 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 
+// kth_script_t kth_chain_script_construct(uint8_t* encoded, uint64_t n, kth_bool_t prefix);
+void chain_script_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 3) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsUint8Array()) {
+        throw_exception(isolate, "Wrong arguments, 0");
+        return;
+    }
+   
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+    
+    if ( ! args[2]->IsBoolean()) {
+        throw_exception(isolate, "Wrong arguments, 2");
+        return;
+    }
+    
+    v8::Local<v8::Uint8Array> encoded_arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
+    uint8_t* encoded = (uint8_t*)encoded_arr->Buffer()->GetContents().Data();
+    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    bool prefix = args[2]->BooleanValue(isolate);
+
+    auto res = kth_chain_script_construct(encoded, n, prefix);
+    args.GetReturnValue().Set(External::New(isolate, res));    
+}
+
 void chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
@@ -193,6 +226,38 @@ void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     uint64_t res = kth_chain_script_sigops(script, embedded);
     args.GetReturnValue().Set(Number::New(isolate, res));
+}
+
+void chain_script_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+
+    void* vptr = v8::External::Cast(*args[0])->Value();
+    kth_script_t script = (kth_script_t)vptr;
+
+    uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_size_t size;
+    auto data_c = kth_chain_script_to_data(script, version, &size);
+
+    Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, size);
+    memcpy(tmp->GetContents().Data(), data_c, size);
+    Local<Uint8Array> data = Uint8Array::New(tmp, 0, size);
+    args.GetReturnValue().Set(data);
 }
 
 // void chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {

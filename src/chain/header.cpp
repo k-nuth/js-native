@@ -85,6 +85,15 @@ void chain_header_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
 // void chain_header_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
 // }
 
+// void print_hex(uint8_t const* data, size_t n) {
+//     while (n != 0) {
+//         printf("%02x", *data);
+//         ++data;
+//         --n;
+//     }
+//     printf("\n");
+// }
+
 // kth_header_t kth_chain_header_construct(uint32_t version, uint8_t* previous_block_hash, uint8_t* merkle, uint32_t timestamp, uint32_t bits, uint32_t nonce);
 void chain_header_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
@@ -287,9 +296,7 @@ void chain_header_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_header_t header = (kth_header_t)vptr;
 
-
     kth_hash_t res = kth_chain_header_hash(header);
-
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
     memcpy(tmp->GetContents().Data(), res.hash, 32);
     Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);

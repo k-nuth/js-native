@@ -50,7 +50,7 @@ void chain_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_chain_block_destruct(block);
 }
 
-void chain_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {

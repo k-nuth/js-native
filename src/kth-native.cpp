@@ -30,9 +30,8 @@
 #include <kth/js-native/chain/stealth_compact.hpp>
 #include <kth/js-native/chain/stealth_compact_list.hpp>
 
-#include <kth/js-native/wallet/word_list.hpp>
-
 #include <kth/js-native/node.hpp>
+#include <kth/js-native/string_list.hpp>
 
 namespace kth::js_native {
 
@@ -87,7 +86,7 @@ void init(v8::Local<v8::Object> exports) {
     // NODE_SET_METHOD(exports, "chain_header_set_nonce", chain_header_set_nonce);
 
     NODE_SET_METHOD(exports, "chain_block_destruct", chain_block_destruct);
-    NODE_SET_METHOD(exports, "chain_block_get_header", chain_block_get_header);
+    NODE_SET_METHOD(exports, "chain_block_header", chain_block_header);
     NODE_SET_METHOD(exports, "chain_block_transaction_count", chain_block_transaction_count);
     NODE_SET_METHOD(exports, "chain_block_serialized_size", chain_block_serialized_size);
     NODE_SET_METHOD(exports, "chain_block_subsidy", chain_block_subsidy);
@@ -142,6 +141,8 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_transaction_outputs", chain_transaction_outputs);
     NODE_SET_METHOD(exports, "chain_transaction_inputs", chain_transaction_inputs);
 
+
+    NODE_SET_METHOD(exports, "chain_input_construct", chain_input_construct);
     NODE_SET_METHOD(exports, "chain_input_destruct", chain_input_destruct);
     NODE_SET_METHOD(exports, "chain_input_is_final", chain_input_is_final);
     NODE_SET_METHOD(exports, "chain_input_serialized_size", chain_input_serialized_size);
@@ -149,6 +150,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_input_signature_operations", chain_input_signature_operations);
     NODE_SET_METHOD(exports, "chain_input_script", chain_input_script);
     NODE_SET_METHOD(exports, "chain_input_previous_output", chain_input_previous_output);
+    NODE_SET_METHOD(exports, "chain_input_to_data", chain_input_to_data);
 
     NODE_SET_METHOD(exports, "chain_output_destruct", chain_output_destruct);
     NODE_SET_METHOD(exports, "chain_output_is_valid", chain_output_is_valid);
@@ -163,6 +165,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_output_point_get_hash", chain_output_point_get_hash);
     NODE_SET_METHOD(exports, "chain_output_point_get_index", chain_output_point_get_index);
 
+    NODE_SET_METHOD(exports, "chain_script_construct", chain_script_construct);
     NODE_SET_METHOD(exports, "chain_script_destruct", chain_script_destruct);
     NODE_SET_METHOD(exports, "chain_script_is_valid", chain_script_is_valid);
     NODE_SET_METHOD(exports, "chain_script_is_valid_operations", chain_script_is_valid_operations);
@@ -170,6 +173,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_script_serialized_size", chain_script_serialized_size);
     NODE_SET_METHOD(exports, "chain_script_to_string", chain_script_to_string);
     NODE_SET_METHOD(exports, "chain_script_sigops", chain_script_sigops);
+    NODE_SET_METHOD(exports, "chain_script_to_data", chain_script_to_data);
     // NODE_SET_METHOD(exports, "chain_script_embedded_sigops", chain_script_embedded_sigops);
 
     NODE_SET_METHOD(exports, "chain_input_list_push_back", chain_input_list_push_back);
@@ -219,9 +223,9 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
 
-    NODE_SET_METHOD(exports, "wallet_word_list_construct", wallet_word_list_construct);
-    NODE_SET_METHOD(exports, "wallet_word_list_destruct", wallet_word_list_destruct);
-    NODE_SET_METHOD(exports, "wallet_word_list_push_back", wallet_word_list_push_back);
+    NODE_SET_METHOD(exports, "core_string_list_construct", core_string_list_construct);
+    NODE_SET_METHOD(exports, "core_string_list_destruct", core_string_list_destruct);
+    NODE_SET_METHOD(exports, "core_string_list_push_back", core_string_list_push_back);
 }
 
 NODE_MODULE(kth, init)

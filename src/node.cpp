@@ -140,12 +140,9 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     context->async = &node_init_run_and_wait_for_signal_ah_;
     context->callback = callback;
 
-    // std::thread t(kth_node_init_run_and_wait_for_signal, node, context, node_init_run_and_wait_for_signal_handler);
-    // t.detach();
-
     //TODO(fernando): fixed in C-API/0.4.9
-    // std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, kth_error_code_t err) {
-    std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, int err) {
+    // std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, int err) {
+    std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, kth_error_code_t err) {
         auto* context = static_cast<context_t*>(ctx);
         context->data = new int(err);
         context->async->data = context;
