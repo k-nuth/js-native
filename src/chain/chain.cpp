@@ -2,14 +2,9 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-// #include <node.h>
-// #include <libuv.h>
-// #include <nan.h>
-
 #include <kth/capi/chain/chain.h>
 #include <kth/capi/node.h>
 
-// #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 #include <tuple>
 
 #include <kth/js-native/chain/chain.hpp>
@@ -42,7 +37,6 @@ void chain_fetch_last_height_handler(kth_chain_t chain, void* ctx, kth_error_cod
     call_function_and_free(isolate, ctx, argv);
 }
 
-
 // void chain_fetch_last_height(kth_chain_t chain, void* ctx, last_height_fetch_handler_t handler);
 void chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
     auto* isolate = args.GetIsolate();
@@ -66,32 +60,8 @@ void chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
     auto callback = make_callback(isolate, args[1]);
-    kth_chain_fetch_last_height(chain, callback, chain_fetch_last_height_handler);
+    kth_chain_async_last_height(chain, callback, chain_fetch_last_height_handler);
 }
-
-
-// void chain_get_last_height(FunctionCallbackInfo<Value> const& args) {
-//     auto* isolate = args.GetIsolate();
-
-//     if (args.Length() != 1) {
-//         throw_exception(isolate, "Wrong number of arguments");
-//         return;
-//     }
-
-//     if (!args[0]->IsExternal()) {
-//         throw_exception(isolate, "Wrong arguments");
-//         return;
-//     }
-
-//     void* vptr = v8::External::Cast(*args[0])->Value();
-//     kth_chain_t chain = (kth_chain_t)vptr;
-//     size_t height;
-//     int res = kth_chain_get_last_height(chain, &height);
-
-//     Local<Number> num = Number::New(isolate, height);
-//     args.GetReturnValue().Set(num);
-// }
-// ---------------------------------------------
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -139,7 +109,7 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_block_height(chain, callback, hash, chain_fetch_block_height_handler);
+    kth_chain_async_block_height(chain, callback, hash, chain_fetch_block_height_handler);
 }
 
 
@@ -184,7 +154,7 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
     kth_chain_t chain = (kth_chain_t)vptr;
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_block_header_by_height(chain, callback, height, chain_fetch_block_header_by_height_handler);
+    kth_chain_async_block_header_by_height(chain, callback, height, chain_fetch_block_header_by_height_handler);
 }
 
 // void chain_fetch_block_header_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, block_header_fetch_handler_t handler);
@@ -231,7 +201,7 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_block_header_by_hash(chain, callback, hash, chain_fetch_block_header_by_hash_handler);
+    kth_chain_async_block_header_by_hash(chain, callback, hash, chain_fetch_block_header_by_hash_handler);
 }
     
 
@@ -279,7 +249,7 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
 
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_block_by_height(chain, callback, height, chain_fetch_block_by_height_handler);
+    kth_chain_async_block_by_height(chain, callback, height, chain_fetch_block_by_height_handler);
 }
     
 
@@ -325,7 +295,7 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_block_by_hash(chain, callback, hash, chain_fetch_block_by_hash_handler);
+    kth_chain_async_block_by_hash(chain, callback, hash, chain_fetch_block_by_hash_handler);
 }
     
     
@@ -373,7 +343,7 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
     
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_merkle_block_by_height(chain, callback, height, chain_fetch_merkle_block_by_height_handler);
+    kth_chain_async_merkle_block_by_height(chain, callback, height, chain_fetch_merkle_block_by_height_handler);
 }
     
 
@@ -421,7 +391,7 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_merkle_block_by_hash(chain, callback, hash, chain_fetch_merkle_block_by_hash_handler);
+    kth_chain_async_merkle_block_by_hash(chain, callback, hash, chain_fetch_merkle_block_by_hash_handler);
 }
 
 // // Compact Block ---------------------------------------------------------------------
@@ -463,7 +433,7 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
 
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_compact_block_by_height(chain, callback, height, chain_fetch_compact_block_by_height_handler);
+    kth_chain_async_compact_block_by_height(chain, callback, height, chain_fetch_compact_block_by_height_handler);
 }
     
 
@@ -510,7 +480,7 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
     kth_chain_t chain = (kth_chain_t)vptr;
     kth_hash_t hash = to_native_hash(arr);
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_compact_block_by_hash(chain, callback, hash, chain_fetch_compact_block_by_hash_handler);
+    kth_chain_async_compact_block_by_hash(chain, callback, hash, chain_fetch_compact_block_by_hash_handler);
 }
     
     
@@ -570,7 +540,7 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     kth_hash_t hash = to_native_hash(arr);
     bool require_confirmed = args[2]->BooleanValue(isolate);
     auto callback = make_callback(isolate, args[3]);
-    kth_chain_fetch_transaction(chain, callback, hash, require_confirmed, chain_fetch_transaction_handler);
+    kth_chain_async_transaction(chain, callback, hash, require_confirmed, chain_fetch_transaction_handler);
 }
     
 // // Transaction Position ---------------------------------------------------------------------
@@ -627,7 +597,7 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
     kth_hash_t hash = to_native_hash(arr);
     bool require_confirmed = args[2]->BooleanValue(isolate);
     auto callback = make_callback(isolate, args[3]);
-    kth_chain_fetch_transaction_position(chain, callback, hash, require_confirmed, chain_fetch_transaction_position_handler);
+    kth_chain_async_transaction_position(chain, callback, hash, require_confirmed, chain_fetch_transaction_position_handler);
 }
 
 
@@ -673,7 +643,7 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
     void* op_vptr = v8::External::Cast(*args[1])->Value();
     kth_outputpoint_t op = (kth_outputpoint_t)op_vptr;
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_fetch_spend(chain, callback, op, chain_fetch_spend_handler);
+    kth_chain_async_spend(chain, callback, op, chain_fetch_spend_handler);
 }
 
 
@@ -732,7 +702,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     uint64_t from_height = args[3]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
     auto callback = make_callback(isolate, args[4]);
-    kth_chain_fetch_history(chain, callback, address, limit, from_height, chain_fetch_history_handler);
+    kth_chain_async_history(chain, callback, address, limit, from_height, chain_fetch_history_handler);
 }
 
     
@@ -797,7 +767,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     Persistent<Function>* callback = new Persistent<Function>;
 //     callback->Reset(isolate, args[3].As<Function>());
 
-//     kth_chain_fetch_stealth(chain, callback, filter, from_height, chain_fetch_stealth_handler);
+//     kth_chain_async_stealth(chain, callback, filter, from_height, chain_fetch_stealth_handler);
 // }
 
     
@@ -863,7 +833,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     Persistent<Function>* callback = new Persistent<Function>;
 //     callback->Reset(isolate, args[2].As<Function>());
 
-//     kth_chain_fetch_block_locator(chain, callback, heights, chain_fetch_block_locator_handler);
+//     kth_chain_async_block_locator(chain, callback, heights, chain_fetch_block_locator_handler);
 // }
 
     
@@ -914,7 +884,7 @@ void chain_organize_block(FunctionCallbackInfo<Value> const& args) {
     kth_block_t block = (kth_block_t)block_vptr;
 
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_organize_block(chain, callback, block, chain_organize_block_handler);
+    kth_chain_async_organize_block(chain, callback, block, chain_organize_block_handler);
 }
 
 
@@ -959,7 +929,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     kth_transaction_t transaction = (kth_transaction_t)transaction_vptr;
 
     auto callback = make_callback(isolate, args[2]);
-    kth_chain_organize_transaction(chain, callback, transaction, chain_organize_transaction_handler);
+    kth_chain_async_organize_transaction(chain, callback, transaction, chain_organize_transaction_handler);
 }
     
 

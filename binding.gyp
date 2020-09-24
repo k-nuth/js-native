@@ -23,12 +23,19 @@
                    "src/chain/payment_address.cpp",
                    "src/chain/stealth_compact.cpp",
                    "src/chain/stealth_compact_list.cpp",
-                ],
+      ],
       
       'variables': {
         'setup_py': '<(DEPTH)/setup.py',
         'install_py': '<(DEPTH)/install.py',
       },
+
+      "xcode_settings": {
+        'OTHER_CFLAGS': [
+          "-std=c++17",
+          # "-stdlib=libc++"
+        ],
+      },   
 
       # 'actions': [
       #   {
@@ -212,10 +219,16 @@
         ['OS=="mac"', {
 
           "cflags": [
-            "-std=c++11",
+            "-std=c++17",
+            ""
           ],
-          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include"],
-          # "include_dirs": ["/home/fernando/dev/c-api/include"],
+
+          "cflags_cc": [
+            "-std=c++17",
+            ""
+          ],
+
+          "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
           
           'libraries': [
             '-L./deps/lib/', 
