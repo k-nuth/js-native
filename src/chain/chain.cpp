@@ -680,10 +680,10 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
 
 // // History ---------------------------------------------------------------------
 // void chain_fetch_history(kth_chain_t chain, void* ctx, kth_payment_address_t address, uint64_t limit, uint64_t from_height, history_fetch_handler_t handler);
-// int chain_get_history(kth_chain_t chain, kth_payment_address_t address, uint64_t limit, uint64_t from_height, history_compact_list_t* out_history);
-// typedef void (*history_fetch_handler_t)(kth_chain_t, void*, int, history_compact_list_t history);
+// int chain_get_history(kth_chain_t chain, kth_payment_address_t address, uint64_t limit, uint64_t from_height, kth_history_compact_list_t* out_history);
+// typedef void (*history_fetch_handler_t)(kth_chain_t, void*, int, kth_history_compact_list_t history);
 
-void chain_fetch_history_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, history_compact_list_t history) {
+void chain_fetch_history_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_history_compact_list_t history) {
     auto* isolate = Isolate::GetCurrent();
     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, history)};
     call_function_and_free(isolate, ctx, argv);

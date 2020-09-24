@@ -44,7 +44,7 @@ void chain_history_compact_get_point_kind(v8::FunctionCallbackInfo<v8::Value> co
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     uint64_t res = kth_chain_history_compact_get_point_kind(history_compact_list);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -64,7 +64,7 @@ void chain_history_compact_get_point(v8::FunctionCallbackInfo<v8::Value> const& 
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     kth_point_t res = kth_chain_history_compact_get_point(history_compact_list);
     args.GetReturnValue().Set(External::New(isolate, res));
@@ -84,7 +84,7 @@ void chain_history_compact_get_height(v8::FunctionCallbackInfo<v8::Value> const&
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     uint64_t res = kth_chain_history_compact_get_height(history_compact_list);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -104,7 +104,7 @@ void chain_history_compact_get_value_or_previous_checksum(v8::FunctionCallbackIn
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     uint64_t res = kth_chain_history_compact_get_value_or_previous_checksum(history_compact_list);
     args.GetReturnValue().Set(Number::New(isolate, res));

@@ -124,7 +124,7 @@ void chain_header_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
 void chain_header_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 3) {
+    if (args.Length() != 2) {
         throw_exception(isolate, "Wrong number of arguments. chain_header_to_data function requires 3 arguments.");
         return;
     }

@@ -8,8 +8,8 @@
 #include <node.h>
 
 namespace kth::js_native {
-// kth_script_t kth_chain_script_construct(uint8_t* encoded, uint64_t n, kth_bool_t prefix);
 
+void chain_script_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_construct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
@@ -17,25 +17,9 @@ void chain_script_is_valid_operations(v8::FunctionCallbackInfo<v8::Value> const&
 void chain_script_satoshi_content_size(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_script_type(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_script_to_data(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-// void chain_script_embedded_sigops(v8::FunctionCallbackInfo<v8::Value> const& args);
-
-
-
-// kth_script_t kth_chain_script_construct_default(void);
-// kth_script_t kth_chain_script_construct(uint8_t* encoded, uint64_t n, kth_bool_t prefix);
-// void kth_chain_script_destruct(kth_script_t script);
-// kth_bool_t kth_chain_script_is_valid(kth_script_t script);
-// kth_bool_t kth_chain_script_is_valid_operations(kth_script_t script);
-// kth_size_t kth_chain_script_satoshi_content_size(kth_script_t script);
-// kth_size_t kth_chain_script_serialized_size(kth_script_t script, kth_bool_t prefix);
-// char* kth_chain_script_to_string(kth_script_t script, uint32_t active_forks);
-// char* kth_chain_script_type(kth_script_t script);
-// uint8_t* kth_chain_script_to_data(kth_script_t script, kth_bool_t prefix, kth_size_t* out_size);
-// kth_size_t kth_chain_script_sigops(kth_script_t script, kth_bool_t embedded);
-
+void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth::js_native
 

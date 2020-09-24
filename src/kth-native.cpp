@@ -173,6 +173,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_output_point_get_hash", chain_output_point_get_hash);
     NODE_SET_METHOD(exports, "chain_output_point_get_index", chain_output_point_get_index);
 
+    NODE_SET_METHOD(exports, "chain_script_construct_default", chain_script_construct_default);
     NODE_SET_METHOD(exports, "chain_script_construct", chain_script_construct);
     NODE_SET_METHOD(exports, "chain_script_destruct", chain_script_destruct);
     NODE_SET_METHOD(exports, "chain_script_is_valid", chain_script_is_valid);
@@ -180,9 +181,9 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_script_satoshi_content_size", chain_script_satoshi_content_size);
     NODE_SET_METHOD(exports, "chain_script_serialized_size", chain_script_serialized_size);
     NODE_SET_METHOD(exports, "chain_script_to_string", chain_script_to_string);
-    NODE_SET_METHOD(exports, "chain_script_sigops", chain_script_sigops);
+    NODE_SET_METHOD(exports, "chain_script_type", chain_script_type);
     NODE_SET_METHOD(exports, "chain_script_to_data", chain_script_to_data);
-    // NODE_SET_METHOD(exports, "chain_script_embedded_sigops", chain_script_embedded_sigops);
+    NODE_SET_METHOD(exports, "chain_script_sigops", chain_script_sigops);
 
     NODE_SET_METHOD(exports, "chain_input_list_push_back", chain_input_list_push_back);
     NODE_SET_METHOD(exports, "chain_input_list_count", chain_input_list_count);

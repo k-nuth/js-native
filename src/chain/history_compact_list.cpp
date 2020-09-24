@@ -45,7 +45,7 @@ void chain_history_compact_list_destruct(v8::FunctionCallbackInfo<v8::Value> con
     }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     kth_chain_history_compact_list_destruct(history_compact_list);
 }
@@ -64,7 +64,7 @@ void chain_history_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const&
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     uint64_t res = kth_chain_history_compact_list_count(history_compact_list);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -89,7 +89,7 @@ void chain_history_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& a
     }
     
     void* vptr = v8::External::Cast(*args[0])->Value();
-    history_compact_list_t history_compact_list = (history_compact_list_t)vptr;
+    kth_history_compact_list_t history_compact_list = (kth_history_compact_list_t)vptr;
 
     uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
