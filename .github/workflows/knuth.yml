@@ -99,8 +99,6 @@ jobs:
           echo ${NPM_EMAIL}
           echo ${NODEJS_VERSION}
           echo ${NODE_PRE_GYP_GITHUB_TOKEN}
-
-          # TRAVIS_BUILD_DIR ???
           
           # export KTH_BRANCH=$(echo '${{ github.ref }}' | awk -F '/' '{print $3}')
           # echo "My branch name is $KTH_BRANCH"

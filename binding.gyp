@@ -261,9 +261,6 @@
           "include_dirs": ["<!(node -e \"require('nan')\")", "<(module_root_dir)/deps/include", "<(module_root_dir)/include"],
           
           'libraries': [
-            "-L<(module_root_dir)/deps/lib/",
-
-          'libraries': [
             '<(module_root_dir)/deps/lib/kth-c-api.lib', 
             '<(module_root_dir)/deps/lib/kth-node.lib', 
             '<(module_root_dir)/deps/lib/kth-blockchain.lib', 
