@@ -16,6 +16,7 @@ sudo -H npm install -g node-pre-gyp-github
 # pip install --upgrade --user conan_package_tools
 # pip install conan --upgrade --user
 pip install kthbuild --upgrade --user
+conan --version
 conan user
 
 

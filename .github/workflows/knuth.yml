@@ -85,8 +85,9 @@ jobs:
 
       - name: Build (Unix)
         # if: ${{ matrix.config.compiler != 'Visual Studio' }}
-        # env:
-          # CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         shell: bash
         run: |
           # echo ${{ matrix.config.compiler }}
@@ -102,10 +103,9 @@ jobs:
           
           # export KTH_BRANCH=$(echo '${{ github.ref }}' | awk -F '/' '{print $3}')
           # echo "My branch name is $KTH_BRANCH"
-
+        
           chmod a+x .travis/entrypoint.sh
           /usr/bin/docker run -u root --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
-
 
 
 
