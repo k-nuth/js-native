@@ -224,9 +224,6 @@
           
           'libraries': [
             "-L<(module_root_dir)/deps/lib/",
-            # '-L./deps/lib/', 
-            # '-L../deps/lib/',
-            # '-L/home/fernando/dev/c-api/build/lib', 
 
             '-lkth-c-api', 
             '-lkth-node', 
@@ -261,28 +258,32 @@
         #   ]
         # }],
         ['OS=="win"', {
-          "include_dirs": ["<!(node -e \"require('nan')\")", "deps/include"],
+          "include_dirs": ["<!(node -e \"require('nan')\")", "<(module_root_dir)/deps/include", "<(module_root_dir)/include"],
+          
           'libraries': [
-            '../deps/lib/kth-c-api.lib', 
-            '../deps/lib/kth-node.lib', 
-            '../deps/lib/kth-blockchain.lib', 
-            '../deps/lib/kth-network.lib', 
-            '../deps/lib/kth-consensus.lib', 
-            '../deps/lib/kth-database.lib', 
-            '../deps/lib/kth-domain.lib',
-            '../deps/lib/kth-infrastructure.lib',
-            '../deps/lib/libboost_chrono.lib', 
-            '../deps/lib/libboost_date_time.lib', 
-            '../deps/lib/libboost_iostreams.lib', 
-            '../deps/lib/libboost_locale.lib', 
-            '../deps/lib/libboost_program_options.lib', 
-            '../deps/lib/libboost_system.lib', 
-            '../deps/lib/libboost_thread.lib', 
-            '../deps/lib/secp256k1.lib', 
-            '../deps/lib/mpir.lib', 
-            # '../deps/lib/libbz2', 
-            # '../deps/lib/libgmp', 
-            # '../deps/lib/libz',
+            "-L<(module_root_dir)/deps/lib/",
+
+          'libraries': [
+            '<(module_root_dir)/deps/lib/kth-c-api.lib', 
+            '<(module_root_dir)/deps/lib/kth-node.lib', 
+            '<(module_root_dir)/deps/lib/kth-blockchain.lib', 
+            '<(module_root_dir)/deps/lib/kth-network.lib', 
+            '<(module_root_dir)/deps/lib/kth-consensus.lib', 
+            '<(module_root_dir)/deps/lib/kth-database.lib', 
+            '<(module_root_dir)/deps/lib/kth-domain.lib',
+            '<(module_root_dir)/deps/lib/kth-infrastructure.lib',
+            '<(module_root_dir)/deps/lib/libboost_chrono.lib', 
+            '<(module_root_dir)/deps/lib/libboost_date_time.lib', 
+            '<(module_root_dir)/deps/lib/libboost_iostreams.lib', 
+            '<(module_root_dir)/deps/lib/libboost_locale.lib', 
+            '<(module_root_dir)/deps/lib/libboost_program_options.lib', 
+            '<(module_root_dir)/deps/lib/libboost_system.lib', 
+            '<(module_root_dir)/deps/lib/libboost_thread.lib', 
+            '<(module_root_dir)/deps/lib/secp256k1.lib', 
+            '<(module_root_dir)/deps/lib/mpir.lib', 
+            # '<(module_root_dir)/deps/lib/libbz2', 
+            # '<(module_root_dir)/deps/lib/libgmp', 
+            # '<(module_root_dir)/deps/lib/libz',
           ]
         }]
       ],
