@@ -11,7 +11,6 @@ namespace kth::js_native {
 
 void chain_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_header(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_block_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_subsidy(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_fees(v8::FunctionCallbackInfo<v8::Value> const& args);
@@ -20,7 +19,7 @@ void chain_block_reward(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_generate_merkle_root(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_block_transaction_nth(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_block_transactions(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_signature_operations_bip16_active(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_block_total_inputs(v8::FunctionCallbackInfo<v8::Value> const& args);
