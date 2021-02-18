@@ -1,0 +1,176 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  generate-matrix:
+    name: Generate Job Matrix
+    needs: wait-for-dependencies
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Generate Job Matrix
+        id: set-matrix
+        env:
+          MATRIX: '{"config": [{"name": "NodeJS 14","nodejs_version": "14","os": "ubuntu-20.04"},
+                               {"name": "NodeJS 12","nodejs_version": "12","os": "ubuntu-20.04"},
+                               {"name": "NodeJS 10","nodejs_version": "10","os": "ubuntu-20.04"},
+                               ]}'
+        run: |
+          # MATRIX=$(cat ./ci_utils/.github/matrix.json)
+          echo "${MATRIX}"
+          echo "::set-output name=matrix::${MATRIX}"
+          
+  builds:
+    needs: generate-matrix
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    name: ${{ matrix.config.name }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+  
+      # - name: Install Dependencies (Unix)
+      #   # if: ${{ matrix.config.compiler != 'Visual Studio' }}
+      #   run: |
+      #     chmod +x ci_utils/.travis/install.sh
+      #     ./ci_utils/.travis/install.sh
+      #   shell: bash
+
+      # - name: Install Dependencies (Windows)
+      #   if: ${{ matrix.config.compiler == 'Visual Studio' }}
+      #   run: |
+      #     set PATH=%PYTHON%;%PYTHON%/Scripts/;%PATH%;
+      #     python.exe --version
+      #     cmake --version
+      #     python.exe -m pip install --upgrade pip
+      #     pip.exe install conan_package_tools==0.34.2
+      #     pip.exe install kthbuild --upgrade
+      #     conan user
+      #   shell: cmd
+
+      - name: Settting EnvVars (Linux)
+        # if: ${{ matrix.config.compiler == 'GCC' }}
+        shell: bash
+        run: |
+          # echo "CONAN_GCC_VERSIONS=${{ matrix.config.version }}" >> $GITHUB_ENV
+          # echo "CONAN_DOCKER_IMAGE=conanio/gcc${{ matrix.config.version }}" >> $GITHUB_ENV
+          echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $GITHUB_ENV
+
+
+      # - name: Settting EnvVars (macOS)
+      #   if: ${{ matrix.config.compiler == 'apple-clang' }}
+      #   shell: bash
+      #   run: |
+      #     echo "CONAN_APPLE_CLANG_VERSIONS=${{ matrix.config.version }}.0" >> $GITHUB_ENV
+
+      # - name: Settting EnvVars (Windows)
+      #   if: ${{ matrix.config.compiler == 'Visual Studio' }}
+      #   # shell: bash
+      #   shell: powershell
+      #   run: |
+      #     echo "CONAN_VISUAL_VERSIONS=${{ matrix.config.version }}" >> $Env:GITHUB_ENV
+      #     echo "CONAN_VISUAL_RUNTIMES=${{ matrix.config.msvc_runtime }}" >> $Env:GITHUB_ENV
+      #     # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $env:GITHUB_ENV
+
+      - name: Build (Unix)
+        # if: ${{ matrix.config.compiler != 'Visual Studio' }}
+        env:
+          # CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
+        shell: bash
+        run: |
+          # echo ${{ matrix.config.compiler }}
+          # echo ${BPT_MATRIX}
+
+          pwd
+
+          echo ${NPM_AUTH_TOKEN}
+          echo ${NPM_EMAIL}
+          echo ${NODEJS_VERSION}
+          echo ${NODE_PRE_GYP_GITHUB_TOKEN}
+
+          # TRAVIS_BUILD_DIR ???
+          
+          # export KTH_BRANCH=$(echo '${{ github.ref }}' | awk -F '/' '{print $3}')
+          # echo "My branch name is $KTH_BRANCH"
+
+
+          # chmod a+x .travis/entrypoint.sh
+          # /usr/bin/docker run --rm -ti 
+          # -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN 
+          # -e NPM_EMAIL=$NPM_EMAIL 
+          # -e NODEJS_VERSION=$NODEJS_VERSION 
+          # -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN 
+          # -v ${TRAVIS_BUILD_DIR}:/home/conan/project 
+          # -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh 
+          # conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
+
+          # chmod a+x .travis/entrypoint.sh
+          # /usr/bin/docker run --rm -ti 
+          # -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN 
+          # -e NPM_EMAIL=$NPM_EMAIL 
+          # -e NODEJS_VERSION=$NODEJS_VERSION 
+          # -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN 
+          # -v ${TRAVIS_BUILD_DIR}:/home/conan/project 
+          # -v ${TRAVIS_BUILD_DIR}/.travis/entrypoint.sh:/tmp/entrypoint.sh 
+          # conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
+
+
+
+
+      # - name: Build (Windows)
+      #   if: ${{ matrix.config.compiler == 'Visual Studio' }}
+      #   env:
+      #     CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+      #     CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+      #     CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
+      #   shell: powershell
+      #   run: |
+      #     # echo ${{ matrix.config.compiler }}
+      #     # echo %BPT_MATRIX%
+      #     # echo %CONAN_STABLE_BRANCH_PATTERN%
+      #     # echo %CONAN_LOGIN_USERNAME%
+
+      #     Write-Host "CONAN_VISUAL_VERSIONS: $Env:CONAN_VISUAL_VERSIONS"
+      #     Write-Host "CONAN_VISUAL_RUNTIMES: $Env:CONAN_VISUAL_RUNTIMES"
+
+      #     $Env:KTH_BRANCH = "${{ github.ref }}".Split("/")[2]
+      #     Write-Host "My branch name is $Env:KTH_BRANCH"
+
+      #     $a = python ci_utils/set_envvars_and_files.py
+      #     Write-Host $a
+      #     Invoke-Expression $a
+
+      #     $ErrorActionPreference = 'SilentlyContinue'
+      #     conan remote add kth https://api.bintray.com/conan/k-nuth/kth
+      #     $ErrorActionPreference = 'Continue'
+
+      #     # conan info . --only None
+      #     # conan info . --only None -s compiler=gcc -s compiler.version=5 -s compiler.libcxx=libstdc++
+      #     python ci_utils/process_conan_reqs.py
+
+      #     $ErrorActionPreference = 'SilentlyContinue'
+      #     conan remove "*" -f
+      #     conan remote remove kth
+      #     conan remote remove kthbuild_kth_temp_
+      #     $ErrorActionPreference = 'Continue'
+
+      #     python build.py
+
+
+
+
+
+# References:
+  # https://github.com/radareorg/radare2
