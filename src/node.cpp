@@ -144,14 +144,14 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     context->callback = callback;
 
 
-    // void kth_node_init_run_and_wait_for_signal(kth_node_t node, void* ctx, kth_start_modules_t mods, kth_run_handler_t handler);
-    // typedef void (*kth_run_handler_t)(kth_node_t, void*, kth_error_code_t);
-    int mods = 0; //TODO(fernando): this is another parameter.
-    std::thread t(kth_node_init_run_and_wait_for_signal, node, context, mods, [](kth_node_t node, void* ctx, kth_error_code_t err) {
-        auto* context = static_cast<context_t*>(ctx);
-        context->data = new int(err);
-        context->async->data = context;
-        uv_async_send(context->async);
+    kth_start_modules_t mods = kth_start_modules_all;   //TODO(fernando): this is another parameter.
+    std::thread t([node, context, mods]() {
+        kth_node_init_run_and_wait_for_signal(node, context, mods, [](kth_node_t node, void* ctx, kth_error_code_t err) {
+            auto* context = static_cast<context_t*>(ctx);
+            context->data = new int(err);
+            context->async->data = context;
+            uv_async_send(context->async);
+        });
     });
     t.detach();
 }
