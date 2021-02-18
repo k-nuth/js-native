@@ -31,7 +31,7 @@
     "remote_path": "{version}"
   },
   "dependencies": {
-    "nan": "^2.7.0"
+    "nan": "^2.14.2"
   },
   "bundledDependencies": [
     "node-pre-gyp"
