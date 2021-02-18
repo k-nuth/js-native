@@ -70,10 +70,9 @@ void chain_block_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     Local<External> ret = External::New(isolate, header);
     args.GetReturnValue().Set(ret);
-    
 }
 
-void chain_block_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void chain_block_transactions(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
     
     if (args.Length() != 1) {
@@ -89,8 +88,9 @@ void chain_block_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& ar
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_t block = (kth_block_t)vptr;
 
-    uint64_t tx_count = kth_chain_block_transaction_count(block);
-    args.GetReturnValue().Set(Number::New(isolate, tx_count));
+    auto tx_list = kth_chain_block_transactions(block);
+    Local<External> ret = External::New(isolate, tx_list);
+    args.GetReturnValue().Set(ret);
 }
 
 void chain_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -274,30 +274,6 @@ void chain_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
-void chain_block_transaction_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
-
-    if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
-        return;
-    }
-
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments");
-        return;
-    }
-
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_block_t block = (kth_block_t)vptr;
-    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    kth_transaction_t res = kth_chain_block_transaction_nth(block, n);
-    args.GetReturnValue().Set(External::New(isolate, res));
-}
 
 void chain_block_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
