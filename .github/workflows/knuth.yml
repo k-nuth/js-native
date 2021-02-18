@@ -106,8 +106,7 @@ jobs:
           # echo "My branch name is $KTH_BRANCH"
 
           chmod a+x .travis/entrypoint.sh
-          # /usr/bin/docker run --rm -ti -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
-          /usr/bin/docker run --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
+          /usr/bin/docker run -u root --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
 
 
 
