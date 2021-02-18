@@ -86,7 +86,7 @@ jobs:
 
       - name: Build (Unix)
         # if: ${{ matrix.config.compiler != 'Visual Studio' }}
-        env:
+        # env:
           # CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
         shell: bash
         run: |
