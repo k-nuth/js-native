@@ -66,7 +66,7 @@ void node_construct(FunctionCallbackInfo<Value> const& args) {
     // }
 
     char* error_message;
-    kth_settings settings;
+    kth_settings* settings;
     kth_bool_t ok = kth_config_settings_get_from_file(*path, &settings, &error_message);
 
     if ( ! ok) {
@@ -76,7 +76,7 @@ void node_construct(FunctionCallbackInfo<Value> const& args) {
 
     bool stdout_enabled = args[1]->BooleanValue(isolate);
 
-    kth_node_t node = kth_node_construct(&settings, stdout_enabled);
+    kth_node_t node = kth_node_construct(settings, stdout_enabled);
     Local<External> ext = External::New(isolate, node);
     args.GetReturnValue().Set(ext);
 }
@@ -143,9 +143,11 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     context->async = &node_init_run_and_wait_for_signal_ah_;
     context->callback = callback;
 
-    //TODO(fernando): fixed in C-API/0.4.9
-    // std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, int err) {
-    std::thread t(kth_node_init_run_and_wait_for_signal, node, context, [](kth_node_t node, void* ctx, kth_error_code_t err) {
+
+    // void kth_node_init_run_and_wait_for_signal(kth_node_t node, void* ctx, kth_start_modules_t mods, kth_run_handler_t handler);
+    // typedef void (*kth_run_handler_t)(kth_node_t, void*, kth_error_code_t);
+    int mods = 0; //TODO(fernando): this is another parameter.
+    std::thread t(kth_node_init_run_and_wait_for_signal, node, context, mods, [](kth_node_t node, void* ctx, kth_error_code_t err) {
         auto* context = static_cast<context_t*>(ctx);
         context->data = new int(err);
         context->async->data = context;
