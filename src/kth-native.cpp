@@ -95,7 +95,7 @@ void init(v8::Local<v8::Object> exports) {
 
     NODE_SET_METHOD(exports, "chain_block_destruct", chain_block_destruct);
     NODE_SET_METHOD(exports, "chain_block_header", chain_block_header);
-    NODE_SET_METHOD(exports, "chain_block_transaction_count", chain_block_transaction_count);
+    NODE_SET_METHOD(exports, "chain_block_transactions", chain_block_transactions);
     NODE_SET_METHOD(exports, "chain_block_serialized_size", chain_block_serialized_size);
     NODE_SET_METHOD(exports, "chain_block_subsidy", chain_block_subsidy);
     NODE_SET_METHOD(exports, "chain_block_fees", chain_block_fees);
@@ -104,7 +104,6 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_generate_merkle_root", chain_block_generate_merkle_root);
     NODE_SET_METHOD(exports, "chain_block_hash", chain_block_hash);
     NODE_SET_METHOD(exports, "chain_block_is_valid", chain_block_is_valid);
-    NODE_SET_METHOD(exports, "chain_block_transaction_nth", chain_block_transaction_nth);
     NODE_SET_METHOD(exports, "chain_block_signature_operations", chain_block_signature_operations);
     NODE_SET_METHOD(exports, "chain_block_signature_operations_bip16_active", chain_block_signature_operations_bip16_active);
     NODE_SET_METHOD(exports, "chain_block_total_inputs", chain_block_total_inputs);
