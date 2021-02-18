@@ -193,7 +193,6 @@
             '-lkth-database', 
             '-lkth-domain',
             '-lkth-infrastructure',
-            '-lkth-c-api-version',
 
             '-llmdb', 
             '-lboost_date_time', 
