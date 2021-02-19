@@ -54,12 +54,12 @@ def run_conan(reference, reference_fallback):
         print ("Conan Remote exists, ignoring exception.")
 
     try:
+        win_setts = ["compiler.runtime=MT"]
         if platform == "win32":
             # c.install(reference, verify=None, manifests=None)
             c.install(reference, verify=None, manifests_interactive=None, manifests=None)
         else:
-            setts = ["compiler.runtime=MT"]
-            c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=setts)
+            c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
 
         pepe = find('capi.h', os.getcwd())
         print(pepe)
@@ -67,7 +67,11 @@ def run_conan(reference, reference_fallback):
     except:
         print('EXCEPTION --------------------------')
 
-        c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
+        if platform == "win32":
+            c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
+        else:
+            c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
+
         pepe = find('capi.h', os.getcwd())
         print(pepe)
         shutil.move('./deps/', '..')
