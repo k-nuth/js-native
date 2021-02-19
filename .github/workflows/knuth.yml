@@ -20,6 +20,7 @@ jobs:
                                {"name": "Linux NodeJS 12","nodejs_version": "12","os": "ubuntu-20.04","os_kind": "linux"},
                                {"name": "macOS NodeJS 12","nodejs_version": "14","os": "macos-10.15","os_kind": "macos"},
                                {"name": "Windows NodeJS 14","nodejs_version": "14","os": "windows-2019","os_kind": "windows"},
+                               {"name": "Windows NodeJS 14","nodejs_version": "12","os": "windows-2019","os_kind": "windows"},
                                ]}'
         run: |
           # MATRIX=$(cat ./ci_utils/.github/matrix.json)
@@ -87,6 +88,70 @@ jobs:
           chmod a+x .travis/entrypoint.sh
           /usr/bin/docker run -u root --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
 
+      - name: Install (macOS)
+        if: ${{ matrix.config.os_kind == 'macos' }}
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        shell: bash
+        run: |
+          brew update
+          brew outdated pyenv || brew upgrade pyenv
+          brew install pyenv-virtualenv
+          brew install cmake || true
+
+          if which pyenv > /dev/null; then
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)" 
+          fi
+
+          pyenv install --list
+          pyenv install 3.8
+          pyenv virtualenv 3.8 conan
+
+          pyenv rehash
+          pyenv activate conan
+
+          npm install -g node-gyp
+          npm install -g node-pre-gyp
+          # npm install -g aws-sdk
+          npm install -g node-pre-gyp-github
+
+          # pip install conan_package_tools --upgrade
+          # pip install conan --upgrade
+          pip install kthbuild --upgrade
+          
+          conan user
+
+      - name: Build (macOS)
+        if: ${{ matrix.config.os_kind == 'macos' }}
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        shell: bash
+        run: |
+          if which pyenv > /dev/null; then
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+          fi
+          pyenv activate conan
+
+          python --version
+          conan user
+          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+          conan install .
+
+          npm install
+          node-pre-gyp configure build package --verbose
+          node-pre-gyp-github publish --release  || true
+
+          # node-pre-gyp clean
+          # node-gyp clean
+
+          # npm install
+
+          # npm publish || true
+
       - uses: actions/setup-node@v2
         if: ${{ matrix.config.os_kind == 'windows' }}
         with:
@@ -131,12 +196,6 @@ jobs:
 
           npm install
           
-          # Write-Host "------------------------------------------------------"
-          # Get-Location
-          # Write-Host "------------------------------------------------------"
-          # dir deps/lib
-          # Write-Host "------------------------------------------------------"
-
           Remove-Item './deps' -Recurse
 
           node-pre-gyp configure build package
