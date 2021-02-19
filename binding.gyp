@@ -257,6 +257,16 @@
         #   ]
         # }],
         ['OS=="win"', {
+          "cflags": [
+            "/std:c++17",
+            ""
+          ],
+
+          "cflags_cc": [
+            "/std:c++17",
+            ""
+          ],
+          
           "include_dirs": ["<!(node -e \"require('nan')\")", "<(module_root_dir)/deps/include", "<(module_root_dir)/include"],
           
           'libraries': [
