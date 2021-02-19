@@ -36,8 +36,8 @@ def replace_boost_lib_names_on_windows(path):
             if file != newfile:
                 file = os.path.join(path, file)
                 newfile = os.path.join(path, newfile)
-                # print(file)
-                # print(newfile)
+                print(file)
+                print(newfile)
                 os.rename(file, newfile)
 
 def run_conan(reference, reference_fallback):
