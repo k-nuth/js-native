@@ -136,21 +136,21 @@
       # "include_dirs": ["C:\\development\\kth\\c-api\\include", "C:\\development\\kth\\kth-domain\\include"],
       # "libraries": [ "C:\\development\\kth\\c-api\\build\\c-api.lib"]
       # # "libraries": [ "-LC:\\development\\kth\\c-api\\build", "-lkth-c-api"  ]
-
-      
-
+ 
       'configurations': {
         'Debug': {
           'msvs_settings': {
             'VCCLCompilerTool': {
-                'RuntimeLibrary': '3' # /MDd
+                'RuntimeLibrary': '3', # /MDd
+                'AdditionalOptions': [ '/std:c++17' ]
             },
-          },
+         },
         },
         'Release': {
           'msvs_settings': {
             'VCCLCompilerTool': {
-              'RuntimeLibrary': '2' # /MD
+              'RuntimeLibrary': '2', # /MD
+              'AdditionalOptions': [ '/std:c++17' ]
             },
           },
         },
@@ -257,6 +257,8 @@
         #   ]
         # }],
         ['OS=="win"', {
+
+       
           "cflags": [
             "/std:c++17",
             ""
