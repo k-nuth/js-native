@@ -18,9 +18,9 @@ jobs:
         env:
           MATRIX: '{"config": [{"name": "Linux NodeJS 14","nodejs_version": "14","os": "ubuntu-20.04","os_kind": "linux"},
                                {"name": "Linux NodeJS 12","nodejs_version": "12","os": "ubuntu-20.04","os_kind": "linux"},
-                               {"name": "macOS NodeJS 12","nodejs_version": "14","os": "macos-10.15","os_kind": "macos"},
+                               {"name": "macOS NodeJS 14","nodejs_version": "14","os": "macos-10.15","os_kind": "macos"},
                                {"name": "Windows NodeJS 14","nodejs_version": "14","os": "windows-2019","os_kind": "windows"},
-                               {"name": "Windows NodeJS 14","nodejs_version": "12","os": "windows-2019","os_kind": "windows"},
+                               {"name": "Windows NodeJS 12","nodejs_version": "12","os": "windows-2019","os_kind": "windows"},
                                ]}'
         run: |
           # MATRIX=$(cat ./ci_utils/.github/matrix.json)
@@ -95,10 +95,11 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         shell: bash
         run: |
+          set -x
           brew update
           brew outdated pyenv || brew upgrade pyenv
           brew install pyenv-virtualenv
-          brew install cmake || true
+          # brew install cmake || true
 
           if which pyenv > /dev/null; then
             eval "$(pyenv init -)"
