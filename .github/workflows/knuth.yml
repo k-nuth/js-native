@@ -101,6 +101,8 @@ jobs:
         run: |
           # Write-Host "CONAN_VISUAL_VERSIONS: $Env:CONAN_VISUAL_VERSIONS"
 
+          $ErrorActionPreference = 'SilentlyContinue'
+
           npm --version
           npm -g install npm@next
           npm --version
@@ -128,6 +130,7 @@ jobs:
           # conan install . -s compiler.runtime=MT
           cd
           dir 
+
 
           npm install
           cd
