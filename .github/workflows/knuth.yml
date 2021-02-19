@@ -125,13 +125,16 @@ jobs:
 
           conan user
           conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
-          conan install . -s compiler.runtime=MT
+          # conan install . -s compiler.runtime=MT
           cd
           dir 
 
           npm install
           cd
           dir
+          dir build
+          dir build/deps
+          dir build/deps/lib
 
           # node-pre-gyp configure build package
           # # node-pre-gyp configure --verbose
