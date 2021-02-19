@@ -141,7 +141,8 @@
         'Debug': {
           'msvs_settings': {
             'VCCLCompilerTool': {
-                'RuntimeLibrary': '3', # /MDd
+                'RuntimeLibrary': '1', # /MTd
+                # 'RuntimeLibrary': '3', # /MDd
                 'AdditionalOptions': [ '/std:c++17' ]
             },
          },
@@ -149,7 +150,8 @@
         'Release': {
           'msvs_settings': {
             'VCCLCompilerTool': {
-              'RuntimeLibrary': '2', # /MD
+              'RuntimeLibrary': '0', # /MT
+              # 'RuntimeLibrary': '2', # /MD
               'AdditionalOptions': [ '/std:c++17' ]
             },
           },
