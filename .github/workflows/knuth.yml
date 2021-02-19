@@ -106,8 +106,8 @@ jobs:
           fi
 
           pyenv install --list
-          pyenv install 3.8
-          pyenv virtualenv 3.8 conan
+          pyenv install 3.8.7
+          pyenv virtualenv 3.8.7 conan
 
           pyenv rehash
           pyenv activate conan
