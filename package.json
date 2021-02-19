@@ -1,7 +1,7 @@
 {
   "name": "kth-bch-native",
   "version": "0.9.4",
-  "description": "Bitcoin, Bitcoin Cash and Litecoin development platform for Javascript applications",
+  "description": "Bitcoin Cash development platform for Javascript applications",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/k-nuth/js-native.git"
@@ -20,8 +20,9 @@
   },
   "homepage": "https://github.com/k-nuth/js-native#readme",
   "engines": {
-    "node": ">=4.2.4"
-  },
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },  
   "main": "index.js",
   "binary": {
     "module_name": "kth-bch-native",

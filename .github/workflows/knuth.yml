@@ -139,7 +139,7 @@ jobs:
 
           python --version
           conan user
-          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth || true
           conan install .
 
           npm install
