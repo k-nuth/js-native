@@ -19,6 +19,7 @@ jobs:
           MATRIX: '{"config": [{"name": "Linux NodeJS 14","nodejs_version": "14","os": "ubuntu-20.04","os_kind": "linux"},
                                {"name": "Linux NodeJS 12","nodejs_version": "12","os": "ubuntu-20.04","os_kind": "linux"},
                                {"name": "macOS NodeJS 14","nodejs_version": "14","os": "macos-10.15","os_kind": "macos"},
+                               {"name": "macOS NodeJS 12","nodejs_version": "12","os": "macos-10.15","os_kind": "macos"},
                                {"name": "Windows NodeJS 14","nodejs_version": "14","os": "windows-2019","os_kind": "windows"},
                                {"name": "Windows NodeJS 12","nodejs_version": "12","os": "windows-2019","os_kind": "windows"},
                                ]}'
@@ -187,9 +188,9 @@ jobs:
           python --version
           # cl /version
 
-          Write-Host "FerFerFer"
+          Write-Host "----------------------------"
           node -p "process.arch"
-          Write-Host "FerFerFer"
+          Write-Host "----------------------------"
 
           conan user
           conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
@@ -203,7 +204,10 @@ jobs:
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose
+          
+          $ErrorActionPreference = 'SilentlyContinue'
           node-pre-gyp-github publish --release
+          $ErrorActionPreference = 'Continue'
 
 
           # $ErrorActionPreference = 'SilentlyContinue'
