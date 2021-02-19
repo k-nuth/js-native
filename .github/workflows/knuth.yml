@@ -102,7 +102,7 @@ jobs:
           # Write-Host "CONAN_VISUAL_VERSIONS: $Env:CONAN_VISUAL_VERSIONS"
           # Write-Host "CONAN_VISUAL_RUNTIMES: $Env:CONAN_VISUAL_RUNTIMES"
 
-          Install-Product node $env:nodejs_version x64
+          # Install-Product node $env:nodejs_version x64
           npm --version
           npm -g install npm@next
           npm --version
