@@ -57,22 +57,18 @@ def run_conan(reference, reference_fallback):
     try:
         # c.install(reference, verify=None, manifests=None)
         c.install(reference, verify=None, manifests_interactive=None, manifests=None)
-        print('11 876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
         pepe = find('capi.h', os.getcwd())
         print(pepe)
-        print('11 876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
 
     except:
         print('EXCEPTION --------------------------')
 
         c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
-        print('22 876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
         pepe = find('capi.h', os.getcwd())
         print(pepe)
         shutil.move('./deps/', '..')
         pepe = find('capi.h', os.getcwd())
         print(pepe)
-        print('22 876128376128371263876128376128371263876128376128371263876128376128371263876128376128371263')
 
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
