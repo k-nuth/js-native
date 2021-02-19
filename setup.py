@@ -40,7 +40,6 @@ def replace_boost_lib_names_on_windows(path):
                 # print(newfile)
                 os.rename(file, newfile)
 
-
 def run_conan(reference, reference_fallback):
     # New API in Conan 0.28
     c, _, _ = Conan.factory()
@@ -52,11 +51,16 @@ def run_conan(reference, reference_fallback):
         # c.remote_add(remote, url, verify_ssl, args.insert)
         c.remote_add('kth', 'https://api.bintray.com/conan/k-nuth/kth')
     except:
-        print ("Conan Remote exists, ignoring exception")
+        print ("Conan Remote exists, ignoring exception.")
 
     try:
-        # c.install(reference, verify=None, manifests=None)
-        c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+        if platform == "win32":
+            # c.install(reference, verify=None, manifests=None)
+            c.install(reference, verify=None, manifests_interactive=None, manifests=None)
+        else:
+            setts = ["compiler.runtime=MT"]
+            c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=setts)
+
         pepe = find('capi.h', os.getcwd())
         print(pepe)
 
