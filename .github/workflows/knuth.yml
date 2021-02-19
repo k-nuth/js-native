@@ -128,9 +128,6 @@ jobs:
           conan user
           conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
           # conan install . -s compiler.runtime=MT
-          cd
-          dir 
-
 
           npm install
           
