@@ -137,11 +137,13 @@ jobs:
           # dir deps/lib
           # Write-Host "------------------------------------------------------"
 
-          node-pre-gyp configure build package
-          # node-pre-gyp configure --verbose
+          Remove-Item './deps' -Recurse
+
+          # node-pre-gyp configure build package
+          node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose
-          node-pre-gyp-github publish --release
+          # node-pre-gyp-github publish --release
 
 
           # $ErrorActionPreference = 'SilentlyContinue'

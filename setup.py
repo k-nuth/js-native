@@ -82,7 +82,7 @@ def run_conan(reference, reference_fallback):
 
         pepe = find('capi.h', os.getcwd())
         print(pepe)
-        # shutil.move('./deps/', '..')
+        shutil.move('./deps/', '..')
         pepe = find('capi.h', os.getcwd())
         print(pepe)
 
