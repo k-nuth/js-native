@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   generate-matrix:
     name: Generate Job Matrix
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-20.04
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
