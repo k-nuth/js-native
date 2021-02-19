@@ -44,25 +44,6 @@ jobs:
         with:
           python-version: "3.8"
   
-      # - name: Install Dependencies (Unix)
-      #   # if: ${{ matrix.config.compiler != 'Visual Studio' }}
-      #   run: |
-      #     chmod +x ci_utils/.travis/install.sh
-      #     ./ci_utils/.travis/install.sh
-      #   shell: bash
-
-      # - name: Install Dependencies (Windows)
-      #   if: ${{ matrix.config.compiler == 'Visual Studio' }}
-      #   run: |
-      #     set PATH=%PYTHON%;%PYTHON%/Scripts/;%PATH%;
-      #     python.exe --version
-      #     cmake --version
-      #     python.exe -m pip install --upgrade pip
-      #     pip.exe install conan_package_tools==0.34.2
-      #     pip.exe install kthbuild --upgrade
-      #     conan user
-      #   shell: cmd
-
       - name: Settting EnvVars (Unix)
         if: ${{ matrix.config.os_kind != 'windows' }}
         shell: bash
@@ -90,6 +71,11 @@ jobs:
           chmod a+x .travis/entrypoint.sh
           /usr/bin/docker run -u root --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
 
+      - uses: actions/setup-node@v2
+        if: ${{ matrix.config.os_kind != 'linux' }}
+        with:
+          node-version: '${{ matrix.config.nodejs_version }}'
+
       - name: Install (macOS)
         if: ${{ matrix.config.os_kind == 'macos' }}
         env:
@@ -98,6 +84,10 @@ jobs:
         shell: bash
         run: |
           set -x
+
+          node --version
+          npm --version
+
           brew update
           brew outdated pyenv || brew upgrade pyenv
           brew install pyenv-virtualenv
@@ -150,15 +140,8 @@ jobs:
 
           # node-pre-gyp clean
           # node-gyp clean
-
           # npm install
-
           # npm publish || true
-
-      - uses: actions/setup-node@v2
-        if: ${{ matrix.config.os_kind == 'windows' }}
-        with:
-          node-version: '${{ matrix.config.nodejs_version }}'
 
       - name: Build (Windows)
         if: ${{ matrix.config.os_kind == 'windows' }}
