@@ -133,11 +133,17 @@ jobs:
 
 
           npm install
-          cd
-          dir
-          dir build
-          dir build/deps
-          dir build/deps/lib
+          
+          Write-Host "------------------------------------------------------"
+          Get-Location
+          Write-Host "------------------------------------------------------"
+          dir deps/lib
+          Write-Host "------------------------------------------------------"
+
+          # dir
+          # dir build
+          # dir build/deps
+          # dir build/deps/lib
 
           # node-pre-gyp configure build package
           # # node-pre-gyp configure --verbose
