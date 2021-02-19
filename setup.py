@@ -53,6 +53,11 @@ def run_conan(reference, reference_fallback):
     except:
         print ("Conan Remote exists, ignoring exception.")
 
+    print('platform --------------------------')
+    print(platform)
+    print('platform --------------------------')
+
+
     try:
         win_setts = ["compiler.runtime=MT"]
         if platform == "win32":
@@ -66,6 +71,9 @@ def run_conan(reference, reference_fallback):
 
     except:
         print('EXCEPTION --------------------------')
+        print('platform --------------------------')
+        print(platform)
+        print('platform --------------------------')
 
         if platform == "win32":
             c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
