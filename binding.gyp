@@ -128,15 +128,8 @@
           'KTH_LOG_LIBRARY_SPDLOG',
           'KTH_CURRENCY_BCH',
       ],
-      # # Linux OLD
-      # "include_dirs": ["/home/fernando/dev/k-nuth/node-cint/include"],
-      # "libraries": [ "-lkth-c-api", "-L/home/fernando/dev/k-nuth/node-cint/cmake-build-debug" ]
-
-      # # Windows OLD
-      # "include_dirs": ["C:\\development\\kth\\c-api\\include", "C:\\development\\kth\\kth-domain\\include"],
-      # "libraries": [ "C:\\development\\kth\\c-api\\build\\c-api.lib"]
-      # # "libraries": [ "-LC:\\development\\kth\\c-api\\build", "-lkth-c-api"  ]
  
+      #  https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.vcprojectengine.runtimelibraryoption?view=visualstudiosdk-2019
       'configurations': {
         'Debug': {
           'msvs_settings': {
@@ -162,7 +155,6 @@
         ['OS=="linux"', {
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
-          # "include_dirs": ["/home/fernando/dev/c-api/include"],
 
           "cflags": [
             "-std=c++17",
@@ -183,9 +175,6 @@
 
           'libraries': [
             "-L<(module_root_dir)/deps/lib/",
-            # '-L./deps/lib/', 
-            # '-L../deps/lib/',
-            # '-L/home/fernando/dev/c-api/build/lib', 
 
             '-lkth-c-api',
             '-lkth-node', 
@@ -259,17 +248,16 @@
         #   ]
         # }],
         ['OS=="win"', {
-
        
-          "cflags": [
-            "/std:c++17",
-            ""
-          ],
+          # "cflags": [
+          #   "/std:c++17",
+          #   ""
+          # ],
 
-          "cflags_cc": [
-            "/std:c++17",
-            ""
-          ],
+          # "cflags_cc": [
+          #   "/std:c++17",
+          #   ""
+          # ],
           
           "include_dirs": ["<!(node -e \"require('nan')\")", "<(module_root_dir)/deps/include", "<(module_root_dir)/include"],
           

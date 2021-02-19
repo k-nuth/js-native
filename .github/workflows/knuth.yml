@@ -134,41 +134,24 @@ jobs:
 
           npm install
           
-          Write-Host "------------------------------------------------------"
-          Get-Location
-          Write-Host "------------------------------------------------------"
-          dir deps/lib
-          Write-Host "------------------------------------------------------"
+          # Write-Host "------------------------------------------------------"
+          # Get-Location
+          # Write-Host "------------------------------------------------------"
+          # dir deps/lib
+          # Write-Host "------------------------------------------------------"
 
-          # dir
-          # dir build
-          # dir build/deps
-          # dir build/deps/lib
+          node-pre-gyp configure build package
+          # node-pre-gyp configure --verbose
+          # node-pre-gyp build --verbose
+          # node-pre-gyp package --verbose
+          node-pre-gyp-github publish --release
 
-          # node-pre-gyp configure build package
-          # # node-pre-gyp configure --verbose
-          # # node-pre-gyp build --verbose
-          # # node-pre-gyp package --verbose
-          # node-pre-gyp-github publish --release
-
-
-
-
-          # $ErrorActionPreference = 'SilentlyContinue'
-          # conan remote add kth https://api.bintray.com/conan/k-nuth/kth
-          # $ErrorActionPreference = 'Continue'
-
-          # # conan info . --only None
-          # # conan info . --only None -s compiler=gcc -s compiler.version=5 -s compiler.libcxx=libstdc++
-          # python ci_utils/process_conan_reqs.py
 
           # $ErrorActionPreference = 'SilentlyContinue'
           # conan remove "*" -f
           # conan remote remove kth
           # conan remote remove kthbuild_kth_temp_
           # $ErrorActionPreference = 'Continue'
-
-          # python build.py
 
 
 
