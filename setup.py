@@ -61,10 +61,10 @@ def run_conan(reference, reference_fallback):
     try:
         win_setts = ["compiler.runtime=MT"]
         if platform == "win32":
+            c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
+        else:
             # c.install(reference, verify=None, manifests=None)
             c.install(reference, verify=None, manifests_interactive=None, manifests=None)
-        else:
-            c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
 
         pepe = find('capi.h', os.getcwd())
         print(pepe)
@@ -76,9 +76,9 @@ def run_conan(reference, reference_fallback):
         print('platform --------------------------')
 
         if platform == "win32":
-            c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
-        else:
             c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
+        else:
+            c.install(reference_fallback, verify=None, manifests_interactive=None, manifests=None)
 
         pepe = find('capi.h', os.getcwd())
         print(pepe)
