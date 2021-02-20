@@ -1,6 +1,6 @@
 {
   "name": "kth-bch-native",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "Bitcoin Cash development platform for Javascript applications",
   "repository": {
     "type": "git",
