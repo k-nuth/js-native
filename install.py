@@ -130,6 +130,11 @@ def run_conan(reference):
     win_setts = ["compiler.runtime=MT"]
     if platform == "win32":
         c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
+        capi_h = find('capi.h', os.getcwd())
+        print("----------------------------------------------------")
+        print(capi_h)
+        print("----------------------------------------------------")
+        shutil.move('./deps/', '..')
     else:
         c.install(reference, verify=None, manifests_interactive=None, manifests=None)
 
@@ -137,12 +142,6 @@ def run_conan(reference):
     print("----------------------------------------------------")
     print(capi_h)
     print("----------------------------------------------------")
-
-    # capi_h = find('capi.h', os.getcwd())
-    # print(capi_h)
-    # shutil.move('./deps/', '..')
-    # capi_h = find('capi.h', os.getcwd())
-    # print(capi_h)
 
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
