@@ -7,7 +7,7 @@ sudo apt-get install -y nodejs
 sudo -H npm install npm@latest -g
 
 sudo -H npm install -g node-gyp
-sudo -H npm install -g node-pre-gyp
+sudo -H npm install -g @mapbox/node-pre-gyp
 # sudo -H npm install -g aws-sdk
 sudo -H npm install -g node-pre-gyp-github
 

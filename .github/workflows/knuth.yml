@@ -106,7 +106,7 @@ jobs:
           pyenv activate conan
 
           npm install -g node-gyp
-          npm install -g node-pre-gyp
+          npm install -g @mapbox/node-pre-gyp
           # npm install -g aws-sdk
           npm install -g node-pre-gyp-github
 
@@ -158,7 +158,7 @@ jobs:
           npm -g install npm@next
           npm --version
           npm install -g node-gyp
-          npm install -g node-pre-gyp
+          npm install -g @mapbox/node-pre-gyp
           npm install -g aws-sdk
           npm install -g node-pre-gyp-github
 

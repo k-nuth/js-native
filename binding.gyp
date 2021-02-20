@@ -26,8 +26,8 @@
       ],
       
       'variables': {
-        'setup_py': '<(DEPTH)/setup.py',
         'install_py': '<(DEPTH)/install.py',
+        # 'setup_py': '<(DEPTH)/setup.py',
       },
 
       "xcode_settings": {
@@ -104,21 +104,21 @@
           'outputs': [''],
           'action': [
             'python',
-            '>@(_inputs)', 
+            '>@(_inputs)', '<(module_root_dir)'
           ],
         },
-        {
-          'action_name': 'Setup',
-          'inputs': [
-            '>(setup_py)',
-          ],
-          # 'outputs': ['>(nmf_pnacl)'],
-          'outputs': [''],
-          'action': [
-            'python',
-            '>@(_inputs)', 
-          ],
-        },
+        # {
+        #   'action_name': 'Setup',
+        #   'inputs': [
+        #     '>(setup_py)',
+        #   ],
+        #   # 'outputs': ['>(nmf_pnacl)'],
+        #   'outputs': [''],
+        #   'action': [
+        #     'python',
+        #     '>@(_inputs)', 
+        #   ],
+        # },
       ],
 
 
