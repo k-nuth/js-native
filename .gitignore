@@ -8,16 +8,9 @@ conaninfo.txt
 debug.log
 deps/
 error.log
-
-
 lib/
 node_modules/
-package.1.json
-
-tests/blockchain (copy)/
 __pycache__/
-
 conanbuildinfo.txt
-package-lock.json
 graph_info.json
 conan.lock
