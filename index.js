@@ -2,17 +2,32 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-var binary = require('node-pre-gyp');
+// var binary = require('node-pre-gyp');
+var binary = require('@mapbox/node-pre-gyp');
+
 var path = require('path')
 var kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
 
-console.log(`kth_path: ${kth_path}`)
+// console.log(`kth_path: ${kth_path}`)
 
 var kth = require(kth_path);
 
 // require('assert').equal(kth.hello(),"hello");
 
 module.exports = kth;
+
+
+
+
+// var binary = require('node-pre-gyp');
+// var path = require('path')
+// var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+// var binding = require(binding_path);
+
+// require('assert').equal(binding.hello(),"hello");
+
+
+
 
 
 
