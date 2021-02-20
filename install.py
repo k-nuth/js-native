@@ -133,14 +133,16 @@ def run_conan(reference):
     else:
         c.install(reference, verify=None, manifests_interactive=None, manifests=None)
 
-    pepe = find('capi.h', os.getcwd())
-    print(pepe)
+    capi_h = find('capi.h', os.getcwd())
+    print("----------------------------------------------------")
+    print(capi_h)
+    print("----------------------------------------------------")
 
-    # pepe = find('capi.h', os.getcwd())
-    # print(pepe)
+    # capi_h = find('capi.h', os.getcwd())
+    # print(capi_h)
     # shutil.move('./deps/', '..')
-    # pepe = find('capi.h', os.getcwd())
-    # print(pepe)
+    # capi_h = find('capi.h', os.getcwd())
+    # print(capi_h)
 
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
