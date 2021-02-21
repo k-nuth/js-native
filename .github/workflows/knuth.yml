@@ -134,6 +134,7 @@ jobs:
           conan install .
 
           npm install
+          npm run test
           node-pre-gyp configure build package --verbose
           node-pre-gyp-github publish --release  || true
 
@@ -142,11 +143,8 @@ jobs:
           # npm install
           # npm publish || true
 
-      - name: Build (Windows)
+      - name: Install (Windows)
         if: ${{ matrix.config.os_kind == 'windows' }}
-        env:
-          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         shell: powershell
         run: |
           # Write-Host "CONAN_VISUAL_VERSIONS: $Env:CONAN_VISUAL_VERSIONS"
@@ -179,7 +177,18 @@ jobs:
           conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
           # conan install . -s compiler.runtime=MT
 
+
+      - name: Build (Windows)
+        if: ${{ matrix.config.os_kind == 'windows' }}
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'SilentlyContinue'
+          
           npm install
+          npm run test
           
           Remove-Item './deps' -Recurse
 
@@ -192,16 +201,11 @@ jobs:
           node-pre-gyp-github publish --release
           $ErrorActionPreference = 'Continue'
 
-
           # $ErrorActionPreference = 'SilentlyContinue'
           # conan remove "*" -f
           # conan remote remove kth
           # conan remote remove kthbuild_kth_temp_
           # $ErrorActionPreference = 'Continue'
-
-
-
-
 
 # References:
   # https://github.com/radareorg/radare2
