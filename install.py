@@ -147,7 +147,20 @@ def run_conan(reference):
     replace_boost_lib_names_on_windows('../deps/lib')
 
 if __name__ == '__main__':
-    # print(sys.argv[1])
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print(sys.argv[1])
+    print("Python version")
+    print (sys.version)
+    print("Version info.")
+    print (sys.version_info)
+    print("Interpreter path.")
+    print(sys.executable)
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+
     install('conan')
     install('kthbuild')
     run_conan(sys.argv[1])
