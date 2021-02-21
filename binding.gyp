@@ -222,7 +222,7 @@
             '-lkth-consensus', 
             '-lkth-database', 
             '-lkth-domain',
-            # '-lboost_chrono', 
+            '-lkth-infrastructure',
             '-lboost_date_time', 
             '-lboost_iostreams', 
             '-lboost_locale', 
