@@ -35,7 +35,6 @@
       },   
 
       'actions': [
-
         {
           'action_name': 'Install',
           'inputs': [
@@ -43,10 +42,11 @@
           ],
           # 'outputs': ['>(nmf_pnacl)'],
           'outputs': [''],
-          'action': [
-            'python',
-            '>@(_inputs)', '<(module_root_dir)'
-          ],
+          # 'action': [
+          #   'python',
+          #   '>@(_inputs)', '<(module_root_dir)'
+          # ],
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
         },
       ],
 
