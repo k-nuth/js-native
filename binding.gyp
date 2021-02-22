@@ -105,13 +105,11 @@
           'action': ['echo','******************************** 3conan_install']
         },
         ['OS=="win"', {
-          {
             'action_name': '4just_windows',
             'inputs': [''],
             'outputs': [''],
             'action': ['echo','******************************** 4just_windows']
-          },
-        }]
+        }],
       ],
 
       'defines': [
