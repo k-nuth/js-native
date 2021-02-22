@@ -85,9 +85,12 @@ def exec_conan(args_param):
     print(args)
 
     try:
-        subprocess.check_call(args)
+        # subprocess.check_call(args)
+        output = subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True, timeout=3, universal_newlines=True)
     except subprocess.CalledProcessError as err:
         print("Failing trying to execute Conan ", err.returncode, err.output)
+    else:
+        print("Output: \n{}\n".format(output))
 
 def run_conan(reference):
     print('platform --------------------------')
