@@ -102,6 +102,7 @@ def run_conan(reference):
     print('platform --------------------------')
 
     exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth', '--force'])
+    exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config.zip'])
 
     if platform == "win32":
         exec_conan(['install', reference, '-s', 'compiler.runtime=MT'])
@@ -121,55 +122,6 @@ def run_conan(reference):
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
 
-
-# def get_conan():
-#     try:
-#         conan_api = importlib.import_module('conans.client.conan_api')
-#         return conan_api
-#     except ImportError:
-#         # print("Conan is not installed *****************************")
-#         return None
-
-# def run_conan(reference):
-#     # New API in Conan 0.28
-#     conan_api = get_conan()
-#     if conan_api == None:
-#         sys.exit('Conan is not installed')
-#         return False
-
-#     Conan = conan_api.Conan
-#     c, _, _ = Conan.factory()
-
-#     print(reference)
-
-#     try:
-#         # c.remote_add(remote, url, verify_ssl, args.insert)
-#         c.remote_add('kth', 'https://api.bintray.com/conan/k-nuth/kth')
-#     except:
-#         print ("Conan Remote exists, ignoring exception.")
-
-#     print('platform --------------------------')
-#     print(platform)
-#     print('platform --------------------------')
-
-#     win_setts = ["compiler.runtime=MT"]
-#     if platform == "win32":
-#         c.install(reference, verify=None, manifests_interactive=None, manifests=None, settings=win_setts)
-#         capi_h = find('capi.h', os.getcwd())
-#         print("----------------------------------------------------")
-#         print(capi_h)
-#         print("----------------------------------------------------")
-#         shutil.move('./deps/', '..')
-#     else:
-#         c.install(reference, verify=None, manifests_interactive=None, manifests=None)
-
-#     capi_h = find('capi.h', os.getcwd())
-#     print("----------------------------------------------------")
-#     print(capi_h)
-#     print("----------------------------------------------------")
-
-#     print('run_conan - END')
-#     replace_boost_lib_names_on_windows('../deps/lib')
 
 if __name__ == '__main__':
     print("----------------------------------------------------")
