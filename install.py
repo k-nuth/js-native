@@ -86,11 +86,12 @@ def exec_conan(args_param):
 
     try:
         # subprocess.check_call(args)
-        output = subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True, timeout=3, universal_newlines=True)
+        # output = subprocess.check_output(args, stderr=subprocess.STDOUT, shell=True, timeout=3, universal_newlines=True)
+        subprocess.check_call(args, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
     except subprocess.CalledProcessError as err:
         print("Failing trying to execute Conan ", err.returncode, err.output)
-    else:
-        print("Output: \n{}\n".format(output))
+    # else:
+    #     print("Output: \n{}\n".format(output))
 
 def run_conan(reference):
     print('platform --------------------------')
@@ -100,7 +101,7 @@ def run_conan(reference):
     exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth'])
 
     if platform == "win32":
-        exec_conan(['install', reference, '-o', 'compiler.runtime=MT'])
+        exec_conan(['install', reference, '-s', 'compiler.runtime=MT'])
         capi_h = find('capi.h', os.getcwd())
         print("----------------------------------------------------")
         print(capi_h)
