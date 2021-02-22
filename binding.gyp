@@ -28,10 +28,17 @@
       },
 
       "xcode_settings": {
+        'MACOSX_DEPLOYMENT_TARGET': '10.15',
         'OTHER_CFLAGS': [
           "-std=c++17",
+          # "-mmacosx-version-min=10.15",
           # "-stdlib=libc++"
         ],
+        # 'OTHER_LDFLAGS': [
+        #   "-std=c++17",
+        #   "-mmacosx-version-min=10.15",
+        #   # "-stdlib=libc++"
+        # ],
       },   
 
       'actions': [
@@ -123,16 +130,31 @@
           ],
         }],
         ['OS=="mac"', {
+          'xcode_settings': {
+              'OTHER_LDFLAGS': [
+                  # '-mmacosx-version-min=10.15', 
+              ], 
+          },
 
           "cflags": [
             "-std=c++17",
+            # "-mmacosx-version-min=10.15",
             ""
           ],
 
           "cflags_cc": [
             "-std=c++17",
+            # "-mmacosx-version-min=10.15",
             ""
           ],
+
+          "ldflags": [
+            # "-mmacosx-version-min=10.15",
+            ""
+          ],
+          # "OTHER_LDFLAGS": [ 
+          #   "-mmacosx-version-min=10.15",
+          # ],
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
           

@@ -188,7 +188,6 @@ jobs:
           conan user
           $ErrorActionPreference = 'Continue'
 
-
       - name: Build (Windows)
         if: ${{ matrix.config.os_kind == 'windows' }}
         env:
