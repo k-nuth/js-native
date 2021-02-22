@@ -35,18 +35,38 @@
       },   
 
       'actions': [
+        # {
+        #   'action_name': 'Install',
+        #   'inputs': [
+        #     '>(install_py)',
+        #   ],
+        #   'outputs': [''],
+        #   'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
+        # },
+
         {
-          'action_name': 'Install',
-          'inputs': [
-            '>(install_py)',
-          ],
-          # 'outputs': ['>(nmf_pnacl)'],
+          'action_name': '0pipkthbuild',
+          'inputs': [''],
           'outputs': [''],
-          # 'action': [
-          #   'python',
-          #   '>@(_inputs)', '<(module_root_dir)'
-          # ],
-          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','-m', "pip", "install", 'kthbuild']
+        },
+        {
+          'action_name': '1pipconan',
+          'inputs': [''],
+          'outputs': [''],
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','-m', "pip", "install", 'conan']
+        },
+        {
+          'action_name': '2conan_remote_add',
+          'inputs': [''],
+          'outputs': [''],
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','-m', "conans.conan", "remote", 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth']
+        },
+        {
+          'action_name': '3conan_install',
+          'inputs': [''],
+          'outputs': [''],
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','-m', "conans.conan", "install", '<(module_root_dir)']
         },
       ],
 
