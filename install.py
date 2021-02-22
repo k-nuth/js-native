@@ -73,7 +73,6 @@ def replace_boost_lib_names_on_windows(path):
                 print(newfile)
                 os.rename(file, newfile)
 
-
 def exec_conan(args_param):
     print("----------------------------------------------------")
     print("----------------------------------------------------")
@@ -102,7 +101,7 @@ def run_conan(reference):
     print(platform)
     print('platform --------------------------')
 
-    exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth'])
+    exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth', '--force'])
 
     if platform == "win32":
         exec_conan(['install', reference, '-s', 'compiler.runtime=MT'])
@@ -188,7 +187,7 @@ if __name__ == '__main__':
     print("----------------------------------------------------")
 
     install('conan')
-    test_conan_install()
+    # test_conan_install()
     install('kthbuild')
-    test_conan_install()
+    # test_conan_install()
     run_conan(sys.argv[1])
