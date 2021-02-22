@@ -1,6 +1,6 @@
 # kth
 
-Bitcoin, Bitcoin Cash and Litecoin development platform for building Javascript applications
+Bitcoin Cash development platform for building Javascript applications
 
 ##  Reference documentation
 

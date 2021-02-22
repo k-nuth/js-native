@@ -1,6 +1,6 @@
 {
   "name": "kth-bch-native",
-  "version": "0.9.21",
+  "version": "0.9.22",
   "description": "Bitcoin Cash development platform for Javascript applications",
   "repository": {
     "type": "git",
@@ -9,9 +9,9 @@
   "keywords": [
     "bitcoin",
     "cash",
-    "litecoin",
     "money",
-    "kth"
+    "kth",
+    "knuth"
   ],
   "author": "Fernando Pelliccioni <fpelliccioni@gmail.com> (http://kth.cash)",
   "license": "MIT",
