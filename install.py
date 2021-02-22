@@ -31,8 +31,7 @@ def install(package):
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
     except subprocess.CalledProcessError as err:
-        print("Failing trying to install the package, returncode: ")
-        print(err.returncode)
+        print("Failing trying to install the package ", err.returncode, err.output)
 
 def test_conan_install():
     print("----------------------------------------------------")
@@ -42,8 +41,7 @@ def test_conan_install():
     try:
         subprocess.check_call([sys.executable, "-c", "import conans.client.conan_api; print(conans); conans.client.conan_api.Conan.factory()"])
     except subprocess.CalledProcessError as err:
-        print("Failing testing Conan installation, returncode: ")
-        print(err.returncode)
+        print("Failing testing Conan installation ", err.returncode, err.output)
 
 
 def find(name, path):
@@ -89,8 +87,7 @@ def exec_conan(args_param):
     try:
         subprocess.check_call(args)
     except subprocess.CalledProcessError as err:
-        print("Failing trying to execute Conan, returncode: ")
-        print(err.returncode)
+        print("Failing trying to execute Conan ", err.returncode, err.output)
 
 def run_conan(reference):
     print('platform --------------------------')
