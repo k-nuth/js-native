@@ -139,7 +139,8 @@ jobs:
           conan install .
 
           # npm install
-          npm install --loglevel verbose
+          # npm install --loglevel verbose
+          KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
 
           # npm run test
           # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test

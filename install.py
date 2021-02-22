@@ -96,7 +96,7 @@ def exec_conan(args_param):
     # else:
     #     print("Output: \n{}\n".format(output))
 
-def run_conan(reference):
+def run_conan(reference, march_id):
     print('platform --------------------------')
     print(platform)
     print('platform --------------------------')
@@ -105,14 +105,16 @@ def run_conan(reference):
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config.zip'])
 
     if platform == "win32":
-        exec_conan(['install', reference, '-s', 'compiler.runtime=MT'])
+        # self.options["c-api"].march_id = "4fZKi37a595hP"
+        exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
         capi_h = find('capi.h', os.getcwd())
         print("----------------------------------------------------")
         print(capi_h)
         print("----------------------------------------------------")
         shutil.move('./deps/', '..')
     else:
-        exec_conan(['install', reference])
+        # exec_conan(['install', reference])
+        exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id)])
 
     capi_h = find('capi.h', os.getcwd())
     print("----------------------------------------------------")
@@ -122,12 +124,15 @@ def run_conan(reference):
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
 
-
 if __name__ == '__main__':
     print("----------------------------------------------------")
     print("----------------------------------------------------")
     print("----------------------------------------------------")
     print(sys.argv[1])
+
+    march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+    print("************** Microarchitecture Id: {}".format(march_id))
+
     print("Python version")
     print (sys.version)
     print("Version info.")
@@ -142,4 +147,4 @@ if __name__ == '__main__':
     # test_conan_install()
     install('kthbuild')
     # test_conan_install()
-    run_conan(sys.argv[1])
+    run_conan(sys.argv[1], march_id)

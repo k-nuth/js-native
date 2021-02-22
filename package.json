@@ -1,6 +1,6 @@
 {
   "name": "kth-bch-native",
-  "version": "0.9.24",
+  "version": "0.9.25",
   "description": "Bitcoin Cash development platform for Javascript applications",
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
     "test": "node index.js",
-    "prepublish": "npm ls"
+    "prepublish": "npm ls",
+    "pepe": "echo"
   }
 }

@@ -31,14 +31,7 @@
         'MACOSX_DEPLOYMENT_TARGET': '10.15',
         'OTHER_CFLAGS': [
           "-std=c++17",
-          # "-mmacosx-version-min=10.15",
-          # "-stdlib=libc++"
         ],
-        # 'OTHER_LDFLAGS': [
-        #   "-std=c++17",
-        #   "-mmacosx-version-min=10.15",
-        #   # "-stdlib=libc++"
-        # ],
       },   
 
       'actions': [
@@ -48,7 +41,6 @@
             '>(install_py)',
           ],
           'outputs': [''],
-          # 'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
           'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(DEPTH)']
         },
       ],
@@ -130,31 +122,15 @@
           ],
         }],
         ['OS=="mac"', {
-          'xcode_settings': {
-              'OTHER_LDFLAGS': [
-                  # '-mmacosx-version-min=10.15', 
-              ], 
-          },
-
           "cflags": [
             "-std=c++17",
-            # "-mmacosx-version-min=10.15",
             ""
           ],
 
           "cflags_cc": [
             "-std=c++17",
-            # "-mmacosx-version-min=10.15",
             ""
           ],
-
-          "ldflags": [
-            # "-mmacosx-version-min=10.15",
-            ""
-          ],
-          # "OTHER_LDFLAGS": [ 
-          #   "-mmacosx-version-min=10.15",
-          # ],
 
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
           
