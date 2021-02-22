@@ -48,12 +48,13 @@ cd /home/conan/project
 # conan install .
 
 # npm cache clean
-npm install
+# npm install
+npm install --loglevel verbose
 npm run test
 
 node-pre-gyp configure build package
 # node-pre-gyp-github publish  || true
-node-pre-gyp-github publish --release  || true
+node-pre-gyp-github publish --release  #|| true
 
 node-pre-gyp clean
 node-gyp clean

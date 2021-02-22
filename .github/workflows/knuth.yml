@@ -138,7 +138,8 @@ jobs:
           conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth || true
           conan install .
 
-          npm install
+          # npm install
+          npm install --loglevel verbose
 
           # npm run test
           # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
@@ -197,7 +198,8 @@ jobs:
         run: |
           $ErrorActionPreference = 'SilentlyContinue'
           
-          npm install
+          # npm install
+          npm install --loglevel verbose
           npm run test
           
           Remove-Item './deps' -Recurse
