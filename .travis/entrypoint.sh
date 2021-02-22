@@ -11,13 +11,11 @@ sudo -H npm install -g @mapbox/node-pre-gyp
 # sudo -H npm install -g aws-sdk
 sudo -H npm install -g node-pre-gyp-github
 
-# npm cache clean
-# sudo pip install --upgrade conan_package_tools
-# pip install --upgrade --user conan_package_tools
-# pip install conan --upgrade --user
-pip install kthbuild --upgrade --user
-conan --version
-conan user
+# # npm cache clean
+# # pip install conan --upgrade --user
+# pip install kthbuild --upgrade --user
+# conan --version
+# conan user
 
 
 
@@ -38,10 +36,8 @@ cat ~/.npmrc
 echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
 cat ~/.npmrc
 
-echo "Fer 7E"
 
-
-conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+# conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
 
 pwd
 
@@ -49,7 +45,7 @@ cd /home/conan/project
 
 # ls -ltra
 
-conan install .
+# conan install .
 
 # npm cache clean
 npm install

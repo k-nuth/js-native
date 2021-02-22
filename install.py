@@ -14,8 +14,37 @@ import subprocess
 # def install(package):
 #     pip.main(['install', package])
 
+# try:
+#     import pandas as pd
+# except ImportError:
+#     subprocess.check_call([sys.executable, "-m", "pip", "install", 'pandas'])
+# finally:
+#     import pandas as pd
+
+
 def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("Installing ")
+    print(package)
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    except subprocess.CalledProcessError as err:
+        print("Failing trying to install the package, returncode: ")
+        print(err.returncode)
+
+def test_conan_install():
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("Testing Conan Installation ")
+    try:
+        subprocess.check_call([sys.executable, "-c", "import conans.client.conan_api; print(conans); conans.client.conan_api.Conan.factory()"])
+    except subprocess.CalledProcessError as err:
+        print("Failing testing Conan installation, returncode: ")
+        print(err.returncode)
+
 
 def find(name, path):
     for root, dirs, files in os.walk(path):
@@ -111,5 +140,7 @@ if __name__ == '__main__':
     print("----------------------------------------------------")
 
     install('conan')
+    test_conan_install()
     install('kthbuild')
+    test_conan_install()
     run_conan(sys.argv[1])
