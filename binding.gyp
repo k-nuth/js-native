@@ -71,39 +71,39 @@
       # ],
 
       'actions': [
-        # {
-        #   'action_name': 'Install',
-        #   'inputs': [
-        #     '>(install_py)',
-        #   ],
-        #   'outputs': [''],
-        #   'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
-        # },
+        {
+          'action_name': 'Install',
+          'inputs': [
+            '>(install_py)',
+          ],
+          'outputs': [''],
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(module_root_dir)']
+        },
 
-        {
-          'action_name': '0pipkthbuild',
-          'inputs': [''],
-          'outputs': [''],
-          'action': ['echo','******************************** 0pipkthbuild']
-        },
-        {
-          'action_name': '1pipconan',
-          'inputs': [''],
-          'outputs': [''],
-          'action': ['echo','******************************** 1pipconan']
-        },
-        {
-          'action_name': '2conan_remote_add',
-          'inputs': [''],
-          'outputs': [''],
-          'action': ['echo','******************************** 2conan_remote_add']
-        },
-        {
-          'action_name': '3conan_install',
-          'inputs': [''],
-          'outputs': [''],
-          'action': ['echo','******************************** 3conan_install']
-        },
+        # {
+        #   'action_name': '0pipkthbuild',
+        #   'inputs': [''],
+        #   'outputs': [''],
+        #   'action': ['echo','******************************** 0pipkthbuild']
+        # },
+        # {
+        #   'action_name': '1pipconan',
+        #   'inputs': [''],
+        #   'outputs': [''],
+        #   'action': ['echo','******************************** 1pipconan']
+        # },
+        # {
+        #   'action_name': '2conan_remote_add',
+        #   'inputs': [''],
+        #   'outputs': [''],
+        #   'action': ['echo','******************************** 2conan_remote_add']
+        # },
+        # {
+        #   'action_name': '3conan_install',
+        #   'inputs': [''],
+        #   'outputs': [''],
+        #   'action': ['echo','******************************** 3conan_install']
+        # },
         # ['OS=="win"', {
         #     'action_name': '4just_windows',
         #     'inputs': [''],
