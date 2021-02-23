@@ -104,9 +104,15 @@ def run_conan(reference, march_id):
     exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth', '--force'])
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config.zip'])
 
+    install_args = ['install', reference]
+    if march_id != None:
+        install_args.extend(['-o', 'c-api:march_id={}'.format(march_id)])
+
     if platform == "win32":
         # self.options["c-api"].march_id = "4fZKi37a595hP"
-        exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
+        # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
+        install_args.extend(['-s', 'compiler.runtime=MT'])
+        exec_conan(install_args)
         capi_h = find('capi.h', os.getcwd())
         print("----------------------------------------------------")
         print(capi_h)
@@ -114,7 +120,8 @@ def run_conan(reference, march_id):
         shutil.move('./deps/', '..')
     else:
         # exec_conan(['install', reference])
-        exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id)])
+        # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id)])
+        exec_conan(install_args)
 
     capi_h = find('capi.h', os.getcwd())
     print("----------------------------------------------------")
@@ -128,6 +135,7 @@ def get_march(arch):
     arr = arch.split("-")
     if len(arr) != 2:
         march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+        # march_id = os.getenv("KTH_MARCHID", None)
         return march_id
 
     march_id = arr[1]
