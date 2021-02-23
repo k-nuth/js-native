@@ -17,13 +17,15 @@ jobs:
       - name: Generate Job Matrix
         id: set-matrix
         env:
-          MATRIX: '{"config": [{"name": "Linux NodeJS 14","nodejs_version": "14","os": "ubuntu-20.04","os_kind": "linux"},
-                               {"name": "Linux NodeJS 12","nodejs_version": "12","os": "ubuntu-20.04","os_kind": "linux"},
-                               {"name": "macOS NodeJS 14","nodejs_version": "14","os": "macos-10.15","os_kind": "macos"},
-                               {"name": "macOS NodeJS 12","nodejs_version": "12","os": "macos-10.15","os_kind": "macos"},
-                               {"name": "Windows NodeJS 14","nodejs_version": "14","os": "windows-2019","os_kind": "windows"},
-                               {"name": "Windows NodeJS 12","nodejs_version": "12","os": "windows-2019","os_kind": "windows"},
-                               ]}'
+          MATRIX: '{"config":[{"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
+                              {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
+                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
+                              {"name":"macOS NodeJS 14 (*)","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
+                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
+                              {"name":"macOS NodeJS 12 (*)","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
+                              {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
+                              {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
+                             ]}'
         run: |
           echo "${MATRIX}"
           echo "::set-output name=matrix::${MATRIX}"
@@ -48,12 +50,16 @@ jobs:
         shell: bash
         run: |
           echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $GITHUB_ENV
+          echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $GITHUB_ENV
+          echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $GITHUB_ENV
 
       - name: Settting EnvVars (Windows)
         if: ${{ matrix.config.os_kind == 'windows' }}
         shell: powershell
         run: |
           echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $Env:GITHUB_ENV
+          echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $Env:GITHUB_ENV
+          echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $Env:GITHUB_ENV
 
       - name: Build (Linux)
         if: ${{ matrix.config.os_kind == 'linux' }}
@@ -72,8 +78,7 @@ jobs:
           echo "-------------------------------------------------------"
           chmod a+x .travis/entrypoint.sh
           chmod -R 777 ${PWD}
-          /usr/bin/docker run --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
-          # /usr/bin/docker run -u root --rm -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
+          /usr/bin/docker run --rm -e KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
 
       - uses: actions/setup-node@v2
         if: ${{ matrix.config.os_kind != 'linux' }}
@@ -120,7 +125,7 @@ jobs:
           
           conan user
 
-      - name: Build (macOS Default 4fZKi37a595hP)
+      - name: Build (macOS)
         if: ${{ matrix.config.os_kind == 'macos' }}
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
@@ -141,45 +146,17 @@ jobs:
           # npm install
           # npm install --loglevel verbose
           # KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
-          npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
+          # npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
+          npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 
-          # npm run test
-          # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
-
-          node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi37a595hP
-          node-pre-gyp-github publish --release || true
-
-          # node-pre-gyp clean
-          # node-gyp clean
-          # npm install
-          # npm publish || true
-
-      - name: Build (macOS 4fZKi376M2D1R)
-        if: ${{ matrix.config.os_kind == 'macos' }}
-        env:
-          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        shell: bash
-        run: |
-          if which pyenv > /dev/null; then
-            eval "$(pyenv init -)"
-            eval "$(pyenv virtualenv-init -)"
+          if [[ "${KTH_GHA_RUN_TESTS}" == "1" ]]; then
+            npm run test
+            # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
           fi
-          pyenv activate conan
 
-          python --version
-          conan user
-          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth || true
-          conan install .
+          # node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi37a595hP
+          node-pre-gyp configure build package --verbose --target_arch=${KTH_GHA_MARCH_ID}
 
-          # npm install
-          # npm install --loglevel verbose
-          # KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
-          npm install --target_arch=x64-4fZKi376M2D1R --loglevel verbose
-
-          npm run test
-
-          node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi376M2D1R
           node-pre-gyp-github publish --release || true
 
           # node-pre-gyp clean
@@ -234,12 +211,12 @@ jobs:
           
           # npm install
           # npm install --loglevel verbose
-          npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
+          npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
           npm run test
           
           Remove-Item './deps' -Recurse
 
-          node-pre-gyp configure build package --target_arch=x64-4fZKi37a595hP
+          node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "KTH_GHA_MARCH_ID: ${KTH_GHA_MARCH_ID}"
 
 node_setup="http://deb.nodesource.com/setup_$NODEJS_VERSION.x"
 wget -qO- $node_setup | sudo -E bash -
@@ -50,10 +51,10 @@ cd /home/conan/project
 # npm cache clean
 # npm install
 # npm install --loglevel verbose
-npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
+npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 npm run test
 
-node-pre-gyp configure build package --target_arch=x64-4fZKi37a595hP
+node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
 # node-pre-gyp-github publish  || true
 node-pre-gyp-github publish --release  #|| true
 
@@ -61,7 +62,6 @@ node-pre-gyp clean
 node-gyp clean
 
 # npm install
-npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
+npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 
 npm publish || true
-
