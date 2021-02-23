@@ -120,7 +120,7 @@ jobs:
           
           conan user
 
-      - name: Build (macOS)
+      - name: Build (macOS Default 4fZKi37a595hP)
         if: ${{ matrix.config.os_kind == 'macos' }}
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
@@ -140,10 +140,44 @@ jobs:
 
           # npm install
           # npm install --loglevel verbose
-          KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
+          # KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
+          npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
 
           # npm run test
           # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
+
+          node-pre-gyp configure build package --verbose
+          node-pre-gyp-github publish --release  || true
+
+          # node-pre-gyp clean
+          # node-gyp clean
+          # npm install
+          # npm publish || true
+
+      - name: Build (macOS 4fZKi376M2D1R)
+        if: ${{ matrix.config.os_kind == 'macos' }}
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        shell: bash
+        run: |
+          if which pyenv > /dev/null; then
+            eval "$(pyenv init -)"
+            eval "$(pyenv virtualenv-init -)"
+          fi
+          pyenv activate conan
+
+          python --version
+          conan user
+          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth || true
+          conan install .
+
+          # npm install
+          # npm install --loglevel verbose
+          # KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
+          npm install --target_arch=x64-4fZKi376M2D1R --loglevel verbose
+
+          npm run test
 
           node-pre-gyp configure build package --verbose
           node-pre-gyp-github publish --release  || true
@@ -199,7 +233,8 @@ jobs:
           $ErrorActionPreference = 'SilentlyContinue'
           
           # npm install
-          npm install --loglevel verbose
+          # npm install --loglevel verbose
+          npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
           npm run test
           
           Remove-Item './deps' -Recurse
