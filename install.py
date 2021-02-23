@@ -132,19 +132,23 @@ def run_conan(reference, march_id):
     replace_boost_lib_names_on_windows('../deps/lib')
 
 def get_march(arch):
-    arr = arch.split("-")
-    if len(arr) != 2:
-        march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
-        # march_id = os.getenv("KTH_MARCHID", None)
-        return march_id
-
-    march_id = arr[1]
+    march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
     return march_id
+
+    # arr = arch.split("-")
+    # if len(arr) != 2:
+    #     march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+    #     # march_id = os.getenv("KTH_MARCHID", None)
+    #     return march_id
+
+    # march_id = arr[1]
+    # return march_id
 
 
 if __name__ == '__main__':
     recipe_dir = sys.argv[1]
-    user_arch = sys.argv[2]
+    # user_arch = sys.argv[2]
+    user_arch = None
     march_id = get_march(user_arch)
 
     print("----------------------------------------------------")

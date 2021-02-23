@@ -17,12 +17,19 @@ jobs:
       - name: Generate Job Matrix
         id: set-matrix
         env:
+          # MATRIX: '{"config":[{"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
+          #                     {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
+          #                     {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
+          #                     {"name":"macOS NodeJS 14 (*)","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
+          #                     {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
+          #                     {"name":"macOS NodeJS 12 (*)","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
+          #                     {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
+          #                     {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
+          #                    ]}'
           MATRIX: '{"config":[{"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 14 (*)","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
                               {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 12 (*)","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi376M2D1R","test":"1"},
                               {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
                              ]}'
@@ -146,16 +153,16 @@ jobs:
           # npm install
           # npm install --loglevel verbose
           # KTH_MARCHID=4fZKi376M2D1R npm install --loglevel verbose
-          # npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
-          npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          npm install --loglevel verbose
 
           if [[ "${KTH_GHA_RUN_TESTS}" == "1" ]]; then
             npm run test
             # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
           fi
 
-          # node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi37a595hP
-          node-pre-gyp configure build package --verbose --target_arch=${KTH_GHA_MARCH_ID}
+          # node-pre-gyp configure build package --verbose --target_arch=${KTH_GHA_MARCH_ID}
+          node-pre-gyp configure build package --verbose
 
           node-pre-gyp-github publish --release || true
 
@@ -211,12 +218,14 @@ jobs:
           
           # npm install
           # npm install --loglevel verbose
-          npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          npm install --loglevel verbose
           npm run test
           
           Remove-Item './deps' -Recurse
 
-          node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
+          # node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
+          node-pre-gyp configure build package
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose

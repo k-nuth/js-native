@@ -50,18 +50,19 @@ cd /home/conan/project
 
 # npm cache clean
 # npm install
-# npm install --loglevel verbose
-npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+npm install --loglevel verbose
+# npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 npm run test
 
-node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
+# node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
+node-pre-gyp configure build package
 # node-pre-gyp-github publish  || true
 node-pre-gyp-github publish --release  #|| true
 
 node-pre-gyp clean
 node-gyp clean
 
-# npm install
-npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+npm install
+# npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 
 npm publish || true
