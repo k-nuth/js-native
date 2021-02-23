@@ -41,7 +41,7 @@
             '>(install_py)',
           ],
           'outputs': [''],
-          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(DEPTH)']
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(DEPTH)', "<(target_arch)"]
         },
       ],
 
