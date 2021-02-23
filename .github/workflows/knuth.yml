@@ -146,8 +146,8 @@ jobs:
           # npm run test
           # /Users/runner/work/_temp/1cbd6dec-60ec-4181-81bd-cceaf2210ae3.sh: line 13: 37183 Illegal instruction: 4  npm run test
 
-          node-pre-gyp configure build package --verbose
-          node-pre-gyp-github publish --release  || true
+          node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi37a595hP
+          node-pre-gyp-github publish --release || true
 
           # node-pre-gyp clean
           # node-gyp clean
@@ -179,8 +179,8 @@ jobs:
 
           npm run test
 
-          node-pre-gyp configure build package --verbose
-          node-pre-gyp-github publish --release  || true
+          node-pre-gyp configure build package --verbose --target_arch=x64-4fZKi376M2D1R
+          node-pre-gyp-github publish --release || true
 
           # node-pre-gyp clean
           # node-gyp clean
@@ -239,7 +239,7 @@ jobs:
           
           Remove-Item './deps' -Recurse
 
-          node-pre-gyp configure build package
+          node-pre-gyp configure build package --target_arch=x64-4fZKi37a595hP
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose

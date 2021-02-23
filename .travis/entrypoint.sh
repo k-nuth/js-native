@@ -53,7 +53,7 @@ cd /home/conan/project
 npm install --target_arch=x64-4fZKi37a595hP --loglevel verbose
 npm run test
 
-node-pre-gyp configure build package
+node-pre-gyp configure build package --target_arch=x64-4fZKi37a595hP
 # node-pre-gyp-github publish  || true
 node-pre-gyp-github publish --release  #|| true
 
