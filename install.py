@@ -124,13 +124,26 @@ def run_conan(reference, march_id):
     print('run_conan - END')
     replace_boost_lib_names_on_windows('../deps/lib')
 
-if __name__ == '__main__':
-    print("----------------------------------------------------")
-    print("----------------------------------------------------")
-    print("----------------------------------------------------")
-    print(sys.argv[1])
+def get_march(arch):
+    arr = arch.split("-")
+    if len(arr) != 2:
+        march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+        return march_id
 
-    march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+    march_id = arr[1]
+    return march_id
+
+
+if __name__ == '__main__':
+    recipe_dir = sys.argv[1]
+    user_arch = sys.argv[2]
+    march_id = get_march(user_arch)
+
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("----------------------------------------------------")
+    print("************** Conan Recipe directory: {}".format(recipe_dir))
+    print("************** User defined arch: {}".format(user_arch))
     print("************** Microarchitecture Id: {}".format(march_id))
 
     print("Python version")
@@ -147,4 +160,4 @@ if __name__ == '__main__':
     # test_conan_install()
     install('kthbuild')
     # test_conan_install()
-    run_conan(sys.argv[1], march_id)
+    run_conan(recipe_dir, march_id)
