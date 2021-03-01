@@ -89,7 +89,7 @@ void chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
 void chain_output_factory_from_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 2) {
+    if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments. chain_output_factory_from_data function requires 2 arguments.");
         return;
     }
@@ -99,13 +99,9 @@ void chain_output_factory_from_data(v8::FunctionCallbackInfo<v8::Value> const& a
         return;
     }
 
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong argument type for argument n (#2). Required to be IsNumber.");
-        return;
-    }
-
-    uint8_t* data = args[0]->arg_conv_func;
-    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    v8::Local<v8::Uint8Array> data_arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
+    uint8_t* data = (uint8_t*)data_arr->Buffer()->GetContents().Data();
+    uint64_t n = data_arr->Length();
 
     kth_output_t res = kth_chain_output_factory_from_data(data, n);
     args.GetReturnValue().Set(External::New(isolate, res));
