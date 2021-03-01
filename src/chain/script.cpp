@@ -58,6 +58,11 @@ void chain_script_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
         return;
     }
 
+    if ( ! args[1]->IsBoolean()) {
+        throw_exception(isolate, "Wrong argument type for argument prefix (#2). Required to be IsBoolean.");
+        return;
+    }
+
     v8::Local<v8::Uint8Array> encoded_arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     uint8_t* encoded = (uint8_t*)encoded_arr->Buffer()->GetContents().Data();
     kth_size_t n = encoded_arr->Length();
