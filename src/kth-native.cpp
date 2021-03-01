@@ -148,9 +148,11 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_transaction_outputs", chain_transaction_outputs);
     NODE_SET_METHOD(exports, "chain_transaction_inputs", chain_transaction_inputs);
 
-
+    NODE_SET_METHOD(exports, "chain_input_construct_default", chain_input_construct_default);
     NODE_SET_METHOD(exports, "chain_input_construct", chain_input_construct);
     NODE_SET_METHOD(exports, "chain_input_destruct", chain_input_destruct);
+    NODE_SET_METHOD(exports, "chain_input_factory_from_data", chain_input_factory_from_data);
+    NODE_SET_METHOD(exports, "chain_input_is_valid", chain_input_is_valid);
     NODE_SET_METHOD(exports, "chain_input_is_final", chain_input_is_final);
     NODE_SET_METHOD(exports, "chain_input_serialized_size", chain_input_serialized_size);
     NODE_SET_METHOD(exports, "chain_input_sequence", chain_input_sequence);
