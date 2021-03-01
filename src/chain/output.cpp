@@ -30,43 +30,103 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+void chain_output_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments. chain_output_construct_default function requires 0 arguments.");
+        return;
+    }
+
+
+    kth_output_t res = kth_chain_output_construct_default();
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
+
+void chain_output_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_output_construct function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument value (#1). Required to be IsNumber.");
+        return;
+    }
+
+    if ( ! args[1]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument script (#2). Required to be IsExternal.");
+        return;
+    }
+
+    uint64_t value = args[0]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_script_t script = (kth_script_t)v8::External::Cast(*args[1])->Value();
+
+    kth_output_t res = kth_chain_output_construct(value, script);
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
 
 void chain_output_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_destruct function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
 
     kth_chain_output_destruct(output);
+}
+
+void chain_output_factory_from_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_output_factory_from_data function requires 2 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsUint8Array()) {
+        throw_exception(isolate, "Wrong argument type for argument data (#1). Required to be IsUint8Array.");
+        return;
+    }
+
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument n (#2). Required to be IsNumber.");
+        return;
+    }
+
+    uint8_t* data = args[0]->arg_conv_func;
+    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+
+    kth_output_t res = kth_chain_output_factory_from_data(data, n);
+    args.GetReturnValue().Set(External::New(isolate, res));
 }
 
 void chain_output_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_is_valid function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
 
-    int res = kth_chain_output_is_valid(output);
+    kth_bool_t res = kth_chain_output_is_valid(output);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
 }
 
@@ -74,44 +134,41 @@ void chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_serialized_size function requires 2 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
     if ( ! args[1]->IsBoolean()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument wire (#2). Required to be IsBoolean.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
+    kth_bool_t wire = to_bool(isolate, args[1]);
 
-    bool wire = args[1]->BooleanValue(isolate);
-    uint64_t res = kth_chain_output_serialized_size(output, wire ? 1 : 0);
+    kth_size_t res = kth_chain_output_serialized_size(output, wire);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
-
 
 void chain_output_value(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_value function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
 
     uint64_t res = kth_chain_output_value(output);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -121,27 +178,18 @@ void chain_output_signature_operations(v8::FunctionCallbackInfo<v8::Value> const
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_signature_operations function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
-    // if ( ! args[1]->IsBoolean()) {
-    //     throw_exception(isolate, "Wrong arguments");
-    //     return;
-    // }    
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
-
-    // bool bip16_active = args[1]->BooleanValue(isolate);
-
-    // uint64_t res = kth_chain_output_signature_operations(output, bip16_active ? 1 : 0);
-    uint64_t res = kth_chain_output_signature_operations(output);
+    kth_size_t res = kth_chain_output_signature_operations(output);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
@@ -149,88 +197,70 @@ void chain_output_script(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_output_script function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_output_t output = (kth_output_t)vptr;
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
 
     kth_script_t res = kth_chain_output_script(output);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
+void chain_output_payment_address(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
 
-//void chain_output_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
-//void chain_output_get_index(v8::FunctionCallbackInfo<v8::Value> const& args);
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_output_payment_address function requires 2 arguments.");
+        return;
+    }
 
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
+        return;
+    }
 
+    if ( ! args[1]->IsBoolean()) {
+        throw_exception(isolate, "Wrong argument type for argument use_testnet_rules (#2). Required to be IsBoolean.");
+        return;
+    }
 
-// void chain_output_is_final(v8::FunctionCallbackInfo<v8::Value> const& args) {
-//     Isolate* isolate = args.GetIsolate();
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
+    kth_bool_t use_testnet_rules = to_bool(isolate, args[1]);
 
-//     if (args.Length() != 1) {
-//         throw_exception(isolate, "Wrong number of arguments");
-//         return;
-//     }
+    kth_payment_address_t res = kth_chain_output_payment_address(output, use_testnet_rules);
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
 
-//     if ( ! args[0]->IsExternal()) {
-//         throw_exception(isolate, "Wrong arguments");
-//         return;
-//     }
+void chain_output_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
 
-//     void* vptr = v8::External::Cast(*args[0])->Value();
-//     kth_output_t output = (kth_output_t)vptr;
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. chain_output_to_data function requires 3 arguments.");
+        return;
+    }
 
-//     int res = kth_chain_output_is_final(output);
-//     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
-    
-// }
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument output (#1). Required to be IsExternal.");
+        return;
+    }
 
-// void chain_output_sequence(v8::FunctionCallbackInfo<v8::Value> const& args) {
-//     Isolate* isolate = args.GetIsolate();
+    if ( ! args[1]->IsBoolean()) {
+        throw_exception(isolate, "Wrong argument type for argument wire (#2). Required to be IsBoolean.");
+        return;
+    }
 
-//     if (args.Length() != 1) {
-//         throw_exception(isolate, "Wrong number of arguments");
-//         return;
-//     }
+    kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
+    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_size_t size;
 
-//     if ( ! args[0]->IsExternal()) {
-//         throw_exception(isolate, "Wrong arguments");
-//         return;
-//     }
-
-//     void* vptr = v8::External::Cast(*args[0])->Value();
-//     kth_output_t output = (kth_output_t)vptr;
-
-//     uint32_t res = kth_chain_output_sequence(output);
-//     args.GetReturnValue().Set(Number::New(isolate, res));
-// }
-
-// void chain_output_previous_output(v8::FunctionCallbackInfo<v8::Value> const& args) {
-//     Isolate* isolate = args.GetIsolate();
-
-//     if (args.Length() != 1) {
-//         throw_exception(isolate, "Wrong number of arguments");
-//         return;
-//     }
-
-//     if ( ! args[0]->IsExternal()) {
-//         throw_exception(isolate, "Wrong arguments");
-//         return;
-//     }
-
-//     void* vptr = v8::External::Cast(*args[0])->Value();
-//     kth_output_t output = (kth_output_t)vptr;
-
-//     kth_outputpoint_t res = kth_chain_output_previous_output(output);
-//     args.GetReturnValue().Set(External::New(isolate, res));
-// }
-
+    uint8_t const* res = kth_chain_output_to_data(output, wire, &size);
+    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+}
 
 }  // namespace kth::js_native
