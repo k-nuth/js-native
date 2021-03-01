@@ -159,12 +159,17 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_input_previous_output", chain_input_previous_output);
     NODE_SET_METHOD(exports, "chain_input_to_data", chain_input_to_data);
 
+    NODE_SET_METHOD(exports, "chain_output_construct_default", chain_output_construct_default);
+    NODE_SET_METHOD(exports, "chain_output_construct", chain_output_construct);
     NODE_SET_METHOD(exports, "chain_output_destruct", chain_output_destruct);
+    NODE_SET_METHOD(exports, "chain_output_factory_from_data", chain_output_factory_from_data);
     NODE_SET_METHOD(exports, "chain_output_is_valid", chain_output_is_valid);
     NODE_SET_METHOD(exports, "chain_output_serialized_size", chain_output_serialized_size);
     NODE_SET_METHOD(exports, "chain_output_value", chain_output_value);
     NODE_SET_METHOD(exports, "chain_output_signature_operations", chain_output_signature_operations);
     NODE_SET_METHOD(exports, "chain_output_script", chain_output_script);
+    NODE_SET_METHOD(exports, "chain_output_payment_address", chain_output_payment_address);
+    NODE_SET_METHOD(exports, "chain_output_to_data", chain_output_to_data);
 
     NODE_SET_METHOD(exports, "chain_output_point_construct", chain_output_point_construct);
     NODE_SET_METHOD(exports, "chain_output_point_construct_from_hash_index", chain_output_point_construct_from_hash_index);
