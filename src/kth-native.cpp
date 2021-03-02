@@ -191,11 +191,15 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_script_to_data", chain_script_to_data);
     NODE_SET_METHOD(exports, "chain_script_sigops", chain_script_sigops);
 
+    NODE_SET_METHOD(exports, "chain_input_list_construct_default", chain_input_list_construct_default);
     NODE_SET_METHOD(exports, "chain_input_list_push_back", chain_input_list_push_back);
+    NODE_SET_METHOD(exports, "chain_input_list_destruct", chain_input_list_destruct);
     NODE_SET_METHOD(exports, "chain_input_list_count", chain_input_list_count);
     NODE_SET_METHOD(exports, "chain_input_list_nth", chain_input_list_nth);
 
+    NODE_SET_METHOD(exports, "chain_output_list_construct_default", chain_output_list_construct_default);
     NODE_SET_METHOD(exports, "chain_output_list_push_back", chain_output_list_push_back);
+    NODE_SET_METHOD(exports, "chain_output_list_destruct", chain_output_list_destruct);
     NODE_SET_METHOD(exports, "chain_output_list_count", chain_output_list_count);
     NODE_SET_METHOD(exports, "chain_output_list_nth", chain_output_list_nth);
 
