@@ -124,11 +124,17 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_merkle_block_total_transaction_count", chain_merkle_block_total_transaction_count);
     NODE_SET_METHOD(exports, "chain_merkle_block_reset", chain_merkle_block_reset);
 
+    NODE_SET_METHOD(exports, "chain_transaction_factory_from_data", chain_transaction_factory_from_data);
+    NODE_SET_METHOD(exports, "chain_transaction_construct_default", chain_transaction_construct_default);
+    NODE_SET_METHOD(exports, "chain_transaction_construct", chain_transaction_construct);
     NODE_SET_METHOD(exports, "chain_transaction_destruct", chain_transaction_destruct);
+    NODE_SET_METHOD(exports, "chain_transaction_is_valid", chain_transaction_is_valid);
     NODE_SET_METHOD(exports, "chain_transaction_version", chain_transaction_version);
-    // NODE_SET_METHOD(exports, "chain_transaction_set_version", chain_transaction_set_version);
+    NODE_SET_METHOD(exports, "chain_transaction_set_version", chain_transaction_set_version);
     NODE_SET_METHOD(exports, "chain_transaction_hash", chain_transaction_hash);
+    NODE_SET_METHOD(exports, "chain_transaction_hash_out", chain_transaction_hash_out);
     NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type", chain_transaction_hash_sighash_type);
+    NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type_out", chain_transaction_hash_sighash_type_out);
     NODE_SET_METHOD(exports, "chain_transaction_locktime", chain_transaction_locktime);
     NODE_SET_METHOD(exports, "chain_transaction_serialized_size", chain_transaction_serialized_size);
     NODE_SET_METHOD(exports, "chain_transaction_fees", chain_transaction_fees);
@@ -147,7 +153,8 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_transaction_is_locktime_conflict", chain_transaction_is_locktime_conflict);
     NODE_SET_METHOD(exports, "chain_transaction_outputs", chain_transaction_outputs);
     NODE_SET_METHOD(exports, "chain_transaction_inputs", chain_transaction_inputs);
-
+    NODE_SET_METHOD(exports, "chain_transaction_to_data", chain_transaction_to_data);
+    
     NODE_SET_METHOD(exports, "chain_input_construct_default", chain_input_construct_default);
     NODE_SET_METHOD(exports, "chain_input_construct", chain_input_construct);
     NODE_SET_METHOD(exports, "chain_input_destruct", chain_input_destruct);
