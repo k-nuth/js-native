@@ -17,7 +17,6 @@ using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
 using v8::Global;
-
 using v8::Object;
 using v8::String;
 using v8::Boolean;
@@ -30,51 +29,76 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+void chain_input_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments. chain_input_list_construct_default function requires 0 arguments.");
+        return;
+    }
+
+
+    kth_input_list_t res = kth_chain_input_list_construct_default();
+    args.GetReturnValue().Set(External::New(isolate, res));
+}
 
 void chain_input_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_input_list_push_back function requires 2 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument list (#1). Required to be IsExternal.");
         return;
     }
 
     if ( ! args[1]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument elem (#2). Required to be IsExternal.");
         return;
     }
-    
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_input_list_t input_list = (kth_input_list_t)vptr;
 
-    void* vptr2 = v8::External::Cast(*args[1])->Value();
-    kth_input_t input = (kth_input_t)vptr2;
+    kth_input_list_t list = (kth_input_list_t)v8::External::Cast(*args[0])->Value();
+    kth_input_t elem = (kth_input_t)v8::External::Cast(*args[1])->Value();
 
-    kth_chain_input_list_push_back(input_list, input);
+    kth_chain_input_list_push_back(list, elem);
+}
+
+void chain_input_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_input_list_destruct function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument list (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_input_list_t list = (kth_input_list_t)v8::External::Cast(*args[0])->Value();
+    kth_chain_input_list_destruct(list);
 }
 
 void chain_input_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_input_list_count function requires 1 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument list (#1). Required to be IsExternal.");
         return;
     }
-    
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_input_list_t input_list = (kth_input_list_t)vptr;
 
-    uint64_t res = kth_chain_input_list_count(input_list);
+    kth_input_list_t list = (kth_input_list_t)v8::External::Cast(*args[0])->Value();
+
+    kth_size_t res = kth_chain_input_list_count(list);
     args.GetReturnValue().Set(Number::New(isolate, res));
 }
 
@@ -82,26 +106,24 @@ void chain_input_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments. chain_input_list_nth function requires 2 arguments.");
         return;
     }
 
     if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument list (#1). Required to be IsExternal.");
         return;
     }
 
     if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong arguments");
+        throw_exception(isolate, "Wrong argument type for argument n (#2). Required to be IsNumber.");
         return;
     }
-    
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_input_list_t input_list = (kth_input_list_t)vptr;
 
-    uint64_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_input_list_t list = (kth_input_list_t)v8::External::Cast(*args[0])->Value();
+    kth_size_t n = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    kth_input_t res = kth_chain_input_list_nth(input_list, n);
+    kth_input_t res = kth_chain_input_list_nth(list, n);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 

@@ -9,7 +9,9 @@
 
 namespace kth::js_native {
 
+void chain_input_list_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_input_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_input_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_input_list_count(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_input_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args);
 
