@@ -93,8 +93,15 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_header_merkle", chain_header_merkle);
     NODE_SET_METHOD(exports, "chain_header_hash", chain_header_hash);
 
+    NODE_SET_METHOD(exports, "chain_block_construct_default", chain_block_construct_default);
+    NODE_SET_METHOD(exports, "chain_block_construct", chain_block_construct);
+    NODE_SET_METHOD(exports, "chain_block_factory_from_data", chain_block_factory_from_data);
     NODE_SET_METHOD(exports, "chain_block_destruct", chain_block_destruct);
+    NODE_SET_METHOD(exports, "chain_block_is_valid", chain_block_is_valid);
     NODE_SET_METHOD(exports, "chain_block_header", chain_block_header);
+    NODE_SET_METHOD(exports, "chain_block_hash", chain_block_hash);
+    NODE_SET_METHOD(exports, "chain_block_hash_out", chain_block_hash_out);
+    NODE_SET_METHOD(exports, "chain_block_proof_str", chain_block_proof_str);
     NODE_SET_METHOD(exports, "chain_block_transactions", chain_block_transactions);
     NODE_SET_METHOD(exports, "chain_block_serialized_size", chain_block_serialized_size);
     NODE_SET_METHOD(exports, "chain_block_subsidy", chain_block_subsidy);
@@ -102,18 +109,18 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_claim", chain_block_claim);
     NODE_SET_METHOD(exports, "chain_block_reward", chain_block_reward);
     NODE_SET_METHOD(exports, "chain_block_generate_merkle_root", chain_block_generate_merkle_root);
-    NODE_SET_METHOD(exports, "chain_block_hash", chain_block_hash);
-    NODE_SET_METHOD(exports, "chain_block_is_valid", chain_block_is_valid);
+    NODE_SET_METHOD(exports, "chain_block_generate_merkle_root_out", chain_block_generate_merkle_root_out);
     NODE_SET_METHOD(exports, "chain_block_signature_operations", chain_block_signature_operations);
     NODE_SET_METHOD(exports, "chain_block_signature_operations_bip16_active", chain_block_signature_operations_bip16_active);
     NODE_SET_METHOD(exports, "chain_block_total_inputs", chain_block_total_inputs);
-    NODE_SET_METHOD(exports, "chain_block_is_extra_coinbase", chain_block_is_extra_coinbase);
+    NODE_SET_METHOD(exports, "chain_block_is_extra_coinbases", chain_block_is_extra_coinbases);
     NODE_SET_METHOD(exports, "chain_block_is_final", chain_block_is_final);
     NODE_SET_METHOD(exports, "chain_block_is_distinct_transaction_set", chain_block_is_distinct_transaction_set);
     NODE_SET_METHOD(exports, "chain_block_is_valid_coinbase_claim", chain_block_is_valid_coinbase_claim);
     NODE_SET_METHOD(exports, "chain_block_is_valid_coinbase_script", chain_block_is_valid_coinbase_script);
     NODE_SET_METHOD(exports, "chain_block_is_internal_double_spend", chain_block_is_internal_double_spend);
     NODE_SET_METHOD(exports, "chain_block_is_valid_merkle_root", chain_block_is_valid_merkle_root);
+    NODE_SET_METHOD(exports, "chain_block_to_data", chain_block_to_data);
 
     NODE_SET_METHOD(exports, "chain_merkle_block_destruct", chain_merkle_block_destruct);
     NODE_SET_METHOD(exports, "chain_merkle_block_get_header", chain_merkle_block_get_header);
@@ -154,7 +161,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_transaction_outputs", chain_transaction_outputs);
     NODE_SET_METHOD(exports, "chain_transaction_inputs", chain_transaction_inputs);
     NODE_SET_METHOD(exports, "chain_transaction_to_data", chain_transaction_to_data);
-    
+
     NODE_SET_METHOD(exports, "chain_input_construct_default", chain_input_construct_default);
     NODE_SET_METHOD(exports, "chain_input_construct", chain_input_construct);
     NODE_SET_METHOD(exports, "chain_input_destruct", chain_input_destruct);
