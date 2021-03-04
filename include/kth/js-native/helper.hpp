@@ -85,6 +85,13 @@ kth_bool_t to_bool(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
     return b;
 }
 
+inline
+kth_network_t to_kth_network_t(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+    auto val = x->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_network_t res = kth_network_t(val);
+    return res;
+}
+
 }  // namespace kth::js_native
 
 #endif // KTH_JS_NATIVE_HELPER_HPP_
