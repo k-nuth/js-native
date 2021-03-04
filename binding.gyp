@@ -21,6 +21,15 @@
                    "src/chain/payment_address.cpp",
                    "src/chain/stealth_compact.cpp",
                    "src/chain/stealth_compact_list.cpp",
+
+                   "src/config/authority.cpp",
+                   "src/config/blockchain_settings.cpp",
+                   "src/config/checkpoint.cpp",
+                  #  "src/config/database_settings.cpp",
+                   "src/config/endpoint.cpp",
+                  #  "src/config/network_settings.cpp",
+                  #  "src/config/node_settings.cpp",
+                  #  "src/config/settings.cpp",
       ],
       
       'variables': {
