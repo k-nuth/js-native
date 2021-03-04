@@ -30,6 +30,15 @@
 #include <kth/js-native/chain/stealth_compact.hpp>
 #include <kth/js-native/chain/stealth_compact_list.hpp>
 
+#include <kth/js-native/config/authority.hpp>
+#include <kth/js-native/config/blockchain_settings.hpp>
+#include <kth/js-native/config/checkpoint.hpp>
+#include <kth/js-native/config/database_settings.hpp>
+#include <kth/js-native/config/endpoint.hpp>
+#include <kth/js-native/config/network_settings.hpp>
+#include <kth/js-native/config/node_settings.hpp>
+#include <kth/js-native/config/settings.hpp>
+
 #include <kth/js-native/node.hpp>
 #include <kth/js-native/string_list.hpp>
 
@@ -46,6 +55,17 @@ void init(v8::Local<v8::Object> exports) {
     // NODE_SET_METHOD(exports, "node_stop", node_stop);
     NODE_SET_METHOD(exports, "node_get_chain", node_get_chain);
     
+    NODE_SET_METHOD(exports, "config_endpoint_allocate_n", config_endpoint_allocate_n);
+    NODE_SET_METHOD(exports, "config_checkpoint_allocate_n", config_checkpoint_allocate_n);
+    // NODE_SET_METHOD(exports, "config_node_settings_default", config_node_settings_default);
+    NODE_SET_METHOD(exports, "config_blockchain_settings_default", config_blockchain_settings_default);
+    // NODE_SET_METHOD(exports, "config_settings_default", config_settings_default);
+    // NODE_SET_METHOD(exports, "config_settings_get_from_file", config_settings_get_from_file);
+    // NODE_SET_METHOD(exports, "config_settings_destruct", config_settings_destruct);
+    NODE_SET_METHOD(exports, "config_authority_allocate_n", config_authority_allocate_n);
+    // NODE_SET_METHOD(exports, "config_database_settings_default", config_database_settings_default);
+    // NODE_SET_METHOD(exports, "config_network_settings_default", config_network_settings_default);
+
     // NODE_SET_METHOD(exports, "chain_validate_tx", chain_validate_tx);
     // NODE_SET_METHOD(exports, "chain_get_last_height", chain_get_last_height);
     NODE_SET_METHOD(exports, "chain_fetch_last_height", chain_fetch_last_height);
