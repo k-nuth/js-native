@@ -34,7 +34,7 @@ using v8::ArrayBuffer;
 v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blockchain_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    bool setr = res->Set(ctx, to_string(isolate, "cores"), Number::New(isolate, setts.cores));
+    auto setr = res->Set(ctx, to_string(isolate, "cores"), Number::New(isolate, setts.cores));
     setr = res->Set(ctx, to_string(isolate, "priority"), Boolean::New(isolate, setts.priority != 0));
     return res;
 
