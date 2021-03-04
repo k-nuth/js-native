@@ -204,14 +204,10 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     kth_chain_async_block_header_by_hash(chain, callback, hash, chain_fetch_block_header_by_hash_handler);
 }
     
-
-
-
 // // Block ---------------------------------------------------------------------
 // void chain_fetch_block_by_height(kth_chain_t chain, void* ctx, uint64_t /*size_t*/ height, block_fetch_handler_t handler);
 // int chain_get_block_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_block_t* out_block, uint64_t /*size_t*/* out_height);
 // typedef void (*block_fetch_handler_t)(kth_chain_t, void*, int, kth_block_t block, uint64_t /*size_t*/ h);
-
 
 void chain_fetch_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_block_t block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
@@ -298,16 +294,11 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     kth_chain_async_block_by_hash(chain, callback, hash, chain_fetch_block_by_hash_handler);
 }
     
-    
-
-
-
 
 // // Merkle Block ---------------------------------------------------------------------
 // void chain_fetch_merkle_block_by_height(kth_chain_t chain, void* ctx, uint64_t /*size_t*/ height, merkle_block_fetch_handler_t handler);
 // int chain_get_merkle_block_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_merkleblock_t* out_block, uint64_t /*size_t*/* out_height);
 // typedef void (*merkle_block_fetch_handler_t)(kth_chain_t, void*, int, kth_merkleblock_t block, uint64_t /*size_t*/ h);
-
 
 void chain_fetch_merkle_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_merkleblock_t merkle_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
@@ -346,7 +337,6 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
     kth_chain_async_merkle_block_by_height(chain, callback, height, chain_fetch_merkle_block_by_height_handler);
 }
     
-
 
 // void chain_fetch_merkle_block_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, merkle_block_fetch_handler_t handler);
 // int chain_get_merkle_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_merkleblock_t* out_merkle_block, uint64_t /*size_t*/* out_height);
@@ -483,17 +473,12 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
     kth_chain_async_compact_block_by_hash(chain, callback, hash, chain_fetch_compact_block_by_hash_handler);
 }
     
-    
-    
-    
-
 
 // // Transaction ---------------------------------------------------------------------
 // void chain_fetch_transaction(kth_chain_t chain, void* ctx, kth_hash_t hash, int require_confirmed, transaction_fetch_handler_t handler);
 // int chain_get_transaction(kth_chain_t chain, kth_hash_t hash, int require_confirmed, kth_transaction_t* out_transaction, uint64_t /*size_t*/* out_height, uint64_t /*size_t*/* out_index);
 // typedef void (*transaction_fetch_handler_t)(kth_chain_t, void*, int, kth_transaction_t transaction, uint64_t i, uint64_t h);
  
-
 void chain_fetch_transaction_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_transaction_t transaction, uint64_t i, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, transaction), Number::New(isolate, i), Number::New(isolate, h)};
@@ -542,13 +527,11 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[3]);
     kth_chain_async_transaction(chain, callback, hash, require_confirmed, chain_fetch_transaction_handler);
 }
-    
+
 // // Transaction Position ---------------------------------------------------------------------
 // void chain_fetch_transaction_position(kth_chain_t chain, void* ctx, kth_hash_t hash, int require_confirmed, transaction_index_fetch_handler_t handler);
 // int chain_get_transaction_position(kth_chain_t chain, kth_hash_t hash, int require_confirmed, uint64_t /*size_t*/* out_position, uint64_t /*size_t*/* out_height);
 // typedef void (*transaction_index_fetch_handler_t)(kth_chain_t, void*, int, uint64_t position, uint64_t height);
-
-
 
 void chain_fetch_transaction_position_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, uint64_t i, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
@@ -607,7 +590,6 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
 // void chain_fetch_spend(kth_chain_t chain, void* ctx, kth_outputpoint_t op, spend_fetch_handler_t handler);
 // typedef void (*spend_fetch_handler_t)(kth_chain_t, void*, int, kth_inputpoint_t input_point);
 
-
 void chain_fetch_spend_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_inputpoint_t input_point) {
     auto* isolate = Isolate::GetCurrent();
     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, input_point)};
@@ -645,7 +627,6 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_spend(chain, callback, op, chain_fetch_spend_handler);
 }
-
 
 
 // // History ---------------------------------------------------------------------
@@ -705,7 +686,6 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     kth_chain_async_history(chain, callback, address, limit, from_height, chain_fetch_history_handler);
 }
 
-    
 
 // // Stealth ---------------------------------------------------------------------
 // // KTH_EXPORT
