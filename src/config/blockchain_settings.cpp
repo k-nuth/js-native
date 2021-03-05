@@ -36,7 +36,6 @@ v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blo
     auto res = v8::Object::New(isolate);
     auto setr = res->Set(ctx, to_string(isolate, "cores"), Number::New(isolate, setts.cores));
     setr = res->Set(ctx, to_string(isolate, "priority"), Boolean::New(isolate, setts.priority != 0));
-    return res;
 
     setr = res->Set(ctx, to_string(isolate, "byte_fee_satoshis"), Number::New(isolate, setts.byte_fee_satoshis));
     setr = res->Set(ctx, to_string(isolate, "sigop_fee_satoshis"), Number::New(isolate, setts.sigop_fee_satoshis));
@@ -74,6 +73,7 @@ v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blo
     setr = res->Set(ctx, to_string(isolate, "euler_activation_time"), Number::New(isolate, setts.euler_activation_time));
     setr = res->Set(ctx, to_string(isolate, "gauss_activation_time"), Number::New(isolate, setts.gauss_activation_time));
     setr = res->Set(ctx, to_string(isolate, "asert_half_life"), Number::New(isolate, setts.asert_half_life));
+    return res;
 }
 
 void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
