@@ -42,12 +42,13 @@ v8::Local<v8::Object> config_checkpoint_to_js(Isolate* isolate, kth_checkpoint c
 }
 
 v8::Local<v8::Array> config_checkpoints_to_js(Isolate* isolate, kth_checkpoint* checkpoint, size_t n) {
+    auto ctx = isolate->GetCurrentContext();
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
-        auto elem = config_checkpoint_to_js(isolate, *checkpoint);
+        auto elem = config_checkpoint_to_js(isolate, checkpoint);
         // double number = vec.at(i);
         // v8::Local<v8::Value> jsElement = Nan::New(number);
-        jsArr->Set(i, elem);
+        jsArr->Set(ctx, i, elem);
         ++checkpoint;
     }
     return jsArr;
