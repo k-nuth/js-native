@@ -38,44 +38,42 @@ v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blo
     setr = res->Set(ctx, to_string(isolate, "priority"), Boolean::New(isolate, setts.priority != 0));
     return res;
 
-// typedef struct {
-//     uint32_t cores;
-//     kth_bool_t priority;
-//     float byte_fee_satoshis;
-//     float sigop_fee_satoshis;
-//     uint64_t minimum_output_satoshis;
-//     uint32_t notify_limit_hours;
-//     uint32_t reorganization_limit;
-//     size_t checkpoint_count;
+    setr = res->Set(ctx, to_string(isolate, "byte_fee_satoshis"), Number::New(isolate, setts.byte_fee_satoshis));
+    setr = res->Set(ctx, to_string(isolate, "sigop_fee_satoshis"), Number::New(isolate, setts.sigop_fee_satoshis));
+    setr = res->Set(ctx, to_string(isolate, "minimum_output_satoshis"), Number::New(isolate, setts.minimum_output_satoshis));
+    setr = res->Set(ctx, to_string(isolate, "notify_limit_hours"), Number::New(isolate, setts.notify_limit_hours));
+    setr = res->Set(ctx, to_string(isolate, "reorganization_limit"), Number::New(isolate, setts.reorganization_limit));
+    setr = res->Set(ctx, to_string(isolate, "checkpoint_count"), Number::New(isolate, setts.checkpoint_count));
+
+    //TODO(fernando)
 //     kth_checkpoint* checkpoints;
-//     kth_bool_t fix_checkpoints;
-//     kth_bool_t allow_collisions;
-//     kth_bool_t easy_blocks;
-//     kth_bool_t retarget;
-//     kth_bool_t bip16;
-//     kth_bool_t bip30;
-//     kth_bool_t bip34;
-//     kth_bool_t bip66;
-//     kth_bool_t bip65;
-//     kth_bool_t bip90;
-//     kth_bool_t bip68;
-//     kth_bool_t bip112;
-//     kth_bool_t bip113;
 
-//     kth_bool_t bch_uahf;
-//     kth_bool_t bch_daa_cw144;
-//     kth_bool_t bch_pythagoras;
-//     kth_bool_t bch_euclid;
-//     kth_bool_t bch_pisano;
-//     kth_bool_t bch_mersenne;
-//     kth_bool_t bch_fermat;      // 2020-May
-//     kth_bool_t bch_euler;       // 2020-Nov
-//     kth_bool_t bch_gauss;       // 2021-May
-//     uint64_t euler_activation_time;
-//     uint64_t gauss_activation_time;
-//     uint64_t asert_half_life;   //two days
-// } kth_blockchain_settings;
+    setr = res->Set(ctx, to_string(isolate, "fix_checkpoints"), Boolean::New(isolate, setts.fix_checkpoints != 0));
+    setr = res->Set(ctx, to_string(isolate, "allow_collisions"), Boolean::New(isolate, setts.allow_collisions != 0));
+    setr = res->Set(ctx, to_string(isolate, "easy_blocks"), Boolean::New(isolate, setts.easy_blocks != 0));
+    setr = res->Set(ctx, to_string(isolate, "retarget"), Boolean::New(isolate, setts.retarget != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip16"), Boolean::New(isolate, setts.bip16 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip30"), Boolean::New(isolate, setts.bip30 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip34"), Boolean::New(isolate, setts.bip34 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip66"), Boolean::New(isolate, setts.bip66 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip65"), Boolean::New(isolate, setts.bip65 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip90"), Boolean::New(isolate, setts.bip90 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip68"), Boolean::New(isolate, setts.bip68 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip112"), Boolean::New(isolate, setts.bip112 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bip113"), Boolean::New(isolate, setts.bip113 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_uahf"), Boolean::New(isolate, setts.bch_uahf != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_daa_cw144"), Boolean::New(isolate, setts.bch_daa_cw144 != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_pythagoras"), Boolean::New(isolate, setts.bch_pythagoras != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_euclid"), Boolean::New(isolate, setts.bch_euclid != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_pisano"), Boolean::New(isolate, setts.bch_pisano != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_mersenne"), Boolean::New(isolate, setts.bch_mersenne != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_fermat"), Boolean::New(isolate, setts.bch_fermat != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_euler"), Boolean::New(isolate, setts.bch_euler != 0));
+    setr = res->Set(ctx, to_string(isolate, "bch_gauss"), Boolean::New(isolate, setts.bch_gauss != 0));
 
+    setr = res->Set(ctx, to_string(isolate, "euler_activation_time"), Number::New(isolate, setts.euler_activation_time));
+    setr = res->Set(ctx, to_string(isolate, "gauss_activation_time"), Number::New(isolate, setts.gauss_activation_time));
+    setr = res->Set(ctx, to_string(isolate, "asert_half_life"), Number::New(isolate, setts.asert_half_life));
 }
 
 void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
