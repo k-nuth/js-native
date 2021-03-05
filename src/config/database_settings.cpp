@@ -18,7 +18,6 @@ using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
 using v8::Global;
-
 using v8::Object;
 using v8::String;
 using v8::Boolean;
@@ -30,19 +29,6 @@ using v8::Persistent;
 using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
-
-
-// typedef struct {
-//     kth_char_t* directory;
-//     kth_bool_t flush_writes;
-//     uint16_t file_growth_rate;
-//     uint32_t index_start_height;
-//     uint32_t reorg_pool_limit;
-//     uint64_t db_max_size;
-//     kth_bool_t safe_mode;
-//     uint32_t cache_capacity;
-// } kth_database_settings;
-
 
 v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_database_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
