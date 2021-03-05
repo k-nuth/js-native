@@ -31,6 +31,33 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+
+// typedef struct {
+//     kth_char_t* directory;
+//     kth_bool_t flush_writes;
+//     uint16_t file_growth_rate;
+//     uint32_t index_start_height;
+//     uint32_t reorg_pool_limit;
+//     uint64_t db_max_size;
+//     kth_bool_t safe_mode;
+//     uint32_t cache_capacity;
+// } kth_database_settings;
+
+
+v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_database_settings const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    auto res = v8::Object::New(isolate);
+    auto setr = res->Set(ctx, to_string(isolate, "directory"), to_string(isolate, setts.directory));
+    setr = res->Set(ctx, to_string(isolate, "flushWrites"), Boolean::New(isolate, setts.flush_writes != 0));
+    setr = res->Set(ctx, to_string(isolate, "fileGrowthRate"), Number::New(isolate, setts.file_growth_rate));
+    setr = res->Set(ctx, to_string(isolate, "indexStartHeight"), Number::New(isolate, setts.index_start_height));
+    setr = res->Set(ctx, to_string(isolate, "reorgPoolLimit"), Number::New(isolate, setts.reorg_pool_limit));
+    setr = res->Set(ctx, to_string(isolate, "dbMaxSize"), Number::New(isolate, setts.db_max_size));
+    setr = res->Set(ctx, to_string(isolate, "safeMode"), Boolean::New(isolate, setts.safe_mode != 0));
+    setr = res->Set(ctx, to_string(isolate, "cacheCapacity"), Number::New(isolate, setts.cache_capacity));
+    return res;
+}
+
 void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
@@ -47,7 +74,7 @@ void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const&
     kth_network_t net = to_kth_network_t(isolate, args[0]);
 
     kth_database_settings res = kth_config_database_settings_default(net);
-    args.GetReturnValue().Set(External::New(isolate, res));
+    args.GetReturnValue().Set(config_database_settings_to_js(isolate, res));
 }
 
 }  // namespace kth::js_native
