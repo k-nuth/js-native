@@ -34,10 +34,8 @@ using v8::ArrayBuffer;
 v8::Local<v8::Object> config_checkpoint_to_js(Isolate* isolate, kth_checkpoint const* checkpoint) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-
     auto setr = res->Set(ctx, to_string(isolate, "hash"), to_hash(isolate, checkpoint->hash));
     setr = res->Set(ctx, to_string(isolate, "height"), Number::New(isolate, checkpoint->height));
-
     return res;
 }
 
@@ -46,8 +44,6 @@ v8::Local<v8::Array> config_checkpoints_to_js(Isolate* isolate, kth_checkpoint* 
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
         auto elem = config_checkpoint_to_js(isolate, checkpoint);
-        // double number = vec.at(i);
-        // v8::Local<v8::Value> jsElement = Nan::New(number);
         jsArr->Set(ctx, i, elem);
         ++checkpoint;
     }
@@ -60,24 +56,13 @@ v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blo
     auto setr = res->Set(ctx, to_string(isolate, "cores"), Number::New(isolate, setts.cores));
     setr = res->Set(ctx, to_string(isolate, "priority"), Boolean::New(isolate, setts.priority != 0));
 
-    setr = res->Set(ctx, to_string(isolate, "bytFeeSatoshis"), Number::New(isolate, setts.byte_fee_satoshis));
+    setr = res->Set(ctx, to_string(isolate, "byteFeeSatoshis"), Number::New(isolate, setts.byte_fee_satoshis));
     setr = res->Set(ctx, to_string(isolate, "sigopFeeSatoshis"), Number::New(isolate, setts.sigop_fee_satoshis));
     setr = res->Set(ctx, to_string(isolate, "minimumOutputSatoshis"), Number::New(isolate, setts.minimum_output_satoshis));
     setr = res->Set(ctx, to_string(isolate, "notifyLimitHours"), Number::New(isolate, setts.notify_limit_hours));
     setr = res->Set(ctx, to_string(isolate, "reorganizationLimit"), Number::New(isolate, setts.reorganization_limit));
-    // setr = res->Set(ctx, to_string(isolate, "checkpointCount"), Number::New(isolate, setts.checkpoint_count));
-
-    // auto chkp = setts.checkpoints;
-    // for (size_t i = 0; i < setts.checkpoint_count; ++i) {
-    //     ++chkp;
-    // }
-    
-
 
     setr = res->Set(ctx, to_string(isolate, "checkpoints"), config_checkpoints_to_js(isolate, setts.checkpoints, setts.checkpoint_count));
-
-    //TODO(fernando)
-//     kth_checkpoint* checkpoints;
 
     setr = res->Set(ctx, to_string(isolate, "fixCheckpoints"), Boolean::New(isolate, setts.fix_checkpoints != 0));
     setr = res->Set(ctx, to_string(isolate, "allowCollisions"), Boolean::New(isolate, setts.allow_collisions != 0));
@@ -124,7 +109,6 @@ void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> cons
     kth_network_t net = to_kth_network_t(isolate, args[0]);
 
     kth_blockchain_settings res = kth_config_blockchain_settings_default(net);
-    // args.GetReturnValue().Set(External::New(isolate, res));
     args.GetReturnValue().Set(config_blockchain_settings_to_js(isolate, res));
 }
 
