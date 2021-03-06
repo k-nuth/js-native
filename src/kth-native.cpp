@@ -57,7 +57,7 @@ void init(v8::Local<v8::Object> exports) {
     
     NODE_SET_METHOD(exports, "config_endpoint_allocate_n", config_endpoint_allocate_n);
     NODE_SET_METHOD(exports, "config_checkpoint_allocate_n", config_checkpoint_allocate_n);
-    // NODE_SET_METHOD(exports, "config_node_settings_default", config_node_settings_default);
+    NODE_SET_METHOD(exports, "config_node_settings_default", config_node_settings_default);
     NODE_SET_METHOD(exports, "config_blockchain_settings_default", config_blockchain_settings_default);
     // NODE_SET_METHOD(exports, "config_settings_default", config_settings_default);
     // NODE_SET_METHOD(exports, "config_settings_get_from_file", config_settings_get_from_file);
