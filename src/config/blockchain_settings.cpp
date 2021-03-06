@@ -31,11 +31,11 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-v8::Local<v8::Object> config_checkpoint_to_js(Isolate* isolate, kth_checkpoint const* checkpoint) {
+v8::Local<v8::Object> config_checkpoint_to_js(Isolate* isolate, kth_checkpoint const& checkpoint) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "hash"), to_hash(isolate, checkpoint->hash));
-    setr = res->Set(ctx, to_string(isolate, "height"), Number::New(isolate, checkpoint->height));
+    auto setr = res->Set(ctx, to_string(isolate, "hash"), to_hash(isolate, checkpoint.hash));
+    setr = res->Set(ctx, to_string(isolate, "height"), Number::New(isolate, checkpoint.height));
     return res;
 }
 
@@ -43,7 +43,7 @@ v8::Local<v8::Array> config_checkpoints_to_js(Isolate* isolate, kth_checkpoint* 
     auto ctx = isolate->GetCurrentContext();
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
-        auto elem = config_checkpoint_to_js(isolate, checkpoint);
+        auto elem = config_checkpoint_to_js(isolate, *checkpoint);
         jsArr->Set(ctx, i, elem);
         ++checkpoint;
     }
