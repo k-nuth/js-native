@@ -55,6 +55,12 @@ T copy_data_and_free(context_t& context) {
     return data;
 }
 
+#if defined(_WIN32)
+v8::Local<v8::String> to_string(v8::Isolate* isolate, wchar_t const* str) {
+    return v8::String::NewFromTwoByte(isolate, reinterpret_cast<uint16_t const*>(str), v8::NewStringType::kNormal).ToLocalChecked();
+}
+#endif // defined(_WIN32)
+
 inline
 v8::Local<v8::String> to_string(v8::Isolate* isolate, char const* str) {
     return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
