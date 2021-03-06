@@ -28,7 +28,7 @@
                    "src/config/database_settings.cpp",
                    "src/config/endpoint.cpp",
                    "src/config/network_settings.cpp",
-                  #  "src/config/node_settings.cpp",
+                   "src/config/node_settings.cpp",
                   #  "src/config/settings.cpp",
       ],
       
