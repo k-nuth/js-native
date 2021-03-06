@@ -63,7 +63,7 @@ void init(v8::Local<v8::Object> exports) {
     // NODE_SET_METHOD(exports, "config_settings_get_from_file", config_settings_get_from_file);
     // NODE_SET_METHOD(exports, "config_settings_destruct", config_settings_destruct);
     NODE_SET_METHOD(exports, "config_authority_allocate_n", config_authority_allocate_n);
-    // NODE_SET_METHOD(exports, "config_database_settings_default", config_database_settings_default);
+    NODE_SET_METHOD(exports, "config_database_settings_default", config_database_settings_default);
     // NODE_SET_METHOD(exports, "config_network_settings_default", config_network_settings_default);
 
     // NODE_SET_METHOD(exports, "chain_validate_tx", chain_validate_tx);
