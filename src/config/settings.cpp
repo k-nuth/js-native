@@ -41,7 +41,7 @@ v8::Local<v8::Object> config_settings_to_js(Isolate* isolate, kth_settings const
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
     auto setr = res->Set(ctx, to_string(isolate, "node"), detail::config_node_settings_to_js(isolate, setts.node));
-    setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_chain_settings_to_js(isolate, setts.chain));
+    setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_blockchain_settings_to_js(isolate, setts.chain));
     setr = res->Set(ctx, to_string(isolate, "database"), detail::config_database_settings_to_js(isolate, setts.database));
     setr = res->Set(ctx, to_string(isolate, "network"), detail::config_network_settings_to_js(isolate, setts.network));
     return res;
@@ -75,7 +75,7 @@ void config_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     // auto ctx = isolate->GetCurrentContext();
     // auto res = v8::Object::New(isolate);
     // auto setr = res->Set(ctx, to_string(isolate, "node"), detail::config_node_settings_to_js(isolate, setts.node));
-    // setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_chain_settings_to_js(isolate, setts.chain));
+    // setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_blockchain_settings_to_js(isolate, setts.chain));
     // setr = res->Set(ctx, to_string(isolate, "database"), detail::config_database_settings_to_js(isolate, setts.database));
     // setr = res->Set(ctx, to_string(isolate, "network"), detail::config_network_settings_to_js(isolate, setts.network));
 
@@ -95,39 +95,40 @@ void config_settings_get_from_file(v8::FunctionCallbackInfo<v8::Value> const& ar
         return;
     }
 
-    char const* path = to_string(isolate, args[0]);
+    v8::String::Utf8Value path(isolate, args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
+
     kth_settings* settings;
     char* error_message;
-
-    kth_bool_t res = kth_config_settings_get_from_file(path, &settings, &error_message);
+    kth_bool_t res = kth_config_settings_get_from_file(*path, &settings, &error_message);
 
     auto ctx = isolate->GetCurrentContext();
-    auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "ok"), Boolean::New(isolate, res != 0);
+    auto obj = v8::Object::New(isolate);
+    auto setr = obj->Set(ctx, to_string(isolate, "ok"), Boolean::New(isolate, res != 0));
 
     if (res == 0) {
-        setr = res->Set(ctx, to_string(isolate, "message"), to_string(isolate, error_message));
+        setr = obj->Set(ctx, to_string(isolate, "message"), to_string(isolate, error_message));
     } else {
-        setr = res->Set(ctx, to_string(isolate, "settings"), detail::config_settings_to_js(isolate, settings));
+        setr = obj->Set(ctx, to_string(isolate, "settings"), detail::config_settings_to_js(isolate, *settings));
+        kth_config_settings_destruct(settings);
     }
-    args.GetReturnValue().Set(res);
+    args.GetReturnValue().Set(obj);
 }
 
-void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments. config_settings_destruct function requires 1 arguments.");
-        return;
-    }
+//     if (args.Length() != 1) {
+//         throw_exception(isolate, "Wrong number of arguments. config_settings_destruct function requires 1 arguments.");
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong argument type for argument settings (#1). Required to be IsExternal.");
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         throw_exception(isolate, "Wrong argument type for argument settings (#1). Required to be IsExternal.");
+//         return;
+//     }
 
-    void* settings = args[0]->arg_conv_func;
-    kth_config_settings_destruct(settings);
-}
+//     void* settings = args[0]->arg_conv_func;
+//     kth_config_settings_destruct(settings);
+// }
 
 }  // namespace kth::js_native
