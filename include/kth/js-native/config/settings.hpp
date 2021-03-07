@@ -11,7 +11,7 @@ namespace kth::js_native {
 
 void config_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args);
 void config_settings_get_from_file(v8::FunctionCallbackInfo<v8::Value> const& args);
-void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+// void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth::js_native
 
