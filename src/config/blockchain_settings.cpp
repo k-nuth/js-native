@@ -31,6 +31,8 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+namespace detail {
+
 v8::Local<v8::Object> config_checkpoint_to_js(Isolate* isolate, kth_checkpoint const& checkpoint) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
@@ -93,6 +95,8 @@ v8::Local<v8::Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blo
     return res;
 }
 
+}
+
 void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
@@ -109,7 +113,7 @@ void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> cons
     kth_network_t net = to_kth_network_t(isolate, args[0]);
 
     kth_blockchain_settings res = kth_config_blockchain_settings_default(net);
-    args.GetReturnValue().Set(config_blockchain_settings_to_js(isolate, res));
+    args.GetReturnValue().Set(detail::config_blockchain_settings_to_js(isolate, res));
 }
 
 }  // namespace kth::js_native

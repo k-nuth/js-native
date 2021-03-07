@@ -8,6 +8,9 @@
 #include <node.h>
 
 namespace kth::js_native {
+namespace detail {
+v8::Local<v8::Object> config_blockchain_settings_to_js(v8::Isolate* isolate, kth_blockchain_settings const& setts);    
+}
 
 void config_blockchain_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args);
 

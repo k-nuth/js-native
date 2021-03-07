@@ -30,6 +30,7 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+namespace detail {
 v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_database_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
@@ -42,6 +43,7 @@ v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_datab
     setr = res->Set(ctx, to_string(isolate, "safeMode"), Boolean::New(isolate, setts.safe_mode != 0));
     setr = res->Set(ctx, to_string(isolate, "cacheCapacity"), Number::New(isolate, setts.cache_capacity));
     return res;
+}
 }
 
 void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -60,7 +62,7 @@ void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const&
     kth_network_t net = to_kth_network_t(isolate, args[0]);
 
     kth_database_settings res = kth_config_database_settings_default(net);
-    args.GetReturnValue().Set(config_database_settings_to_js(isolate, res));
+    args.GetReturnValue().Set(detail::config_database_settings_to_js(isolate, res));
 }
 
 }  // namespace kth::js_native

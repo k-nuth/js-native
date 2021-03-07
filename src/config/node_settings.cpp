@@ -31,15 +31,7 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
-// typedef struct {
-//     uint32_t sync_peers;
-//     uint32_t sync_timeout_seconds;
-//     uint32_t block_latency_seconds;
-//     kth_bool_t refresh_transactions;
-//     kth_bool_t compact_blocks_high_bandwidth;
-// } kth_node_settings;
-
-
+namespace detail {
 v8::Local<v8::Object> config_node_settings_to_js(Isolate* isolate, kth_node_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
@@ -49,6 +41,7 @@ v8::Local<v8::Object> config_node_settings_to_js(Isolate* isolate, kth_node_sett
     setr = res->Set(ctx, to_string(isolate, "refreshTransactions"), Boolean::New(isolate, setts.refresh_transactions != 0));
     setr = res->Set(ctx, to_string(isolate, "compactBlocksHighBandwidth"), Boolean::New(isolate, setts.compact_blocks_high_bandwidth != 0));
     return res;
+}
 }
 
 void config_node_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -66,7 +59,7 @@ void config_node_settings_default(v8::FunctionCallbackInfo<v8::Value> const& arg
 
     kth_network_t network = to_kth_network_t(isolate, args[0]);
     kth_node_settings res = kth_config_node_settings_default(network);
-    args.GetReturnValue().Set(config_node_settings_to_js(isolate, res));
+    args.GetReturnValue().Set(detail::config_node_settings_to_js(isolate, res));
 }
 
 }  // namespace kth::js_native
