@@ -10,6 +10,11 @@
 #include <kth/capi/config/settings.h>
 
 #include <kth/js-native/config/settings.hpp>
+
+#include <kth/js-native/config/blockchain_settings.hpp>
+#include <kth/js-native/config/database_settings.hpp>
+#include <kth/js-native/config/network_settings.hpp>
+#include <kth/js-native/config/node_settings.hpp>
 #include <kth/js-native/helper.hpp>
 
 namespace kth::js_native {
@@ -31,6 +36,18 @@ using v8::Function;
 using v8::Uint8Array;
 using v8::ArrayBuffer;
 
+namespace detail {
+v8::Local<v8::Object> config_settings_to_js(Isolate* isolate, kth_settings const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    auto res = v8::Object::New(isolate);
+    auto setr = res->Set(ctx, to_string(isolate, "node"), detail::config_node_settings_to_js(isolate, setts.node));
+    setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_chain_settings_to_js(isolate, setts.chain));
+    setr = res->Set(ctx, to_string(isolate, "database"), detail::config_database_settings_to_js(isolate, setts.database));
+    setr = res->Set(ctx, to_string(isolate, "network"), detail::config_network_settings_to_js(isolate, setts.network));
+    return res;
+}
+}
+
 void config_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
@@ -46,8 +63,23 @@ void config_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     kth_network_t network = to_kth_network_t(isolate, args[0]);
 
-    kth_settings res = kth_config_settings_default(network);
-    args.GetReturnValue().Set(External::New(isolate, res));
+    kth_settings setts = kth_config_settings_default(network);
+
+// typedef struct {
+//     kth_node_settings node;
+//     kth_blockchain_settings chain;
+//     kth_database_settings database;
+//     kth_network_settings network;
+// } kth_settings;
+
+    // auto ctx = isolate->GetCurrentContext();
+    // auto res = v8::Object::New(isolate);
+    // auto setr = res->Set(ctx, to_string(isolate, "node"), detail::config_node_settings_to_js(isolate, setts.node));
+    // setr = res->Set(ctx, to_string(isolate, "chain"), detail::config_chain_settings_to_js(isolate, setts.chain));
+    // setr = res->Set(ctx, to_string(isolate, "database"), detail::config_database_settings_to_js(isolate, setts.database));
+    // setr = res->Set(ctx, to_string(isolate, "network"), detail::config_network_settings_to_js(isolate, setts.network));
+
+    args.GetReturnValue().Set(detail::config_settings_to_js(isolate, setts));
 }
 
 void config_settings_get_from_file(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -68,7 +100,17 @@ void config_settings_get_from_file(v8::FunctionCallbackInfo<v8::Value> const& ar
     char* error_message;
 
     kth_bool_t res = kth_config_settings_get_from_file(path, &settings, &error_message);
-    args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
+
+    auto ctx = isolate->GetCurrentContext();
+    auto res = v8::Object::New(isolate);
+    auto setr = res->Set(ctx, to_string(isolate, "ok"), Boolean::New(isolate, res != 0);
+
+    if (res == 0) {
+        setr = res->Set(ctx, to_string(isolate, "message"), to_string(isolate, error_message));
+    } else {
+        setr = res->Set(ctx, to_string(isolate, "settings"), detail::config_settings_to_js(isolate, settings));
+    }
+    args.GetReturnValue().Set(res);
 }
 
 void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) {
