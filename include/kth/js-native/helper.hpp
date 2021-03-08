@@ -57,18 +57,18 @@ T copy_data_and_free(context_t& context) {
 
 #if defined(_WIN32)
 inline
-v8::Local<v8::String> to_string(v8::Isolate* isolate, wchar_t const* str) {
+v8::Local<v8::String> string_to_js(v8::Isolate* isolate, wchar_t const* str) {
     return v8::String::NewFromTwoByte(isolate, reinterpret_cast<uint16_t const*>(str), v8::NewStringType::kNormal).ToLocalChecked();
 }
 #endif // defined(_WIN32)
 
 inline
-v8::Local<v8::String> to_string(v8::Isolate* isolate, char const* str) {
+v8::Local<v8::String> string_to_js(v8::Isolate* isolate, char const* str) {
     return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
 }
 
 inline
-v8::Local<v8::Uint8Array> to_byte_array(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
+v8::Local<v8::Uint8Array> byte_array_to_js(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
     v8::Local<v8::ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
     memcpy(tmp->GetContents().Data(), data, size);
     v8::Local<v8::Uint8Array> res = v8::Uint8Array::New(tmp, 0, size);
@@ -76,24 +76,41 @@ v8::Local<v8::Uint8Array> to_byte_array(v8::Isolate* isolate, uint8_t const* dat
 }
 
 inline
-v8::Local<v8::Uint8Array> to_hash(v8::Isolate* isolate, kth_hash_t const& hash) {
-    return to_byte_array(isolate, hash.hash, 32);
+v8::Local<v8::Uint8Array> hash_to_js(v8::Isolate* isolate, kth_hash_t const& hash) {
+    return byte_array_to_js(isolate, hash.hash, 32);
 }
 
 inline
-v8::Local<v8::Uint8Array> to_shorthash(v8::Isolate* isolate, kth_shorthash_t const& hash) {
-    return to_byte_array(isolate, hash.hash, 16);
+v8::Local<v8::Uint8Array> shorthash_to_js(v8::Isolate* isolate, kth_shorthash_t const& hash) {
+    return byte_array_to_js(isolate, hash.hash, 16);
 }
 
 inline
-kth_bool_t to_bool(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+kth_bool_t bool_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
     bool b = x->BooleanValue(isolate);
     // return b ? 1 : 0;
     return b;
 }
 
 inline
-kth_network_t to_kth_network_t(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+void byte_array_to_cpp(v8::Isolate* isolate, v8::Local<v8::Uint8Array> const& data, uint8_t* out_data) {
+    auto const n = data->Length();
+    auto const ctx = isolate->GetCurrentContext();
+    for (size_t i = 0; i < n; ++i) {
+        *out_data = data->Get(ctx, i).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+        ++out_data;
+    }
+}
+
+inline
+kth_hash_t hash_to_cpp(v8::Isolate* isolate, v8::Local<v8::Uint8Array> const& hash_js) {
+    kth_hash_t res;
+    byte_array_to_cpp(isolate, hash_js, res.hash);
+    return res;
+}
+
+inline
+kth_network_t network_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
     auto val = x->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     kth_network_t res = kth_network_t(val);
     return res;
