@@ -35,11 +35,11 @@ namespace detail {
 v8::Local<v8::Object> config_node_settings_to_js(Isolate* isolate, kth_node_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "syncPeers"), Number::New(isolate, setts.sync_peers));
-    setr = res->Set(ctx, to_string(isolate, "syncTimeoutSeconds"), Number::New(isolate, setts.sync_timeout_seconds));
-    setr = res->Set(ctx, to_string(isolate, "blockLatencySeconds"), Number::New(isolate, setts.block_latency_seconds));
-    setr = res->Set(ctx, to_string(isolate, "refreshTransactions"), Boolean::New(isolate, setts.refresh_transactions != 0));
-    setr = res->Set(ctx, to_string(isolate, "compactBlocksHighBandwidth"), Boolean::New(isolate, setts.compact_blocks_high_bandwidth != 0));
+    auto setr = res->Set(ctx, string_to_js(isolate, "syncPeers"), Number::New(isolate, setts.sync_peers));
+    setr = res->Set(ctx, string_to_js(isolate, "syncTimeoutSeconds"), Number::New(isolate, setts.sync_timeout_seconds));
+    setr = res->Set(ctx, string_to_js(isolate, "blockLatencySeconds"), Number::New(isolate, setts.block_latency_seconds));
+    setr = res->Set(ctx, string_to_js(isolate, "refreshTransactions"), Boolean::New(isolate, setts.refresh_transactions != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "compactBlocksHighBandwidth"), Boolean::New(isolate, setts.compact_blocks_high_bandwidth != 0));
     return res;
 }
 }
@@ -57,7 +57,7 @@ void config_node_settings_default(v8::FunctionCallbackInfo<v8::Value> const& arg
         return;
     }
 
-    kth_network_t network = to_kth_network_t(isolate, args[0]);
+    kth_network_t network = network_to_cpp(isolate, args[0]);
     kth_node_settings res = kth_config_node_settings_default(network);
     args.GetReturnValue().Set(detail::config_node_settings_to_js(isolate, res));
 }
