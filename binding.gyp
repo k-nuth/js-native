@@ -128,7 +128,7 @@
             '-lkth-domain',
             '-lkth-infrastructure',
 
-            '-llmdb', 
+            '-llmdb',
             '-lboost_date_time', 
             '-lboost_iostreams', 
             '-lboost_locale', 
@@ -165,6 +165,7 @@
             '-lkth-database', 
             '-lkth-domain',
             '-lkth-infrastructure',
+            '-llmdb',
             '-lboost_date_time', 
             '-lboost_iostreams', 
             '-lboost_locale', 
