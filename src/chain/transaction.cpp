@@ -204,7 +204,7 @@ void chain_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_transaction_hash(transaction);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_transaction_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -249,7 +249,7 @@ void chain_transaction_hash_sighash_type(v8::FunctionCallbackInfo<v8::Value> con
     uint32_t sighash_type = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
     kth_hash_t res = kth_chain_transaction_hash_sighash_type(transaction, sighash_type);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_transaction_hash_sighash_type_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -316,7 +316,7 @@ void chain_transaction_serialized_size(v8::FunctionCallbackInfo<v8::Value> const
     }
 
     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_transaction_serialized_size(transaction, wire);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -379,7 +379,7 @@ void chain_transaction_signature_operations_bip16_active(v8::FunctionCallbackInf
     }
 
     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t bip16_active = to_bool(isolate, args[1]);
+    kth_bool_t bip16_active = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_transaction_signature_operations_bip16_active(transaction, bip16_active);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -543,7 +543,7 @@ void chain_transaction_is_double_spend(v8::FunctionCallbackInfo<v8::Value> const
     }
 
     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t include_unconfirmed = to_bool(isolate, args[1]);
+    kth_bool_t include_unconfirmed = bool_to_cpp(isolate, args[1]);
 
     kth_bool_t res = kth_chain_transaction_is_double_spend(transaction, include_unconfirmed);
     args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
@@ -675,11 +675,11 @@ void chain_transaction_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) 
     }
 
     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
     kth_size_t size;
 
     uint8_t const* res = kth_chain_transaction_to_data(transaction, wire, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 }  // namespace kth::js_native
