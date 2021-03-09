@@ -8,6 +8,7 @@
 #include <kth/capi/node.h>
 #include <kth/capi/chain/chain.h>
 #include <kth/js-native/helper.hpp>
+#include <kth/js-native/config/settings.hpp>
 
 // #include <inttypes.h>   //TODO: Remove, it is for the printf (printing pointer addresses)
 #include <thread>
@@ -37,7 +38,7 @@ void node_construct(FunctionCallbackInfo<Value> const& args) {
         return;
     }
 
-    if ( ! args[0]->IsString()) {
+    if ( ! args[0]->IsObject()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
     }
@@ -47,39 +48,50 @@ void node_construct(FunctionCallbackInfo<Value> const& args) {
         return;
     }
 
-    v8::String::Utf8Value path(isolate, args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
-
-    // int32_t sout_fd = -1;
-    // int32_t serr_fd = -1;
-    // if ( ! args[1]->IsNull()) {
-    //     auto sout_obj = args[1]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
-    //     sout_fd = sout_obj->Get(isolate->GetCurrentContext(), 
-    //         String::NewFromUtf8(isolate, "fd", v8::NewStringType::kNormal).ToLocalChecked()
-    //         ).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
-    // }
-
-    // if ( ! args[2]->IsNull()) {
-    //     auto serr_obj = args[2]->ToObject(isolate->GetCurrentContext()).ToLocalChecked();
-    //     serr_fd = serr_obj->Get(isolate->GetCurrentContext(), 
-    //         String::NewFromUtf8(isolate, "fd", v8::NewStringType::kNormal).ToLocalChecked()
-    //         ).ToLocalChecked()->Int32Value(isolate->GetCurrentContext()).ToChecked();
-    // }
-
-    char* error_message;
-    kth_settings* settings;
-    kth_bool_t ok = kth_config_settings_get_from_file(*path, &settings, &error_message);
-
-    if ( ! ok) {
-        throw_exception(isolate, error_message);
-        return;
-    }
+    kth_settings settings = detail::config_settings_to_cpp(isolate, args[0]->ToObject(isolate->GetCurrentContext()).ToLocalChecked());
 
     bool stdout_enabled = args[1]->BooleanValue(isolate);
 
-    kth_node_t node = kth_node_construct(settings, stdout_enabled);
+    kth_node_t node = kth_node_construct(&settings, stdout_enabled);
     Local<External> ext = External::New(isolate, node);
     args.GetReturnValue().Set(ext);
 }
+
+// void node_construct(FunctionCallbackInfo<Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
+
+//     if (args.Length() != 2) {
+//         throw_exception(isolate, "Wrong number of arguments, 2 arguments expected");
+//         return;
+//     }
+
+//     if ( ! args[0]->IsString()) {
+//         throw_exception(isolate, "Wrong arguments, 1");
+//         return;
+//     }
+
+//     if ( ! args[1]->IsBoolean()) {
+//         throw_exception(isolate, "Wrong arguments, 2");
+//         return;
+//     }
+
+//     v8::String::Utf8Value path(isolate, args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
+
+//     char* error_message;
+//     kth_settings* settings;
+//     kth_bool_t ok = kth_config_settings_get_from_file(*path, &settings, &error_message);
+
+//     if ( ! ok) {
+//         throw_exception(isolate, error_message);
+//         return;
+//     }
+
+//     bool stdout_enabled = args[1]->BooleanValue(isolate);
+
+//     kth_node_t node = kth_node_construct(settings, stdout_enabled);
+//     Local<External> ext = External::New(isolate, node);
+//     args.GetReturnValue().Set(ext);
+// }
 
 void node_destruct(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
