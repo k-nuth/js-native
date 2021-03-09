@@ -1,6 +1,6 @@
 {
   "name": "kth-bch-native",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "description": "Bitcoin Cash development platform for Javascript applications",
   "repository": {
     "type": "git",
@@ -35,9 +35,12 @@
     "@mapbox/node-pre-gyp": "^1.0.0",
     "nan": "^2.14.2"
   },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
-    "test": "node index.js",
+    "test": "node tests.js",
     "prepublish": "npm ls",
     "pepe": "echo"
   }
