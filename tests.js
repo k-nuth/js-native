@@ -106,32 +106,39 @@ function print_settings(setts) {
 
 }
 
-async function main() {
+// async function main() {
 
+//     const mainnet = 0;
+//     const setts = kth.config_settings_default(mainnet);
+    
+//     let node = kth.node_construct(setts, true);
+    
+//     // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", process.stdout, process.stderr);
+//     // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", null, null);
+//     // const node = kth.node_construct("", null, null)
+//     // kth.node_initchain(node)
+//     // kth.node_run_wait(node)
+
+//     kth.node_init_run_and_wait_for_signal(node, function (err) {
+//         console.log(err);
+//     });
+
+//     setTimeout(function() {
+//         console.log('program exit...');
+//         kth.node_signal_stop(node);
+//         kth.node_destruct(node);
+//     }, 15000);
+
+
+// }
+
+
+async function main() {
     const mainnet = 0;
     const setts = kth.config_settings_default(mainnet);
-    
     let node = kth.node_construct(setts, true);
-    
-    // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", process.stdout, process.stderr);
-    // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", null, null);
-    // const node = kth.node_construct("", null, null)
-    // kth.node_initchain(node)
-    // kth.node_run_wait(node)
-
-    kth.node_init_run_and_wait_for_signal(node, function (err) {
-        console.log(err);
-    });
-
-    setTimeout(function() {
-        console.log('program exit...');
-        kth.node_signal_stop(node);
-        kth.node_destruct(node);
-    }, 15000);
-
-
+    kth.node_destruct(node);
 }
-
 
 (async () => {
     try {
