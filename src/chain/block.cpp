@@ -169,7 +169,7 @@ void chain_block_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_block_hash(block);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_block_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -208,7 +208,7 @@ void chain_block_proof_str(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
 
     char const* res = kth_chain_block_proof_str(block);
-    args.GetReturnValue().Set(to_string(isolate, res));
+    args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
 void chain_block_transactions(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -353,7 +353,7 @@ void chain_block_generate_merkle_root(v8::FunctionCallbackInfo<v8::Value> const&
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_block_generate_merkle_root(block);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_block_generate_merkle_root_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -414,7 +414,7 @@ void chain_block_signature_operations_bip16_active(v8::FunctionCallbackInfo<v8::
     }
 
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t bip16_active = to_bool(isolate, args[1]);
+    kth_bool_t bip16_active = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_block_signature_operations_bip16_active(block, bip16_active);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -439,7 +439,7 @@ void chain_block_total_inputs(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t with_coinbase = to_bool(isolate, args[1]);
+    kth_bool_t with_coinbase = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_block_total_inputs(block, with_coinbase);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -621,11 +621,11 @@ void chain_block_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
     kth_size_t size;
 
     uint8_t const* res = kth_chain_block_to_data(block, wire, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 }  // namespace kth::js_native

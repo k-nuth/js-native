@@ -145,7 +145,7 @@ void chain_output_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
     }
 
     kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_output_serialized_size(output, wire);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -227,7 +227,7 @@ void chain_output_payment_address(v8::FunctionCallbackInfo<v8::Value> const& arg
     }
 
     kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t use_testnet_rules = to_bool(isolate, args[1]);
+    kth_bool_t use_testnet_rules = bool_to_cpp(isolate, args[1]);
 
     kth_payment_address_t res = kth_chain_output_payment_address(output, use_testnet_rules);
     args.GetReturnValue().Set(External::New(isolate, res));
@@ -252,11 +252,11 @@ void chain_output_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_output_t output = (kth_output_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
     kth_size_t size;
 
     uint8_t const* res = kth_chain_output_to_data(output, wire, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 }  // namespace kth::js_native

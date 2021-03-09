@@ -66,7 +66,7 @@ void chain_script_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     v8::Local<v8::Uint8Array> encoded_arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     uint8_t* encoded = (uint8_t*)encoded_arr->Buffer()->GetContents().Data();
     kth_size_t n = encoded_arr->Length();
-    kth_bool_t prefix = to_bool(isolate, args[2]);
+    kth_bool_t prefix = bool_to_cpp(isolate, args[2]);
 
     kth_script_t res = kth_chain_script_construct(encoded, n, prefix);
     args.GetReturnValue().Set(External::New(isolate, res));
@@ -167,7 +167,7 @@ void chain_script_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& arg
     }
 
     kth_script_t script = (kth_script_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t prefix = to_bool(isolate, args[1]);
+    kth_bool_t prefix = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_script_serialized_size(script, prefix);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -195,7 +195,7 @@ void chain_script_to_string(v8::FunctionCallbackInfo<v8::Value> const& args) {
     uint32_t active_forks = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
     char const* res = kth_chain_script_to_string(script, active_forks);
-    args.GetReturnValue().Set(to_string(isolate, res));
+    args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
 void chain_script_type(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -214,7 +214,7 @@ void chain_script_type(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_script_t script = (kth_script_t)v8::External::Cast(*args[0])->Value();
 
     char const* res = kth_chain_script_type(script);
-    args.GetReturnValue().Set(to_string(isolate, res));
+    args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
 void chain_script_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -236,11 +236,11 @@ void chain_script_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_script_t script = (kth_script_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t prefix = to_bool(isolate, args[1]);
+    kth_bool_t prefix = bool_to_cpp(isolate, args[1]);
     kth_size_t size;
 
     uint8_t const* res = kth_chain_script_to_data(script, prefix, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -262,7 +262,7 @@ void chain_script_sigops(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_script_t script = (kth_script_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t embedded = to_bool(isolate, args[1]);
+    kth_bool_t embedded = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_script_sigops(script, embedded);
     args.GetReturnValue().Set(Number::New(isolate, res));

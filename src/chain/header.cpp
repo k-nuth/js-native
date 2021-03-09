@@ -144,7 +144,7 @@ void chain_header_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_size_t size;
 
     uint8_t const* res = kth_chain_header_to_data(header, version, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 void chain_header_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -382,7 +382,7 @@ void chain_header_proof_str(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     char const* res = kth_chain_header_proof_str(header);
-    args.GetReturnValue().Set(to_string(isolate, res));
+    args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
 void chain_header_set_bits(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -470,7 +470,7 @@ void chain_header_previous_block_hash(v8::FunctionCallbackInfo<v8::Value> const&
     kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_header_previous_block_hash(header);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_header_merkle(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -489,7 +489,7 @@ void chain_header_merkle(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_header_merkle(header);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 void chain_header_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -508,7 +508,7 @@ void chain_header_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_header_t header = (kth_header_t)v8::External::Cast(*args[0])->Value();
 
     kth_hash_t res = kth_chain_header_hash(header);
-    args.GetReturnValue().Set(to_hash(isolate, res));
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 }  // namespace kth::js_native

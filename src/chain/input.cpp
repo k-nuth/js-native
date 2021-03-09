@@ -171,7 +171,7 @@ void chain_input_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args
     }
 
     kth_input_t input = (kth_input_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_input_serialized_size(input, wire);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -215,7 +215,7 @@ void chain_input_signature_operations(v8::FunctionCallbackInfo<v8::Value> const&
     }
 
     kth_input_t input = (kth_input_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t bip16_active = to_bool(isolate, args[1]);
+    kth_bool_t bip16_active = bool_to_cpp(isolate, args[1]);
 
     kth_size_t res = kth_chain_input_signature_operations(input, bip16_active);
     args.GetReturnValue().Set(Number::New(isolate, res));
@@ -278,11 +278,11 @@ void chain_input_to_data(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     kth_input_t input = (kth_input_t)v8::External::Cast(*args[0])->Value();
-    kth_bool_t wire = to_bool(isolate, args[1]);
+    kth_bool_t wire = bool_to_cpp(isolate, args[1]);
     kth_size_t size;
 
     uint8_t const* res = kth_chain_input_to_data(input, wire, &size);
-    args.GetReturnValue().Set(to_byte_array(isolate, res, size));
+    args.GetReturnValue().Set(byte_array_to_js(isolate, res, size));
 }
 
 }  // namespace kth::js_native
