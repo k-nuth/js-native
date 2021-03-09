@@ -32,6 +32,7 @@ using v8::Uint8Array;
 using v8::ArrayBuffer;
 
 namespace detail {
+
 v8::Local<v8::Object> config_node_settings_to_js(Isolate* isolate, kth_node_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
@@ -42,7 +43,20 @@ v8::Local<v8::Object> config_node_settings_to_js(Isolate* isolate, kth_node_sett
     setr = res->Set(ctx, string_to_js(isolate, "compactBlocksHighBandwidth"), Boolean::New(isolate, setts.compact_blocks_high_bandwidth != 0));
     return res;
 }
+
+
+kth_node_settings config_node_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    kth_node_settings res;
+    res.sync_peers = setts->Get(ctx, string_to_js(isolate, "syncPeers")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.sync_timeout_seconds = setts->Get(ctx, string_to_js(isolate, "syncTimeoutSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.block_latency_seconds = setts->Get(ctx, string_to_js(isolate, "blockLatencySeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.refresh_transactions = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "refreshTransactions")).ToLocalChecked());
+    res.compact_blocks_high_bandwidth = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "compactBlocksHighBandwidth")).ToLocalChecked());
+    return res;
 }
+
+} // namespace detail
 
 void config_node_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
