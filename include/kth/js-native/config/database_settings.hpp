@@ -11,6 +11,7 @@ namespace kth::js_native {
 
 namespace detail {
 v8::Local<v8::Object> config_database_settings_to_js(v8::Isolate* isolate, kth_database_settings const& setts);
+kth_database_settings config_database_settings_to_cpp(v8::Isolate* isolate, v8::Local<v8::Object> const& setts);
 }
 
 void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args);

@@ -8,6 +8,7 @@
 #include <node.h>
 
 #include <kth/capi/config/database_settings.h>
+#include <kth/capi/platform.h>
 
 #include <kth/js-native/config/database_settings.hpp>
 #include <kth/js-native/helper.hpp>
@@ -34,14 +35,29 @@ namespace detail {
 v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_database_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "directory"), to_string(isolate, setts.directory));
-    setr = res->Set(ctx, to_string(isolate, "flushWrites"), Boolean::New(isolate, setts.flush_writes != 0));
-    setr = res->Set(ctx, to_string(isolate, "fileGrowthRate"), Number::New(isolate, setts.file_growth_rate));
-    setr = res->Set(ctx, to_string(isolate, "indexStartHeight"), Number::New(isolate, setts.index_start_height));
-    setr = res->Set(ctx, to_string(isolate, "reorgPoolLimit"), Number::New(isolate, setts.reorg_pool_limit));
-    setr = res->Set(ctx, to_string(isolate, "dbMaxSize"), Number::New(isolate, setts.db_max_size));
-    setr = res->Set(ctx, to_string(isolate, "safeMode"), Boolean::New(isolate, setts.safe_mode != 0));
-    setr = res->Set(ctx, to_string(isolate, "cacheCapacity"), Number::New(isolate, setts.cache_capacity));
+    auto setr = res->Set(ctx, string_to_js(isolate, "directory"), string_to_js(isolate, setts.directory));
+    setr = res->Set(ctx, string_to_js(isolate, "flushWrites"), Boolean::New(isolate, setts.flush_writes != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "fileGrowthRate"), Number::New(isolate, setts.file_growth_rate));
+    setr = res->Set(ctx, string_to_js(isolate, "indexStartHeight"), Number::New(isolate, setts.index_start_height));
+    setr = res->Set(ctx, string_to_js(isolate, "reorgPoolLimit"), Number::New(isolate, setts.reorg_pool_limit));
+    setr = res->Set(ctx, string_to_js(isolate, "dbMaxSize"), Number::New(isolate, setts.db_max_size));
+    setr = res->Set(ctx, string_to_js(isolate, "safeMode"), Boolean::New(isolate, setts.safe_mode != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "cacheCapacity"), Number::New(isolate, setts.cache_capacity));
+    return res;
+}
+
+kth_database_settings config_database_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    kth_database_settings res;
+    v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked());
+    kth_platform_allocate_and_copy_string_at(&res.directory, 0, *str);
+    res.flush_writes = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "flushWrites")).ToLocalChecked());
+    res.file_growth_rate = setts->Get(ctx, string_to_js(isolate, "fileGrowthRate")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.index_start_height = setts->Get(ctx, string_to_js(isolate, "indexStartHeight")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.reorg_pool_limit = setts->Get(ctx, string_to_js(isolate, "reorgPoolLimit")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.db_max_size = setts->Get(ctx, string_to_js(isolate, "dbMaxSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.safe_mode = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "safeMode")).ToLocalChecked());
+    res.cache_capacity = setts->Get(ctx, string_to_js(isolate, "cacheCapacity")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     return res;
 }
 }
@@ -59,7 +75,7 @@ void config_database_settings_default(v8::FunctionCallbackInfo<v8::Value> const&
         return;
     }
 
-    kth_network_t net = to_kth_network_t(isolate, args[0]);
+    kth_network_t net = network_to_cpp(isolate, args[0]);
 
     kth_database_settings res = kth_config_database_settings_default(net);
     args.GetReturnValue().Set(detail::config_database_settings_to_js(isolate, res));
