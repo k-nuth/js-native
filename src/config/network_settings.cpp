@@ -8,12 +8,14 @@
 #include <node.h>
 
 #include <kth/capi/config/network_settings.h>
+#include <kth/capi/platform.h>
 
 #include <kth/js-native/config/network_settings.hpp>
 #include <kth/js-native/helper.hpp>
 
 namespace kth::js_native {
 
+using v8::Array;
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
 using v8::Local;
@@ -35,9 +37,9 @@ namespace detail {
 v8::Local<v8::Object> config_endpoint_to_js(Isolate* isolate, kth_endpoint const& endpoint) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "scheme"), to_string(isolate, endpoint.scheme));
-    setr = res->Set(ctx, to_string(isolate, "host"), to_string(isolate, endpoint.host));
-    setr = res->Set(ctx, to_string(isolate, "port"), Number::New(isolate, endpoint.port));
+    auto setr = res->Set(ctx, string_to_js(isolate, "scheme"), string_to_js(isolate, endpoint.scheme));
+    setr = res->Set(ctx, string_to_js(isolate, "host"), string_to_js(isolate, endpoint.host));
+    setr = res->Set(ctx, string_to_js(isolate, "port"), Number::New(isolate, endpoint.port));
     return res;
 }
 
@@ -55,8 +57,8 @@ v8::Local<v8::Array> config_endpoints_to_js(Isolate* isolate, kth_endpoint* endp
 v8::Local<v8::Object> config_authority_to_js(Isolate* isolate, kth_authority const& authority) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "ip"), to_string(isolate, authority.ip));
-    setr = res->Set(ctx, to_string(isolate, "port"), Number::New(isolate, authority.port));
+    auto setr = res->Set(ctx, string_to_js(isolate, "ip"), string_to_js(isolate, authority.ip));
+    setr = res->Set(ctx, string_to_js(isolate, "port"), Number::New(isolate, authority.port));
     return res;
 }
 
@@ -75,7 +77,7 @@ v8::Local<v8::Array> config_strings_to_js(Isolate* isolate, char** strs, size_t 
     auto ctx = isolate->GetCurrentContext();
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
-        auto elem = to_string(isolate, *strs);
+        auto elem = string_to_js(isolate, *strs);
         jsArr->Set(ctx, i, elem);
         ++strs;
     }
@@ -85,53 +87,200 @@ v8::Local<v8::Array> config_strings_to_js(Isolate* isolate, char** strs, size_t 
 v8::Local<v8::Object> config_network_settings_to_js(Isolate* isolate, kth_network_settings const& setts) {
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
-    auto setr = res->Set(ctx, to_string(isolate, "threads"), Number::New(isolate, setts.threads));
-    setr = res->Set(ctx, to_string(isolate, "protocolMaximum"), Number::New(isolate, setts.protocol_maximum));
-    setr = res->Set(ctx, to_string(isolate, "protocolMinimum"), Number::New(isolate, setts.protocol_minimum));
-    setr = res->Set(ctx, to_string(isolate, "services"), Number::New(isolate, setts.services));
-    setr = res->Set(ctx, to_string(isolate, "invalidServices"), Number::New(isolate, setts.invalid_services));
-    setr = res->Set(ctx, to_string(isolate, "relayTransactions"), Boolean::New(isolate, setts.relay_transactions != 0));
-    setr = res->Set(ctx, to_string(isolate, "validateChecksum"), Boolean::New(isolate, setts.validate_checksum != 0));
+    auto setr = res->Set(ctx, string_to_js(isolate, "threads"), Number::New(isolate, setts.threads));
+    setr = res->Set(ctx, string_to_js(isolate, "protocolMaximum"), Number::New(isolate, setts.protocol_maximum));
+    setr = res->Set(ctx, string_to_js(isolate, "protocolMinimum"), Number::New(isolate, setts.protocol_minimum));
+    setr = res->Set(ctx, string_to_js(isolate, "services"), Number::New(isolate, setts.services));
+    setr = res->Set(ctx, string_to_js(isolate, "invalidServices"), Number::New(isolate, setts.invalid_services));
+    setr = res->Set(ctx, string_to_js(isolate, "relayTransactions"), Boolean::New(isolate, setts.relay_transactions != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "validateChecksum"), Boolean::New(isolate, setts.validate_checksum != 0));
 
-    setr = res->Set(ctx, to_string(isolate, "identifier"), Number::New(isolate, setts.identifier));
-    setr = res->Set(ctx, to_string(isolate, "inboundPort"), Number::New(isolate, setts.inbound_port));
-    setr = res->Set(ctx, to_string(isolate, "inboundConnections"), Number::New(isolate, setts.inbound_connections));
-    setr = res->Set(ctx, to_string(isolate, "outboundConnections"), Number::New(isolate, setts.outbound_connections));
-    setr = res->Set(ctx, to_string(isolate, "manualAttemptLimit"), Number::New(isolate, setts.manual_attempt_limit));
-    setr = res->Set(ctx, to_string(isolate, "connectBatchSize"), Number::New(isolate, setts.connect_batch_size));
-    setr = res->Set(ctx, to_string(isolate, "connectTimeoutSeconds"), Number::New(isolate, setts.connect_timeout_seconds));
-    setr = res->Set(ctx, to_string(isolate, "channelHandshakeSeconds"), Number::New(isolate, setts.channel_handshake_seconds));
-    setr = res->Set(ctx, to_string(isolate, "channelHeartbeatMinutes"), Number::New(isolate, setts.channel_heartbeat_minutes));
-    setr = res->Set(ctx, to_string(isolate, "channelInactivityMinutes"), Number::New(isolate, setts.channel_inactivity_minutes));
-    setr = res->Set(ctx, to_string(isolate, "channelExpirationMinutes"), Number::New(isolate, setts.channel_expiration_minutes));
-    setr = res->Set(ctx, to_string(isolate, "channelGerminationSeconds"), Number::New(isolate, setts.channel_germination_seconds));
-    setr = res->Set(ctx, to_string(isolate, "hostPoolCapacity"), Number::New(isolate, setts.host_pool_capacity));
+    setr = res->Set(ctx, string_to_js(isolate, "identifier"), Number::New(isolate, setts.identifier));
+    setr = res->Set(ctx, string_to_js(isolate, "inboundPort"), Number::New(isolate, setts.inbound_port));
+    setr = res->Set(ctx, string_to_js(isolate, "inboundConnections"), Number::New(isolate, setts.inbound_connections));
+    setr = res->Set(ctx, string_to_js(isolate, "outboundConnections"), Number::New(isolate, setts.outbound_connections));
+    setr = res->Set(ctx, string_to_js(isolate, "manualAttemptLimit"), Number::New(isolate, setts.manual_attempt_limit));
+    setr = res->Set(ctx, string_to_js(isolate, "connectBatchSize"), Number::New(isolate, setts.connect_batch_size));
+    setr = res->Set(ctx, string_to_js(isolate, "connectTimeoutSeconds"), Number::New(isolate, setts.connect_timeout_seconds));
+    setr = res->Set(ctx, string_to_js(isolate, "channelHandshakeSeconds"), Number::New(isolate, setts.channel_handshake_seconds));
+    setr = res->Set(ctx, string_to_js(isolate, "channelHeartbeatMinutes"), Number::New(isolate, setts.channel_heartbeat_minutes));
+    setr = res->Set(ctx, string_to_js(isolate, "channelInactivityMinutes"), Number::New(isolate, setts.channel_inactivity_minutes));
+    setr = res->Set(ctx, string_to_js(isolate, "channelExpirationMinutes"), Number::New(isolate, setts.channel_expiration_minutes));
+    setr = res->Set(ctx, string_to_js(isolate, "channelGerminationSeconds"), Number::New(isolate, setts.channel_germination_seconds));
+    setr = res->Set(ctx, string_to_js(isolate, "hostPoolCapacity"), Number::New(isolate, setts.host_pool_capacity));
 
-    setr = res->Set(ctx, to_string(isolate, "hostsFile"), to_string(isolate, setts.hosts_file));
-    setr = res->Set(ctx, to_string(isolate, "self"), config_authority_to_js(isolate, setts.self));
-    setr = res->Set(ctx, to_string(isolate, "blacklist"), config_authorities_to_js(isolate, setts.blacklists, setts.blacklist_count));
-    setr = res->Set(ctx, to_string(isolate, "peers"), config_endpoints_to_js(isolate, setts.peers, setts.peer_count));
-    setr = res->Set(ctx, to_string(isolate, "seeds"), config_endpoints_to_js(isolate, setts.seeds, setts.seed_count));
+    setr = res->Set(ctx, string_to_js(isolate, "hostsFile"), string_to_js(isolate, setts.hosts_file));
+    setr = res->Set(ctx, string_to_js(isolate, "self"), config_authority_to_js(isolate, setts.self));
+    setr = res->Set(ctx, string_to_js(isolate, "blacklist"), config_authorities_to_js(isolate, setts.blacklists, setts.blacklist_count));
+    setr = res->Set(ctx, string_to_js(isolate, "peers"), config_endpoints_to_js(isolate, setts.peers, setts.peer_count));
+    setr = res->Set(ctx, string_to_js(isolate, "seeds"), config_endpoints_to_js(isolate, setts.seeds, setts.seed_count));
 
-    setr = res->Set(ctx, to_string(isolate, "debugFile"), to_string(isolate, setts.debug_file));
-    setr = res->Set(ctx, to_string(isolate, "errorFile"), to_string(isolate, setts.error_file));
-    setr = res->Set(ctx, to_string(isolate, "archiveDirectory"), to_string(isolate, setts.archive_directory));
+    setr = res->Set(ctx, string_to_js(isolate, "debugFile"), string_to_js(isolate, setts.debug_file));
+    setr = res->Set(ctx, string_to_js(isolate, "errorFile"), string_to_js(isolate, setts.error_file));
+    setr = res->Set(ctx, string_to_js(isolate, "archiveDirectory"), string_to_js(isolate, setts.archive_directory));
 
-    setr = res->Set(ctx, to_string(isolate, "rotationSize"), Number::New(isolate, setts.rotation_size));
-    setr = res->Set(ctx, to_string(isolate, "minimumFreeSpace"), Number::New(isolate, setts.minimum_free_space));
-    setr = res->Set(ctx, to_string(isolate, "maximumArchiveSize"), Number::New(isolate, setts.maximum_archive_size));
-    setr = res->Set(ctx, to_string(isolate, "maximumArchiveFiles"), Number::New(isolate, setts.maximum_archive_files));
+    setr = res->Set(ctx, string_to_js(isolate, "rotationSize"), Number::New(isolate, setts.rotation_size));
+    setr = res->Set(ctx, string_to_js(isolate, "minimumFreeSpace"), Number::New(isolate, setts.minimum_free_space));
+    setr = res->Set(ctx, string_to_js(isolate, "maximumArchiveSize"), Number::New(isolate, setts.maximum_archive_size));
+    setr = res->Set(ctx, string_to_js(isolate, "maximumArchiveFiles"), Number::New(isolate, setts.maximum_archive_files));
 
-    setr = res->Set(ctx, to_string(isolate, "statisticsServer"), config_authority_to_js(isolate, setts.statistics_server));
+    setr = res->Set(ctx, string_to_js(isolate, "statisticsServer"), config_authority_to_js(isolate, setts.statistics_server));
 
-    setr = res->Set(ctx, to_string(isolate, "verbose"), Boolean::New(isolate, setts.verbose != 0));
-    setr = res->Set(ctx, to_string(isolate, "useIpv6"), Boolean::New(isolate, setts.use_ipv6 != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "verbose"), Boolean::New(isolate, setts.verbose != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "useIpv6"), Boolean::New(isolate, setts.use_ipv6 != 0));
 
-    setr = res->Set(ctx, to_string(isolate, "userAgentBlacklist"), config_strings_to_js(isolate, setts.user_agent_blacklist, setts.user_agent_blacklist_count));
+    setr = res->Set(ctx, string_to_js(isolate, "userAgentBlacklist"), config_strings_to_js(isolate, setts.user_agent_blacklist, setts.user_agent_blacklist_count));
 
     return res;
 }
 
+kth_authority config_authority_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    kth_authority res;
+    v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked());
+    // res.ip = *ip_str;
+    kth_platform_allocate_and_copy_string_at(&res.ip, 0, *str);
+
+    res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    return res;
+}
+
+// kth_authority* config_authorities_to_cpp(Isolate* isolate, Local<Array> const& setts, kth_size_t* out_size) {
+kth_authority* config_authorities_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t* out_size) {
+    auto const ctx = isolate->GetCurrentContext();
+    *out_size = setts->Length();
+    kth_authority* res = kth_config_authority_allocate_n(*out_size);
+    auto const n = setts->Length();
+    kth_authority* it = res;
+    for (size_t i = 0; i < n; ++i) {
+        *it = config_authority_to_cpp(isolate, setts->Get(ctx, i).ToLocalChecked().As<Object>());
+        ++it;
+    }
+    return res;
+}
+
+kth_endpoint config_endpoint_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    kth_endpoint res;
+    v8::String::Utf8Value scheme_str(isolate, setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked());
+    // res.scheme = *scheme_str;
+    kth_platform_allocate_and_copy_string_at(&res.scheme, 0, *scheme_str);
+
+    v8::String::Utf8Value host_str(isolate, setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked());
+    // res.host = *host_str;
+    kth_platform_allocate_and_copy_string_at(&res.host, 0, *host_str);
+
+    res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    return res;
+}
+
+// kth_endpoint* config_endpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, kth_size_t* out_size) {
+kth_endpoint* config_endpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t* out_size) {
+    auto const ctx = isolate->GetCurrentContext();
+    *out_size = setts->Length();
+    kth_endpoint* res = kth_config_endpoint_allocate_n(*out_size);
+    auto const n = setts->Length();
+    kth_endpoint* it = res;
+    for (size_t i = 0; i < n; ++i) {
+        *it = config_endpoint_to_cpp(isolate, setts->Get(ctx, i).ToLocalChecked().As<Object>());
+        ++it;
+    }
+    return res;
+}
+
+// char** config_strings_to_cpp(Isolate* isolate, Local<Array> const& setts, kth_size_t* out_size) {
+char** config_strings_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t* out_size) {
+    auto const ctx = isolate->GetCurrentContext();
+    *out_size = setts->Length();
+    char** buffer = kth_platform_allocate_array_of_strings(*out_size);
+    auto const n = setts->Length();
+    for (size_t i = 0; i < n; ++i) {
+        v8::String::Utf8Value str(isolate, setts->Get(ctx, i).ToLocalChecked());
+        kth_platform_allocate_and_copy_string_at(buffer, i, *str);
+    }
+    return buffer;
+}
+
+kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
+    auto ctx = isolate->GetCurrentContext();
+    kth_network_settings res;
+
+    res.threads = setts->Get(ctx, string_to_js(isolate, "threads")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.protocol_maximum = setts->Get(ctx, string_to_js(isolate, "protocolMaximum")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.protocol_minimum = setts->Get(ctx, string_to_js(isolate, "protocolMinimum")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.services = setts->Get(ctx, string_to_js(isolate, "services")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.invalid_services = setts->Get(ctx, string_to_js(isolate, "invalidServices")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.relay_transactions = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "relayTransactions")).ToLocalChecked());
+    res.validate_checksum = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "validateChecksum")).ToLocalChecked());
+    res.identifier = setts->Get(ctx, string_to_js(isolate, "identifier")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.inbound_port = setts->Get(ctx, string_to_js(isolate, "inboundPort")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.inbound_connections = setts->Get(ctx, string_to_js(isolate, "inboundConnections")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.outbound_connections = setts->Get(ctx, string_to_js(isolate, "outboundConnections")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.manual_attempt_limit = setts->Get(ctx, string_to_js(isolate, "manualAttemptLimit")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.connect_batch_size = setts->Get(ctx, string_to_js(isolate, "connectBatchSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.connect_timeout_seconds = setts->Get(ctx, string_to_js(isolate, "connectTimeoutSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.channel_handshake_seconds = setts->Get(ctx, string_to_js(isolate, "channelHandshakeSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.channel_heartbeat_minutes = setts->Get(ctx, string_to_js(isolate, "channelHeartbeatMinutes")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.channel_inactivity_minutes = setts->Get(ctx, string_to_js(isolate, "channelInactivityMinutes")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.channel_expiration_minutes = setts->Get(ctx, string_to_js(isolate, "channelExpirationMinutes")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.channel_germination_seconds = setts->Get(ctx, string_to_js(isolate, "channelGerminationSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.host_pool_capacity = setts->Get(ctx, string_to_js(isolate, "hostPoolCapacity")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+
+    v8::String::Utf8Value hosts_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked());
+    // res.hosts_file = *hosts_file_str;
+    kth_platform_allocate_and_copy_string_at(&res.hosts_file, 0, *hosts_file_str);
+
+
+    res.self = config_authority_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "self")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+
+//     size_t blacklist_count;
+//     kth_authority* blacklists;
+    res.blacklists = config_authorities_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "blacklist")).ToLocalChecked().As<Array>(), 
+        &res.blacklist_count);
+
+//     size_t peer_count;
+//     kth_endpoint* peers;
+    res.peers = config_endpoints_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "peers")).ToLocalChecked().As<Array>(), 
+        &res.peer_count);
+
+//     size_t seed_count;
+//     kth_endpoint* seeds;
+    res.seeds = config_endpoints_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "seeds")).ToLocalChecked().As<Array>(), 
+        &res.seed_count);
+
+    v8::String::Utf8Value debug_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked());
+    // res.debug_file = *debug_file_str;
+    kth_platform_allocate_and_copy_string_at(&res.debug_file, 0, *debug_file_str);
+
+    v8::String::Utf8Value error_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked());
+    // res.error_file = *error_file_str;
+    kth_platform_allocate_and_copy_string_at(&res.error_file, 0, *error_file_str);
+
+    v8::String::Utf8Value archive_directory_str(isolate, setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked());
+    // res.archive_directory = *archive_directory_str;
+    kth_platform_allocate_and_copy_string_at(&res.archive_directory, 0, *archive_directory_str);
+
+    res.rotation_size = setts->Get(ctx, string_to_js(isolate, "rotationSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.minimum_free_space = setts->Get(ctx, string_to_js(isolate, "minimumFreeSpace")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.maximum_archive_size = setts->Get(ctx, string_to_js(isolate, "maximumArchiveSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.maximum_archive_files = setts->Get(ctx, string_to_js(isolate, "maximumArchiveFiles")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+
+    res.statistics_server = config_authority_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "statisticsServer")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+
+    res.verbose = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "verbose")).ToLocalChecked());
+    res.use_ipv6 = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "useIpv6")).ToLocalChecked());
+
+//     size_t user_agent_blacklist_count;
+//     char** user_agent_blacklist;
+    res.user_agent_blacklist = config_strings_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "userAgentBlacklist")).ToLocalChecked().As<Array>(), 
+        &res.user_agent_blacklist_count);
+
+    return res;
+}
 }
 
 void config_network_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -147,7 +296,7 @@ void config_network_settings_default(v8::FunctionCallbackInfo<v8::Value> const& 
         return;
     }
 
-    kth_network_t net = to_kth_network_t(isolate, args[0]);
+    kth_network_t net = network_to_cpp(isolate, args[0]);
     kth_network_settings res = kth_config_network_settings_default(net);
     args.GetReturnValue().Set(detail::config_network_settings_to_js(isolate, res));
 }
