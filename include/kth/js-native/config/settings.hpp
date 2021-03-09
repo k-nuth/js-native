@@ -9,6 +9,11 @@
 
 namespace kth::js_native {
 
+namespace detail {
+v8::Local<v8::Object> config_settings_to_js(v8::Isolate* isolate, kth_settings const& setts);
+kth_settings config_settings_to_cpp(v8::Isolate* isolate, v8::Local<v8::Object> const& setts);
+}
+
 void config_settings_default(v8::FunctionCallbackInfo<v8::Value> const& args);
 void config_settings_get_from_file(v8::FunctionCallbackInfo<v8::Value> const& args);
 // void config_settings_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
