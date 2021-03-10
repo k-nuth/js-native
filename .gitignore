@@ -14,3 +14,4 @@ __pycache__/
 conanbuildinfo.txt
 graph_info.json
 conan.lock
+hosts.cache
