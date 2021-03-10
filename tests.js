@@ -132,13 +132,33 @@ function print_settings(setts) {
 
 // }
 
-
 async function main() {
+
     const mainnet = 0;
+    const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
+    
     let node = kth.node_construct(setts, true);
-    kth.node_destruct(node);
+    
+    kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
+        console.log("handler result: ");
+        console.log(err);
+    });
+
+    setTimeout(function() {
+        console.log('program exit...');
+        kth.node_signal_stop(node);
+        kth.node_destruct(node);
+    }, 1000);
 }
+
+
+// async function main() {
+//     const mainnet = 0;
+//     const setts = kth.config_settings_default(mainnet);
+//     let node = kth.node_construct(setts, true);
+//     kth.node_destruct(node);
+// }
 
 (async () => {
     try {
