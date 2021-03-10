@@ -130,7 +130,7 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     auto* isolate = args.GetIsolate();
 
     if (args.Length() != 3) {
-        throw_exception(isolate, "Wrong number of arguments");
+        throw_exception(isolate, "Wrong number of arguments.");
         return;
     }
 
@@ -153,7 +153,7 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_node_t node = (kth_node_t)vptr;
 
-    auto callback = make_callback(isolate, args[1]);
+    auto callback = make_callback(isolate, args[2]);
 
     auto* context = new context_t;
     uv_async_init(uv_default_loop(), &node_init_run_and_wait_for_signal_ah_, node_init_run_and_wait_for_signal_handler);
