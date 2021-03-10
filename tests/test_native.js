@@ -161,7 +161,8 @@ async function main() {
     // kth.node_initchain(node)
     // kth.node_run_wait(node)
 
-    kth.node_init_run_and_wait_for_signal(node, function (err) {
+    let justChain = 1;
+    kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
         console.log(err);
     });
 

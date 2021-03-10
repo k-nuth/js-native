@@ -129,7 +129,7 @@ void node_init_run_and_wait_for_signal_handler(uv_async_t* handle) {
 void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) {
     auto* isolate = args.GetIsolate();
 
-    if (args.Length() != 2) {
+    if (args.Length() != 3) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
     }
@@ -139,8 +139,13 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
         return;
     }
 
-    if ( ! args[1]->IsFunction()) {
+    if ( ! args[1]->IsNumber()) {
         throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+
+    if ( ! args[2]->IsFunction()) {
+        throw_exception(isolate, "Wrong arguments, 2");
         return;
     }
 
@@ -155,8 +160,8 @@ void node_init_run_and_wait_for_signal(FunctionCallbackInfo<Value> const& args) 
     context->async = &node_init_run_and_wait_for_signal_ah_;
     context->callback = callback;
 
+    kth_start_modules_t mods = start_modules_to_cpp(isolate, args[1]);
 
-    kth_start_modules_t mods = kth_start_modules_all;   //TODO(fernando): this is another parameter.
     std::thread t([node, context, mods]() {
         kth_node_init_run_and_wait_for_signal(node, context, mods, [](kth_node_t node, void* ctx, kth_error_code_t err) {
             auto* context = static_cast<context_t*>(ctx);
