@@ -116,6 +116,13 @@ kth_network_t network_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x
     return res;
 }
 
+inline
+kth_start_modules_t start_modules_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+    auto val = x->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_start_modules_t res = kth_start_modules_t(val);
+    return res;
+}
+
 }  // namespace kth::js_native
 
 #endif // KTH_JS_NATIVE_HELPER_HPP_
