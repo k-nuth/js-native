@@ -138,12 +138,12 @@ kth_authority config_authority_to_cpp(Isolate* isolate, v8::Local<v8::Object> co
     auto ctx = isolate->GetCurrentContext();
     kth_authority res;
 
-    // v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked());
-    // kth_platform_allocate_and_copy_string_at(&res.ip, 0, *str);
+    v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked());
+    kth_platform_allocate_and_copy_string_at(&res.ip, 0, *str);
 
-    string_to_cpp(isolate, 
-        setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
-        &res.ip);
+    // string_to_cpp(isolate, 
+    //     setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+    //     &res.ip);
 
     res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     return res;
@@ -166,20 +166,20 @@ kth_authority* config_authorities_to_cpp(Isolate* isolate, Local<Array> const& s
 kth_endpoint config_endpoint_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
     auto ctx = isolate->GetCurrentContext();
     kth_endpoint res;
-    // v8::String::Utf8Value scheme_str(isolate, setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked());
-    // kth_platform_allocate_and_copy_string_at(&res.scheme, 0, *scheme_str);
+    v8::String::Utf8Value scheme_str(isolate, setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked());
+    kth_platform_allocate_and_copy_string_at(&res.scheme, 0, *scheme_str);
 
-    string_to_cpp(isolate, 
-        setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
-        &res.scheme);
+    // string_to_cpp(isolate, 
+    //     setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+    //     &res.scheme);
 
 
-    // v8::String::Utf8Value host_str(isolate, setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked());
-    // kth_platform_allocate_and_copy_string_at(&res.host, 0, *host_str);
+    v8::String::Utf8Value host_str(isolate, setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked());
+    kth_platform_allocate_and_copy_string_at(&res.host, 0, *host_str);
 
-    string_to_cpp(isolate, 
-        setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
-        &res.host);
+    // string_to_cpp(isolate, 
+    //     setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+    //     &res.host);
 
 
     res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
@@ -205,17 +205,17 @@ char** config_strings_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t
     auto const ctx = isolate->GetCurrentContext();
     *out_size = setts->Length();
     char** buffer = kth_platform_allocate_array_of_strings(*out_size);
-    char** it = buffer;
+    // char** it = buffer;
     auto const n = setts->Length();
     for (size_t i = 0; i < n; ++i) {
-        // v8::String::Utf8Value str(isolate, setts->Get(ctx, i).ToLocalChecked());
-        // kth_platform_allocate_and_copy_string_at(buffer, i, *str);
+        v8::String::Utf8Value str(isolate, setts->Get(ctx, i).ToLocalChecked());
+        kth_platform_allocate_and_copy_string_at(buffer, i, *str);
 
-        string_to_cpp(isolate, 
-            setts->Get(ctx, i).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
-            it);
+        // string_to_cpp(isolate, 
+        //     setts->Get(ctx, i).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        //     it);
 
-        ++it;
+        // ++it;
     }
     return buffer;
 }
