@@ -79,7 +79,7 @@ wchar_t* string_to_cpp_wide(v8::Isolate* isolate, v8::Local<v8::String> const& j
 
 inline
 wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
-    return string_to_cpp_wide(isolate, js_str);
+    return string_to_cpp_wide(isolate, js_str, out);
 }
 #else
 inline
