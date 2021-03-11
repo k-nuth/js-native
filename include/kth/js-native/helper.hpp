@@ -67,6 +67,35 @@ v8::Local<v8::String> string_to_js(v8::Isolate* isolate, char const* str) {
     return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
 }
 
+#if defined(_WIN32)
+inline
+wchar_t* string_to_cpp_wide(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
+    v8::String::Value str(isolate, js_str);
+    auto n = js_str->Length();
+    *out = static_cast<wchar_t*>(malloc(sizeof(wchar_t) * n));
+    std::copy_n(*str, n + 1, *out);
+    return *out;
+}
+
+inline
+wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
+    return string_to_cpp_wide(isolate, js_str);
+}
+#else
+inline
+char* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, char** out) {
+    // return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
+    // v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.directory, 0, *str);
+
+    v8::String::Utf8Value str(isolate, js_str);
+    auto n = js_str->Length(); //TODO(fernando): Utf8Length() ?
+    *out = static_cast<char*>(malloc(sizeof(char) * n));
+    std::copy_n(*str, n + 1, *out);
+    return *out;
+}
+#endif // defined(_WIN32)
+
 inline
 v8::Local<v8::Uint8Array> byte_array_to_js(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
     v8::Local<v8::ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
