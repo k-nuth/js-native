@@ -50,15 +50,9 @@ kth_database_settings config_database_settings_to_cpp(Isolate* isolate, v8::Loca
     auto ctx = isolate->GetCurrentContext();
     kth_database_settings res;
     
-    // v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked());
-    // kth_platform_allocate_and_copy_string_at(&res.directory, 0, *str);
-
-    // string_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked(), &res.directory);
     string_to_cpp(isolate, 
         setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.directory);
-
-    // args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked()
 
     res.flush_writes = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "flushWrites")).ToLocalChecked());
     res.file_growth_rate = setts->Get(ctx, string_to_js(isolate, "fileGrowthRate")).ToLocalChecked()->IntegerValue(ctx).ToChecked();

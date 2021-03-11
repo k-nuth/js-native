@@ -137,9 +137,13 @@ v8::Local<v8::Object> config_network_settings_to_js(Isolate* isolate, kth_networ
 kth_authority config_authority_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
     auto ctx = isolate->GetCurrentContext();
     kth_authority res;
-    v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked());
-    // res.ip = *ip_str;
-    kth_platform_allocate_and_copy_string_at(&res.ip, 0, *str);
+
+    // v8::String::Utf8Value str(isolate, setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.ip, 0, *str);
+
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "ip")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.ip);
 
     res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     return res;
@@ -162,13 +166,21 @@ kth_authority* config_authorities_to_cpp(Isolate* isolate, Local<Array> const& s
 kth_endpoint config_endpoint_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
     auto ctx = isolate->GetCurrentContext();
     kth_endpoint res;
-    v8::String::Utf8Value scheme_str(isolate, setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked());
-    // res.scheme = *scheme_str;
-    kth_platform_allocate_and_copy_string_at(&res.scheme, 0, *scheme_str);
+    // v8::String::Utf8Value scheme_str(isolate, setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.scheme, 0, *scheme_str);
 
-    v8::String::Utf8Value host_str(isolate, setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked());
-    // res.host = *host_str;
-    kth_platform_allocate_and_copy_string_at(&res.host, 0, *host_str);
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "scheme")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.scheme);
+
+
+    // v8::String::Utf8Value host_str(isolate, setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.host, 0, *host_str);
+
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "host")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.host);
+
 
     res.port = setts->Get(ctx, string_to_js(isolate, "port")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     return res;
@@ -193,10 +205,17 @@ char** config_strings_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t
     auto const ctx = isolate->GetCurrentContext();
     *out_size = setts->Length();
     char** buffer = kth_platform_allocate_array_of_strings(*out_size);
+    char** it = buffer;
     auto const n = setts->Length();
     for (size_t i = 0; i < n; ++i) {
-        v8::String::Utf8Value str(isolate, setts->Get(ctx, i).ToLocalChecked());
-        kth_platform_allocate_and_copy_string_at(buffer, i, *str);
+        // v8::String::Utf8Value str(isolate, setts->Get(ctx, i).ToLocalChecked());
+        // kth_platform_allocate_and_copy_string_at(buffer, i, *str);
+
+        string_to_cpp(isolate, 
+            setts->Get(ctx, i).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+            it);
+
+        ++it;
     }
     return buffer;
 }
@@ -226,42 +245,43 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
     res.channel_germination_seconds = setts->Get(ctx, string_to_js(isolate, "channelGerminationSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.host_pool_capacity = setts->Get(ctx, string_to_js(isolate, "hostPoolCapacity")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
-    v8::String::Utf8Value hosts_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked());
-    // res.hosts_file = *hosts_file_str;
-    kth_platform_allocate_and_copy_string_at(&res.hosts_file, 0, *hosts_file_str);
-
+    // v8::String::Utf8Value hosts_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.hosts_file, 0, *hosts_file_str);
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.hosts_file);
 
     res.self = config_authority_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "self")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
 
-//     size_t blacklist_count;
-//     kth_authority* blacklists;
     res.blacklists = config_authorities_to_cpp(isolate, 
         setts->Get(ctx, string_to_js(isolate, "blacklist")).ToLocalChecked().As<Array>(), 
         &res.blacklist_count);
 
-//     size_t peer_count;
-//     kth_endpoint* peers;
     res.peers = config_endpoints_to_cpp(isolate, 
         setts->Get(ctx, string_to_js(isolate, "peers")).ToLocalChecked().As<Array>(), 
         &res.peer_count);
 
-//     size_t seed_count;
-//     kth_endpoint* seeds;
     res.seeds = config_endpoints_to_cpp(isolate, 
         setts->Get(ctx, string_to_js(isolate, "seeds")).ToLocalChecked().As<Array>(), 
         &res.seed_count);
 
-    v8::String::Utf8Value debug_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked());
-    // res.debug_file = *debug_file_str;
-    kth_platform_allocate_and_copy_string_at(&res.debug_file, 0, *debug_file_str);
+    // v8::String::Utf8Value debug_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.debug_file, 0, *debug_file_str);
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.debug_file);
 
-    v8::String::Utf8Value error_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked());
-    // res.error_file = *error_file_str;
-    kth_platform_allocate_and_copy_string_at(&res.error_file, 0, *error_file_str);
+    // v8::String::Utf8Value error_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.error_file, 0, *error_file_str);
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.error_file);
 
-    v8::String::Utf8Value archive_directory_str(isolate, setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked());
-    // res.archive_directory = *archive_directory_str;
-    kth_platform_allocate_and_copy_string_at(&res.archive_directory, 0, *archive_directory_str);
+    // v8::String::Utf8Value archive_directory_str(isolate, setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked());
+    // kth_platform_allocate_and_copy_string_at(&res.archive_directory, 0, *archive_directory_str);
+    string_to_cpp(isolate, 
+        setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
+        &res.archive_directory);
 
     res.rotation_size = setts->Get(ctx, string_to_js(isolate, "rotationSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.minimum_free_space = setts->Get(ctx, string_to_js(isolate, "minimumFreeSpace")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
@@ -273,8 +293,6 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
     res.verbose = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "verbose")).ToLocalChecked());
     res.use_ipv6 = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "useIpv6")).ToLocalChecked());
 
-//     size_t user_agent_blacklist_count;
-//     char** user_agent_blacklist;
     res.user_agent_blacklist = config_strings_to_cpp(isolate, 
         setts->Get(ctx, string_to_js(isolate, "userAgentBlacklist")).ToLocalChecked().As<Array>(), 
         &res.user_agent_blacklist_count);
