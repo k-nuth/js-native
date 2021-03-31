@@ -137,7 +137,8 @@ async function main() {
     const mainnet = 0;
     const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
-    
+    setts.database.dbMaxSize = 2 * 1024 * 1024;    // 2MiB
+
     let node = kth.node_construct(setts, true);
     
     kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
