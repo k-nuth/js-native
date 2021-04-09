@@ -110,8 +110,8 @@ kth_checkpoint config_checkpoint_to_cpp(Isolate* isolate, Local<Object> const& s
     return res;
 }
 
-// kth_checkpoint* config_checkpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, kth_size_t* out_size) {
-kth_checkpoint* config_checkpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t* out_size) {
+// kth_checkpoint* config_checkpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, size_t* out_size) {
+kth_checkpoint* config_checkpoints_to_cpp(Isolate* isolate, Local<Array> const& setts, kth_size_t* out_size) {
     auto const ctx = isolate->GetCurrentContext();
     *out_size = setts->Length();
     kth_checkpoint* res = kth_config_checkpoint_allocate_n(*out_size);
@@ -137,16 +137,10 @@ kth_blockchain_settings config_blockchain_settings_to_cpp(Isolate* isolate, Loca
     res.notify_limit_hours = setts->Get(ctx, string_to_js(isolate, "notifyLimitHours")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.reorganization_limit = setts->Get(ctx, string_to_js(isolate, "reorganizationLimit")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
-    // res.checkpoint_count = setts->Get(ctx, string_to_js(isolate, "checkpointCount")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
-    //TODO!!!!!
-    // kth_checkpoint* checkpoints;
-    res.checkpoints = config_checkpoints_to_cpp(isolate, 
-        setts->Get(ctx, string_to_js(isolate, "checkpoints")).ToLocalChecked().As<Array>(), 
+    res.checkpoints = config_checkpoints_to_cpp(isolate,
+        setts->Get(ctx, string_to_js(isolate, "checkpoints")).ToLocalChecked().As<Array>(),
         &res.checkpoint_count);
 
-    // for (size_t i = 0; i < res.checkpoint_count; ++i) {
-    //     printf("res.checkpoints[i].height:   %zu\n", res.checkpoints[i].height);
-    // }
 
     res.fix_checkpoints = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "fixCheckpoints")).ToLocalChecked());
     res.allow_collisions = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "allowCollisions")).ToLocalChecked());
