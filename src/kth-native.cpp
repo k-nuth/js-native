@@ -46,15 +46,12 @@ namespace kth::js_native {
 
 void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "node_construct", node_construct);
-    NODE_SET_METHOD(exports, "node_destruct", node_destruct);
     NODE_SET_METHOD(exports, "node_init_run_and_wait_for_signal", node_init_run_and_wait_for_signal);
-    NODE_SET_METHOD(exports, "node_signal_stop", node_signal_stop);
-    // NODE_SET_METHOD(exports, "node_initchain", node_initchain);
-    // NODE_SET_METHOD(exports, "node_run", node_run);
-    // NODE_SET_METHOD(exports, "node_run_wait", node_run_wait);
-    // NODE_SET_METHOD(exports, "node_stop", node_stop);
+    NODE_SET_METHOD(exports, "node_print_thread_id", node_print_thread_id);
+    NODE_SET_METHOD(exports, "node_running", node_running);
     NODE_SET_METHOD(exports, "node_get_chain", node_get_chain);
-    
+    NODE_SET_METHOD(exports, "node_destruct", node_destruct);
+    NODE_SET_METHOD(exports, "node_signal_stop", node_signal_stop);
     NODE_SET_METHOD(exports, "config_endpoint_allocate_n", config_endpoint_allocate_n);
     NODE_SET_METHOD(exports, "config_checkpoint_allocate_n", config_checkpoint_allocate_n);
     NODE_SET_METHOD(exports, "config_node_settings_default", config_node_settings_default);
@@ -257,7 +254,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_history_compact_list_destruct", chain_history_compact_list_destruct);
     NODE_SET_METHOD(exports, "chain_history_compact_list_count", chain_history_compact_list_count);
     NODE_SET_METHOD(exports, "chain_history_compact_list_nth", chain_history_compact_list_nth);
-    
+
     NODE_SET_METHOD(exports, "chain_history_compact_get_point_kind", chain_history_compact_get_point_kind);
     NODE_SET_METHOD(exports, "chain_history_compact_get_point", chain_history_compact_get_point);
     NODE_SET_METHOD(exports, "chain_history_compact_get_height", chain_history_compact_get_height);
