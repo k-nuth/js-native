@@ -3,10 +3,8 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 const binary = require('@mapbox/node-pre-gyp');
-
 const path = require('path')
 const kth_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
-
 const kth = require(kth_path);
 
 function print_settings(setts) {
@@ -106,52 +104,27 @@ function print_settings(setts) {
 
 }
 
-// async function main() {
-
-//     const mainnet = 0;
-//     const setts = kth.config_settings_default(mainnet);
-    
-//     let node = kth.node_construct(setts, true);
-    
-//     // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", process.stdout, process.stderr);
-//     // var node = kth.node_construct("/home/fernando/testnet4/testnet4.cfg", null, null);
-//     // const node = kth.node_construct("", null, null)
-//     // kth.node_initchain(node)
-//     // kth.node_run_wait(node)
-
-//     kth.node_init_run_and_wait_for_signal(node, function (err) {
-//         console.log(err);
-//     });
-
-//     setTimeout(function() {
-//         console.log('program exit...');
-//         kth.node_signal_stop(node);
-//         kth.node_destruct(node);
-//     }, 15000);
-
-
-// }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function main() {
-
     const mainnet = 0;
     const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
-    
+    // console.log(setts);
+
     let node = kth.node_construct(setts, true);
-    
     kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
         console.log("handler result: ");
         console.log(err);
     });
 
-    setTimeout(function() {
-        console.log('program exit...');
-        kth.node_signal_stop(node);
-        kth.node_destruct(node);
-    }, 1000);
-}
+    await sleep(1000);
 
+    kth.node_signal_stop(node);
+    kth.node_destruct(node);
+}
 
 // async function main() {
 //     const mainnet = 0;
@@ -166,7 +139,7 @@ async function main() {
         // console.log(text);
         await main();
     } catch (e) {
-        console.log(e);
+        console.log("error: ", e);
     }
 })();
 
