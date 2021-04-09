@@ -20,9 +20,9 @@ jobs:
           MATRIX: '{"config":[{"name":"Linux NodeJS 15","nodejs_version":"15","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"macOS NodeJS 15","nodejs_version":"15","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
+                              {"name":"macOS NodeJS 15","nodejs_version":"15","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"1"},
+                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"1"},
+                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-10.15","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Windows NodeJS 15","nodejs_version":"15","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
                               {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "${MATRIX}"
           echo "::set-output name=matrix::${MATRIX}"
-          
+
   builds:
     needs: generate-matrix
     runs-on: ${{ matrix.config.os }}
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8"
-  
+
       - name: Settting EnvVars (Unix)
         if: ${{ matrix.config.os_kind != 'windows' }}
         shell: bash
@@ -73,7 +73,7 @@ jobs:
           # echo ${NPM_EMAIL}
           # echo ${NODEJS_VERSION}
           # echo ${NODE_PRE_GYP_GITHUB_TOKEN}
-                
+
           echo "-------------------------------------------------------"
           whoami
           echo "-------------------------------------------------------"
@@ -105,7 +105,7 @@ jobs:
 
           if which pyenv > /dev/null; then
             eval "$(pyenv init -)"
-            eval "$(pyenv virtualenv-init -)" 
+            eval "$(pyenv virtualenv-init -)"
           fi
 
           pyenv install --list
@@ -123,7 +123,7 @@ jobs:
           # pip install conan_package_tools --upgrade
           # pip install conan --upgrade
           pip install kthbuild --upgrade
-          
+
           conan user
 
       - name: Build (macOS)
@@ -206,13 +206,13 @@ jobs:
         shell: powershell
         run: |
           $ErrorActionPreference = 'SilentlyContinue'
-          
+
           # npm install
           # npm install --loglevel verbose
           # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
           npm install --loglevel verbose
           npm run test
-          
+
           Remove-Item './deps' -Recurse
 
           # node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
@@ -220,7 +220,7 @@ jobs:
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose
-          
+
           $ErrorActionPreference = 'SilentlyContinue'
           node-pre-gyp-github publish --release
           $ErrorActionPreference = 'Continue'
