@@ -5,6 +5,7 @@
 #ifndef KTH_JS_NATIVE_HELPER_HPP_
 #define KTH_JS_NATIVE_HELPER_HPP_
 
+#include <iostream>
 #include <string>
 
 #include <node.h>
@@ -23,13 +24,12 @@ void throw_exception(v8::Isolate* isolate, std::string const& message) {
             v8::String::NewFromUtf8(isolate, message.c_str(), v8::NewStringType::kNormal).ToLocalChecked()));
 }
 
-template <typename T, size_t argc> 
+template <typename T, size_t argc>
 void call_function_and_free(v8::Isolate* isolate, void* ctx, T (&argv)[argc]) {
     auto* callback = static_cast<v8::Persistent<v8::Function>*>(ctx);
     auto cb = v8::Local<v8::Function>::New(isolate, *callback);
     cb->Call(isolate->GetCurrentContext(), v8::Null(isolate), argc, argv).ToLocalChecked();
     callback->Reset();
-    //callback->Dispose();
     delete callback;
 }
 
@@ -46,8 +46,8 @@ v8::Persistent<v8::Function>* make_callback(v8::Isolate* isolate, v8::Local<v8::
     return callback;
 }
 
-template <typename T> 
-inline 
+template <typename T>
+inline
 T copy_data_and_free(context_t& context) {
     auto* context_data = static_cast<T*>(context.data);
     T data = *context_data;
@@ -89,7 +89,7 @@ char* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, c
     // kth_platform_allocate_and_copy_string_at(&res.directory, 0, *str);
 
     v8::String::Utf8Value str(isolate, js_str);
-    auto n = js_str->Length(); //TODO(fernando): Utf8Length() ?
+    auto n = js_str->Length() + 1; //TODO(fernando): Utf8Length() ?
     *out = static_cast<char*>(malloc(sizeof(char) * n));
     std::copy_n(*str, n + 1, *out);
     return *out;
