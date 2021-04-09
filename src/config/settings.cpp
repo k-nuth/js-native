@@ -72,6 +72,9 @@ kth_settings config_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> cons
     res.network = config_network_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "network")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
     res.node = config_node_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "node")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
 
+
+
+
     // printf("res.chain.cores:              %d\n", res.chain.cores);
     // printf("res.chain.priority:           %d\n", res.chain.priority);
     // printf("res.chain.byte_fee_satoshis:  %f\n", res.chain.byte_fee_satoshis);
@@ -158,8 +161,8 @@ kth_settings config_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> cons
 
 
     // printf("res.network.blacklist_count:      %d\n", res.network.blacklist_count);
-    // // printf("res.network.blacklists[0].ip:     %s\n", res.network.blacklists[0].ip);
-    // // printf("res.network.blacklists[0].port:   %d\n", res.network.blacklists[0].port);
+    // // printf("res.network.blacklist[0].ip:     %s\n", res.network.blacklist[0].ip);
+    // // printf("res.network.blacklist[0].port:   %d\n", res.network.blacklist[0].port);
 
     // printf("res.network.peer_count:      %d\n", res.network.peer_count);
 
