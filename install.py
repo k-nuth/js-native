@@ -78,7 +78,7 @@ def exec_conan(args_param):
     print("----------------------------------------------------")
     print("----------------------------------------------------")
     print("Executing Conan ")
-    
+
     args = [sys.executable, "-m", "conans.conan"]
     args.extend(args_param)
     print(args)
@@ -96,7 +96,7 @@ def exec_conan(args_param):
     # else:
     #     print("Output: \n{}\n".format(output))
 
-def run_conan(reference, march_id):
+def run_conan(reference, march_id, debug_build):
     print('platform --------------------------')
     print(platform)
     print('platform --------------------------')
@@ -107,6 +107,9 @@ def run_conan(reference, march_id):
     install_args = ['install', reference]
     if march_id != None:
         install_args.extend(['-o', 'c-api:march_id={}'.format(march_id)])
+
+    if debug_build:
+        install_args.extend(['-s', 'build_type=Debug'])
 
     if platform == "win32":
         # self.options["c-api"].march_id = "4fZKi37a595hP"
@@ -144,19 +147,24 @@ def get_march(arch):
     # march_id = arr[1]
     # return march_id
 
+def get_debug_build():
+    dbuild = os.getenv("KTH_DEBUG_BUILD", "0")
+    return dbuild == "1"
 
 if __name__ == '__main__':
     recipe_dir = sys.argv[1]
     # user_arch = sys.argv[2]
     user_arch = None
     march_id = get_march(user_arch)
+    debug_build = get_debug_build()
 
     print("----------------------------------------------------")
     print("----------------------------------------------------")
     print("----------------------------------------------------")
     print("************** Conan Recipe directory: {}".format(recipe_dir))
-    print("************** User defined arch: {}".format(user_arch))
-    print("************** Microarchitecture Id: {}".format(march_id))
+    print("************** User defined arch:      {}".format(user_arch))
+    print("************** Microarchitecture Id:   {}".format(march_id))
+    print("************** Debug Build:            {}".format(debug_build))
 
     print("Python version")
     print (sys.version)
@@ -172,4 +180,4 @@ if __name__ == '__main__':
     # test_conan_install()
     install('kthbuild')
     # test_conan_install()
-    run_conan(recipe_dir, march_id)
+    run_conan(recipe_dir, march_id, debug_build)
