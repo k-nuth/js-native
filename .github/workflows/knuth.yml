@@ -44,7 +44,7 @@ jobs:
           submodules: true
       - uses: actions/setup-python@v1
         with:
-          python-version: "3.8"
+          python-version: "3.9"
 
       - name: Settting EnvVars (Unix)
         if: ${{ matrix.config.os_kind != 'windows' }}
@@ -173,7 +173,7 @@ jobs:
           npm --version
           npm -g install npm@next
           npm --version
-          npm install -g node-gyp
+          npm install -g node-gyp@7.1.2
           npm install -g @mapbox/node-pre-gyp
           npm install -g aws-sdk
           npm install -g node-pre-gyp-github
@@ -210,16 +210,45 @@ jobs:
           # npm install
           # npm install --loglevel verbose
           # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          
+          Write-Host "****************************************************"
+          Write-Host "BEFORE npm install"
+          Write-Host "****************************************************"
+          
           npm install --loglevel verbose
+
+          Write-Host "****************************************************"
+          Write-Host "AFTER npm install"
+          Write-Host "****************************************************"
+
+          Write-Host "****************************************************"
+          Write-Host "BEFORE npm run test"
+          Write-Host "****************************************************"
+
           npm run test
 
+          Write-Host "****************************************************"
+          Write-Host "AFTER npm run test"
+          Write-Host "****************************************************"
+
           Remove-Item './deps' -Recurse
+
+
+          Write-Host "****************************************************"
+          Write-Host "BEFORE node-pre-gyp configure build package"
+          Write-Host "****************************************************"
 
           # node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
           node-pre-gyp configure build package
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose
+
+          Write-Host "****************************************************"
+          Write-Host "AFTER node-pre-gyp configure build package"
+          Write-Host "****************************************************"
+
+
 
           $ErrorActionPreference = 'SilentlyContinue'
           node-pre-gyp-github publish --release
