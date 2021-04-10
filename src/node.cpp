@@ -10,6 +10,7 @@
 #include <kth/js-native/helper.hpp>
 #include <kth/js-native/config/settings.hpp>
 
+#include <atomic>
 #include <thread>
 
 namespace kth::js_native {
