@@ -210,16 +210,45 @@ jobs:
           # npm install
           # npm install --loglevel verbose
           # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+          
+          Write-Host "****************************************************"
+          Write-Host "BEFORE npm install"
+          Write-Host "****************************************************"
+          
           npm install --loglevel verbose
+
+          Write-Host "****************************************************"
+          Write-Host "AFTER npm install"
+          Write-Host "****************************************************"
+
+          Write-Host "****************************************************"
+          Write-Host "BEFORE npm run test"
+          Write-Host "****************************************************"
+
           npm run test
 
+          Write-Host "****************************************************"
+          Write-Host "AFTER npm run test"
+          Write-Host "****************************************************"
+
           Remove-Item './deps' -Recurse
+
+
+          Write-Host "****************************************************"
+          Write-Host "BEFORE node-pre-gyp configure build package"
+          Write-Host "****************************************************"
 
           # node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
           node-pre-gyp configure build package
           # node-pre-gyp configure --verbose
           # node-pre-gyp build --verbose
           # node-pre-gyp package --verbose
+
+          Write-Host "****************************************************"
+          Write-Host "AFTER node-pre-gyp configure build package"
+          Write-Host "****************************************************"
+
+
 
           $ErrorActionPreference = 'SilentlyContinue'
           node-pre-gyp-github publish --release
