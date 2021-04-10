@@ -74,8 +74,8 @@ char* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, c
     // kth_platform_allocate_and_copy_string_at(&res.directory, 0, *str);
 
     v8::String::Utf8Value str(isolate, js_str);
-    auto n = js_str->Length() + 1; //TODO(fernando): Utf8Length() ?
-    *out = static_cast<char*>(malloc(sizeof(char) * n));
+    auto n = js_str->Length(); //TODO(fernando): Utf8Length() ?
+    *out = static_cast<char*>(malloc(sizeof(char) * (n + 1)));
     std::copy_n(*str, n + 1, *out);
     return *out;
 }
@@ -85,7 +85,7 @@ inline
 wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
     v8::String::Value str(isolate, js_str);
     auto n = js_str->Length();
-    *out = static_cast<wchar_t*>(malloc(sizeof(wchar_t) * n));
+    *out = static_cast<wchar_t*>(malloc(sizeof(wchar_t) *  (n + 1)));
     std::copy_n(*str, n + 1, *out);
     return *out;
 }
