@@ -67,21 +67,6 @@ v8::Local<v8::String> string_to_js(v8::Isolate* isolate, char const* str) {
     return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
 }
 
-#if defined(_WIN32)
-inline
-wchar_t* string_to_cpp_wide(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
-    v8::String::Value str(isolate, js_str);
-    auto n = js_str->Length();
-    *out = static_cast<wchar_t*>(malloc(sizeof(wchar_t) * n));
-    std::copy_n(*str, n + 1, *out);
-    return *out;
-}
-
-inline
-wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
-    return string_to_cpp_wide(isolate, js_str, out);
-}
-#else
 inline
 char* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, char** out) {
     // return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
@@ -91,6 +76,16 @@ char* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, c
     v8::String::Utf8Value str(isolate, js_str);
     auto n = js_str->Length() + 1; //TODO(fernando): Utf8Length() ?
     *out = static_cast<char*>(malloc(sizeof(char) * n));
+    std::copy_n(*str, n + 1, *out);
+    return *out;
+}
+
+#if defined(_WIN32)
+inline
+wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str, wchar_t** out) {
+    v8::String::Value str(isolate, js_str);
+    auto n = js_str->Length();
+    *out = static_cast<wchar_t*>(malloc(sizeof(wchar_t) * n));
     std::copy_n(*str, n + 1, *out);
     return *out;
 }
