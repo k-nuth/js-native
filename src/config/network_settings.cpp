@@ -223,6 +223,8 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
     auto ctx = isolate->GetCurrentContext();
     kth_network_settings res;
 
+    printf("config_network_settings_to_cpp 1\n");
+
     res.threads = setts->Get(ctx, string_to_js(isolate, "threads")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.protocol_maximum = setts->Get(ctx, string_to_js(isolate, "protocolMaximum")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.protocol_minimum = setts->Get(ctx, string_to_js(isolate, "protocolMinimum")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
@@ -244,25 +246,37 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
     res.channel_germination_seconds = setts->Get(ctx, string_to_js(isolate, "channelGerminationSeconds")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.host_pool_capacity = setts->Get(ctx, string_to_js(isolate, "hostPoolCapacity")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
+    printf("config_network_settings_to_cpp 2\n");
+
     // v8::String::Utf8Value hosts_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked());
     // kth_platform_allocate_and_copy_string_at(&res.hosts_file, 0, *hosts_file_str);
     string_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "hostsFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.hosts_file);
 
+    printf("config_network_settings_to_cpp 3\n");
+
     res.self = config_authority_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "self")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+
+    printf("config_network_settings_to_cpp 4\n");
 
     res.blacklist = config_authorities_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "blacklist")).ToLocalChecked().As<Array>(),
         &res.blacklist_count);
 
+    printf("config_network_settings_to_cpp 5\n");
+
     res.peers = config_endpoints_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "peers")).ToLocalChecked().As<Array>(),
         &res.peer_count);
 
+    printf("config_network_settings_to_cpp 6\n");
+
     res.seeds = config_endpoints_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "seeds")).ToLocalChecked().As<Array>(),
         &res.seed_count);
+
+    printf("config_network_settings_to_cpp 7\n");
 
     // v8::String::Utf8Value debug_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked());
     // kth_platform_allocate_and_copy_string_at(&res.debug_file, 0, *debug_file_str);
@@ -270,11 +284,16 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
         setts->Get(ctx, string_to_js(isolate, "debugFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.debug_file);
 
+    printf("config_network_settings_to_cpp 8\n");
+
+
     // v8::String::Utf8Value error_file_str(isolate, setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked());
     // kth_platform_allocate_and_copy_string_at(&res.error_file, 0, *error_file_str);
     string_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "errorFile")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.error_file);
+
+    printf("config_network_settings_to_cpp 9\n");
 
     // v8::String::Utf8Value archive_directory_str(isolate, setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked());
     // kth_platform_allocate_and_copy_string_at(&res.archive_directory, 0, *archive_directory_str);
@@ -282,19 +301,29 @@ kth_network_settings config_network_settings_to_cpp(Isolate* isolate, v8::Local<
         setts->Get(ctx, string_to_js(isolate, "archiveDirectory")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.archive_directory);
 
+    printf("config_network_settings_to_cpp 10\n");
+
     res.rotation_size = setts->Get(ctx, string_to_js(isolate, "rotationSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.minimum_free_space = setts->Get(ctx, string_to_js(isolate, "minimumFreeSpace")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.maximum_archive_size = setts->Get(ctx, string_to_js(isolate, "maximumArchiveSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.maximum_archive_files = setts->Get(ctx, string_to_js(isolate, "maximumArchiveFiles")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
+    printf("config_network_settings_to_cpp 11\n");
+
     res.statistics_server = config_authority_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "statisticsServer")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+
+    printf("config_network_settings_to_cpp 12\n");
 
     res.verbose = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "verbose")).ToLocalChecked());
     res.use_ipv6 = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "useIpv6")).ToLocalChecked());
 
+    printf("config_network_settings_to_cpp 13\n");
+
     res.user_agent_blacklist = config_strings_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "userAgentBlacklist")).ToLocalChecked().As<Array>(),
         &res.user_agent_blacklist_count);
+
+    printf("config_network_settings_to_cpp 14\n");
 
     return res;
 }
