@@ -12,13 +12,13 @@ class KnuthJsNative(ConanFile):
     url = "https://github.com/k-nuth/js-native"
     description = "Bitcoin full node as a Javascript library"
     settings = "os", "compiler", "build_type", "arch"
-    
+
     # options = {"shared": [True, False]}
     # default_options = "shared=False"
     # TODO(fernando): use Shared=False as default
 
     generators = "cmake"
-    requires = (("c-api/0.14.0@kth/stable"))
+    requires = (("c-api/0.15.0@kth/stable"))
 
     def configure(self):
         ConanFile.configure(self)
