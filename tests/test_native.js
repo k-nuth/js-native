@@ -32,7 +32,7 @@ function timestampToDate(unix_timestamp) {
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
     return formattedTime
-} 
+}
 
 function byteToHexString(uint8arr) {
     if (!uint8arr) {
@@ -93,14 +93,18 @@ function fromHash(arr) {
 // console.log(toType(hash_arr2))
 
 // return
-    
+
 
 // ------------------------------------------------------------------------------------------------
 
 
-function sleep(sleepDuration) {
-    var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+// function sleep(sleepDuration) {
+//     var now = new Date().getTime();
+//     while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
+// }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -121,7 +125,7 @@ function chain_fetch_last_height(chain) {
             // } else {
             //     reject(e);
             // }
-        })    
+        })
     });
 }
 
@@ -146,7 +150,7 @@ async function wait_until_block(chain, desired_height) {
     while (res.height < desired_height) {
         var res = await chain_fetch_last_height(chain);
         console.log(`chain_fetch_last_height is OK, height: ${res.height}`)
-        
+
         if (res.height < desired_height) {
             sleep(1000)
         }
@@ -162,15 +166,24 @@ async function main() {
     // kth.node_run_wait(node)
 
     let justChain = 1;
-    kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
+    kth.node_run(node, justChain, function (err) {
         console.log(err);
     });
 
-    setTimeout(function() {
-        console.log('program exit...');
-        kth.node_signal_stop(node);
-        kth.node_destruct(node);
-    }, 5000);
+    var now = new Date().getTime();
+    console.log("-------------------------------------------", now);
+    await sleep(5000);
+    now = new Date().getTime();
+    console.log("-------------------------------------------", now);
+
+    // setTimeout(async function() {
+    //     console.log('program exit...');
+    //     kth.node_signal_stop(node);
+    //     // kth.node_destruct(node);
+    // }, 200000);
+
+    kth.node_signal_stop(node);
+    // kth.node_destruct(node);
 }
 
 
@@ -186,7 +199,7 @@ async function main() {
 //         console.log(err);
 //     });
 
-    
+
 //     const chain = kth.node_get_chain(node);
 
 //     await wait_until_block(chain, 2300);
@@ -257,7 +270,7 @@ async function main() {
 //             // var nonce = kth.chain_header_nonce(header);
 //             // console.log(`chain_fetch_block_header_by_height, nonce: ${nonce}`)
 
-            
+
 
 
 //             kth.chain_header_destruct(header);
@@ -303,11 +316,11 @@ async function main() {
 
 //             var fees = kth.chain_block_fees(block);
 //             console.log(`chain_fetch_block_by_height, fees: ${fees}`)
-            
+
 //             var claim = kth.chain_block_claim(block);
 //             console.log(`chain_fetch_block_by_height, claim: ${claim}`)
-            
-            
+
+
 //             var reward = kth.chain_block_reward(block, 2300);
 //             console.log(`chain_fetch_block_by_height, reward: ${reward}`)
 
@@ -353,7 +366,7 @@ async function main() {
 
 //             var is_valid_merkle_root = kth.chain_block_is_valid_merkle_root(block);
 //             console.log(`chain_fetch_block_by_height, is_valid_merkle_root: ${is_valid_merkle_root}`)
-            
+
 
 
 
@@ -361,35 +374,35 @@ async function main() {
 
 //             var version = kth.chain_header_version(header);
 //             console.log(`chain_fetch_block_by_height, version: ${version}`)
-            
+
 //             var previous_block_hash = kth.chain_header_previous_block_hash(header);
 //             // console.log(`chain_fetch_block_by_height, previous_block_hash: ${previous_block_hash}`)
 //             var previous_block_hash_str = fromHash(previous_block_hash)
 //             console.log(`chain_fetch_block_by_height, previous_block_hash_str: ${previous_block_hash_str}`)
-            
+
 //             var merkle = kth.chain_header_merkle(header);
 //             // console.log(`chain_fetch_block_by_height, merkle: ${merkle}`)
 //             var merkle_str = fromHash(merkle)
 //             console.log(`chain_fetch_block_by_height, merkle_str: ${merkle_str}`)
-            
+
 //             var hash = kth.chain_header_hash(header);
 //             // console.log(`chain_fetch_block_by_height, hash: ${hash}`)
 //             var hash_str = fromHash(hash)
 //             console.log(`chain_fetch_block_by_height, hash_str: ${hash_str}`)
-            
+
 //             var timestamp = kth.chain_header_timestamp(header);
 //             console.log(`chain_fetch_block_by_height, timestamp: ${timestamp}`)
-            
+
 //             var timestamp_date = timestampToDate(timestamp)
 //             console.log(`chain_fetch_block_by_height, timestamp_date: ${timestamp_date}`)
-            
-            
+
+
 //             var bits = kth.chain_header_bits(header);
 //             console.log(`chain_fetch_block_by_height, bits: ${bits}`)
-            
+
 //             var nonce = kth.chain_header_nonce(header);
 //             console.log(`chain_fetch_block_by_height, nonce: ${nonce}`)
-            
+
 
 //         } else {
 //             console.log(`chain_fetch_block_by_height failed, err: ${err}, height: ${height}`)
@@ -452,14 +465,14 @@ async function main() {
 //         if (err == 0) {
 //             console.log(`chain_fetch_transaction is OK, err:  ${err}, index: ${index}, height: ${height}`)
 
-            
+
 //             var version = kth.chain_transaction_version(tx)
 //             console.log(`chain_fetch_transaction, version: ${version}`)
 
 //             // kth.chain_transaction_set_version(tx)
 //             var hash = kth.chain_transaction_hash(tx)
 //             console.log(`chain_fetch_transaction, hash: ${hash}`)
-            
+
 //             var hash_sighash_type = kth.chain_transaction_hash_sighash_type(tx, 0)
 //             console.log(`chain_fetch_transaction, hash_sighash_type: ${hash_sighash_type}`)
 
@@ -516,10 +529,10 @@ async function main() {
 
 //             var inputs = kth.chain_transaction_inputs(tx)
 //             // console.log(`chain_fetch_transaction, inputs: ${inputs}`)
-            
+
 
 //             kth.chain_transaction_destruct(tx)
-            
+
 
 //         } else {
 //             console.log(`chain_fetch_transaction failed, err: ${err}, index: ${index}, height: ${height}`)
@@ -534,7 +547,7 @@ async function main() {
 //             console.log(`chain_fetch_transaction_position failed, err: ${err}, index: ${index}, height: ${height}`)
 //         }
 //     })
-        
+
 //     //-----------------------------------
 
 //     //-----------------------------------
@@ -595,5 +608,5 @@ async function main() {
 //     await sleep(2000);
 //     console.log('Two second later');
 // }
-  
+
 // demo();

@@ -67,10 +67,16 @@ v8::Local<v8::Object> config_settings_to_js(Isolate* isolate, kth_settings const
 kth_settings config_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
     auto ctx = isolate->GetCurrentContext();
     kth_settings res;
+
+    printf("config_settings_to_cpp 1\n");
     res.chain = config_blockchain_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "chain")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+    printf("config_settings_to_cpp 2\n");
     res.database = config_database_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "database")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+    printf("config_settings_to_cpp 3\n");
     res.network = config_network_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "network")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+    printf("config_settings_to_cpp 4\n");
     res.node = config_node_settings_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "node")).ToLocalChecked()->ToObject(ctx).ToLocalChecked());
+    printf("config_settings_to_cpp 5\n");
 
 
 
