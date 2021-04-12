@@ -55,7 +55,7 @@ void chain_fetch_last_height(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[1]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -96,14 +96,14 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -121,8 +121,8 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_block_header_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_header_t header, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), 
-                            External::New(isolate, header), 
+    Local<Value> argv[] = { Number::New(isolate, error),
+                            External::New(isolate, header),
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -139,7 +139,7 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsNumber()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -148,7 +148,7 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -161,8 +161,8 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
 // int chain_get_block_header_by_hash(kth_chain_t chain, kth_hash_t hash, kth_header_t* out_header, uint64_t /*size_t*/* out_height);
 void chain_fetch_block_header_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_header_t header, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), 
-                            External::New(isolate, header), 
+    Local<Value> argv[] = { Number::New(isolate, error),
+                            External::New(isolate, header),
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -188,14 +188,14 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -203,7 +203,7 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_block_header_by_hash(chain, callback, hash, chain_fetch_block_header_by_hash_handler);
 }
-    
+
 // // Block ---------------------------------------------------------------------
 // void chain_fetch_block_by_height(kth_chain_t chain, void* ctx, uint64_t /*size_t*/ height, block_fetch_handler_t handler);
 // int chain_get_block_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_block_t* out_block, uint64_t /*size_t*/* out_height);
@@ -211,8 +211,8 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_block_t block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), 
-                            External::New(isolate, block), 
+    Local<Value> argv[] = { Number::New(isolate, error),
+                            External::New(isolate, block),
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -229,7 +229,7 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsNumber()) {
             throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -238,7 +238,7 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -247,7 +247,7 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_block_by_height(chain, callback, height, chain_fetch_block_by_height_handler);
 }
-    
+
 
 // void chain_fetch_block_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, block_fetch_handler_t handler);
 // int chain_get_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_block_t* out_block, uint64_t /*size_t*/* out_height);
@@ -269,7 +269,7 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -278,14 +278,14 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -293,7 +293,7 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_block_by_hash(chain, callback, hash, chain_fetch_block_by_hash_handler);
 }
-    
+
 
 // // Merkle Block ---------------------------------------------------------------------
 // void chain_fetch_merkle_block_by_height(kth_chain_t chain, void* ctx, uint64_t /*size_t*/ height, merkle_block_fetch_handler_t handler);
@@ -318,7 +318,7 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsNumber()) {
             throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -327,16 +327,16 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
-    
+
     uint64_t height = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_merkle_block_by_height(chain, callback, height, chain_fetch_merkle_block_by_height_handler);
 }
-    
+
 
 // void chain_fetch_merkle_block_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, merkle_block_fetch_handler_t handler);
 // int chain_get_merkle_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_merkleblock_t* out_merkle_block, uint64_t /*size_t*/* out_height);
@@ -359,7 +359,7 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -368,14 +368,14 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -407,7 +407,7 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsNumber()) {
             throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -416,7 +416,7 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -425,7 +425,7 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_compact_block_by_height(chain, callback, height, chain_fetch_compact_block_by_height_handler);
 }
-    
+
 
 // void chain_fetch_compact_block_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, compact_block_fetch_handler_t handler);
 // int chain_get_compact_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_compactblock_t* out_compact_block, uint64_t /*size_t*/* out_height);
@@ -448,7 +448,7 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -457,14 +457,14 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -472,16 +472,19 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_compact_block_by_hash(chain, callback, hash, chain_fetch_compact_block_by_hash_handler);
 }
-    
+
 
 // // Transaction ---------------------------------------------------------------------
 // void chain_fetch_transaction(kth_chain_t chain, void* ctx, kth_hash_t hash, int require_confirmed, transaction_fetch_handler_t handler);
 // int chain_get_transaction(kth_chain_t chain, kth_hash_t hash, int require_confirmed, kth_transaction_t* out_transaction, uint64_t /*size_t*/* out_height, uint64_t /*size_t*/* out_index);
 // typedef void (*transaction_fetch_handler_t)(kth_chain_t, void*, int, kth_transaction_t transaction, uint64_t i, uint64_t h);
- 
+
 void chain_fetch_transaction_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_transaction_t transaction, uint64_t i, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, transaction), Number::New(isolate, i), Number::New(isolate, h)};
+    Local<Value> argv[] = { Number::New(isolate, error),
+                            External::New(isolate, transaction),
+                            Number::New(isolate, i),
+                            Number::New(isolate, h)};
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -497,7 +500,7 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -511,14 +514,14 @@ void chain_fetch_transaction(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[3]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 3");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -551,7 +554,7 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 0");
         return;
     }
-    
+
     if ( ! args[1]->IsUint8Array()) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
@@ -566,14 +569,14 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[3]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 3");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -617,7 +620,7 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
 
     void* vptr = v8::External::Cast(*args[0])->Value();
@@ -657,7 +660,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
         throw_exception(isolate, "Wrong arguments, 1");
         return;
     }
-    
+
     if ( ! args[2]->IsNumber()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
@@ -671,14 +674,14 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[4]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
 
     void* address_vptr = v8::External::Cast(*args[1])->Value();
     kth_payment_address_t address = (kth_payment_address_t)address_vptr;
-    
+
     uint64_t limit = args[2]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     uint64_t from_height = args[3]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
@@ -725,7 +728,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //         throw_exception(isolate, "Wrong arguments, 1");
 //         return;
 //     }
-    
+
 //     if ( ! args[2]->IsNumber()) {
 //         throw_exception(isolate, "Wrong arguments, 2");
 //         return;
@@ -734,14 +737,14 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     if ( ! args[3]->IsFunction()) {
 //         throw_exception(isolate, "Wrong arguments, 2");
 //         return;
-//     }    
+//     }
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
 //     kth_chain_t chain = (kth_chain_t)vptr;
 
 //     void* filter_vptr = v8::External::Cast(*args[1])->Value();
 //     kth_binary_t filter = (kth_binary_t)filter_vptr;
-    
+
 //     uint64_t from_height = args[2]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
 //     Persistent<Function>* callback = new Persistent<Function>;
@@ -750,7 +753,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     kth_chain_async_stealth(chain, callback, filter, from_height, chain_fetch_stealth_handler);
 // }
 
-    
+
 
 
 // // // Block Locator ---------------------------------------------------------------------
@@ -764,7 +767,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     printf("chain_fetch_block_locator_handler - 1\n");
 //     printf("chain_fetch_block_locator_handler - error:   %d\n", error);
 //     printf("chain_fetch_block_locator_handler - headers:  %p\n", headers);
-    
+
 //     auto* isolate = Isolate::GetCurrent();
 
 //     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, headers)};
@@ -802,7 +805,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     if ( ! args[2]->IsFunction()) {
 //         throw_exception(isolate, "Wrong arguments, 2");
 //         return;
-//     }    
+//     }
 
 //     void* vptr = v8::External::Cast(*args[0])->Value();
 //     kth_chain_t chain = (kth_chain_t)vptr;
@@ -816,7 +819,7 @@ void chain_fetch_history(FunctionCallbackInfo<Value> const& args) {
 //     kth_chain_async_block_locator(chain, callback, heights, chain_fetch_block_locator_handler);
 // }
 
-    
+
 
 
 // // Organizers.
@@ -855,7 +858,7 @@ void chain_organize_block(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -900,7 +903,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     if ( ! args[2]->IsFunction()) {
         throw_exception(isolate, "Wrong arguments, 2");
         return;
-    }    
+    }
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_chain_t chain = (kth_chain_t)vptr;
@@ -911,7 +914,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
     auto callback = make_callback(isolate, args[2]);
     kth_chain_async_organize_transaction(chain, callback, transaction, chain_organize_transaction_handler);
 }
-    
+
 
 
 // Subscribers.
@@ -928,9 +931,9 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 // 	v8::HandleScope scope(isolate);
 //     v8::Locker locker(isolate);
 
-//     Local<Value> argv[] = {Number::New(isolate, error), 
-//                                Number::New(isolate, fork_height), 
-//                                Null(isolate), 
+//     Local<Value> argv[] = {Number::New(isolate, error),
+//                                Number::New(isolate, fork_height),
+//                                Null(isolate),
 //                                Null(isolate)};
 
 //     if (blocks_incoming != nullptr) {
@@ -940,9 +943,9 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 //     if (blocks_replaced != nullptr) {
 //         argv[3] = External::New(isolate, blocks_replaced);
 //     }
-                                
+
 //     auto res = Local<Function>::New(isolate, *callback)->Call(isolate->GetCurrentContext(), Null(isolate), argc, argv);
-//     return res.ToLocalChecked()->BooleanValue(isolate); 
+//     return res.ToLocalChecked()->BooleanValue(isolate);
 // }
 
 // using subs_blk_data_t = std::tuple<Persistent<Function>*, kth_error_code_t, uint64_t, kth_block_list_t, kth_block_list_t>;
@@ -1067,7 +1070,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 //     if ( ! args[2]->IsFunction()) {
 //         throw_exception(isolate, "Wrong arguments, 2");
 //         return;
-//     }    
+//     }
 
 //     kth_node_t exec = (kth_node_t)v8::External::Cast(*args[0])->Value();
 //     kth_chain_t chain = (kth_chain_t)v8::External::Cast(*args[1])->Value();
