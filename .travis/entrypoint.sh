@@ -65,4 +65,4 @@ node-gyp clean
 npm install
 # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
 
-npm publish || true
+npm publish --access public || true
