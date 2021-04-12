@@ -1,7 +1,7 @@
 {
-  "name": "kth-bch-native",
-  "version": "0.23.0",
-  "description": "Bitcoin Cash development platform for Javascript applications",
+  "name": "@knuth/bch-native",
+  "version": "0.24.0",
+  "description": "Foundation library for @knuth/bch (Bitcoin Cash development platform for Javascript applications)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/k-nuth/js-native.git"
