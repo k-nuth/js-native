@@ -49,29 +49,29 @@ def find(name, path):
         if name in files:
             return os.path.join(root, name)
 
-def replace_boost_lib_names_on_windows(path):
-    # print('replace_boost_lib_names_on_windows')
-    # print(platform)
-    if platform != "win32":
-        return
+# def replace_boost_lib_names_on_windows(path):
+#     # print('replace_boost_lib_names_on_windows')
+#     # print(platform)
+#     if platform != "win32":
+#         return
 
-    # print('replace_boost_lib_names_on_windows')
+#     # print('replace_boost_lib_names_on_windows')
 
-    for root, dirs, files in os.walk(path):
-        # print(files)
+#     for root, dirs, files in os.walk(path):
+#         # print(files)
 
-        for file in files:
-            newfile = re.sub(r"-\d_\d\d", "", file)
-            newfile = re.sub(r"-vc\d\d\d-mt", "", newfile)
+#         for file in files:
+#             newfile = re.sub(r"-\d_\d\d", "", file)
+#             newfile = re.sub(r"-vc\d\d\d-mt", "", newfile)
 
-            # print(file)
-            # print(newfile)
-            if file != newfile:
-                file = os.path.join(path, file)
-                newfile = os.path.join(path, newfile)
-                print(file)
-                print(newfile)
-                os.rename(file, newfile)
+#             # print(file)
+#             # print(newfile)
+#             if file != newfile:
+#                 file = os.path.join(path, file)
+#                 newfile = os.path.join(path, newfile)
+#                 print(file)
+#                 print(newfile)
+#                 os.rename(file, newfile)
 
 def exec_conan(args_param):
     print("----------------------------------------------------")
@@ -135,7 +135,7 @@ def run_conan(reference, march_id, debug_build):
     print("----------------------------------------------------")
 
     print('run_conan - END')
-    replace_boost_lib_names_on_windows('../deps/lib')
+    # replace_boost_lib_names_on_windows('../deps/lib')
 
 def get_march(arch):
     march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
