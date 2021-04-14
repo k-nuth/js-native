@@ -29,7 +29,7 @@ environment:
       - WINDOWS_SDK_VERSION: "v7.1"
         APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
         nodejs_version: "4"
-  
+
 
 
 install:
@@ -44,7 +44,7 @@ install:
   - npm install -g node-pre-gyp
   - npm install -g aws-sdk
   - npm install -g node-pre-gyp-github
-  
+
 
   # - SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
   # - SET VS90COMNTOOLS=%VS140COMNTOOLS%
@@ -78,13 +78,13 @@ build_script:
   - npm --version
   - python --version
   # - cl /version
-  
+
   - echo "FerFerFer"
   - node -p "process.arch"
   - echo "FerFerFer"
 
   - conan user
-  - conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+  - conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth
   # - conan install .
 
   - npm install
@@ -93,8 +93,8 @@ build_script:
   # - node-pre-gyp build --verbose
   # - node-pre-gyp package --verbose
   - node-pre-gyp-github publish --release  || true
-  
-    # - cd %APPVEYOR_BUILD_FOLDER% 
+
+    # - cd %APPVEYOR_BUILD_FOLDER%
     # - conan install .
     # # - pip install  -e .
     # - "%PYTHON%\\python.exe setup.py build"

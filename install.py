@@ -101,7 +101,7 @@ def run_conan(reference, march_id, debug_build):
     print(platform)
     print('platform --------------------------')
 
-    exec_conan(['remote', 'add', 'kth', 'https://api.bintray.com/conan/k-nuth/kth', '--force'])
+    exec_conan(['remote', 'add', 'kth', 'https://knuth.jfrog.io/artifactory/api/conan/knuth', '--force'])
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config.zip'])
 
     install_args = ['install', reference]
@@ -121,6 +121,9 @@ def run_conan(reference, march_id, debug_build):
         print(capi_h)
         print("----------------------------------------------------")
         shutil.move('./deps/', '..')
+    elif platform == "linux":
+        install_args.extend(['-s', 'compiler.libcxx=libstdc++11'])
+        exec_conan(install_args)
     else:
         # exec_conan(['install', reference])
         # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id)])

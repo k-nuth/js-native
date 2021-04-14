@@ -141,7 +141,7 @@ jobs:
 
           python --version
           conan user
-          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth || true
+          conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth || true
           conan install .
 
           # npm install --loglevel verbose
@@ -193,7 +193,7 @@ jobs:
           Write-Host "----------------------------"
 
           conan user
-          conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+          conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth
           # conan install . -s compiler.runtime=MT
           conan user
           $ErrorActionPreference = 'Continue'
@@ -210,11 +210,11 @@ jobs:
           # npm install
           # npm install --loglevel verbose
           # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
-          
+
           Write-Host "****************************************************"
           Write-Host "BEFORE npm install"
           Write-Host "****************************************************"
-          
+
           npm install --loglevel verbose
 
           Write-Host "****************************************************"

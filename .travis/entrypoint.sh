@@ -38,7 +38,7 @@ echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
 cat ~/.npmrc
 
 
-# conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+# conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth
 
 pwd
 

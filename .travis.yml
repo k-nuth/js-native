@@ -58,7 +58,7 @@ matrix:
       # - <<: *linux
       #   env: NODEJS_VERSION=5
       #   compiler: gcc
-     
+
       # - <<: *linux
       #   env: NODEJS_VERSION=4
       #   compiler: gcc
@@ -143,7 +143,7 @@ install:
 
         if which pyenv > /dev/null; then
             eval "$(pyenv init -)"
-            eval "$(pyenv virtualenv-init -)" 
+            eval "$(pyenv virtualenv-init -)"
         fi
 
         pyenv install --list
@@ -161,10 +161,10 @@ install:
         # pip install conan_package_tools --upgrade
         # pip install conan --upgrade
         pip install kthbuild --upgrade
-        
+
         conan user
       fi
-    fi    
+    fi
 
 
 
@@ -196,7 +196,7 @@ script:
       else
         python --version
         conan user
-        conan remote add kth_temp https://api.bintray.com/conan/k-nuth/kth
+        conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth
         conan install .
 
         npm install
@@ -209,7 +209,7 @@ script:
         # npm install
 
         # npm publish || true
-        
+
       fi
 
       # - python setup.py sdist
@@ -220,15 +220,15 @@ script:
       #   # For Testing Release
       #   # twine upload -r test -u ${PYPI_USER_NAME} -p ${PYPI_PASSWORD} dist/* || true
       #   twine upload -u ${PYPI_USER_NAME} -p ${PYPI_PASSWORD} --repository-url https://test.pypi.org/legacy/ dist/*  || true
-      # fi    
-    fi  
+      # fi
+    fi
 
   # - pwd
   # - cd ${TRAVIS_BUILD_DIR}
   # - pwd
   # - ls -ltra
 
-  # - conan remote add kth https://api.bintray.com/conan/k-nuth/kth
+  # - conan remote add kth https://knuth.jfrog.io/artifactory/api/conan/knuth
   # - conan install .
 
   # # - npm cache clean
@@ -240,7 +240,7 @@ script:
 
 
 notifications:
-  email: 
+  email:
     - ci@kth.cash
     - dev@kth.cash
     - fernando@kth.cash
