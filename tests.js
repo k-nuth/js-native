@@ -40,8 +40,8 @@ function print_settings(setts) {
     console.log(setts.chain.bchMersenne);
     console.log(setts.chain.bchFermat);
     console.log(setts.chain.bchEuler);
-    console.log(setts.chain.bchGauss);
-    console.log(setts.chain.gaussActivationTime);
+    // console.log(setts.chain.bchGauss);
+    // console.log(setts.chain.gaussActivationTime);
     console.log(setts.chain.asertHalfLife);
     // ------------------------------------------------------------------------------------
     console.log(setts.database.directory);
