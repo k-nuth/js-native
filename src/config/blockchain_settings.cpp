@@ -88,10 +88,8 @@ Local<Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blockchain_
     setr = res->Set(ctx, string_to_js(isolate, "bchMersenne"), Boolean::New(isolate, setts.bch_mersenne != 0));
     setr = res->Set(ctx, string_to_js(isolate, "bchFermat"), Boolean::New(isolate, setts.bch_fermat != 0));
     setr = res->Set(ctx, string_to_js(isolate, "bchEuler"), Boolean::New(isolate, setts.bch_euler != 0));
-    setr = res->Set(ctx, string_to_js(isolate, "bchGauss"), Boolean::New(isolate, setts.bch_gauss != 0));
-
-    setr = res->Set(ctx, string_to_js(isolate, "eulerActivationTime"), Number::New(isolate, setts.euler_activation_time));
-    setr = res->Set(ctx, string_to_js(isolate, "gaussActivationTime"), Number::New(isolate, setts.gauss_activation_time));
+    // setr = res->Set(ctx, string_to_js(isolate, "bchGauss"), Boolean::New(isolate, setts.bch_gauss != 0));
+    // setr = res->Set(ctx, string_to_js(isolate, "gaussActivationTime"), Number::New(isolate, setts.gauss_activation_time));
     setr = res->Set(ctx, string_to_js(isolate, "asertHalfLife"), Number::New(isolate, setts.asert_half_life));
     return res;
 }
@@ -163,9 +161,8 @@ kth_blockchain_settings config_blockchain_settings_to_cpp(Isolate* isolate, Loca
     res.bch_mersenne = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchMersenne")).ToLocalChecked());
     res.bch_fermat = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchFermat")).ToLocalChecked());
     res.bch_euler = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchEuler")).ToLocalChecked());
-    res.bch_gauss = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchGauss")).ToLocalChecked());
-    res.euler_activation_time = setts->Get(ctx, string_to_js(isolate, "eulerActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
-    res.gauss_activation_time = setts->Get(ctx, string_to_js(isolate, "gaussActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    // res.bch_gauss = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchGauss")).ToLocalChecked());
+    // res.gauss_activation_time = setts->Get(ctx, string_to_js(isolate, "gaussActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.asert_half_life = setts->Get(ctx, string_to_js(isolate, "asertHalfLife")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
     return res;
