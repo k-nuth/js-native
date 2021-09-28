@@ -386,10 +386,10 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
 
 // // Compact Block ---------------------------------------------------------------------
 // void chain_fetch_compact_block_by_height(kth_chain_t chain, void* ctx, uint64_t /*size_t*/ height, compact_block_fetch_handler_t handler);
-// int chain_get_compact_block_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_compactblock_t* out_block, uint64_t /*size_t*/* out_height);
-// typedef void (*compact_block_fetch_handler_t)(kth_chain_t, void*, int, kth_compactblock_t block, uint64_t /*size_t*/ h);
+// int chain_get_compact_block_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_compact_block_t* out_block, uint64_t /*size_t*/* out_height);
+// typedef void (*compact_block_fetch_handler_t)(kth_chain_t, void*, int, kth_compact_block_t block, uint64_t /*size_t*/ h);
 
-void chain_fetch_compact_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compactblock_t compact_block, uint64_t h) {
+void chain_fetch_compact_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compact_block_t compact_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, compact_block), Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
@@ -428,9 +428,9 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
 
 
 // void chain_fetch_compact_block_by_hash(kth_chain_t chain, void* ctx, kth_hash_t hash, compact_block_fetch_handler_t handler);
-// int chain_get_compact_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_compactblock_t* out_compact_block, uint64_t /*size_t*/* out_height);
+// int chain_get_compact_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_compact_block_t* out_compact_block, uint64_t /*size_t*/* out_height);
 
-void chain_fetch_compact_block_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compactblock_t compact_block, uint64_t h) {
+void chain_fetch_compact_block_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compact_block_t compact_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
     Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, compact_block), Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
