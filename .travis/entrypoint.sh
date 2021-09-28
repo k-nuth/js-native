@@ -10,7 +10,8 @@ sudo -H npm install npm@latest -g
 sudo -H npm install -g node-gyp
 sudo -H npm install -g @mapbox/node-pre-gyp
 # sudo -H npm install -g aws-sdk
-sudo -H npm install -g node-pre-gyp-github
+# sudo -H npm install -g node-pre-gyp-github
+sudo -H npm install -g @mmomtchev/node-pre-gyp-github
 
 # # npm cache clean
 # # pip install conan --upgrade --user

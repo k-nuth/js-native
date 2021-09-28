@@ -118,7 +118,9 @@ jobs:
           npm install -g node-gyp
           npm install -g @mapbox/node-pre-gyp
           # npm install -g aws-sdk
-          npm install -g node-pre-gyp-github
+          # npm install -g node-pre-gyp-github
+          npm install -g @mmomtchev/node-pre-gyp-github
+
 
           # pip install conan_package_tools --upgrade
           # pip install conan --upgrade
@@ -176,7 +178,9 @@ jobs:
           npm install -g node-gyp@7.1.2
           npm install -g @mapbox/node-pre-gyp
           npm install -g aws-sdk
-          npm install -g node-pre-gyp-github
+          # npm install -g node-pre-gyp-github
+          npm install -g @mmomtchev/node-pre-gyp-github
+
 
           pip --version
           pip install kthbuild --upgrade
