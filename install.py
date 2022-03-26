@@ -115,6 +115,7 @@ def run_conan(reference, march_id, debug_build):
         # self.options["c-api"].march_id = "4fZKi37a595hP"
         # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
         install_args.extend(['-s', 'compiler.runtime=MT'])
+        install_args.extend(['--build=missing'])
         exec_conan(install_args)
         capi_h = find('capi.h', os.getcwd())
         print("----------------------------------------------------")
@@ -123,11 +124,15 @@ def run_conan(reference, march_id, debug_build):
         shutil.move('./deps/', '..')
     elif platform == "linux":
         install_args.extend(['-s', 'compiler.libcxx=libstdc++11'])
+        install_args.extend(['--build=missing'])
         exec_conan(install_args)
     else:
         # exec_conan(['install', reference])
         # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id)])
+        install_args.extend(['--build=missing'])
         exec_conan(install_args)
+
+
 
     capi_h = find('capi.h', os.getcwd())
     print("----------------------------------------------------")
