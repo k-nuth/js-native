@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,7 +32,7 @@ function timestampToDate(unix_timestamp) {
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
     return formattedTime
-} 
+}
 
 function byteToHexString(uint8arr) {
     if (!uint8arr) {
@@ -81,7 +81,7 @@ function fromHash(arr) {
 
 function sleep(sleepDuration) {
     var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -122,10 +122,10 @@ function wait_until_block(chain, desired_height) {
                 // console.log(`chain_fetch_last_height failed, err: ${e}, height: ${h}`)
             }
         })
-    
+
 
         // printf("wait_until_block; desired_height: %zd, error: %d, height: %zd\n", desired_height, error, height);
-        
+
         if (height < desired_height) {
             // printf("wait_until_block - 2\n");
             sleep(1000)

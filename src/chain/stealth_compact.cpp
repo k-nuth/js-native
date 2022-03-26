@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,7 +33,7 @@ using v8::ArrayBuffer;
 
 void chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -56,7 +56,7 @@ void chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCallbackInf
 
 void chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -79,7 +79,7 @@ void chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo<v8::Val
 
 void chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;

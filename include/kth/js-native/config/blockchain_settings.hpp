@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,7 +9,7 @@
 
 namespace kth::js_native {
 namespace detail {
-v8::Local<v8::Object> config_blockchain_settings_to_js(v8::Isolate* isolate, kth_blockchain_settings const& setts);    
+v8::Local<v8::Object> config_blockchain_settings_to_js(v8::Isolate* isolate, kth_blockchain_settings const& setts);
 kth_blockchain_settings config_blockchain_settings_to_cpp(v8::Isolate* isolate, v8::Local<v8::Object> const& setts);
 }
 

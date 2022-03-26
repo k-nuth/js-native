@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -59,7 +59,7 @@ void chain_point_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
 void chain_point_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;

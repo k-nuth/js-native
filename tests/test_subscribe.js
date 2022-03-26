@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -32,7 +32,7 @@ function timestampToDate(unix_timestamp) {
     var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
     return formattedTime
-} 
+}
 
 function byteToHexString(uint8arr) {
     if (!uint8arr) {
@@ -77,7 +77,7 @@ function fromHash(arr) {
 // ------------------------------------------------------------------------------------------------
 function sleep(sleepDuration) {
     var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+    while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
 }
 // ------------------------------------------------------------------------------------------------
 
@@ -141,12 +141,12 @@ const chain = kth.node_get_chain(executor)
 
 function print_blocks(block_list) {
     var n = kth.chain_block_list_count(block_list)
-    
+
     for (var i = 0; i < n; ++i) {
         var blk = kth.chain_block_list_nth(block_list, i)
         var blk_hash = kth.chain_block_hash(blk)
         console.log(`print_blocks, blk_hash: ${blk_hash}`)
-    }    
+    }
 }
 
 
@@ -183,7 +183,7 @@ kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks
 //         if (e == 0) {
 //             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
 //             // console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
-    
+
 //             if (fork_height % 100 == 0) {
 //                 console.log(`chain_subscribe_blockchain is OK, err:  ${e}, fork_height: ${fork_height}`)
 //             }
@@ -191,12 +191,12 @@ kth.chain_subscribe_blockchain(executor, chain, function (e, fork_height, blocks
 //             // console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}, blocks_incoming: ${blocks_incoming}, blocks_replaced: ${blocks_replaced}`)
 //             console.log(`chain_subscribe_blockchain failed, err: ${e}, fork_height: ${fork_height}`)
 //         }
-    
+
 //         if (fork_height % 1000 == 0) {
 //             console.log('-*-*-*-*-*-*-*-*-*-* Ending Block notification -*-*-*-*-*-*-*-*-*-* ')
 //             return false;
 //         }
-    
+
 //         if (blocks_incoming) {
 //             var n = kth.chain_block_list_count(blocks_incoming)
 

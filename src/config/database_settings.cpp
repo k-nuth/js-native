@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -49,8 +49,8 @@ v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_datab
 kth_database_settings config_database_settings_to_cpp(Isolate* isolate, v8::Local<v8::Object> const& setts) {
     auto ctx = isolate->GetCurrentContext();
     kth_database_settings res;
-    
-    string_to_cpp(isolate, 
+
+    string_to_cpp(isolate,
         setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.directory);
 

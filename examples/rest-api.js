@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -99,7 +99,7 @@ app.get('/last_height/', function(req, res) {
     console.log(`last_height Number.MAX_VALUE: ${Number.MAX_VALUE}`)
     // req.socket.setTimeout(Infinity);
     req.socket.setTimeout(Number.MAX_VALUE);
-    
+
     res.writeHead(200, {
     	'Content-Type': 'text/event-stream',  // <- Important headers
     	'Cache-Control': 'no-cache',

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -51,7 +51,7 @@ void chain_merkle_block_destruct(v8::FunctionCallbackInfo<v8::Value> const& args
 
 void chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -69,12 +69,12 @@ void chain_merkle_block_get_header(v8::FunctionCallbackInfo<v8::Value> const& ar
 
     Local<External> ret = External::New(isolate, header);
     args.GetReturnValue().Set(ret);
-    
+
 }
 
 void chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 2) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -101,7 +101,7 @@ void chain_merkle_block_serialized_size(v8::FunctionCallbackInfo<v8::Value> cons
 
 void chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -127,7 +127,7 @@ void chain_merkle_block_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args
 
 void chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -147,7 +147,7 @@ void chain_merkle_block_hash_count(v8::FunctionCallbackInfo<v8::Value> const& ar
 
 void chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -167,7 +167,7 @@ void chain_merkle_block_total_transaction_count(v8::FunctionCallbackInfo<v8::Val
 
 void chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -180,7 +180,7 @@ void chain_merkle_block_reset(v8::FunctionCallbackInfo<v8::Value> const& args) {
 
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_merkleblock_t merkle_block = (kth_merkleblock_t)vptr;
-    
+
     kth_chain_merkle_block_reset(merkle_block);
 }
 

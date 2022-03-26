@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -46,7 +46,7 @@ void chain_output_point_construct(v8::FunctionCallbackInfo<v8::Value> const& arg
 
 void chain_output_point_construct_from_hash_index(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
-    
+
     if (args.Length() != 2) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
@@ -60,14 +60,14 @@ void chain_output_point_construct_from_hash_index(v8::FunctionCallbackInfo<v8::V
     if ( ! args[1]->IsNumber()) {
         throw_exception(isolate, "Wrong arguments");
         return;
-    }    
+    }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
 
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, 1, number of bytes");
         return;
-    }    
+    }
 
     kth_hash_t hash = to_native_hash(arr);
     uint32_t index = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();

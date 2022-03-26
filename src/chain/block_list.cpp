@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -80,7 +80,7 @@ void chain_block_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args)
         throw_exception(isolate, "Wrong arguments");
         return;
     }
-    
+
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_list_t block_list = (kth_block_list_t)vptr;
 
@@ -102,7 +102,7 @@ void chain_block_list_count(v8::FunctionCallbackInfo<v8::Value> const& args) {
         throw_exception(isolate, "Wrong arguments");
         return;
     }
-    
+
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_list_t block_list = (kth_block_list_t)vptr;
 
@@ -127,7 +127,7 @@ void chain_block_list_nth(v8::FunctionCallbackInfo<v8::Value> const& args) {
         throw_exception(isolate, "Wrong arguments");
         return;
     }
-    
+
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_block_list_t block_list = (kth_block_list_t)vptr;
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2021 Knuth Project developers.
+// Copyright (c) 2016-2022 Knuth Project developers.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -61,7 +61,7 @@ void chain_stealth_compact_list_count(v8::FunctionCallbackInfo<v8::Value> const&
         throw_exception(isolate, "Wrong arguments");
         return;
     }
-    
+
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_stealth_compact_list_t stealth_compact_list = (kth_stealth_compact_list_t)vptr;
 
@@ -86,7 +86,7 @@ void chain_stealth_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& a
         throw_exception(isolate, "Wrong arguments");
         return;
     }
-    
+
     void* vptr = v8::External::Cast(*args[0])->Value();
     kth_stealth_compact_list_t stealth_compact_list = (kth_stealth_compact_list_t)vptr;
 
@@ -113,7 +113,7 @@ void chain_stealth_compact_list_nth(v8::FunctionCallbackInfo<v8::Value> const& a
 //         throw_exception(isolate, "Wrong arguments");
 //         return;
 //     }
-    
+
 //     void* vptr = v8::External::Cast(*args[0])->Value();
 //     kth_stealth_compact_list_t stealth_compact_list = (kth_stealth_compact_list_t)vptr;
 
