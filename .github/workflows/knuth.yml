@@ -150,6 +150,14 @@ jobs:
 
           python --version
           conan user
+          echo "-----------------------------------------------------------"
+          conan config get
+          echo "-----------------------------------------------------------"
+          conan config set general.revisions_enabled=1
+          echo "-----------------------------------------------------------"
+          conan config get
+          echo "-----------------------------------------------------------"
+
           conan remote add kth_temp https://knuth.jfrog.io/artifactory/api/conan/knuth || true
           conan install . --build=missing
 
