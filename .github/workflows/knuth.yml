@@ -27,12 +27,12 @@ jobs:
           #                     {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2022","os_kind":"windows","march_id":"x64-ZLm9Pjh","test":"1"},
           #                     {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2022","os_kind":"windows","march_id":"x64-ZLm9Pjh","test":"1"},
           #                     ]}'
-          MATRIX: '{"config":[{"name":"Linux NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
-                              {"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
-                              {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
-                              {"name":"macOS NodeJS 16","nodejs_version":"16","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
-                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
-                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+          MATRIX: '{"config":[{"name":"Linux (GCC11) NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Linux (GCC11) NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Linux (GCC11) NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS 12 NodeJS 14","nodejs_version":"14","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS 12 NodeJS 12","nodejs_version":"12","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               ]}'
         run: |
           echo "${MATRIX}"
@@ -86,7 +86,7 @@ jobs:
           echo "-------------------------------------------------------"
           chmod a+x .travis/entrypoint.sh
           chmod -R 777 ${PWD}
-          /usr/bin/docker run --rm -e KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc10 /bin/bash -c /tmp/entrypoint.sh
+          /usr/bin/docker run --rm -e KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.travis/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc11-ubuntu16.04 /bin/bash -c /tmp/entrypoint.sh
 
       - uses: actions/setup-node@v2
         if: ${{ matrix.config.os_kind != 'linux' }}
