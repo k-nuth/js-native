@@ -18,12 +18,12 @@ class KnuthJsNative(ConanFile):
     # TODO(fernando): use Shared=False as default
 
     generators = "cmake"
-    requires = (("c-api/0.24.0@kth/stable"))
+    requires = (("c-api/0.27.0@kth/stable"))
 
     def configure(self):
         ConanFile.configure(self)
         self.options["c-api"].db = "full"
-        self.options["c-api"].march_id = "4fZKi37a595hP"
+        self.options["c-api"].march_id = "ZLm9Pjh"
 
     def imports(self):
         self.copy("*.h", "./deps/include/kth", "include/kth")

@@ -17,15 +17,15 @@ jobs:
       - name: Generate Job Matrix
         id: set-matrix
         env:
-          MATRIX: '{"config":[{"name":"Linux NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"macOS NodeJS 16","nodejs_version":"16","os":"macos-11","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-11","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-11","os_kind":"macos","march_id":"x64-4fZKi37a595hP","test":"0"},
-                              {"name":"Windows NodeJS 16","nodejs_version":"16","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
-                              {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2019","os_kind":"windows","march_id":"x64-4fZKi37a595hP","test":"1"},
+          MATRIX: '{"config":[{"name":"Linux NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Linux NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Linux NodeJS 12","nodejs_version":"12","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"macOS NodeJS 16","nodejs_version":"16","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS NodeJS 14","nodejs_version":"14","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS NodeJS 12","nodejs_version":"12","os":"macos-11","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"Windows NodeJS 16","nodejs_version":"16","os":"windows-2022","os_kind":"windows","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Windows NodeJS 14","nodejs_version":"14","os":"windows-2022","os_kind":"windows","march_id":"x64-ZLm9Pjh","test":"1"},
+                              {"name":"Windows NodeJS 12","nodejs_version":"12","os":"windows-2022","os_kind":"windows","march_id":"x64-ZLm9Pjh","test":"1"},
                               ]}'
         run: |
           echo "${MATRIX}"

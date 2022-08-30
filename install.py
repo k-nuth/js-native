@@ -112,7 +112,7 @@ def run_conan(reference, march_id, debug_build):
         install_args.extend(['-s', 'build_type=Debug'])
 
     if platform == "win32":
-        # self.options["c-api"].march_id = "4fZKi37a595hP"
+        # self.options["c-api"].march_id = "ZLm9Pjh"
         # exec_conan(['install', reference, '-o', 'c-api:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
         install_args.extend(['-s', 'compiler.runtime=MT'])
         install_args.extend(['--build=missing'])
@@ -143,12 +143,12 @@ def run_conan(reference, march_id, debug_build):
     # replace_boost_lib_names_on_windows('../deps/lib')
 
 def get_march(arch):
-    march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+    march_id = os.getenv("KTH_MARCHID", "ZLm9Pjh")
     return march_id
 
     # arr = arch.split("-")
     # if len(arr) != 2:
-    #     march_id = os.getenv("KTH_MARCHID", "4fZKi37a595hP")
+    #     march_id = os.getenv("KTH_MARCHID", "ZLm9Pjh")
     #     # march_id = os.getenv("KTH_MARCHID", None)
     #     return march_id
 
