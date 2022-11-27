@@ -26,7 +26,7 @@
 #include <kth/js-native/chain/point.hpp>
 #include <kth/js-native/chain/history_compact_list.hpp>
 #include <kth/js-native/chain/history_compact.hpp>
-#include <kth/js-native/chain/payment_address.hpp>
+// #include <kth/js-native/chain/payment_address.hpp>
 #include <kth/js-native/chain/stealth_compact.hpp>
 #include <kth/js-native/chain/stealth_compact_list.hpp>
 
@@ -38,6 +38,8 @@
 #include <kth/js-native/config/network_settings.hpp>
 #include <kth/js-native/config/node_settings.hpp>
 #include <kth/js-native/config/settings.hpp>
+
+#include <kth/js-native/wallet/payment_address.hpp>
 
 #include <kth/js-native/node.hpp>
 #include <kth/js-native/string_list.hpp>
@@ -268,10 +270,14 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_count", chain_stealth_compact_list_count);
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_nth", chain_stealth_compact_list_nth);
 
-    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
+    NODE_SET_METHOD(exports, "wallet_payment_address_set_cashaddr_prefix", wallet_payment_address_set_cashaddr_prefix);
     NODE_SET_METHOD(exports, "wallet_payment_address_encoded", wallet_payment_address_encoded);
-    NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
+    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_cashaddr", wallet_payment_address_encoded_cashaddr);
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
+    NODE_SET_METHOD(exports, "wallet_payment_address_hash", wallet_payment_address_hash);
+    NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
+    NODE_SET_METHOD(exports, "wallet_payment_address_is_valid", wallet_payment_address_is_valid);
+    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
 
     NODE_SET_METHOD(exports, "core_string_list_construct", core_string_list_construct);
     NODE_SET_METHOD(exports, "core_string_list_destruct", core_string_list_destruct);

@@ -29,7 +29,7 @@
                    "src/chain/block_list.cpp",
                    "src/chain/history_compact_list.cpp",
                    "src/chain/history_compact.cpp",
-                   "src/chain/payment_address.cpp",
+                  #  "src/chain/payment_address.cpp",
                    "src/chain/stealth_compact.cpp",
                    "src/chain/stealth_compact_list.cpp",
 
@@ -41,6 +41,9 @@
                    "src/config/network_settings.cpp",
                    "src/config/node_settings.cpp",
                    "src/config/settings.cpp",
+
+                   "src/wallet/payment_address.cpp",
+
       ],
 
       'variables': {
