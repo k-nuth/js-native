@@ -117,8 +117,8 @@ def run_conan(reference, march_id, debug_build):
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config2023.zip'])
 
     install_args = ['install', reference, '--deploy=full_deploy']
-    install_args.extend(['-pr:b', 'general-ci-cd'])
-    install_args.extend(['-pr:h', 'general-ci-cd'])
+    # install_args.extend(['-pr:b', 'general-ci-cd'])
+    # install_args.extend(['-pr:h', 'general-ci-cd'])
 
     if march_id != None:
         install_args.extend(['-o', f'c-api/*:march_id={march_id}'])
