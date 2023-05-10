@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from conans import ConanFile, CMake
+from conan import ConanFile
 # import os
 
 class KnuthJsNative(ConanFile):
@@ -17,24 +17,9 @@ class KnuthJsNative(ConanFile):
     # default_options = "shared=False"
     # TODO(fernando): use Shared=False as default
 
-    generators = "cmake"
-    requires = (("c-api/0.32.0@kth/stable"))
+    # generators = "cmake"
+    requires = (("c-api/0.34.0"))
 
     def configure(self):
-        ConanFile.configure(self)
-        self.options["c-api"].db = "full"
-        self.options["c-api"].march_id = "ZLm9Pjh"
-
-    def imports(self):
-        self.copy("*.h", "./deps/include/kth", "include/kth")
-        self.copy("*.hpp", dst="./deps/include/kth", src="include/kth")
-        self.copy("*.lib", dst="./deps/lib", src="lib")
-        self.copy("*.a", dst="./deps/lib", src="lib")
-        self.copy("*.dylib", dst="./deps/lib", src="lib")
-        self.copy("*.so", dst="./deps/lib", src="lib")
-        self.copy("*.dll", dst="./deps/lib", src="lib")
-
-
-    # def build(self):
-    # def package(self):
-    # def package_info(self):
+        self.options["c-api/*"].db = "full"
+        self.options["c-api/*"].march_id = "ZLm9Pjh"

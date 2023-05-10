@@ -50,8 +50,7 @@ void wallet_payment_address_set_cashaddr_prefix(v8::FunctionCallbackInfo<v8::Val
     kth_wallet_payment_address_set_cashaddr_prefix(*prefix);
 }
 
-// char* kth_wallet_payment_address_encoded(kth_payment_address_t payment_address);
-void wallet_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_encoded_legacy(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -66,7 +65,7 @@ void wallet_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& a
 
     kth_payment_address_t payment_address = (kth_payment_address_t)v8::External::Cast(*args[0])->Value();
 
-    char const* res = kth_wallet_payment_address_encoded(payment_address);
+    char const* res = kth_wallet_payment_address_encoded_legacy(payment_address);
     args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
@@ -74,8 +73,8 @@ void wallet_payment_address_encoded(v8::FunctionCallbackInfo<v8::Value> const& a
 void wallet_payment_address_encoded_cashaddr(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments. wallet_payment_address_encoded_cashaddr function requires 1 argument.");
+    if (args.Length() != 2) {
+        throw_exception(isolate, "Wrong number of arguments. wallet_payment_address_encoded_cashaddr function requires 2 argument.");
         return;
     }
 
@@ -84,9 +83,15 @@ void wallet_payment_address_encoded_cashaddr(v8::FunctionCallbackInfo<v8::Value>
         return;
     }
 
-    kth_payment_address_t payment_address = (kth_payment_address_t)v8::External::Cast(*args[0])->Value();
+    if ( ! args[1]->IsBoolean()) {
+        throw_exception(isolate, "Wrong argument type for argument payment_address (#2). Required to be Boolean.");
+        return;
+    }
 
-    char const* res = kth_wallet_payment_address_encoded_cashaddr(payment_address);
+    kth_payment_address_t payment_address = (kth_payment_address_t)v8::External::Cast(*args[0])->Value();
+    kth_bool_t token_aware = bool_to_cpp(isolate, args[1]);
+
+    char const* res = kth_wallet_payment_address_encoded_cashaddr(payment_address, token_aware);
     args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 
@@ -109,8 +114,8 @@ void wallet_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::V
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-// kth_shorthash_t kth_wallet_payment_address_hash(kth_payment_address_t payment_address);
-void wallet_payment_address_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+// kth_shorthash_t kth_wallet_payment_address_hash20(kth_payment_address_t payment_address);
+void wallet_payment_address_hash20(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -125,8 +130,28 @@ void wallet_payment_address_hash(v8::FunctionCallbackInfo<v8::Value> const& args
 
     kth_payment_address_t payment_address = (kth_payment_address_t)v8::External::Cast(*args[0])->Value();
 
-    kth_shorthash_t res = kth_wallet_payment_address_hash(payment_address);
+    kth_shorthash_t res = kth_wallet_payment_address_hash20(payment_address);
     args.GetReturnValue().Set(shorthash_to_js(isolate, res));
+}
+
+// kth_hash_t kth_wallet_payment_address_hash32(kth_payment_address_t payment_address);
+void wallet_payment_address_hash32(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. wallet_payment_address_hash function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument payment_address (#1). Required to be IsExternal.");
+        return;
+    }
+
+    kth_payment_address_t payment_address = (kth_payment_address_t)v8::External::Cast(*args[0])->Value();
+
+    kth_hash_t res = kth_wallet_payment_address_hash32(payment_address);
+    args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
 // uint8_t kth_wallet_payment_address_version(kth_payment_address_t payment_address);

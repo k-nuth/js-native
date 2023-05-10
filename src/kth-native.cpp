@@ -271,10 +271,11 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_nth", chain_stealth_compact_list_nth);
 
     NODE_SET_METHOD(exports, "wallet_payment_address_set_cashaddr_prefix", wallet_payment_address_set_cashaddr_prefix);
-    NODE_SET_METHOD(exports, "wallet_payment_address_encoded", wallet_payment_address_encoded);
+    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_legacy", wallet_payment_address_encoded_legacy);
     NODE_SET_METHOD(exports, "wallet_payment_address_encoded_cashaddr", wallet_payment_address_encoded_cashaddr);
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
-    NODE_SET_METHOD(exports, "wallet_payment_address_hash", wallet_payment_address_hash);
+    NODE_SET_METHOD(exports, "wallet_payment_address_hash20", wallet_payment_address_hash20);
+    NODE_SET_METHOD(exports, "wallet_payment_address_hash32", wallet_payment_address_hash32);
     NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
     NODE_SET_METHOD(exports, "wallet_payment_address_is_valid", wallet_payment_address_is_valid);
     NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);

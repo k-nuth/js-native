@@ -13,5 +13,7 @@ node_modules/
 __pycache__/
 conanbuildinfo.txt
 graph_info.json
-conan.lock
 hosts.cache
+host/
+deactivate_conanrun.sh
+deactivate_conanbuild.sh
