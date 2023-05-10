@@ -34,12 +34,31 @@ jobs:
           #                     {"name":"macOS 12 NodeJS 14","nodejs_version":"14","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     {"name":"macOS 12 NodeJS 12","nodejs_version":"12","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     ]}'
-          MATRIX: '{"config":[{"name":"Linux (GCC11) NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1"},
+          MATRIX: '{"config":[{"name":"Linux (GCC 12) NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu16.04"},
                               {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               ]}'
         run: |
           echo "${MATRIX}"
           echo "::set-output name=matrix::${MATRIX}"
+
+
+  build-with-container:
+    needs: [generate-matrix]
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    name: ${{ matrix.config.name }}
+    uses: k-nuth/js-native/.github/workflows/build-with-container.yml@master
+    with:
+      if: ${{ matrix.config.os_kind == 'linux' }}
+      upload: ${{ github.event_name == 'push' }} # && needs.check.outputs.permitted == 'true'
+      os: ${{ matrix.config.os }}
+      image: "kthnode/gcc${{ matrix.config.compiler_version }}${{ matrix.config.docker_suffix }}"
+      # NPM_EMAIL:
+      NODEJS_VERSION: ${{ matrix.config.nodejs_version }}
+    secrets:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
 
   builds:
     needs: generate-matrix
@@ -49,7 +68,7 @@ jobs:
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
     name: ${{ matrix.config.name }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - uses: actions/setup-python@v1
@@ -72,24 +91,25 @@ jobs:
           echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $Env:GITHUB_ENV
           echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $Env:GITHUB_ENV
 
-      - name: Build (Linux)
-        if: ${{ matrix.config.os_kind == 'linux' }}
-        env:
-          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        shell: bash
-        run: |
-          # echo ${NPM_AUTH_TOKEN}
-          # echo ${NPM_EMAIL}
-          # echo ${NODEJS_VERSION}
-          # echo ${NODE_PRE_GYP_GITHUB_TOKEN}
+      # - name: Build (Linux)
+      #   if: ${{ matrix.config.os_kind == 'linux' }}
+      #   env:
+      #     NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+      #     NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      #   shell: bash
+      #   run: |
+      #     # echo ${NPM_AUTH_TOKEN}
+      #     # echo ${NPM_EMAIL}
+      #     # echo ${NODEJS_VERSION}
+      #     # echo ${NODE_PRE_GYP_GITHUB_TOKEN}
 
-          echo "-------------------------------------------------------"
-          whoami
-          echo "-------------------------------------------------------"
-          chmod a+x .cicd/entrypoint.sh
-          chmod -R 777 ${PWD}
-          /usr/bin/docker run --rm -e KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.cicd/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc11-ubuntu16.04 /bin/bash -c /tmp/entrypoint.sh
+      #     echo "-------------------------------------------------------"
+      #     whoami
+      #     echo "-------------------------------------------------------"
+      #     chmod a+x .cicd/entrypoint.sh
+      #     chmod -R 777 ${PWD}
+      #     /usr/bin/docker run --rm -e KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID -e NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN -e NPM_EMAIL=$NPM_EMAIL -e NODEJS_VERSION=$NODEJS_VERSION -e NODE_PRE_GYP_GITHUB_TOKEN=$NODE_PRE_GYP_GITHUB_TOKEN -v ${PWD}:/home/conan/project -v ${PWD}/.cicd/entrypoint.sh:/tmp/entrypoint.sh conanio/gcc11-ubuntu16.04 /bin/bash -c /tmp/entrypoint.sh
+
 
       - uses: actions/setup-node@v2
         if: ${{ matrix.config.os_kind != 'linux' }}
