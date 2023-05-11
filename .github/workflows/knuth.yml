@@ -156,7 +156,7 @@ jobs:
           # pip install conan --upgrade
           pip install kthbuild --upgrade
 
-          conan user
+          # conan user
 
       - name: Build (macOS)
         if: ${{ matrix.config.os_kind == 'macos' }}
@@ -172,7 +172,7 @@ jobs:
           pyenv activate conan
 
           python --version
-          conan user
+          # conan user
           echo "-----------------------------------------------------------"
           conan config get
           echo "-----------------------------------------------------------"
@@ -223,7 +223,7 @@ jobs:
           pip --version
           pip install kthbuild --upgrade
           python --version
-          conan user # It creates the conan data directory
+          # conan user # It creates the conan data directory
 
           node --version
           npm --version
@@ -234,10 +234,10 @@ jobs:
           node -p "process.arch"
           Write-Host "----------------------------"
 
-          conan user
+          # conan user
           conan remote add kth_temp https://packages.kth.cash/api
           # conan install . -s compiler.runtime=MT
-          conan user
+          # conan user
           $ErrorActionPreference = 'Continue'
 
       - name: Build (Windows)
