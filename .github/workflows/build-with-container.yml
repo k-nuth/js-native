@@ -1,0 +1,114 @@
+on:
+  workflow_call:
+    inputs:
+      if:
+        description: 'Whether to run this job'
+        required: true
+        type: boolean
+      upload:
+        description: 'Have to upload the package'
+        required: true
+        type: boolean
+      os:
+        required: true
+        type: string
+      image:
+        required: true
+        type: string
+      NODEJS_VERSION:
+        required: true
+        type: string
+
+      # NPM_EMAIL:
+      #   required: true
+      #   type: string
+      # KTH_GHA_MARCH_ID=$KTH_GHA_MARCH_ID
+
+    secrets:
+      NPM_AUTH_TOKEN:
+        required: true
+      NODE_PRE_GYP_GITHUB_TOKEN:
+        required: true
+
+        # -v ${PWD}:/home/conan/project
+        # -v ${PWD}/.cicd/entrypoint.sh:/tmp/entrypoint.sh
+        # conanio/gcc11-ubuntu16.04 /bin/bash -c /tmp/entrypoint.sh
+
+jobs:
+  reusable-build-with-container:
+    if: ${{ inputs.if }}
+    runs-on: ${{ inputs.os }}
+    container:
+      image: ${{ inputs.image }}
+    steps:
+      - run: |
+          echo "inputs.if: ${{ inputs.if }}"
+          echo "inputs.os: ${{ inputs.os }}"
+          echo "inputs.image: ${{ inputs.image }}"
+
+          echo "inputs.upload:             ${{ inputs.upload }}"
+          # echo "github.event_name:         ${{ github.event_name }}"
+
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: install deps
+        working-directory: .
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NODEJS_VERSION: ${{ inputs.NODEJS_VERSION }}
+        run: |
+          # echo "KTH_GHA_MARCH_ID: ${KTH_GHA_MARCH_ID}"
+          echo "NODEJS_VERSION: ${NODEJS_VERSION}"
+          echo "NODEJS_VERSION: $NODEJS_VERSION"
+          echo "NODEJS_VERSION: ${{ inputs.NODEJS_VERSION }}"
+
+          node_setup="http://deb.nodesource.com/setup_$NODEJS_VERSION.x"
+          wget -qO- $node_setup | sudo -E bash -
+          sudo apt-get install -y nodejs
+          sudo -H npm install npm@latest -g
+
+          sudo -H npm install -g node-gyp
+          sudo -H npm install -g @mapbox/node-pre-gyp
+          sudo -H npm install -g @mmomtchev/node-pre-gyp-github
+
+          cat ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
+          cat ~/.npmrc
+
+
+      - name: build
+        working-directory: .
+        run: |
+          # cd /home/conan/project
+
+          npm install --loglevel verbose
+          # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+
+      - name: test
+        working-directory: .
+        run: |
+          npm run test
+
+      - name: publish
+        if: ${{ inputs.upload }}
+        env:
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+        run: |
+          # node-pre-gyp configure build package --target_arch=${KTH_GHA_MARCH_ID}
+          node-pre-gyp configure build package
+          # node-pre-gyp-github publish  || true
+          node-pre-gyp-github publish --release  #|| true
+
+          node-pre-gyp clean
+          node-gyp clean
+
+          npm install
+          # npm install --target_arch=${KTH_GHA_MARCH_ID} --loglevel verbose
+
+          npm publish --access public || true
+
