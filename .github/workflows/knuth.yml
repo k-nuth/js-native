@@ -186,7 +186,8 @@ jobs:
           # echo "-----------------------------------------------------------"
 
           # conan remote add kth_temp https://packages.kth.cash/api || true
-          conan install . --build=missing
+          conan install . --build=missing -s compiler.cppstd=20
+          # -o c-api/*:march_id=ZLm9Pjh
 
           # npm install --loglevel verbose
           npm install --loglevel verbose
