@@ -33,7 +33,7 @@ sudo -H npm install -g @mmomtchev/node-pre-gyp-github
 # !
 
 
-cat ~/.npmrc
+# cat ~/.npmrc
 # echo _auth = $NPM_AUTH_TOKEN > ~/.npmrc
 echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
 cat ~/.npmrc
@@ -43,7 +43,7 @@ cat ~/.npmrc
 
 pwd
 
-cd /home/conan/project
+# cd /home/conan/project
 
 # ls -ltra
 
