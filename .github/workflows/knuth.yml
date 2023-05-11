@@ -155,6 +155,10 @@ jobs:
           # pip install conan_package_tools --upgrade
           # pip install conan --upgrade
           pip install kthbuild --upgrade
+          python3 -m pip install "conan>=2.0" --upgrade --ignore-installed
+          conan --version
+          conan profile detect
+          conan config install -t dir ./.conan
 
           # conan user
 
