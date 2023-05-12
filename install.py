@@ -93,12 +93,10 @@ def accomodate_capi():
     extensions = ['.a', '.so', '.lib', '.dylib', '.dll']
 
     new_directory = './deps/lib/'
-    starting_directory = './host/'
+    starting_directory = './full_deploy/host/'
 
     # os.mkdir(new_directory)
     os.makedirs(new_directory, exist_ok=True)
-
-
 
     for root, dirs, files in os.walk(starting_directory):
         for file in files:
@@ -106,7 +104,7 @@ def accomodate_capi():
                 file_path = os.path.join(root, file)
                 shutil.move(file_path, new_directory)
 
-    shutil.move(f'./host/c-api/{capi_version}/Release/x86_64/include', './deps/include')
+    shutil.move(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include', './deps/include')
 
 def run_conan(reference, march_id, debug_build):
     # print('platform --------------------------')
@@ -137,7 +135,7 @@ def run_conan(reference, march_id, debug_build):
         # print("----------------------------------------------------")
         # print(capi_h)
         # print("----------------------------------------------------")
-        shutil.move('./host/', '..')
+        shutil.move('./full_deploy/host/', '..')
     elif platform == "linux":
         # install_args.extend(['-s', 'compiler.libcxx=libstdc++11'])
         install_args.extend(['--build=missing'])
