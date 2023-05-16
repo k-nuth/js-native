@@ -41,10 +41,11 @@ function print_settings(setts) {
     console.log(setts.chain.bchFermat);
     console.log(setts.chain.bchEuler);
     console.log(setts.chain.bchGauss);
-    // console.log(setts.chain.bchDescartes);
+    console.log(setts.chain.bchDescartes);
+    // console.log(setts.chain.bchLobachevski);
 
-    console.log(setts.chain.descartesActivationTime);
     console.log(setts.chain.lobachevskiActivationTime);
+    console.log(setts.chain.galoisActivationTime);
 
     console.log(setts.chain.asertHalfLife);
     // ------------------------------------------------------------------------------------

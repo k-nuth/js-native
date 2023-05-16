@@ -17,3 +17,7 @@ hosts.cache
 host/
 deactivate_conanrun.sh
 deactivate_conanbuild.sh
+conanbuild.sh
+conanbuildenv-release-x86_64.sh
+conanrun.sh
+conanrunenv-release-x86_64.sh
