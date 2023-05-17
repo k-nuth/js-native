@@ -57,7 +57,7 @@ jobs:
         run: |
           python3 -m pip install "conan>=2.0" --upgrade --ignore-installed
           conan --version
-          conan profile detect
+          # conan profile detect
           conan config install -t dir ./.conan
 
       - name: install deps
