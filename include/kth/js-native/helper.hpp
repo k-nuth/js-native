@@ -94,7 +94,17 @@ wchar_t* string_to_cpp(v8::Isolate* isolate, v8::Local<v8::String> const& js_str
 inline
 v8::Local<v8::Uint8Array> byte_array_to_js(v8::Isolate* isolate, uint8_t const* data, kth_size_t size) {
     v8::Local<v8::ArrayBuffer> tmp = v8::ArrayBuffer::New(isolate, size);
+
+
+
+#if (V8_MAJOR_VERSION >= 8)
+    //   data = static_cast<char*>(buffer->GetBackingStore()->Data()) + byte_offset;
+    memcpy(tmp->GetBackingStore()->Data(), data, size);
+#else
+    //   data = static_cast<char*>(buffer->GetContents().Data()) + byte_offset;
     memcpy(tmp->GetContents().Data(), data, size);
+#endif
+
     v8::Local<v8::Uint8Array> res = v8::Uint8Array::New(tmp, 0, size);
     return res;
 }

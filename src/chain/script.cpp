@@ -64,7 +64,13 @@ void chain_script_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
     }
 
     v8::Local<v8::Uint8Array> encoded_arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
+
+#if (V8_MAJOR_VERSION >= 8)
+    uint8_t* encoded = (uint8_t*)encoded_arr->Buffer()->GetBackingStore()->Data();
+#else
     uint8_t* encoded = (uint8_t*)encoded_arr->Buffer()->GetContents().Data();
+#endif
+
     kth_size_t n = encoded_arr->Length();
     kth_bool_t prefix = bool_to_cpp(isolate, args[2]);
 

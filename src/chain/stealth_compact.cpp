@@ -49,7 +49,13 @@ void chain_stealth_compact_get_ephemeral_public_key_hash(v8::FunctionCallbackInf
 
     kth_hash_t res = kth_chain_stealth_compact_get_ephemeral_public_key_hash(stealth_compact);
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
+
+#if (V8_MAJOR_VERSION >= 8)
+    memcpy(tmp->GetBackingStore()->Data(), res.hash, 32);
+#else
     memcpy(tmp->GetContents().Data(), res.hash, 32);
+#endif
+
     Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
     args.GetReturnValue().Set(hash);
 }
@@ -72,7 +78,13 @@ void chain_stealth_compact_get_transaction_hash(v8::FunctionCallbackInfo<v8::Val
 
     kth_hash_t res = kth_chain_stealth_compact_get_transaction_hash(stealth_compact);
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
+
+#if (V8_MAJOR_VERSION >= 8)
+    memcpy(tmp->GetBackingStore()->Data(), res.hash, 32);
+#else
     memcpy(tmp->GetContents().Data(), res.hash, 32);
+#endif
+
     Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
     args.GetReturnValue().Set(hash);
 }
@@ -95,7 +107,13 @@ void chain_stealth_compact_get_public_key_hash(v8::FunctionCallbackInfo<v8::Valu
 
     kth_shorthash_t res = kth_chain_stealth_compact_get_public_key_hash(stealth_compact);
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 20); //TODO: warning, hardcoded hash size!
+
+#if (V8_MAJOR_VERSION >= 8)
+    memcpy(tmp->GetBackingStore()->Data(), res.hash, 20);   //TODO: warning, hardcoded hash size!
+#else
     memcpy(tmp->GetContents().Data(), res.hash, 20);        //TODO: warning, hardcoded hash size!
+#endif
+
     Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 20);   //TODO: warning, hardcoded hash size!
     args.GetReturnValue().Set(hash);
 }
