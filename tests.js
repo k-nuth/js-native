@@ -113,7 +113,38 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function test_encoding() {
+    const addressStr = 'bitcoincash:qrcuqadqrzp2uztjl9wn5sthepkg22majyxw4gmv6p';
+
+    const native = kth.wallet_payment_address_construct_from_string(addressStr);
+    const valid = kth.wallet_payment_address_is_valid(native);
+    console.log(`valid: ${valid}`);
+    if ( ! valid) {
+        kth.wallet_payment_address_destruct(native);
+        return;
+    }
+    // const obj = fromNative(native);
+
+    const encoded = kth.wallet_payment_address_encoded_cashaddr(native, false);
+    // kth.wallet_payment_address_destruct(native);
+
+    console.log(`addressStr: ${addressStr}`);
+    console.log(`encoded:    ${encoded}`);
+
+
+
+
+    // expect(result.ok).toBe(true);
+    // const addr = result.obj;
+    // expect(addr.encoded()).toBe('bitcoincash:qrcuqadqrzp2uztjl9wn5sthepkg22majyxw4gmv6p');
+    // expect(addr.encodedCashAddr()).toBe('bitcoincash:qrcuqadqrzp2uztjl9wn5sthepkg22majyxw4gmv6p');
+    // expect(addr.encodedLegacy()).toBe('1P3GQYtcWgZHrrJhUa4ctoQ3QoCU2F65nz');
+}
+
 async function main() {
+    test_encoding();
+    return;
+
     const mainnet = 0;
     const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
