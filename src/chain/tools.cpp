@@ -12,7 +12,12 @@ namespace kth::js_native {
 kth_hash_t to_native_hash(v8::Local<v8::Uint8Array> const& arr) {
     //precondition: arr->Length() == 32
     kth_hash_t hash;
+
+#if (V8_MAJOR_VERSION >= 8)
+    uint8_t* native_arr = (uint8_t*)arr->Buffer()->GetBackingStore()->Data();
+#else
     uint8_t* native_arr = (uint8_t*)arr->Buffer()->GetContents().Data();
+#endif
 
     for (uint32_t i = 0; i < arr->Length(); ++i) {
         hash.hash[i] = native_arr[i];

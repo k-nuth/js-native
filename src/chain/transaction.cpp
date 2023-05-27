@@ -49,7 +49,13 @@ void chain_transaction_factory_from_data(v8::FunctionCallbackInfo<v8::Value> con
 
     uint32_t version = args[0]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     v8::Local<v8::Uint8Array> data_arr = v8::Local<v8::Uint8Array>::Cast(args[1]);
+
+#if (V8_MAJOR_VERSION >= 8)
+    uint8_t* data = (uint8_t*)data_arr->Buffer()->GetBackingStore()->Data();
+#else
     uint8_t* data = (uint8_t*)data_arr->Buffer()->GetContents().Data();
+#endif
+
     kth_size_t n = data_arr->Length();
 
     kth_transaction_t res = kth_chain_transaction_factory_from_data(version, data, n);

@@ -52,7 +52,13 @@ void chain_point_get_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     kth_hash_t res = kth_chain_point_get_hash(point);
 
     Local<ArrayBuffer> tmp = ArrayBuffer::New(isolate, 32);
+
+#if (V8_MAJOR_VERSION >= 8)
+    memcpy(tmp->GetBackingStore()->Data(), res.hash, 32);
+#else
     memcpy(tmp->GetContents().Data(), res.hash, 32);
+#endif
+
     Local<Uint8Array> hash = Uint8Array::New(tmp, 0, 32);
     args.GetReturnValue().Set(hash);
 }
