@@ -997,7 +997,7 @@ void chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
 
     // Make sure to manage this pointer to prevent memory leaks
     auto callback = new v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>;
-    callback->Reset(isolate, args[1].As<v8::Function>());
+    callback->Reset(isolate, args[2].As<v8::Function>());
 
     kth_chain_subscribe_blockchain(node, chain, callback, kth_chain_subscribe_blockchain_handler);
     // void kth_chain_subscribe_blockchain(kth_node_t exec, kth_chain_t chain, void* ctx, kth_subscribe_blockchain_handler_t handler);
