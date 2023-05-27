@@ -27,7 +27,8 @@ void chain_fetch_history(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_organize_block(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_organize_transaction(v8::FunctionCallbackInfo<v8::Value> const& args);
 
-// void chain_subscribe_blockchain(v8::FunctionCallbackInfo<v8::Value> const& args);
+void chain_subscribe_blockchain(v8::FunctionCallbackInfo<v8::Value> const& args);
+
 
 }  // namespace kth::js_native
 

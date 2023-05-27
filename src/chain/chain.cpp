@@ -920,6 +920,91 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 // Subscribers.
 //-------------------------------------------------------------------------
 
+// 'void (kth_chain_t, void *, kth_error_code_t, uint64_t, kth_block_list_t, kth_block_list_t)'
+// (aka 'void (void *, void *, error_code, unsigned long long, void *, void *)')
+// to
+// 'kth_subscribe_blockchain_handler_t'
+// (aka 'int (*)(void *, void *, void *, error_code, unsigned long long, void *, void *)') for 4th argument
+
+kth_bool_t kth_chain_subscribe_blockchain_handler(kth_node_t node, kth_chain_t chain, void* ctx, kth_error_code_t error, uint64_t height, kth_block_list_t incoming, kth_block_list_t outgoing) {
+    auto* isolate = Isolate::GetCurrent();
+
+    constexpr int service_stopped = 1;
+
+    // If the node is stopped or if an error occurred, free the callback and stop the subscription
+    if (kth_node_stopped(chain) != 0 || error == service_stopped) {
+        auto callback = static_cast<Persistent<Function>*>(ctx);
+        callback->Reset();
+        delete callback;
+        return 0;
+    }
+
+    // create incoming and outgoing block lists
+    Local<Value> incomingBlocks = External::New(isolate, incoming);
+    Local<Value> outgoingBlocks = External::New(isolate, outgoing);
+
+    // Call the callback
+    Local<Value> argv[] = { Number::New(isolate, error), Number::New(isolate, height), incomingBlocks, outgoingBlocks };
+    auto callback = static_cast<Persistent<Function>*>(ctx);
+    auto callback_local = Local<Function>::New(isolate, *callback);
+    auto maybe_result = callback_local->Call(isolate->GetCurrentContext(), isolate->GetCurrentContext()->Global(), 4, argv);
+
+    if (maybe_result.IsEmpty() ) {
+        // Handle case where callback call failed
+        callback->Reset();
+        delete callback;
+        return 0;
+    }
+
+    // If the callback returns false, free the callback and stop the subscription
+    Local<Value> result = maybe_result.ToLocalChecked();
+    if ( ! result->IsTrue() ) {
+        callback->Reset();
+        delete callback;
+        return 0;
+    }
+    return 1;
+}
+
+void chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
+    auto* isolate = args.GetIsolate();
+
+    if (args.Length() != 3) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[1]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[2]->IsFunction()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    void* node_ptr = v8::External::Cast(*args[0])->Value();
+    kth_node_t node = (kth_node_t)node_ptr;
+
+    void* chain_ptr = v8::External::Cast(*args[1])->Value();
+    kth_chain_t chain = (kth_chain_t)chain_ptr;
+
+    // Make sure to manage this pointer to prevent memory leaks
+    auto callback = new v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>>;
+    callback->Reset(isolate, args[1].As<v8::Function>());
+
+    kth_chain_subscribe_blockchain(node, chain, callback, kth_chain_subscribe_blockchain_handler);
+    // void kth_chain_subscribe_blockchain(kth_node_t exec, kth_chain_t chain, void* ctx, kth_subscribe_blockchain_handler_t handler);
+}
+
+
+
 // // KTH_EXPORT
 // // void chain_subscribe_blockchain(kth_chain_t chain, void* ctx, reorganize_handler_t handler);
 
