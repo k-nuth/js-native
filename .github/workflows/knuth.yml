@@ -10,7 +10,7 @@ jobs:
   generate-matrix:
     name: Generate Job Matrix
     if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -34,10 +34,10 @@ jobs:
           #                     {"name":"macOS 12 NodeJS 14","nodejs_version":"14","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     {"name":"macOS 12 NodeJS 12","nodejs_version":"12","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     ]}'
-          MATRIX: '{"config":[{"name":"Linux (GCC 12) NodeJS 18","nodejs_version":"18","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
-                              {"name":"Linux (GCC 12) NodeJS 16","nodejs_version":"16","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
-                              {"name":"Linux (GCC 12) NodeJS 14","nodejs_version":"14","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
-                              {"name":"Linux (GCC 12) NodeJS 20","nodejs_version":"20","os":"ubuntu-20.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
+          MATRIX: '{"config":[{"name":"Linux (GCC 12) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
+                              {"name":"Linux (GCC 12) NodeJS 16","nodejs_version":"16","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
+                              {"name":"Linux (GCC 12) NodeJS 14","nodejs_version":"14","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
+                              {"name":"Linux (GCC 12) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"12", "docker_suffix":"-ubuntu18.04"},
                               {"name":"macOS 12 NodeJS 18","nodejs_version":"18","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               {"name":"macOS 12 NodeJS 14","nodejs_version":"14","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
