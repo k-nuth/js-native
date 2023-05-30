@@ -1092,15 +1092,34 @@ void chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
     kth_chain_subscribe_blockchain(node, chain, callback_data, kth_chain_subscribe_blockchain_handler);
 }
 
-
 //---------------------------------------------------------------------------
 
+void chain_is_stale(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments. chain_is_stale function requires 1 arguments.");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong argument type for argument block (#1). Required to be IsExternal.");
+        return;
+    }
+
+    void* chain_ptr = v8::External::Cast(*args[0])->Value();
+    kth_chain_t chain = (kth_chain_t)chain_ptr;
+
+
+    kth_bool_t res = kth_chain_is_stale(chain);
+    args.GetReturnValue().Set(Boolean::New(isolate, res != 0));
+}
+
+//---------------------------------------------------------------------------
 // KTH_EXPORT
 // kth_transaction_t hex_to_tx(char const* tx_hex);
 
-
 // KTH_EXPORT
 // void chain_validate_tx(kth_chain_t chain, void* ctx, kth_transaction_t tx, validate_tx_handler_t handler);
-
 
 }  // namespace kth::js_native
