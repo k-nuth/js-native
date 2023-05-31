@@ -17,6 +17,14 @@ void node_get_chain(v8::FunctionCallbackInfo<v8::Value> const& args);
 void node_print_thread_id(v8::FunctionCallbackInfo<v8::Value> const& args);
 void node_running(v8::FunctionCallbackInfo<v8::Value> const& args);
 
+void node_capi_version(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_cppapi_version(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_microarchitecture(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_march_names(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_currency_symbol(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_currency(v8::FunctionCallbackInfo<v8::Value> const& args);
+void node_db_type(v8::FunctionCallbackInfo<v8::Value> const& args);
+
 }  // namespace kth::js_native
 
 #endif //KTH_JS_NATIVE_NODE_HPP_

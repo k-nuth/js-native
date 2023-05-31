@@ -54,6 +54,15 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "node_get_chain", node_get_chain);
     NODE_SET_METHOD(exports, "node_destruct", node_destruct);
     NODE_SET_METHOD(exports, "node_signal_stop", node_signal_stop);
+
+    NODE_SET_METHOD(exports, "node_capi_version", node_capi_version);
+    NODE_SET_METHOD(exports, "node_cppapi_version", node_cppapi_version);
+    NODE_SET_METHOD(exports, "node_microarchitecture", node_microarchitecture);
+    NODE_SET_METHOD(exports, "node_march_names", node_march_names);
+    NODE_SET_METHOD(exports, "node_currency_symbol", node_currency_symbol);
+    NODE_SET_METHOD(exports, "node_currency", node_currency);
+    NODE_SET_METHOD(exports, "node_db_type", node_db_type);
+
     NODE_SET_METHOD(exports, "config_endpoint_allocate_n", config_endpoint_allocate_n);
     NODE_SET_METHOD(exports, "config_checkpoint_allocate_n", config_checkpoint_allocate_n);
     NODE_SET_METHOD(exports, "config_node_settings_default", config_node_settings_default);
