@@ -206,4 +206,88 @@ void node_get_chain(FunctionCallbackInfo<Value> const& args) {
     args.GetReturnValue().Set(ext);
 }
 
+void node_capi_version(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_capi_version();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_cppapi_version(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_cppapi_version();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_microarchitecture(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_microarchitecture();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_march_names(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_march_names();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_currency_symbol(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_currency_symbol();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_currency(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_currency();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
+void node_db_type(FunctionCallbackInfo<Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 0) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    char const* res = kth_node_db_type();
+    args.GetReturnValue().Set(string_to_js(isolate, res));
+}
+
 }  // namespace kth::js_native
