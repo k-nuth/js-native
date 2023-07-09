@@ -18,8 +18,8 @@ class KnuthJsNative(ConanFile):
     # TODO(fernando): use Shared=False as default
 
     # generators = "cmake"
-    requires = (("c-api/0.36.0"))
+    requires = (("c-api/0.38.0"))
 
     def configure(self):
-        self.options["c-api/*"].db = "full"
+        # self.options["c-api/*"].db = "full"
         self.options["c-api/*"].march_id = "ZLm9Pjh"

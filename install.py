@@ -22,7 +22,7 @@ import subprocess
 #     import pandas as pd
 
 
-capi_version = "0.36.0"
+capi_version = "0.38.0"
 
 def install(package):
     print("Installing ")
@@ -107,17 +107,11 @@ def accomodate_capi():
     shutil.move(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include', './deps/include')
 
 def run_conan(reference, march_id, debug_build):
-    # print('platform --------------------------')
-    # print(platform)
-    # print('platform --------------------------')
-
     exec_conan(['profile', 'detect'])
     exec_conan(['remote', 'add', 'kth', 'https://packages.kth.cash/api', '--force'])
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config2023.zip'])
 
     install_args = ['install', reference, '--deploy=full_deploy']
-    # install_args.extend(['-pr:b', 'general-ci-cd'])
-    # install_args.extend(['-pr:h', 'general-ci-cd'])
     install_args.extend(['-s', 'compiler.cppstd=20'])
 
     if march_id != None:
@@ -127,32 +121,19 @@ def run_conan(reference, march_id, debug_build):
         install_args.extend(['-s', 'build_type=Debug'])
 
     if platform == "win32":
-        # self.options["c-api"].march_id = "ZLm9Pjh"
         # exec_conan(['install', reference, '-o', 'c-api/*:march_id={}'.format(march_id), '-s', 'compiler.runtime=MT'])
         install_args.extend(['-s', 'compiler.runtime=MT'])
         install_args.extend(['--build=missing'])
         exec_conan(install_args)
         capi_h = find('capi.h', os.getcwd())
-        # print("----------------------------------------------------")
-        # print(capi_h)
-        # print("----------------------------------------------------")
         shutil.move('./full_deploy/host/', '..')
-    elif platform == "linux":
-        # install_args.extend(['-s', 'compiler.libcxx=libstdc++11'])
-        install_args.extend(['--build=missing'])
-        exec_conan(install_args)
+    # elif platform == "linux":
     else:
-        # exec_conan(['install', reference])
-        # exec_conan(['install', reference, '-o', 'c-api/*:march_id={}'.format(march_id)])
         install_args.extend(['--build=missing'])
         exec_conan(install_args)
 
     accomodate_capi()
-
     capi_h = find('capi.h', os.getcwd())
-    # print("----------------------------------------------------")
-    # print(capi_h)
-    # print("----------------------------------------------------")
 
     print('run_conan - END')
     # replace_boost_lib_names_on_windows('../host/c-api/lib')
@@ -161,43 +142,15 @@ def get_march(arch):
     march_id = os.getenv("KTH_MARCHID", "ZLm9Pjh")
     return march_id
 
-    # arr = arch.split("-")
-    # if len(arr) != 2:
-    #     march_id = os.getenv("KTH_MARCHID", "ZLm9Pjh")
-    #     # march_id = os.getenv("KTH_MARCHID", None)
-    #     return march_id
-
-    # march_id = arr[1]
-    # return march_id
-
 def get_debug_build():
     dbuild = os.getenv("KTH_DEBUG_BUILD", "0")
     return dbuild == "1"
 
 if __name__ == '__main__':
     recipe_dir = sys.argv[1]
-    # user_arch = sys.argv[2]
     user_arch = None
     march_id = get_march(user_arch)
     debug_build = get_debug_build()
-
-    # print("----------------------------------------------------")
-    # print("----------------------------------------------------")
-    # print("----------------------------------------------------")
-    # print("************** Conan Recipe directory: {}".format(recipe_dir))
-    # print("************** User defined arch:      {}".format(user_arch))
-    # print("************** Microarchitecture Id:   {}".format(march_id))
-    # print("************** Debug Build:            {}".format(debug_build))
-
-    # print("Python version")
-    # print (sys.version)
-    # print("Version info.")
-    # print (sys.version_info)
-    # print("Interpreter path.")
-    # print(sys.executable)
-    # print("----------------------------------------------------")
-    # print("----------------------------------------------------")
-    # print("----------------------------------------------------")
 
     install('conan')
     # test_conan_install()
