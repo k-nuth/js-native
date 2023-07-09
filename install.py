@@ -111,7 +111,7 @@ def run_conan(reference, march_id, debug_build):
     exec_conan(['remote', 'add', 'kth', 'https://packages.kth.cash/api', '--force'])
     exec_conan(['config', 'install', 'https://github.com/k-nuth/ci-utils/raw/master/conan/config2023.zip'])
 
-    install_args = ['install', reference, '--deploy=full_deploy']
+    install_args = ['install', reference, '--deployer=full_deploy']
     install_args.extend(['-s', 'compiler.cppstd=20'])
 
     if march_id != None:
