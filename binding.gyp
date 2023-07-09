@@ -71,7 +71,6 @@
 
       'defines': [
           'KTH_LIB_STATIC',
-          'KTH_DB_NEW_FULL',
           'KTH_LOG_LIBRARY_SPDLOG',
           'KTH_CURRENCY_BCH',
       ],
