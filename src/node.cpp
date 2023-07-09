@@ -281,12 +281,19 @@ void node_currency(FunctionCallbackInfo<Value> const& args) {
 void node_db_type(FunctionCallbackInfo<Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 0) {
+    if (args.Length() != 1) {
         throw_exception(isolate, "Wrong number of arguments");
         return;
     }
 
-    char const* res = kth_node_db_type();
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong arguments, 1");
+        return;
+    }
+
+    kth_db_mode_t mode = db_mode_to_cpp(isolate, args[1]);
+
+    char const* res = kth_node_db_type(mode);
     args.GetReturnValue().Set(string_to_js(isolate, res));
 }
 

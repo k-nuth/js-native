@@ -157,6 +157,13 @@ kth_start_modules_t start_modules_to_cpp(v8::Isolate* isolate, v8::Local<v8::Val
     return res;
 }
 
+inline
+kth_db_mode_t db_mode_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
+    auto val = x->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    kth_db_mode_t res = kth_db_mode_t(val);
+    return res;
+}
+
 }  // namespace kth::js_native
 
 #endif // KTH_JS_NATIVE_HELPER_HPP_

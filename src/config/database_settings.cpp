@@ -36,9 +36,7 @@ v8::Local<v8::Object> config_database_settings_to_js(Isolate* isolate, kth_datab
     auto ctx = isolate->GetCurrentContext();
     auto res = v8::Object::New(isolate);
     auto setr = res->Set(ctx, string_to_js(isolate, "directory"), string_to_js(isolate, setts.directory));
-    setr = res->Set(ctx, string_to_js(isolate, "flushWrites"), Boolean::New(isolate, setts.flush_writes != 0));
-    setr = res->Set(ctx, string_to_js(isolate, "fileGrowthRate"), Number::New(isolate, setts.file_growth_rate));
-    setr = res->Set(ctx, string_to_js(isolate, "indexStartHeight"), Number::New(isolate, setts.index_start_height));
+    setr = res->Set(ctx, string_to_js(isolate, "dbMode"), Number::New(isolate, setts.db_mode));
     setr = res->Set(ctx, string_to_js(isolate, "reorgPoolLimit"), Number::New(isolate, setts.reorg_pool_limit));
     setr = res->Set(ctx, string_to_js(isolate, "dbMaxSize"), Number::New(isolate, setts.db_max_size));
     setr = res->Set(ctx, string_to_js(isolate, "safeMode"), Boolean::New(isolate, setts.safe_mode != 0));
@@ -54,9 +52,7 @@ kth_database_settings config_database_settings_to_cpp(Isolate* isolate, v8::Loca
         setts->Get(ctx, string_to_js(isolate, "directory")).ToLocalChecked()->ToString(ctx).ToLocalChecked(),
         &res.directory);
 
-    res.flush_writes = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "flushWrites")).ToLocalChecked());
-    res.file_growth_rate = setts->Get(ctx, string_to_js(isolate, "fileGrowthRate")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
-    res.index_start_height = setts->Get(ctx, string_to_js(isolate, "indexStartHeight")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.db_mode = db_mode_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "dbMode")).ToLocalChecked());
     res.reorg_pool_limit = setts->Get(ctx, string_to_js(isolate, "reorgPoolLimit")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.db_max_size = setts->Get(ctx, string_to_js(isolate, "dbMaxSize")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.safe_mode = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "safeMode")).ToLocalChecked());

@@ -50,9 +50,7 @@ function print_settings(setts) {
     console.log(setts.chain.asertHalfLife);
     // ------------------------------------------------------------------------------------
     console.log(setts.database.directory);
-    console.log(setts.database.flushWrites);
-    console.log(setts.database.fileGrowthRate);
-    console.log(setts.database.indexStartHeight);
+    console.log(setts.database.dbMode);
     console.log(setts.database.reorgPoolLimit);
     console.log(setts.database.dbMaxSize);
     console.log(setts.database.safeMode);
@@ -143,13 +141,14 @@ function test_encoding() {
 
 async function main() {
     test_encoding();
-    return;
 
     const mainnet = 0;
     const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
     setts.database.dbMaxSize = 2 * 1024 * 1024;    // 2MiB
-    // console.log(setts);
+    console.log(setts);
+    print_settings(setts);
+    return;
 
     let node = kth.node_construct(setts, true);
     kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
