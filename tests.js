@@ -139,6 +139,33 @@ function test_encoding() {
     // expect(addr.encodedLegacy()).toBe('1P3GQYtcWgZHrrJhUa4ctoQ3QoCU2F65nz');
 }
 
+function chain_fetch_last_height(chain) {
+    return new Promise((resolve, reject) => {
+        kth.chain_fetch_last_height(chain, function (e, h) {
+            resolve({error: e, height: h});
+            // if (e == 0) {
+            //     resolve(h);
+            // } else {
+            //     reject(e);
+            // }
+        })
+    });
+}
+async function wait_until_block(chain, desired_height) {
+
+    var res = await chain_fetch_last_height(chain);
+    console.log(`chain_fetch_last_height is OK, height: ${res.height}`)
+
+    while (res.height < desired_height) {
+        var res = await  chain_fetch_last_height(chain);
+        console.log(`chain_fetch_last_height is OK, height: ${res.height}`)
+
+        if (res.height < desired_height) {
+            sleep(1000)
+        }
+    }
+}
+
 async function main() {
     test_encoding();
 
@@ -146,17 +173,71 @@ async function main() {
     const justChain = 1;
     const setts = kth.config_settings_default(mainnet);
     setts.database.dbMaxSize = 2 * 1024 * 1024;    // 2MiB
-    console.log(setts);
-    print_settings(setts);
-    return;
+    // console.log(setts);
+    // print_settings(setts);
 
+    let started = false
     let node = kth.node_construct(setts, true);
     kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
         console.log("handler result: ");
         console.log(err);
+        started = true;
     });
 
-    await sleep(1000);
+    while (!started) {
+        await sleep(1000);
+    }
+
+    // const res = await async_chain.fetch_block_by_height(this.native, height);
+    // return [res[0], block.fromNative(res[1]), res[2]];
+
+    const chain = kth.node_get_chain(node);
+    // await wait_until_block(chain, 2300);
+
+    // kth.chain_fetch_block_header_by_height(chain, 0, function (err, header, height) {
+    //     if (err == 0) {
+    //         console.log(`chain_fetch_block_header_by_height is OK, err:  ${err}, height: ${height}, header: ${header}`)
+    //     } else {
+    //         console.log(`chain_fetch_block_header_by_height failed, err: ${err}, height: ${height}`)
+    //     }
+    // })
+
+    kth.chain_fetch_block_by_height(chain, 0, function (err, block, height) {
+        if (err == 0) {
+            console.log(`chain_fetch_block_by_height is OK, err:  ${err}, height: ${height}`)
+            if (kth.chain_block_is_valid(block)) {
+                console.log(`chain_block_is_valid is OK, err:  ${err}, height: ${height}`)
+            } else {
+                console.log(`chain_block_is_valid failed, err: ${err}, height: ${height}`)
+            }
+
+            const hash = kth.chain_block_hash(block);
+            console.log(`chain_block_hash is OK, err:  ${err}, height: ${height}, hash: ${hash}`)
+            console.log(block)
+
+
+            const headerNative = kth.chain_block_header(block);
+            console.log(headerNative);
+            const version = kth.chain_header_version(headerNative);
+            console.log(version);
+            const prevHash = kth.chain_header_previous_block_hash(headerNative);
+            console.log(prevHash);
+            const merkle = kth.chain_header_merkle(headerNative);
+            console.log(merkle);
+            const timestamp = kth.chain_header_timestamp(headerNative);
+            console.log(timestamp);
+            const bits = kth.chain_header_bits(headerNative);
+            console.log(bits);
+            const nonce = kth.chain_header_nonce(headerNative);
+            console.log(nonce);
+
+
+        } else {
+            console.log(`chain_fetch_block_by_height failed, err: ${err}, height: ${height}`)
+        }
+    })
+
+    await sleep(5000);
 
     kth.node_signal_stop(node);
     kth.node_destruct(node);

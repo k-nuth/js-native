@@ -137,10 +137,19 @@ void chain_fetch_block_height(FunctionCallbackInfo<Value> const& args) {
 // int chain_get_block_header_by_height(kth_chain_t chain, uint64_t /*size_t*/ height, kth_header_t* out_header, uint64_t /*size_t*/* out_height);
 // typedef void (*block_header_fetch_handler_t)(kth_chain_t, void*, int, kth_header_t header, uint64_t /*size_t*/ h);
 
+template <typename T>
+Local<Value> object_or_null(kth_error_code_t error, Isolate* isolate, T* obj) {
+    if (error != kth_ec_success) {
+        return Null(isolate);
+    }
+    return External::New(isolate, obj);
+}
+
 void chain_fetch_block_header_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_header_t header, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
+    auto obj = object_or_null(error, isolate, header);
     Local<Value> argv[] = { Number::New(isolate, error),
-                            External::New(isolate, header),
+                            obj,
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -179,8 +188,9 @@ void chain_fetch_block_header_by_height(FunctionCallbackInfo<Value> const& args)
 // int chain_get_block_header_by_hash(kth_chain_t chain, kth_hash_t hash, kth_header_t* out_header, uint64_t /*size_t*/* out_height);
 void chain_fetch_block_header_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_header_t header, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
+    auto obj = object_or_null(error, isolate, header);
     Local<Value> argv[] = { Number::New(isolate, error),
-                            External::New(isolate, header),
+                            obj,
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -229,8 +239,9 @@ void chain_fetch_block_header_by_hash(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_block_t block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
+    auto obj = object_or_null(error, isolate, block);
     Local<Value> argv[] = { Number::New(isolate, error),
-                            External::New(isolate, block),
+                            obj,
                             Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
@@ -271,7 +282,8 @@ void chain_fetch_block_by_height(FunctionCallbackInfo<Value> const& args) {
 // int chain_get_block_by_hash(kth_chain_t chain, kth_hash_t hash, kth_block_t* out_block, uint64_t /*size_t*/* out_height);
 void chain_fetch_block_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_block_t block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, block), Number::New(isolate, h) };
+    auto obj = object_or_null(error, isolate, block);
+    Local<Value> argv[] = { Number::New(isolate, error), obj, Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -320,7 +332,8 @@ void chain_fetch_block_by_hash(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_merkle_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_merkleblock_t merkle_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, merkle_block), Number::New(isolate, h) };
+    auto obj = object_or_null(error, isolate, merkle_block);
+    Local<Value> argv[] = { Number::New(isolate, error), obj, Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -361,7 +374,8 @@ void chain_fetch_merkle_block_by_height(FunctionCallbackInfo<Value> const& args)
 
 void chain_fetch_merkle_block_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_merkleblock_t merkle_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, merkle_block), Number::New(isolate, h) };
+    auto obj = object_or_null(error, isolate, merkle_block);
+    Local<Value> argv[] = { Number::New(isolate, error), obj, Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -409,7 +423,8 @@ void chain_fetch_merkle_block_by_hash(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_compact_block_by_height_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compact_block_t compact_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, compact_block), Number::New(isolate, h) };
+    auto obj = object_or_null(error, isolate, compact_block);
+    Local<Value> argv[] = { Number::New(isolate, error), obj, Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -450,7 +465,8 @@ void chain_fetch_compact_block_by_height(FunctionCallbackInfo<Value> const& args
 
 void chain_fetch_compact_block_by_hash_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_compact_block_t compact_block, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, compact_block), Number::New(isolate, h) };
+    auto obj = object_or_null(error, isolate, compact_block);
+    Local<Value> argv[] = { Number::New(isolate, error), obj, Number::New(isolate, h) };
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -499,8 +515,9 @@ void chain_fetch_compact_block_by_hash(FunctionCallbackInfo<Value> const& args) 
 
 void chain_fetch_transaction_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_transaction_t transaction, uint64_t i, uint64_t h) {
     auto* isolate = Isolate::GetCurrent();
+    auto obj = object_or_null(error, isolate, transaction);
     Local<Value> argv[] = { Number::New(isolate, error),
-                            External::New(isolate, transaction),
+                            obj,
                             Number::New(isolate, i),
                             Number::New(isolate, h)};
     call_function_and_free(isolate, ctx, argv);
@@ -613,7 +630,8 @@ void chain_fetch_transaction_position(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_spend_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_inputpoint_t input_point) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, input_point)};
+    auto obj = object_or_null(error, isolate, input_point);
+    Local<Value> argv[] = { Number::New(isolate, error), obj};
     call_function_and_free(isolate, ctx, argv);
 }
 
@@ -657,7 +675,8 @@ void chain_fetch_spend(FunctionCallbackInfo<Value> const& args) {
 
 void chain_fetch_history_handler(kth_chain_t chain, void* ctx, kth_error_code_t error, kth_history_compact_list_t history) {
     auto* isolate = Isolate::GetCurrent();
-    Local<Value> argv[] = { Number::New(isolate, error), External::New(isolate, history)};
+    auto obj = object_or_null(error, isolate, history);
+    Local<Value> argv[] = { Number::New(isolate, error), obj};
     call_function_and_free(isolate, ctx, argv);
 }
 

@@ -3,3 +3,13 @@ rm -rf deps
 rm -rf lib
 rm -rf node_modules
 rm -rf host
+rm -rf blockchain
+rm -rf full_deploy
+rm -rf conanbuild.sh
+rm -rf conanbuildenv-release-x86_64.sh
+rm -rf conanrun.sh
+rm -rf conanrunenv-release-x86_64.sh
+rm -rf deactivate_conanbuild.sh
+rm -rf deactivate_conanrun.sh
+rm -rf debug.log
+rm -rf error.log
