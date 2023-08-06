@@ -97,9 +97,9 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_organize_transaction", chain_organize_transaction);
 
     NODE_SET_METHOD(exports, "chain_subscribe_blockchain", chain_subscribe_blockchain);
+    NODE_SET_METHOD(exports, "chain_subscribe_transaction", chain_subscribe_transaction);
 
     NODE_SET_METHOD(exports, "chain_is_stale", chain_is_stale);
-
 
     // chain header
     NODE_SET_METHOD(exports, "chain_header_factory_from_data", chain_header_factory_from_data);

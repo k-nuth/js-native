@@ -5,6 +5,7 @@
 #include <kth/capi/chain/chain.h>
 #include <kth/capi/node.h>
 #include <kth/capi/chain/block_list.h>
+#include <kth/capi/chain/transaction.h>
 
 #include <tuple>
 
@@ -42,7 +43,17 @@ struct blockchain_callback_data_t {
     bool unsubscribe;
 };
 
-static std::atomic<blockchain_callback_data_t*> global_callback_data{nullptr};
+struct transaction_callback_data_t {
+    persistent_function_t* callback;
+    uv_async_t* async;
+    kth_error_code_t error;
+    kth_transaction_t transaction;
+    bool closing;
+    bool unsubscribe;
+};
+
+static std::atomic<blockchain_callback_data_t*> global_blockchain_callback_data{nullptr};
+static std::atomic<transaction_callback_data_t*> global_transaction_callback_data{nullptr};
 
 // ---------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------
@@ -957,6 +968,7 @@ void chain_organize_transaction(FunctionCallbackInfo<Value> const& args) {
 // Subscribers.
 //-------------------------------------------------------------------------
 
+// Subscribe blockchain
 void free_blockchain_callback_data(blockchain_callback_data_t* callback_data) {
     if (callback_data == nullptr) {
         return;
@@ -971,7 +983,7 @@ void free_blockchain_callback_data(blockchain_callback_data_t* callback_data) {
 
 kth_bool_t kth_chain_subscribe_blockchain_handler(kth_node_t node, kth_chain_t chain, void* ctx, kth_error_code_t error, uint64_t height, kth_block_list_t incoming, kth_block_list_t outgoing) {
     auto* callback_data = static_cast<blockchain_callback_data_t*>(ctx);
-    if (global_callback_data == nullptr) {
+    if (global_blockchain_callback_data == nullptr) {
         return 0;
     }
 
@@ -979,7 +991,7 @@ kth_bool_t kth_chain_subscribe_blockchain_handler(kth_node_t node, kth_chain_t c
     if (kth_node_stopped(node) != 0 || error == service_stopped) {
         callback_data->closing = true;
 
-        auto* existing_callback_data = global_callback_data.exchange(nullptr);
+        auto* existing_callback_data = global_blockchain_callback_data.exchange(nullptr);
         if (existing_callback_data != nullptr) {
             free_blockchain_callback_data(existing_callback_data);
         }
@@ -987,7 +999,7 @@ kth_bool_t kth_chain_subscribe_blockchain_handler(kth_node_t node, kth_chain_t c
     }
 
     if (callback_data->unsubscribe) {
-        auto* existing_callback_data = global_callback_data.exchange(nullptr);
+        auto* existing_callback_data = global_blockchain_callback_data.exchange(nullptr);
         if (existing_callback_data != nullptr) {
             free_blockchain_callback_data(existing_callback_data);
         }
@@ -1007,7 +1019,7 @@ kth_bool_t kth_chain_subscribe_blockchain_handler(kth_node_t node, kth_chain_t c
 
 void kth_chain_subscribe_blockchain_async_handler(uv_async_t* handle) {
     auto* callback_data = static_cast<blockchain_callback_data_t*>(handle->data);
-    if (global_callback_data == nullptr) {
+    if (global_blockchain_callback_data == nullptr) {
         return;
     }
 
@@ -1090,7 +1102,7 @@ void chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
     kth_chain_t chain = (kth_chain_t)chain_ptr;
 
     // Cleanup existing subscription, if any
-    auto* existing_callback_data = global_callback_data.exchange(nullptr);
+    auto* existing_callback_data = global_blockchain_callback_data.exchange(nullptr);
     if (existing_callback_data != nullptr) {
         free_blockchain_callback_data(existing_callback_data);
     }
@@ -1107,9 +1119,149 @@ void chain_subscribe_blockchain(FunctionCallbackInfo<Value> const& args) {
     callback_data->async = async;
     callback_data->closing = false;
     callback_data->unsubscribe = false;
-    global_callback_data = callback_data;
+    global_blockchain_callback_data = callback_data;
 
     kth_chain_subscribe_blockchain(node, chain, callback_data, kth_chain_subscribe_blockchain_handler);
+}
+
+// Subscribe transaction
+void free_transaction_callback_data(transaction_callback_data_t* callback_data) {
+    if (callback_data == nullptr) {
+        return;
+    }
+    callback_data->callback->Reset();
+    delete callback_data->callback;
+    uv_close(reinterpret_cast<uv_handle_t*>(callback_data->async), [](uv_handle_t* handle) {
+        delete reinterpret_cast<uv_async_t*>(handle);
+    });
+    delete callback_data;
+}
+
+kth_bool_t kth_chain_subscribe_transaction_handler(kth_node_t node, kth_chain_t chain, void* ctx, kth_error_code_t error, kth_transaction_t tx) {
+    auto* callback_data = static_cast<transaction_callback_data_t*>(ctx);
+    if (global_transaction_callback_data == nullptr) {
+        return 0;
+    }
+
+    constexpr int service_stopped = 1;
+    if (kth_node_stopped(node) != 0 || error == service_stopped) {
+        callback_data->closing = true;
+
+        auto* existing_callback_data = global_transaction_callback_data.exchange(nullptr);
+        if (existing_callback_data != nullptr) {
+            free_transaction_callback_data(existing_callback_data);
+        }
+        return 0;
+    }
+
+    if (callback_data->unsubscribe) {
+        auto* existing_callback_data = global_transaction_callback_data.exchange(nullptr);
+        if (existing_callback_data != nullptr) {
+            free_transaction_callback_data(existing_callback_data);
+        }
+        return 0;
+    }
+
+    callback_data->error = error;
+    callback_data->transaction = tx;
+    callback_data->async->data = callback_data;
+
+    uv_async_send(callback_data->async);
+
+    return 1; // Return 1 to keep the subscription active.
+}
+
+void kth_chain_subscribe_transaction_async_handler(uv_async_t* handle) {
+    auto* callback_data = static_cast<transaction_callback_data_t*>(handle->data);
+    if (global_transaction_callback_data == nullptr) {
+        return;
+    }
+
+    auto* isolate = Isolate::GetCurrent();
+    auto callback = callback_data->callback;
+
+    v8::HandleScope handle_scope(isolate);
+
+    Local<Value> tx;
+    if (callback_data->transaction != nullptr) {
+        tx = External::New(isolate, callback_data->transaction);
+    } else {
+        tx = Null(isolate);
+    }
+
+    Local<Value> argv[] = {
+        Number::New(isolate, callback_data->error),
+        tx
+    };
+
+    auto callback_local = Local<Function>::New(isolate, *callback);
+    auto maybe_result = callback_local->Call(isolate->GetCurrentContext(), isolate->GetCurrentContext()->Global(), 2, argv);
+
+    if (maybe_result.IsEmpty() || ! maybe_result.ToLocalChecked()->IsTrue()) {
+        callback_data->unsubscribe = true;
+    }
+
+    if (callback_data->transaction != nullptr) {
+        kth_chain_transaction_destruct(callback_data->transaction);
+        callback_data->transaction = nullptr;
+    }
+
+    // // Check if closing flag is set and if so, delete callback_data
+    // if (callback_data->closing) {
+    //     delete callback_data;
+    // }
+}
+
+void chain_subscribe_transaction(FunctionCallbackInfo<Value> const& args) {
+    auto* isolate = args.GetIsolate();
+
+    if (args.Length() != 3) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[1]->IsExternal()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    if ( ! args[2]->IsFunction()) {
+        throw_exception(isolate, "Wrong arguments");
+        return;
+    }
+
+    void* node_ptr = v8::External::Cast(*args[0])->Value();
+    kth_node_t node = (kth_node_t)node_ptr;
+
+    void* chain_ptr = v8::External::Cast(*args[1])->Value();
+    kth_chain_t chain = (kth_chain_t)chain_ptr;
+
+    // Cleanup existing subscription, if any
+    auto* existing_callback_data = global_transaction_callback_data.exchange(nullptr);
+    if (existing_callback_data != nullptr) {
+        free_transaction_callback_data(existing_callback_data);
+    }
+
+    auto callback = new persistent_function_t;
+    callback->Reset(isolate, args[2].As<v8::Function>());
+
+    auto* async = new uv_async_t;
+    uv_async_init(uv_default_loop(), async, kth_chain_subscribe_transaction_async_handler);
+
+    // Create new subscription context
+    auto* callback_data = new transaction_callback_data_t;
+    callback_data->callback = callback;
+    callback_data->async = async;
+    callback_data->closing = false;
+    callback_data->unsubscribe = false;
+    global_transaction_callback_data = callback_data;
+
+    kth_chain_subscribe_transaction(node, chain, callback_data, kth_chain_subscribe_transaction_handler);
 }
 
 //---------------------------------------------------------------------------

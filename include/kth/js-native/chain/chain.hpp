@@ -28,7 +28,7 @@ void chain_organize_block(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_organize_transaction(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 void chain_subscribe_blockchain(v8::FunctionCallbackInfo<v8::Value> const& args);
-
+void chain_subscribe_transaction(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 void chain_is_stale(v8::FunctionCallbackInfo<v8::Value> const& args);
 
