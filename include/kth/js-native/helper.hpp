@@ -57,13 +57,19 @@ T copy_data_and_free(context_t& context) {
 
 #if defined(_WIN32)
 inline
-v8::Local<v8::String> string_to_js(v8::Isolate* isolate, wchar_t const* str) {
+v8::Local<v8::Value> string_to_js(v8::Isolate* isolate, wchar_t const* str) {
+    if (str == nullptr) {
+        return v8::Null(isolate);
+    }
     return v8::String::NewFromTwoByte(isolate, reinterpret_cast<uint16_t const*>(str), v8::NewStringType::kNormal).ToLocalChecked();
 }
 #endif // defined(_WIN32)
 
 inline
-v8::Local<v8::String> string_to_js(v8::Isolate* isolate, char const* str) {
+v8::Local<v8::Value> string_to_js(v8::Isolate* isolate, char const* str) {
+    if (str == nullptr) {
+        return v8::Null(isolate);
+    }
     return v8::String::NewFromUtf8(isolate, str, v8::NewStringType::kNormal).ToLocalChecked();
 }
 
@@ -120,6 +126,11 @@ v8::Local<v8::Uint8Array> shorthash_to_js(v8::Isolate* isolate, kth_shorthash_t 
 }
 
 inline
+v8::Local<v8::Uint8Array> longhash_to_js(v8::Isolate* isolate, kth_longhash_t const& hash) {
+    return byte_array_to_js(isolate, hash.hash, 64);
+}
+
+inline
 kth_bool_t bool_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x) {
     bool b = x->BooleanValue(isolate);
     // return b ? 1 : 0;
@@ -163,13 +174,6 @@ kth_db_mode_t db_mode_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x
     kth_db_mode_t res = kth_db_mode_t(val);
     return res;
 }
-
-// Wallet
-inline
-v8::Local<v8::Uint8Array> ec_secret_to_js(v8::Isolate* isolate, kth_ec_secret_t const& x) {
-    return byte_array_to_js(isolate, x.data, 32);
-}
-
 
 }  // namespace kth::js_native
 

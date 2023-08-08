@@ -10,10 +10,8 @@
 namespace kth::js_native {
 
 kth_hash_t to_native_hash(v8::Local<v8::Uint8Array> const& arr);
-kth_shorthash_t to_native_shorthash(v8::Local<v8::Uint8Array> arr);
-kth_wif_compressed_t to_native_wif_compressed(v8::Local<v8::Uint8Array> arr);
-kth_wif_uncompressed_t to_native_wif_uncompressed(v8::Local<v8::Uint8Array> arr);
-kth_ec_secret_t to_native_ec_secret(v8::Local<v8::Uint8Array> arr);
+kth_shorthash_t to_native_shorthash(v8::Local<v8::Uint8Array> const& arr);
+kth_longhash_t to_native_longhash(v8::Local<v8::Uint8Array> const& arr);
 
 }  // namespace kth::js_native
 

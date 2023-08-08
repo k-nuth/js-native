@@ -213,25 +213,25 @@ void chain_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
-void chain_transaction_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void chain_transaction_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments. chain_transaction_hash_out function requires 2 arguments.");
-        return;
-    }
+//     if (args.Length() != 1) {
+//         throw_exception(isolate, "Wrong number of arguments. chain_transaction_hash_out function requires 2 arguments.");
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong argument type for argument transaction (#1). Required to be IsExternal.");
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         throw_exception(isolate, "Wrong argument type for argument transaction (#1). Required to be IsExternal.");
+//         return;
+//     }
 
-    kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    kth_hash_t hash;
+//     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
+//     kth_hash_t hash;
 
-    kth_chain_transaction_hash_out(transaction, &hash);
+//     kth_chain_transaction_hash_out(transaction, &hash);
 
-}
+// }
 
 void chain_transaction_hash_sighash_type(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
@@ -258,31 +258,31 @@ void chain_transaction_hash_sighash_type(v8::FunctionCallbackInfo<v8::Value> con
     args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
-void chain_transaction_hash_sighash_type_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void chain_transaction_hash_sighash_type_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 2) {
-        throw_exception(isolate, "Wrong number of arguments. chain_transaction_hash_sighash_type_out function requires 3 arguments.");
-        return;
-    }
+//     if (args.Length() != 2) {
+//         throw_exception(isolate, "Wrong number of arguments. chain_transaction_hash_sighash_type_out function requires 3 arguments.");
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong argument type for argument transaction (#1). Required to be IsExternal.");
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         throw_exception(isolate, "Wrong argument type for argument transaction (#1). Required to be IsExternal.");
+//         return;
+//     }
 
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong argument type for argument sighash_type (#2). Required to be IsNumber.");
-        return;
-    }
+//     if ( ! args[1]->IsNumber()) {
+//         throw_exception(isolate, "Wrong argument type for argument sighash_type (#2). Required to be IsNumber.");
+//         return;
+//     }
 
-    kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
-    uint32_t sighash_type = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    kth_hash_t hash;
+//     kth_transaction_t transaction = (kth_transaction_t)v8::External::Cast(*args[0])->Value();
+//     uint32_t sighash_type = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+//     kth_hash_t hash;
 
-    kth_chain_transaction_hash_sighash_type_out(transaction, sighash_type, &hash);
+//     kth_chain_transaction_hash_sighash_type_out(transaction, sighash_type, &hash);
 
-}
+// }
 
 void chain_transaction_locktime(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();

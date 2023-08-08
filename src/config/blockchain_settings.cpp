@@ -47,7 +47,7 @@ Local<Array> config_checkpoints_to_js(Isolate* isolate, kth_checkpoint* checkpoi
     Local<Array> jsArr = Nan::New<Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
         auto elem = config_checkpoint_to_js(isolate, *checkpoint);
-        jsArr->Set(ctx, i, elem);
+        auto _ = jsArr->Set(ctx, i, elem);
         ++checkpoint;
     }
     return jsArr;

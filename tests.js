@@ -151,6 +151,7 @@ function chain_fetch_last_height(chain) {
         })
     });
 }
+
 async function wait_until_block(chain, desired_height) {
 
     var res = await chain_fetch_last_height(chain);
@@ -166,8 +167,64 @@ async function wait_until_block(chain, desired_height) {
     }
 }
 
+function testBIP44Addresses() {
+    const MAINNET_P2KH = 0x00;
+    const MAINNET_P2SH = 0x05;
+    const HD_FIRST_HARDENED_KEY = 0x80000000;   //(1 << 31)
+    const HD_PRIVATE_MAINNET = 326702167824577054;
+    const HD_PRIVATE_TESTNET = 303293221666392015;
+
+
+    // car slab tail dirt wife custom front shield diet pear skull vapor gorilla token yard
+    // https://iancoleman.io/bip39/
+    // e0b6ebf43ebcaa428f59a1f9241019ba4c083a1c05d988677c8bf28ec6505ae07286515a9bb0bf98d836f582a94f29fc92bbe9a0a5805ce6dc4756a439ebd1d9
+
+    const words = [
+        'car', 'slab', 'tail', 'dirt', 'wife', 'custom', 'front',
+        'shield', 'diet', 'pear', 'skull', 'vapor', 'gorilla', 'token', 'yard'
+    ];
+
+
+    let wl = kth.core_string_list_construct();
+    console.log("------------------------------------------------");
+    words.forEach(word => {
+        // console.log(word);
+        kth.core_string_list_push_back(wl, word);
+    });
+    console.log("------------------------------------------------");
+
+    const seed = kth.wallet_mnemonics_to_seed(wl);
+    console.log("seed: ", seed);
+    // return;
+
+    const m = kth.wallet_hd_private_construct_with_seed(seed, HD_PRIVATE_MAINNET);
+    const m44h = kth.wallet_hd_private_derive_private(m, 44 + HD_FIRST_HARDENED_KEY);
+    const m44h145h = kth.wallet_hd_private_derive_private(m44h, 145 + HD_FIRST_HARDENED_KEY);
+    const m44h145h0h = kth.wallet_hd_private_derive_private(m44h145h, 0 + HD_FIRST_HARDENED_KEY);
+    const m44h145h0h0 = kth.wallet_hd_private_derive_private(m44h145h0h, 0);
+
+    console.log("BIP32 Root Key:", kth.wallet_hd_private_encoded(m));
+    console.log("BIP44 Account Extended Private Key:", kth.wallet_hd_private_encoded(m44h145h0h));
+    console.log("BIP44 Account Extended Public Key:", kth.wallet_hd_public_encoded(kth.wallet_hd_private_to_public(m44h145h0h)));
+    console.log("BIP32 Account Extended Private Key:", kth.wallet_hd_private_encoded(m44h145h0h0));
+    console.log("BIP32 Account Extended Public Key:", kth.wallet_hd_public_encoded(kth.wallet_hd_private_to_public(m44h145h0h0)));
+
+    // print addresses
+    for (let i = 0; i < 20; ++i) {
+        const key = kth.wallet_hd_private_derive_private(m44h145h0h0, i);
+        const secret = kth.wallet_hd_private_secret(key);
+        const point = kth.wallet_secret_to_public(secret);
+        const ecp = kth.wallet_ec_public_construct_from_point(point, true);
+        const pa = kth.wallet_ec_public_to_payment_address(ecp, MAINNET_P2KH);
+        console.log(kth.wallet_payment_address_encoded_cashaddr(pa, false));
+    }
+}
+
+
 async function main() {
-    test_encoding();
+    testBIP44Addresses();
+    return;
+    // test_encoding();
 
     const mainnet = 0;
     const justChain = 1;

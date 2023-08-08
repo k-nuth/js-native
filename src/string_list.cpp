@@ -56,10 +56,8 @@ void core_string_list_destruct(v8::FunctionCallbackInfo<v8::Value> const& args) 
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_string_list_t string_list = (kth_string_list_t)vptr;
-
-    kth_core_string_list_destruct(string_list);
+    auto obj = (kth_string_list_t)v8::External::Cast(*args[0])->Value();
+    kth_core_string_list_destruct(obj);
 }
 
 void core_string_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -80,10 +78,9 @@ void core_string_list_push_back(v8::FunctionCallbackInfo<v8::Value> const& args)
         return;
     }
 
-    void* vptr = v8::External::Cast(*args[0])->Value();
-    kth_string_list_t string_list = (kth_string_list_t)vptr;
-    v8::String::Utf8Value str(isolate, args[0]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
-    kth_core_string_list_push_back(string_list, *str);
+    auto obj = (kth_string_list_t)v8::External::Cast(*args[0])->Value();
+    v8::String::Utf8Value str(isolate, args[1]->ToString(isolate->GetCurrentContext()).ToLocalChecked());
+    kth_core_string_list_push_back(obj, *str);
 }
 
 }  // namespace kth::js_native
