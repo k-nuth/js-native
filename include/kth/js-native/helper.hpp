@@ -164,6 +164,13 @@ kth_db_mode_t db_mode_to_cpp(v8::Isolate* isolate, v8::Local<v8::Value> const& x
     return res;
 }
 
+// Wallet
+inline
+v8::Local<v8::Uint8Array> ec_secret_to_js(v8::Isolate* isolate, kth_ec_secret_t const& x) {
+    return byte_array_to_js(isolate, x.data, 32);
+}
+
+
 }  // namespace kth::js_native
 
 #endif // KTH_JS_NATIVE_HELPER_HPP_
