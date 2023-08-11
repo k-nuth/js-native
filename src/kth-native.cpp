@@ -39,7 +39,13 @@
 #include <kth/js-native/config/node_settings.hpp>
 #include <kth/js-native/config/settings.hpp>
 
+#include <kth/js-native/wallet/ec_private.hpp>
+#include <kth/js-native/wallet/ec_public.hpp>
+#include <kth/js-native/wallet/hd_private.hpp>
+#include <kth/js-native/wallet/hd_public.hpp>
+#include <kth/js-native/wallet/elliptic_curve.hpp>
 #include <kth/js-native/wallet/payment_address.hpp>
+#include <kth/js-native/wallet/wallet.hpp>
 
 #include <kth/js-native/node.hpp>
 #include <kth/js-native/string_list.hpp>
@@ -131,7 +137,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_is_valid", chain_block_is_valid);
     NODE_SET_METHOD(exports, "chain_block_header", chain_block_header);
     NODE_SET_METHOD(exports, "chain_block_hash", chain_block_hash);
-    NODE_SET_METHOD(exports, "chain_block_hash_out", chain_block_hash_out);
+    // NODE_SET_METHOD(exports, "chain_block_hash_out", chain_block_hash_out);
     NODE_SET_METHOD(exports, "chain_block_proof_str", chain_block_proof_str);
     NODE_SET_METHOD(exports, "chain_block_transactions", chain_block_transactions);
     NODE_SET_METHOD(exports, "chain_block_serialized_size", chain_block_serialized_size);
@@ -140,7 +146,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_block_claim", chain_block_claim);
     NODE_SET_METHOD(exports, "chain_block_reward", chain_block_reward);
     NODE_SET_METHOD(exports, "chain_block_generate_merkle_root", chain_block_generate_merkle_root);
-    NODE_SET_METHOD(exports, "chain_block_generate_merkle_root_out", chain_block_generate_merkle_root_out);
+    // NODE_SET_METHOD(exports, "chain_block_generate_merkle_root_out", chain_block_generate_merkle_root_out);
     NODE_SET_METHOD(exports, "chain_block_signature_operations", chain_block_signature_operations);
     NODE_SET_METHOD(exports, "chain_block_signature_operations_bip16_active", chain_block_signature_operations_bip16_active);
     NODE_SET_METHOD(exports, "chain_block_total_inputs", chain_block_total_inputs);
@@ -170,9 +176,9 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_transaction_version", chain_transaction_version);
     NODE_SET_METHOD(exports, "chain_transaction_set_version", chain_transaction_set_version);
     NODE_SET_METHOD(exports, "chain_transaction_hash", chain_transaction_hash);
-    NODE_SET_METHOD(exports, "chain_transaction_hash_out", chain_transaction_hash_out);
+    // NODE_SET_METHOD(exports, "chain_transaction_hash_out", chain_transaction_hash_out);
     NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type", chain_transaction_hash_sighash_type);
-    NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type_out", chain_transaction_hash_sighash_type_out);
+    // NODE_SET_METHOD(exports, "chain_transaction_hash_sighash_type_out", chain_transaction_hash_sighash_type_out);
     NODE_SET_METHOD(exports, "chain_transaction_locktime", chain_transaction_locktime);
     NODE_SET_METHOD(exports, "chain_transaction_serialized_size", chain_transaction_serialized_size);
     NODE_SET_METHOD(exports, "chain_transaction_fees", chain_transaction_fees);
@@ -282,15 +288,86 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_count", chain_stealth_compact_list_count);
     NODE_SET_METHOD(exports, "chain_stealth_compact_list_nth", chain_stealth_compact_list_nth);
 
-    NODE_SET_METHOD(exports, "wallet_payment_address_set_cashaddr_prefix", wallet_payment_address_set_cashaddr_prefix);
-    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_legacy", wallet_payment_address_encoded_legacy);
-    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_cashaddr", wallet_payment_address_encoded_cashaddr);
+    NODE_SET_METHOD(exports, "wallet_ec_private_construct_default", wallet_ec_private_construct_default);
+    NODE_SET_METHOD(exports, "wallet_ec_private_construct_string", wallet_ec_private_construct_string);
+    NODE_SET_METHOD(exports, "wallet_ec_private_construct_compressed", wallet_ec_private_construct_compressed);
+    NODE_SET_METHOD(exports, "wallet_ec_private_construct_uncompressed", wallet_ec_private_construct_uncompressed);
+    NODE_SET_METHOD(exports, "wallet_ec_private_construct_secret", wallet_ec_private_construct_secret);
+    NODE_SET_METHOD(exports, "wallet_ec_private_destruct", wallet_ec_private_destruct);
+    NODE_SET_METHOD(exports, "wallet_ec_private_is_valid", wallet_ec_private_is_valid);
+    NODE_SET_METHOD(exports, "wallet_ec_private_encoded", wallet_ec_private_encoded);
+    NODE_SET_METHOD(exports, "wallet_ec_private_secret", wallet_ec_private_secret);
+    NODE_SET_METHOD(exports, "wallet_ec_private_version", wallet_ec_private_version);
+    NODE_SET_METHOD(exports, "wallet_ec_private_payment_version", wallet_ec_private_payment_version);
+    NODE_SET_METHOD(exports, "wallet_ec_private_wif_version", wallet_ec_private_wif_version);
+    NODE_SET_METHOD(exports, "wallet_ec_private_compressed", wallet_ec_private_compressed);
+    NODE_SET_METHOD(exports, "wallet_ec_private_to_public", wallet_ec_private_to_public);
+    NODE_SET_METHOD(exports, "wallet_ec_private_to_payment_address", wallet_ec_private_to_payment_address);
+
+    NODE_SET_METHOD(exports, "wallet_ec_public_construct_default", wallet_ec_public_construct_default);
+    NODE_SET_METHOD(exports, "wallet_ec_public_construct", wallet_ec_public_construct);
+    NODE_SET_METHOD(exports, "wallet_ec_public_construct_from_decoded", wallet_ec_public_construct_from_decoded);
+    NODE_SET_METHOD(exports, "wallet_ec_public_construct_from_base16", wallet_ec_public_construct_from_base16);
+    NODE_SET_METHOD(exports, "wallet_ec_public_construct_from_point", wallet_ec_public_construct_from_point);
+    NODE_SET_METHOD(exports, "wallet_ec_public_destruct", wallet_ec_public_destruct);
+    NODE_SET_METHOD(exports, "wallet_ec_public_is_valid", wallet_ec_public_is_valid);
+    NODE_SET_METHOD(exports, "wallet_ec_public_encoded", wallet_ec_public_encoded);
+    NODE_SET_METHOD(exports, "wallet_ec_public_point", wallet_ec_public_point);
+    NODE_SET_METHOD(exports, "wallet_ec_public_compressed", wallet_ec_public_compressed);
+    NODE_SET_METHOD(exports, "wallet_ec_public_to_data", wallet_ec_public_to_data);
+    NODE_SET_METHOD(exports, "wallet_ec_public_to_uncompressed", wallet_ec_public_to_uncompressed);
+    NODE_SET_METHOD(exports, "wallet_ec_public_to_payment_address", wallet_ec_public_to_payment_address);
+
+    NODE_SET_METHOD(exports, "wallet_secret_to_public", wallet_secret_to_public);
+
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_default", wallet_hd_private_construct_default);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct", wallet_hd_private_construct);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_prefix", wallet_hd_private_construct_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_prefixes", wallet_hd_private_construct_with_prefixes);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_seed", wallet_hd_private_construct_with_seed);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string", wallet_hd_private_construct_string);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_with_prefix", wallet_hd_private_construct_string_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_with_prefixes", wallet_hd_private_construct_string_with_prefixes);
+    NODE_SET_METHOD(exports, "wallet_hd_private_destruct", wallet_hd_private_destruct);
+    NODE_SET_METHOD(exports, "wallet_hd_private_encoded", wallet_hd_private_encoded);
+    NODE_SET_METHOD(exports, "wallet_hd_private_secret", wallet_hd_private_secret);
+    NODE_SET_METHOD(exports, "wallet_hd_private_to_hd_key", wallet_hd_private_to_hd_key);
+    NODE_SET_METHOD(exports, "wallet_hd_private_to_public", wallet_hd_private_to_public);
+    NODE_SET_METHOD(exports, "wallet_hd_private_derive_private", wallet_hd_private_derive_private);
+    NODE_SET_METHOD(exports, "wallet_hd_private_derive_public", wallet_hd_private_derive_public);
+
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_default", wallet_hd_public_construct_default);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct", wallet_hd_public_construct);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_with_prefix", wallet_hd_public_construct_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_string", wallet_hd_public_construct_string);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_string_with_prefix", wallet_hd_public_construct_string_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_public_destruct", wallet_hd_public_destruct);
+    NODE_SET_METHOD(exports, "wallet_hd_public_is_valid", wallet_hd_public_is_valid);
+    NODE_SET_METHOD(exports, "wallet_hd_public_encoded", wallet_hd_public_encoded);
+    NODE_SET_METHOD(exports, "wallet_hd_public_chain_code", wallet_hd_public_chain_code);
+    NODE_SET_METHOD(exports, "wallet_hd_public_lineage", wallet_hd_public_lineage);
+    NODE_SET_METHOD(exports, "wallet_hd_public_point", wallet_hd_public_point);
+    NODE_SET_METHOD(exports, "wallet_hd_public_to_hd_key", wallet_hd_public_to_hd_key);
+    NODE_SET_METHOD(exports, "wallet_hd_public_derive_public", wallet_hd_public_derive_public);
+
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
+    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_hash", wallet_payment_address_construct_from_hash);
+    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_public", wallet_payment_address_construct_from_public);
+    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_script", wallet_payment_address_construct_from_script);
+    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
+    NODE_SET_METHOD(exports, "wallet_payment_address_set_cashaddr_prefix", wallet_payment_address_set_cashaddr_prefix);
+    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_cashaddr", wallet_payment_address_encoded_cashaddr);
+    NODE_SET_METHOD(exports, "wallet_payment_address_encoded_legacy", wallet_payment_address_encoded_legacy);
     NODE_SET_METHOD(exports, "wallet_payment_address_hash20", wallet_payment_address_hash20);
     NODE_SET_METHOD(exports, "wallet_payment_address_hash32", wallet_payment_address_hash32);
     NODE_SET_METHOD(exports, "wallet_payment_address_version", wallet_payment_address_version);
     NODE_SET_METHOD(exports, "wallet_payment_address_is_valid", wallet_payment_address_is_valid);
-    NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);
+
+    NODE_SET_METHOD(exports, "wallet_mnemonics_to_seed", wallet_mnemonics_to_seed);
+    NODE_SET_METHOD(exports, "wallet_hd_new", wallet_hd_new);
+    NODE_SET_METHOD(exports, "wallet_hd_private_to_ec", wallet_hd_private_to_ec);
+    NODE_SET_METHOD(exports, "wallet_ec_to_public", wallet_ec_to_public);
+    NODE_SET_METHOD(exports, "wallet_ec_to_address", wallet_ec_to_address);
 
     NODE_SET_METHOD(exports, "core_string_list_construct", core_string_list_construct);
     NODE_SET_METHOD(exports, "core_string_list_destruct", core_string_list_destruct);

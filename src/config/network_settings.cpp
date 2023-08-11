@@ -48,7 +48,7 @@ v8::Local<v8::Array> config_endpoints_to_js(Isolate* isolate, kth_endpoint* endp
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
         auto elem = config_endpoint_to_js(isolate, *endpoint);
-        jsArr->Set(ctx, i, elem);
+        auto _ = jsArr->Set(ctx, i, elem);
         ++endpoint;
     }
     return jsArr;
@@ -67,7 +67,7 @@ v8::Local<v8::Array> config_authorities_to_js(Isolate* isolate, kth_authority* a
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
         auto elem = config_authority_to_js(isolate, *authority);
-        jsArr->Set(ctx, i, elem);
+        auto _ = jsArr->Set(ctx, i, elem);
         ++authority;
     }
     return jsArr;
@@ -78,7 +78,7 @@ v8::Local<v8::Array> config_strings_to_js(Isolate* isolate, char** strs, size_t 
     v8::Local<v8::Array> jsArr = Nan::New<v8::Array>(n);
     for (size_t i = 0; i < jsArr->Length(); ++i) {
         auto elem = string_to_js(isolate, *strs);
-        jsArr->Set(ctx, i, elem);
+        auto _ = jsArr->Set(ctx, i, elem);
         ++strs;
     }
     return jsArr;

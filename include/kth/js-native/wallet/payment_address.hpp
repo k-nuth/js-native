@@ -9,15 +9,18 @@
 
 namespace kth::js_native {
 
-void wallet_payment_address_set_cashaddr_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_payment_address_encoded_legacy(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_payment_address_encoded_cashaddr(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_construct_from_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_construct_from_public(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_construct_from_script(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_set_cashaddr_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_encoded_cashaddr(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_encoded_legacy(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_hash20(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_hash32(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_version(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 
 }  // namespace kth::js_native
 

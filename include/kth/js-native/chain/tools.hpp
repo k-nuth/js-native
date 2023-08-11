@@ -10,6 +10,8 @@
 namespace kth::js_native {
 
 kth_hash_t to_native_hash(v8::Local<v8::Uint8Array> const& arr);
+kth_shorthash_t to_native_shorthash(v8::Local<v8::Uint8Array> const& arr);
+kth_longhash_t to_native_longhash(v8::Local<v8::Uint8Array> const& arr);
 
 }  // namespace kth::js_native
 

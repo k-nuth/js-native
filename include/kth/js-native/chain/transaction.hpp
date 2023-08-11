@@ -17,9 +17,9 @@ void chain_transaction_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args)
 void chain_transaction_version(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_set_version(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_transaction_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args);
+// void chain_transaction_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_hash_sighash_type(v8::FunctionCallbackInfo<v8::Value> const& args);
-void chain_transaction_hash_sighash_type_out(v8::FunctionCallbackInfo<v8::Value> const& args);
+// void chain_transaction_hash_sighash_type_out(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_locktime(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_serialized_size(v8::FunctionCallbackInfo<v8::Value> const& args);
 void chain_transaction_fees(v8::FunctionCallbackInfo<v8::Value> const& args);

@@ -178,25 +178,25 @@ void chain_block_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
-void chain_block_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void chain_block_hash_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments. chain_block_hash_out function requires 2 arguments.");
-        return;
-    }
+//     if (args.Length() != 1) {
+//         throw_exception(isolate, "Wrong number of arguments. chain_block_hash_out function requires 2 arguments.");
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong argument type for argument block (#1). Required to be IsExternal.");
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         throw_exception(isolate, "Wrong argument type for argument block (#1). Required to be IsExternal.");
+//         return;
+//     }
 
-    kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
-    kth_hash_t hash;
+//     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
+//     kth_hash_t hash;
 
-    kth_chain_block_hash_out(block, &hash);
+//     kth_chain_block_hash_out(block, &hash);
 
-}
+// }
 
 void chain_block_proof_str(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
@@ -362,25 +362,25 @@ void chain_block_generate_merkle_root(v8::FunctionCallbackInfo<v8::Value> const&
     args.GetReturnValue().Set(hash_to_js(isolate, res));
 }
 
-void chain_block_generate_merkle_root_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
-    Isolate* isolate = args.GetIsolate();
+// void chain_block_generate_merkle_root_out(v8::FunctionCallbackInfo<v8::Value> const& args) {
+//     Isolate* isolate = args.GetIsolate();
 
-    if (args.Length() != 1) {
-        throw_exception(isolate, "Wrong number of arguments. chain_block_generate_merkle_root_out function requires 2 arguments.");
-        return;
-    }
+//     if (args.Length() != 1) {
+//         throw_exception(isolate, "Wrong number of arguments. chain_block_generate_merkle_root_out function requires 2 arguments.");
+//         return;
+//     }
 
-    if ( ! args[0]->IsExternal()) {
-        throw_exception(isolate, "Wrong argument type for argument block (#1). Required to be IsExternal.");
-        return;
-    }
+//     if ( ! args[0]->IsExternal()) {
+//         throw_exception(isolate, "Wrong argument type for argument block (#1). Required to be IsExternal.");
+//         return;
+//     }
 
-    kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
-    kth_hash_t merkle;
+//     kth_block_t block = (kth_block_t)v8::External::Cast(*args[0])->Value();
+//     kth_hash_t merkle;
 
-    kth_chain_block_generate_merkle_root_out(block, &merkle);
+//     kth_chain_block_generate_merkle_root_out(block, &merkle);
 
-}
+// }
 
 void chain_block_signature_operations(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();

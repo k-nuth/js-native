@@ -29,7 +29,6 @@
                    "src/chain/block_list.cpp",
                    "src/chain/history_compact_list.cpp",
                    "src/chain/history_compact.cpp",
-                  #  "src/chain/payment_address.cpp",
                    "src/chain/stealth_compact.cpp",
                    "src/chain/stealth_compact_list.cpp",
 
@@ -42,7 +41,13 @@
                    "src/config/node_settings.cpp",
                    "src/config/settings.cpp",
 
+                   "src/wallet/ec_private.cpp",
+                   "src/wallet/ec_public.cpp",
+                   "src/wallet/elliptic_curve.cpp",
+                   "src/wallet/hd_private.cpp",
+                   "src/wallet/hd_public.cpp",
                    "src/wallet/payment_address.cpp",
+                   "src/wallet/wallet.cpp",
 
       ],
 
