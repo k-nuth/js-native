@@ -145,6 +145,17 @@ void wallet_ec_private_construct_secret(v8::FunctionCallbackInfo<v8::Value> cons
         return;
     }
 
+    if ( ! args[1]->IsNumber()) {
+        throw_exception(isolate, "Wrong argument type for argument version (#0). Required to be IsNumber.");
+        return;
+    }
+
+    if ( ! args[2]->IsBoolean()) {
+        throw_exception(isolate, "Wrong arguments: Expected a boolean for compression flag");
+        return;
+    }
+
+
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     if (arr->Length() != 32) {
         throw_exception(isolate, "Wrong arguments, secret length must be 32 bytes");
