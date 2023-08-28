@@ -109,10 +109,6 @@ void wallet_hd_private_construct_key_prefixes(v8::FunctionCallbackInfo<v8::Value
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     kth_hd_key_t key = to_native_hd_key(arr);
-    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    // v8::Local<v8::BigInt> bigIntValue = args[1].As<v8::BigInt>();
-    // int64_t nativeValue = bigIntValue->Int64Value();
-
     uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
 
     kth_hd_private_t res = kth_wallet_hd_private_construct_key_prefixes(&key, prefixes);
@@ -145,7 +141,6 @@ void wallet_hd_private_construct_seed(v8::FunctionCallbackInfo<v8::Value> const&
 #endif
 
     kth_size_t size = arr->Length();
-    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
 
     kth_hd_private_t res = kth_wallet_hd_private_construct_seed(seed, size, prefixes);
@@ -215,7 +210,6 @@ void wallet_hd_private_construct_string_prefixes(v8::FunctionCallbackInfo<v8::Va
     }
 
     String::Utf8Value encoded(isolate, args[0]);
-    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
     uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
 
     kth_hd_private_t res = kth_wallet_hd_private_construct_string_prefixes(*encoded, prefixes);
