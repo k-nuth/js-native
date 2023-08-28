@@ -44,7 +44,7 @@ inline
 v8::Local<v8::Object> hd_lineage_to_js(v8::Isolate* isolate, kth_hd_lineage const& x) {
     auto ctx = isolate->GetCurrentContext();
     v8::Local<v8::Object> res = v8::Object::New(isolate);
-    res->Set(ctx, string_to_js(isolate, "prefixes"), v8::Number::New(isolate, x.prefixes));
+    res->Set(ctx, string_to_js(isolate, "prefixes"), v8::BigInt::NewFromUnsigned(isolate, x.prefixes));
     res->Set(ctx, string_to_js(isolate, "depth"), v8::Number::New(isolate, x.depth));
     res->Set(ctx, string_to_js(isolate, "parent_fingerprint"), v8::Number::New(isolate, x.parent_fingerprint));
     res->Set(ctx, string_to_js(isolate, "child_number"), v8::Number::New(isolate, x.child_number));
