@@ -46,7 +46,7 @@ void wallet_hd_public_construct_default(v8::FunctionCallbackInfo<v8::Value> cons
     args.GetReturnValue().Set(External::New(args.GetIsolate(), res));
 }
 
-void wallet_hd_public_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_public_construct_key(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -67,11 +67,11 @@ void wallet_hd_public_construct(v8::FunctionCallbackInfo<v8::Value> const& args)
     }
 
     auto key = to_native_hd_key(arr);
-    auto res = kth_wallet_hd_public_construct(&key);
+    auto res = kth_wallet_hd_public_construct_key(&key);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_public_construct_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_public_construct_key_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -98,7 +98,7 @@ void wallet_hd_public_construct_with_prefix(v8::FunctionCallbackInfo<v8::Value> 
     }
 
     auto key = to_native_hd_key(arr);
-    auto res = kth_wallet_hd_public_construct_with_prefix(&key, prefix);
+    auto res = kth_wallet_hd_public_construct_key_prefix(&key, prefix);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
@@ -119,7 +119,7 @@ void wallet_hd_public_construct_string(v8::FunctionCallbackInfo<v8::Value> const
     args.GetReturnValue().Set(External::New(args.GetIsolate(), res));
 }
 
-void wallet_hd_public_construct_string_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_public_construct_string_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -139,7 +139,7 @@ void wallet_hd_public_construct_string_with_prefix(v8::FunctionCallbackInfo<v8::
 
     v8::String::Utf8Value encoded(args.GetIsolate(), args[0]->ToString(args.GetIsolate()->GetCurrentContext()).ToLocalChecked());
     uint32_t prefix = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    kth_hd_public_t res = kth_wallet_hd_public_construct_string_with_prefix(*encoded, prefix);
+    kth_hd_public_t res = kth_wallet_hd_public_construct_string_prefix(*encoded, prefix);
     args.GetReturnValue().Set(External::New(args.GetIsolate(), res));
 }
 

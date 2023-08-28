@@ -10,10 +10,10 @@
 namespace kth::js_native {
 
 void wallet_hd_public_construct_default(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_hd_public_construct(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_hd_public_construct_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_hd_public_construct_key(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_hd_public_construct_key_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_hd_public_construct_string(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_hd_public_construct_string_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_hd_public_construct_string_prefix(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_hd_public_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_hd_public_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_hd_public_encoded(v8::FunctionCallbackInfo<v8::Value> const& args);
