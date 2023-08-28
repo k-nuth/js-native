@@ -321,26 +321,28 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "wallet_secret_to_public", wallet_secret_to_public);
 
     NODE_SET_METHOD(exports, "wallet_hd_private_construct_default", wallet_hd_private_construct_default);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct", wallet_hd_private_construct);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_prefix", wallet_hd_private_construct_with_prefix);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_prefixes", wallet_hd_private_construct_with_prefixes);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct_with_seed", wallet_hd_private_construct_with_seed);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_key", wallet_hd_private_construct_key);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_key_prefix", wallet_hd_private_construct_key_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_key_prefixes", wallet_hd_private_construct_key_prefixes);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_seed", wallet_hd_private_construct_seed);
     NODE_SET_METHOD(exports, "wallet_hd_private_construct_string", wallet_hd_private_construct_string);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_with_prefix", wallet_hd_private_construct_string_with_prefix);
-    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_with_prefixes", wallet_hd_private_construct_string_with_prefixes);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_prefix", wallet_hd_private_construct_string_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_private_construct_string_prefixes", wallet_hd_private_construct_string_prefixes);
     NODE_SET_METHOD(exports, "wallet_hd_private_destruct", wallet_hd_private_destruct);
+    NODE_SET_METHOD(exports, "wallet_hd_private_is_valid", wallet_hd_private_is_valid);
     NODE_SET_METHOD(exports, "wallet_hd_private_encoded", wallet_hd_private_encoded);
     NODE_SET_METHOD(exports, "wallet_hd_private_secret", wallet_hd_private_secret);
     NODE_SET_METHOD(exports, "wallet_hd_private_to_hd_key", wallet_hd_private_to_hd_key);
     NODE_SET_METHOD(exports, "wallet_hd_private_to_public", wallet_hd_private_to_public);
     NODE_SET_METHOD(exports, "wallet_hd_private_derive_private", wallet_hd_private_derive_private);
     NODE_SET_METHOD(exports, "wallet_hd_private_derive_public", wallet_hd_private_derive_public);
+    NODE_SET_METHOD(exports, "wallet_hd_private_lineage", wallet_hd_private_lineage);
 
     NODE_SET_METHOD(exports, "wallet_hd_public_construct_default", wallet_hd_public_construct_default);
-    NODE_SET_METHOD(exports, "wallet_hd_public_construct", wallet_hd_public_construct);
-    NODE_SET_METHOD(exports, "wallet_hd_public_construct_with_prefix", wallet_hd_public_construct_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_key", wallet_hd_public_construct_key);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_key_prefix", wallet_hd_public_construct_key_prefix);
     NODE_SET_METHOD(exports, "wallet_hd_public_construct_string", wallet_hd_public_construct_string);
-    NODE_SET_METHOD(exports, "wallet_hd_public_construct_string_with_prefix", wallet_hd_public_construct_string_with_prefix);
+    NODE_SET_METHOD(exports, "wallet_hd_public_construct_string_prefix", wallet_hd_public_construct_string_prefix);
     NODE_SET_METHOD(exports, "wallet_hd_public_destruct", wallet_hd_public_destruct);
     NODE_SET_METHOD(exports, "wallet_hd_public_is_valid", wallet_hd_public_is_valid);
     NODE_SET_METHOD(exports, "wallet_hd_public_encoded", wallet_hd_public_encoded);
