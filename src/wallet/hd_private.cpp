@@ -45,7 +45,7 @@ void wallet_hd_private_construct_default(v8::FunctionCallbackInfo<v8::Value> con
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_key(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 1) {
@@ -60,11 +60,11 @@ void wallet_hd_private_construct(v8::FunctionCallbackInfo<v8::Value> const& args
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     kth_hd_key_t key = to_native_hd_key(arr);
-    kth_hd_private_t res = kth_wallet_hd_private_construct(&key);
+    kth_hd_private_t res = kth_wallet_hd_private_construct_key(&key);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_key_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -85,11 +85,11 @@ void wallet_hd_private_construct_with_prefix(v8::FunctionCallbackInfo<v8::Value>
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     kth_hd_key_t key = to_native_hd_key(arr);
     uint32_t prefix = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    kth_hd_private_t res = kth_wallet_hd_private_construct_with_prefix(&key, prefix);
+    kth_hd_private_t res = kth_wallet_hd_private_construct_key_prefix(&key, prefix);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct_with_prefixes(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_key_prefixes(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -102,19 +102,24 @@ void wallet_hd_private_construct_with_prefixes(v8::FunctionCallbackInfo<v8::Valu
         return;
     }
 
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong argument type: Number expected");
+    if ( ! args[1]->IsBigInt()) {
+        throw_exception(isolate, "Wrong argument type: BigInt expected");
         return;
     }
 
     v8::Local<v8::Uint8Array> arr = v8::Local<v8::Uint8Array>::Cast(args[0]);
     kth_hd_key_t key = to_native_hd_key(arr);
-    uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
-    kth_hd_private_t res = kth_wallet_hd_private_construct_with_prefixes(&key, prefixes);
+    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    // v8::Local<v8::BigInt> bigIntValue = args[1].As<v8::BigInt>();
+    // int64_t nativeValue = bigIntValue->Int64Value();
+
+    uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
+
+    kth_hd_private_t res = kth_wallet_hd_private_construct_key_prefixes(&key, prefixes);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct_with_seed(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_seed(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -127,8 +132,8 @@ void wallet_hd_private_construct_with_seed(v8::FunctionCallbackInfo<v8::Value> c
         return;
     }
 
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong argument type: Number expected");
+    if ( ! args[1]->IsBigInt()) {
+        throw_exception(isolate, "Wrong argument type: BigInt expected");
         return;
     }
 
@@ -140,9 +145,10 @@ void wallet_hd_private_construct_with_seed(v8::FunctionCallbackInfo<v8::Value> c
 #endif
 
     kth_size_t size = arr->Length();
-    uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
 
-    kth_hd_private_t res = kth_wallet_hd_private_construct_with_seed(seed, size, prefixes);
+    kth_hd_private_t res = kth_wallet_hd_private_construct_seed(seed, size, prefixes);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
@@ -164,7 +170,7 @@ void wallet_hd_private_construct_string(v8::FunctionCallbackInfo<v8::Value> cons
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct_string_with_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_string_prefix(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -186,11 +192,11 @@ void wallet_hd_private_construct_string_with_prefix(v8::FunctionCallbackInfo<v8:
     // uint32_t prefix = args[1]->Uint32Value(isolate->GetCurrentContext()).ToChecked();
     uint32_t prefix = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    kth_hd_private_t res = kth_wallet_hd_private_construct_string_with_prefix(*encoded, prefix);
+    kth_hd_private_t res = kth_wallet_hd_private_construct_string_prefix(*encoded, prefix);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_hd_private_construct_string_with_prefixes(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_hd_private_construct_string_prefixes(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -203,15 +209,16 @@ void wallet_hd_private_construct_string_with_prefixes(v8::FunctionCallbackInfo<v
         return;
     }
 
-    if ( ! args[1]->IsNumber()) {
-        throw_exception(isolate, "Wrong argument type: Number expected");
+    if ( ! args[1]->IsBigInt()) {
+        throw_exception(isolate, "Wrong argument type: BigInt expected");
         return;
     }
 
     String::Utf8Value encoded(isolate, args[0]);
-    uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    // uint64_t prefixes = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
+    uint64_t prefixes = args[1].As<v8::BigInt>()->Uint64Value();
 
-    kth_hd_private_t res = kth_wallet_hd_private_construct_string_with_prefixes(*encoded, prefixes);
+    kth_hd_private_t res = kth_wallet_hd_private_construct_string_prefixes(*encoded, prefixes);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
@@ -230,6 +237,23 @@ void wallet_hd_private_destruct(v8::FunctionCallbackInfo<v8::Value> const& args)
 
     auto obj = (kth_hd_private_t)v8::External::Cast(*args[0])->Value();
     kth_wallet_hd_private_destruct(obj);
+}
+
+void wallet_hd_private_is_valid(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Argument 0 must be an external object");
+        return;
+    }
+    auto obj = (kth_hd_private_t)v8::External::Cast(*args[0])->Value();
+    kth_bool_t res = kth_wallet_hd_private_is_valid(obj);
+    args.GetReturnValue().Set(Boolean::New(args.GetIsolate(), res != 0));
 }
 
 void wallet_hd_private_encoded(v8::FunctionCallbackInfo<v8::Value> const& args) {
@@ -353,5 +377,23 @@ void wallet_hd_private_derive_public(v8::FunctionCallbackInfo<v8::Value> const& 
     kth_hd_public_t derived_hd_public = kth_wallet_hd_private_derive_public(obj, index);
     args.GetReturnValue().Set(External::New(isolate, derived_hd_public));
 }
+
+void wallet_hd_private_lineage(v8::FunctionCallbackInfo<v8::Value> const& args) {
+    Isolate* isolate = args.GetIsolate();
+
+    if (args.Length() != 1) {
+        throw_exception(isolate, "Wrong number of arguments");
+        return;
+    }
+
+    if ( ! args[0]->IsExternal()) {
+        throw_exception(isolate, "Argument 0 must be an external object");
+        return;
+    }
+    auto obj = (kth_hd_private_t)v8::External::Cast(*args[0])->Value();
+    kth_hd_lineage_t res = kth_wallet_hd_private_lineage(obj);
+    args.GetReturnValue().Set(hd_lineage_to_js(isolate, res));
+}
+
 
 }  // namespace kth::js_native
