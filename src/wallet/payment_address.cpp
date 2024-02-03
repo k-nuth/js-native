@@ -51,7 +51,7 @@ void wallet_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::V
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
-void wallet_payment_address_construct_from_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
+void wallet_payment_address_construct_from_short_hash(v8::FunctionCallbackInfo<v8::Value> const& args) {
     Isolate* isolate = args.GetIsolate();
 
     if (args.Length() != 2) {
@@ -80,7 +80,7 @@ void wallet_payment_address_construct_from_hash(v8::FunctionCallbackInfo<v8::Val
     // uint8_t version = static_cast<uint8_t>(args[1]->NumberValue(isolate->GetCurrentContext()).ToChecked());
     uint32_t version = args[1]->IntegerValue(isolate->GetCurrentContext()).ToChecked();
 
-    kth_payment_address_t res = kth_wallet_payment_address_construct_from_hash(&hash, version);
+    kth_payment_address_t res = kth_wallet_payment_address_construct_from_short_hash(&hash, version);
     args.GetReturnValue().Set(External::New(isolate, res));
 }
 
