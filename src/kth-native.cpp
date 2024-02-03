@@ -353,7 +353,7 @@ void init(v8::Local<v8::Object> exports) {
     NODE_SET_METHOD(exports, "wallet_hd_public_derive_public", wallet_hd_public_derive_public);
 
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_string", wallet_payment_address_construct_from_string);
-    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_hash", wallet_payment_address_construct_from_hash);
+    NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_short_hash", wallet_payment_address_construct_from_short_hash);
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_public", wallet_payment_address_construct_from_public);
     NODE_SET_METHOD(exports, "wallet_payment_address_construct_from_script", wallet_payment_address_construct_from_script);
     NODE_SET_METHOD(exports, "wallet_payment_address_destruct", wallet_payment_address_destruct);

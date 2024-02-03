@@ -10,7 +10,7 @@
 namespace kth::js_native {
 
 void wallet_payment_address_construct_from_string(v8::FunctionCallbackInfo<v8::Value> const& args);
-void wallet_payment_address_construct_from_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
+void wallet_payment_address_construct_from_short_hash(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_construct_from_public(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_construct_from_script(v8::FunctionCallbackInfo<v8::Value> const& args);
 void wallet_payment_address_destruct(v8::FunctionCallbackInfo<v8::Value> const& args);
