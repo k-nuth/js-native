@@ -49,7 +49,7 @@ jobs:
           echo "inputs.upload:             ${{ inputs.upload }}"
           # echo "github.event_name:         ${{ github.event_name }}"
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 

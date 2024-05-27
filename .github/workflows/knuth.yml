@@ -75,12 +75,12 @@ jobs:
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
     name: ${{ matrix.config.name }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
+          python-version: "3.12"
 
       - name: Settting EnvVars (Unix)
         if: ${{ matrix.config.os_kind != 'windows' }}
