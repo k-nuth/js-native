@@ -89,6 +89,13 @@ def exec_conan(args_param):
     # else:
     #     print("Output: \n{}\n".format(output))
 
+def check_exists(path):
+    e = os.path.exists(path)
+    print(f'exists: {path} -> {e}')
+    l = os.listdir(path)
+    print(f'list: {path} -> {l}')
+
+
 def accomodate_capi():
     extensions = ['.a', '.so', '.lib', '.dylib', '.dll']
 
@@ -105,6 +112,17 @@ def accomodate_capi():
                 shutil.move(file_path, new_directory)
 
     shutil.move(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include', './deps/include')
+
+    #TODO check if f'./full_deploy/host/c-api/{capi_version}' exists: if not, then print an error message and fini
+    check_exists(f'./full_deploy/host/c-api')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include')
+
+
+    #TODO then list the files
+
 
 def run_conan(reference, march_id, debug_build):
     exec_conan(['profile', 'detect'])
