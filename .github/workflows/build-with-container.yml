@@ -75,8 +75,8 @@ jobs:
           echo "NODEJS_VERSION: ${{ inputs.NODEJS_VERSION }}"
 
 
-          node --version
-          npm --version
+          # node --version
+          # npm --version
 
           node_setup="http://deb.nodesource.com/setup_$NODEJS_VERSION.x"
           wget -qO- $node_setup | sudo -E bash -
