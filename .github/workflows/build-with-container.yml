@@ -67,15 +67,26 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           NODEJS_VERSION: ${{ inputs.NODEJS_VERSION }}
         run: |
+          set -x
+
           # echo "KTH_GHA_MARCH_ID: ${KTH_GHA_MARCH_ID}"
           echo "NODEJS_VERSION: ${NODEJS_VERSION}"
           echo "NODEJS_VERSION: $NODEJS_VERSION"
           echo "NODEJS_VERSION: ${{ inputs.NODEJS_VERSION }}"
 
+
+          node --version
+          npm --version
+
           node_setup="http://deb.nodesource.com/setup_$NODEJS_VERSION.x"
           wget -qO- $node_setup | sudo -E bash -
           sudo apt-get install -y nodejs
           sudo -H npm install npm@latest -g
+
+
+          node --version
+          npm --version
+
 
           sudo -H npm install -g node-gyp
           sudo -H npm install -g @mapbox/node-pre-gyp
@@ -84,6 +95,9 @@ jobs:
           # cat ~/.npmrc
           echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ~/.npmrc
           cat ~/.npmrc
+
+          node --version
+          npm --version
 
 
       - name: build
