@@ -53,12 +53,13 @@
 
       'variables': {
         'install_py': '<(DEPTH)/install.py',
+        'deployment_target%': '<!(echo $MACOSX_DEPLOYMENT_TARGET)'
       },
 
       "xcode_settings": {
-        'MACOSX_DEPLOYMENT_TARGET': '10.15',
+        'MACOSX_DEPLOYMENT_TARGET': '<(deployment_target)',
         'OTHER_CFLAGS': [
-          "-std=c++17",
+          "-std=c++20",
         ],
       },
 
@@ -87,7 +88,7 @@
             'VCCLCompilerTool': {
                 'RuntimeLibrary': '1', # /MTd
                 # 'RuntimeLibrary': '3', # /MDd
-                'AdditionalOptions': [ '/std:c++17' ]
+                'AdditionalOptions': [ '/std:c++20' ]
             },
          },
         },
@@ -96,7 +97,7 @@
             'VCCLCompilerTool': {
               'RuntimeLibrary': '0', # /MT
               # 'RuntimeLibrary': '2', # /MD
-              'AdditionalOptions': [ '/std:c++17' ]
+              'AdditionalOptions': [ '/std:c++20' ]
             },
           },
         },
@@ -108,7 +109,7 @@
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
 
           "cflags": [
-            "-std=c++17",
+            "-std=c++20",
             "-Wno-deprecated-declarations",
             "-Wno-unused-result",
             "-Wno-cast-function-type",
@@ -116,7 +117,7 @@
           ],
 
           "cflags_cc": [
-            "-std=c++17",
+            "-std=c++20",
             "-Wno-deprecated-declarations",
             "-Wno-unused-result",
             "-Wno-cast-function-type",
@@ -151,12 +152,12 @@
         }],
         ['OS=="mac"', {
           "cflags": [
-            "-std=c++17",
+            "-std=c++20",
             ""
           ],
 
           "cflags_cc": [
-            "-std=c++17",
+            "-std=c++20",
             ""
           ],
 
