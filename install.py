@@ -22,7 +22,7 @@ import subprocess
 #     import pandas as pd
 
 
-capi_version = "0.45.0"
+capi_version = "0.46.0"
 
 def install(package):
     print("Installing ")

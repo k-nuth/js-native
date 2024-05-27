@@ -90,10 +90,11 @@ Local<Object> config_blockchain_settings_to_js(Isolate* isolate, kth_blockchain_
     setr = res->Set(ctx, string_to_js(isolate, "bchEuler"), Boolean::New(isolate, setts.bch_euler != 0));
     setr = res->Set(ctx, string_to_js(isolate, "bchGauss"), Boolean::New(isolate, setts.bch_gauss != 0));
     setr = res->Set(ctx, string_to_js(isolate, "bchDescartes"), Boolean::New(isolate, setts.bch_descartes != 0));
-    // setr = res->Set(ctx, string_to_js(isolate, "bchLobachevski"), Boolean::New(isolate, setts.bch_lobachevski != 0));
+    setr = res->Set(ctx, string_to_js(isolate, "bchLobachevski"), Boolean::New(isolate, setts.bch_lobachevski != 0));
+    // setr = res->Set(ctx, string_to_js(isolate, "bchGalois"), Boolean::New(isolate, setts.bch_galois != 0));
 
-    setr = res->Set(ctx, string_to_js(isolate, "lobachevskiActivationTime"), Number::New(isolate, setts.lobachevski_activation_time));
     setr = res->Set(ctx, string_to_js(isolate, "galoisActivationTime"), Number::New(isolate, setts.galois_activation_time));
+    setr = res->Set(ctx, string_to_js(isolate, "leibnizActivationTime"), Number::New(isolate, setts.leibniz_activation_time));
 
     setr = res->Set(ctx, string_to_js(isolate, "asertHalfLife"), Number::New(isolate, setts.asert_half_life));
     return res;
@@ -167,10 +168,11 @@ kth_blockchain_settings config_blockchain_settings_to_cpp(Isolate* isolate, Loca
     res.bch_euler = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchEuler")).ToLocalChecked());
     res.bch_gauss = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchGauss")).ToLocalChecked());
     res.bch_descartes = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchDescartes")).ToLocalChecked());
-    // res.bch_lobachevski = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchLobachevski")).ToLocalChecked());
+    res.bch_lobachevski = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchLobachevski")).ToLocalChecked());
+    // res.bch_galois = bool_to_cpp(isolate, setts->Get(ctx, string_to_js(isolate, "bchGalois")).ToLocalChecked());
 
-    res.lobachevski_activation_time = setts->Get(ctx, string_to_js(isolate, "lobachevskiActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
     res.galois_activation_time = setts->Get(ctx, string_to_js(isolate, "galoisActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
+    res.leibniz_activation_time = setts->Get(ctx, string_to_js(isolate, "leibnizActivationTime")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 
     res.asert_half_life = setts->Get(ctx, string_to_js(isolate, "asertHalfLife")).ToLocalChecked()->IntegerValue(ctx).ToChecked();
 

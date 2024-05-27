@@ -42,10 +42,11 @@ function print_settings(setts) {
     console.log(setts.chain.bchEuler);
     console.log(setts.chain.bchGauss);
     console.log(setts.chain.bchDescartes);
-    // console.log(setts.chain.bchLobachevski);
+    console.log(setts.chain.bchLobachevski);
+    // console.log(setts.chain.bchGalois);
 
-    console.log(setts.chain.lobachevskiActivationTime);
     console.log(setts.chain.galoisActivationTime);
+    console.log(setts.chain.leibnizActivationTime);
 
     console.log(setts.chain.asertHalfLife);
     // ------------------------------------------------------------------------------------
@@ -232,8 +233,8 @@ function testBIP44Addresses() {
 }
 
 async function main() {
-    testBIP44Addresses();
-    return;
+    // testBIP44Addresses();
+    // return;
     // test_encoding();
 
     const mainnet = 0;
@@ -241,7 +242,7 @@ async function main() {
     const setts = kth.config_settings_default(mainnet);
     setts.database.dbMaxSize = 2 * 1024 * 1024;    // 2MiB
     // console.log(setts);
-    // print_settings(setts);
+    print_settings(setts);
 
     let started = false
     let node = kth.node_construct(setts, true);
