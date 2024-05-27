@@ -34,10 +34,16 @@ jobs:
           #                     {"name":"macOS 12 NodeJS 14","nodejs_version":"14","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     {"name":"macOS 12 NodeJS 12","nodejs_version":"12","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     ]}'
-          MATRIX: '{"config":[{"name":"Linux (GCC 13) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"Linux (GCC 13) NodeJS 16","nodejs_version":"16","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"macOS 12 NodeJS 18","nodejs_version":"18","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
-                              {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+          # MATRIX: '{"config":[{"name":"Linux (GCC 13) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
+          #                     {"name":"Linux (GCC 13) NodeJS 16","nodejs_version":"16","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
+          #                     {"name":"macOS 12 NodeJS 18","nodejs_version":"18","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+          #                     {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+          #                     ]}'
+
+          MATRIX: '{"config":[{"name":"Linux (GCC 14) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"14", "docker_suffix":"-ubuntu20.04"},
+                              {"name":"Linux (GCC 14) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"14", "docker_suffix":"-ubuntu20.04"},
+                              {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               ]}'
         run: |
           echo "${MATRIX}"
@@ -122,9 +128,12 @@ jobs:
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          MACOSX_DEPLOYMENT_TARGET: "14.0"
         shell: bash
         run: |
           set -x
+
+          echo "MACOSX_DEPLOYMENT_TARGET: $MACOSX_DEPLOYMENT_TARGET"
 
           node --version
           npm --version

@@ -243,18 +243,33 @@ async function main() {
     setts.database.dbMaxSize = 2 * 1024 * 1024;    // 2MiB
     // console.log(setts);
     print_settings(setts);
+    // return;
 
     let started = false
+    let error = 0;
     let node = kth.node_construct(setts, true);
+    // kth.node_signal_stop(node);
+    // kth.node_destruct(node);
+    // return;
+
+    console.log("before waiting for signal...");
     kth.node_init_run_and_wait_for_signal(node, justChain, function (err) {
-        console.log("handler result: ");
-        console.log(err);
+        console.log("handler result: ", err);
         started = true;
+        error = err;
     });
+    console.log("after waiting for signal...");
 
     while (!started) {
         await sleep(1000);
     }
+    if (error != 0) {
+        console.log("error: ", error);
+        kth.node_signal_stop(node);
+        kth.node_destruct(node);
+        return;
+    }
+    console.log("node started");
 
     // const res = await async_chain.fetch_block_by_height(this.native, height);
     // return [res[0], block.fromNative(res[1]), res[2]];
