@@ -40,8 +40,8 @@ jobs:
           #                     {"name":"macOS 12 NodeJS 16","nodejs_version":"16","os":"macos-12","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
           #                     ]}'
 
-          MATRIX: '{"config":[{"name":"Linux (GCC 14) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"14", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"Linux (GCC 14) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"14", "docker_suffix":"-ubuntu20.04"},
+          MATRIX: '{"config":[{"name":"Linux (GCC 13) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
+                              {"name":"Linux (GCC 13) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
                               {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
                               ]}'
@@ -149,8 +149,10 @@ jobs:
           fi
 
           pyenv install --list
-          pyenv install 3.8.7
-          pyenv virtualenv 3.8.7 conan
+          # pyenv install 3.8.7
+          # pyenv virtualenv 3.8.7 conan
+          pyenv install 3.12.3
+          pyenv virtualenv  3.12.3 conan
 
           pyenv rehash
           pyenv activate conan
