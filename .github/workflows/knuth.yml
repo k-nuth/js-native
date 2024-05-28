@@ -42,8 +42,8 @@ jobs:
 
           MATRIX: '{"config":[{"name":"Linux (GCC 13) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
                               {"name":"Linux (GCC 13) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0"},
-                              {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0"},
+                              {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0","macos_version":"14.0"},
+                              {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0","macos_version":"14.0"},
                               ]}'
         run: |
           echo "${MATRIX}"
@@ -82,14 +82,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Settting EnvVars (Unix)
-        if: ${{ matrix.config.os_kind != 'windows' }}
+      - name: Settting EnvVars (Linux)
+        if: ${{ matrix.config.os_kind == 'linux' }}
         shell: bash
         run: |
           echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $GITHUB_ENV
           echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $GITHUB_ENV
           echo "KTH_GHA_ARCH=${{ matrix.config.arch }}" >> $GITHUB_ENV
           echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $GITHUB_ENV
+
+      - name: Settting EnvVars (macOS)
+        if: ${{ matrix.config.os_kind == 'macos' }}
+        shell: bash
+        run: |
+          echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $GITHUB_ENV
+          echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $GITHUB_ENV
+          echo "KTH_GHA_ARCH=${{ matrix.config.arch }}" >> $GITHUB_ENV
+          echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $GITHUB_ENV
+          echo "MACOSX_DEPLOYMENT_TARGET=${{ matrix.config.macos_version }}" >> $GITHUB_ENV
 
       - name: Settting EnvVars (Windows)
         if: ${{ matrix.config.os_kind == 'windows' }}
@@ -130,7 +140,7 @@ jobs:
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          MACOSX_DEPLOYMENT_TARGET: "14.0"  # TODO: move it to the matrix data
+          # MACOSX_DEPLOYMENT_TARGET: "14.0"  # TODO: move it to the matrix data
         shell: bash
         run: |
           set -x
@@ -183,6 +193,8 @@ jobs:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         shell: bash
         run: |
+          echo "MACOSX_DEPLOYMENT_TARGET: $MACOSX_DEPLOYMENT_TARGET"
+
           if which pyenv > /dev/null; then
             eval "$(pyenv init -)"
             eval "$(pyenv virtualenv-init -)"
