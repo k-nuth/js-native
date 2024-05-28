@@ -130,7 +130,7 @@ jobs:
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.NODE_PRE_GYP_GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          MACOSX_DEPLOYMENT_TARGET: "14.0"
+          MACOSX_DEPLOYMENT_TARGET: "14.0"  # TODO: move it to the matrix data
         shell: bash
         run: |
           set -x
@@ -140,7 +140,7 @@ jobs:
           node --version
           npm --version
 
-          brew update
+          brew update &>/dev/null
           brew outdated pyenv || brew upgrade pyenv
           brew install pyenv-virtualenv
           # brew install cmake || true
@@ -150,7 +150,7 @@ jobs:
             eval "$(pyenv virtualenv-init -)"
           fi
 
-          pyenv install --list
+          # pyenv install --list
           # pyenv install 3.8.7
           # pyenv virtualenv 3.8.7 conan
           pyenv install 3.12.3
@@ -206,9 +206,10 @@ jobs:
 
 
           echo "*** KTH_GHA_ARCH: ${KTH_GHA_ARCH}"
-          export KTH_ARCH=KTH_GHA_ARCH
-          echo "*** KTH_ARCH: ${KTH_ARCH}"
-
+          # export KTH_ARCH=${KTH_GHA_ARCH}
+          # echo "*** KTH_ARCH: ${KTH_ARCH}"
+          export KTH_TMP=${KTH_GHA_ARCH}
+          echo "*** KTH_TMP: ${KTH_TMP}"
 
           # npm install --loglevel verbose
           npm install --loglevel verbose
