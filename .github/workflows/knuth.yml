@@ -10,7 +10,7 @@ jobs:
 
   test-macos-14-x86:
     name: Test macOS 14 x86_64
-    runs-on: macos-14
+    runs-on: macos-14-large
     steps:
       - name: Hello
         run: |
