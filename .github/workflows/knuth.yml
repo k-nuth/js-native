@@ -7,6 +7,23 @@ name: Build and Test
 on: [push, pull_request]
 
 jobs:
+
+  test-macos-14-x86:
+    name: Test macOS 14 x86_64
+    runs-on: macos-14
+    steps:
+      - name: Hello
+        run: |
+          echo "Hello from macos-14 x86_64"
+
+  test-macos-14-arm:
+    name: Test macOS 14 ARM
+    runs-on: macos-14-arm64
+    steps:
+      - name: Hello
+        run: |
+          echo "Hello from macos-14 ARM"
+
   generate-matrix:
     name: Generate Job Matrix
     if: github.ref == 'refs/heads/master'
@@ -151,8 +168,8 @@ jobs:
           npm --version
 
           brew update &>/dev/null
-          brew outdated pyenv || brew upgrade pyenv
-          brew install pyenv-virtualenv
+          brew outdated pyenv || brew upgrade pyenv &>/dev/null
+          brew install pyenv-virtualenv &>/dev/null
           # brew install cmake || true
 
           if which pyenv > /dev/null; then
@@ -174,7 +191,6 @@ jobs:
           # npm install -g aws-sdk
           # npm install -g node-pre-gyp-github
           npm install -g @mmomtchev/node-pre-gyp-github
-
 
           # pip install conan_package_tools --upgrade
           # pip install conan --upgrade
@@ -215,7 +231,6 @@ jobs:
           conan profile detect
           conan install . --build=missing -s compiler.cppstd=20
           # -o c-api/*:march_id=ZLm9Pjh
-
 
           echo "*** KTH_GHA_ARCH: ${KTH_GHA_ARCH}"
           # export KTH_ARCH=${KTH_GHA_ARCH}
