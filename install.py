@@ -10,6 +10,9 @@ import sys
 from sys import platform
 import importlib
 import subprocess
+import platform
+
+
 
 # def install(package):
 #     pip.main(['install', package])
@@ -97,11 +100,13 @@ def check_exists(path):
 
 
 def accomodate_capi():
+    arch = get_arch()
+    print(f'******* arch: {arch}')
     check_exists(f'./full_deploy/host/c-api')
     check_exists(f'./full_deploy/host/c-api/{capi_version}')
     check_exists(f'./full_deploy/host/c-api/{capi_version}/Release')
-    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64')
-    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/{arch}')
+    check_exists(f'./full_deploy/host/c-api/{capi_version}/Release/{arch}/include')
 
 
     extensions = ['.a', '.so', '.lib', '.dylib', '.dll']
@@ -118,7 +123,7 @@ def accomodate_capi():
                 file_path = os.path.join(root, file)
                 shutil.move(file_path, new_directory)
 
-    shutil.move(f'./full_deploy/host/c-api/{capi_version}/Release/x86_64/include', './deps/include')
+    shutil.move(f'./full_deploy/host/c-api/{capi_version}/Release/{arch}/include', './deps/include')
 
 
 def run_conan(reference, march_id, debug_build):
@@ -156,6 +161,19 @@ def run_conan(reference, march_id, debug_build):
 def get_march(arch):
     march_id = os.getenv("KTH_MARCHID", "ZLm9Pjh")
     return march_id
+
+def get_arch():
+    arch = os.getenv("KTH_ARCH", None)
+    if not arch is None:
+        return arch
+
+
+    machine = platform.machine()
+    if machine == "x86_64":
+        return "x86_64"
+    if machine == "arm64":
+        return "armv8"
+    return None
 
 def get_debug_build():
     dbuild = os.getenv("KTH_DEBUG_BUILD", "0")

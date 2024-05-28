@@ -42,8 +42,8 @@ jobs:
 
           MATRIX: '{"config":[{"name":"Linux (GCC 13) NodeJS 18","nodejs_version":"18","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
                               {"name":"Linux (GCC 13) NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"13", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
-                              {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","test":"0"},
+                              {"name":"macOS 14 NodeJS 18","nodejs_version":"18","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8,"test":"0"},
+                              {"name":"macOS 14 NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8,"test":"0"},
                               ]}'
         run: |
           echo "${MATRIX}"
@@ -88,6 +88,7 @@ jobs:
         run: |
           echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $GITHUB_ENV
           echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $GITHUB_ENV
+          echo "KTH_GHA_ARCH=${{ matrix.config.arch }}" >> $GITHUB_ENV
           echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $GITHUB_ENV
 
       - name: Settting EnvVars (Windows)
@@ -96,6 +97,7 @@ jobs:
         run: |
           echo "NODEJS_VERSION=${{ matrix.config.nodejs_version }}" >> $Env:GITHUB_ENV
           echo "KTH_GHA_MARCH_ID=${{ matrix.config.march_id }}" >> $Env:GITHUB_ENV
+          echo "KTH_GHA_ARCH=${{ matrix.config.arch }}" >> $Env:GITHUB_ENV
           echo "KTH_GHA_RUN_TESTS=${{ matrix.config.test }}" >> $Env:GITHUB_ENV
 
       # - name: Build (Linux)
@@ -201,6 +203,12 @@ jobs:
           conan profile detect
           conan install . --build=missing -s compiler.cppstd=20
           # -o c-api/*:march_id=ZLm9Pjh
+
+
+          echo "*** KTH_GHA_ARCH: ${KTH_GHA_ARCH}"
+          export KTH_ARCH=KTH_GHA_ARCH
+          echo "*** KTH_ARCH: ${KTH_ARCH}"
+
 
           # npm install --loglevel verbose
           npm install --loglevel verbose
