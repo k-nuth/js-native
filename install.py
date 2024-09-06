@@ -25,7 +25,7 @@ import platform
 #     import pandas as pd
 
 
-capi_version = "0.47.0"
+capi_version = "0.48.0"
 
 def install(package):
     print("Installing ")
