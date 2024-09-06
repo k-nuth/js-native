@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ "$OSTYPE" == "darwin" ]; then
+    export MACOSX_DEPLOYMENT_TARGET=14.0
+fi
+
 rm -rf blockchain lib
 node-pre-gyp configure build
 
