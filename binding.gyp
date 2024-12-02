@@ -59,7 +59,7 @@
       "xcode_settings": {
         'MACOSX_DEPLOYMENT_TARGET': '<(deployment_target)',
         'OTHER_CFLAGS': [
-          "-std=c++23",
+          "-std=c++2b",
         ],
       },
 
@@ -152,12 +152,12 @@
         }],
         ['OS=="mac"', {
           "cflags": [
-            "-std=c++23",
+            "-std=2b",
             ""
           ],
 
           "cflags_cc": [
-            "-std=c++23",
+            "-std=c++2b",
             ""
           ],
 
