@@ -21,3 +21,5 @@ conanbuild.sh
 conanbuildenv-release-x86_64.sh
 conanrun.sh
 conanrunenv-release-x86_64.sh
+conanbuildenv-release-armv8.sh
+conanrunenv-release-armv8.sh

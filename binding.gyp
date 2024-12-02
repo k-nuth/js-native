@@ -59,7 +59,7 @@
       "xcode_settings": {
         'MACOSX_DEPLOYMENT_TARGET': '<(deployment_target)',
         'OTHER_CFLAGS': [
-          "-std=c++20",
+          "-std=c++23",
         ],
       },
 
@@ -71,7 +71,7 @@
           ],
           'outputs': [''],
           # 'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(DEPTH)', "<(target_arch)"]
-          'action': ['<!(node -p "process.env.npm_config_python || \\"python\\"")','>@(_inputs)', '<(DEPTH)']
+          'action': ['<!(node -p "process.env.npm_config_python || \\"python3\\"")','>@(_inputs)', '<(DEPTH)']
         },
       ],
 
@@ -88,7 +88,7 @@
             'VCCLCompilerTool': {
                 'RuntimeLibrary': '1', # /MTd
                 # 'RuntimeLibrary': '3', # /MDd
-                'AdditionalOptions': [ '/std:c++20' ]
+                'AdditionalOptions': [ '/std:c++23' ]
             },
          },
         },
@@ -97,7 +97,7 @@
             'VCCLCompilerTool': {
               'RuntimeLibrary': '0', # /MT
               # 'RuntimeLibrary': '2', # /MD
-              'AdditionalOptions': [ '/std:c++20' ]
+              'AdditionalOptions': [ '/std:c++23' ]
             },
           },
         },
@@ -109,7 +109,7 @@
           "include_dirs": ["<!(node -e \"require('nan')\")", "./deps/include", "../deps/include", "./include", "../include"],
 
           "cflags": [
-            "-std=c++20",
+            "-std=c++23",
             "-Wno-deprecated-declarations",
             "-Wno-unused-result",
             "-Wno-cast-function-type",
@@ -117,7 +117,7 @@
           ],
 
           "cflags_cc": [
-            "-std=c++20",
+            "-std=c++23",
             "-Wno-deprecated-declarations",
             "-Wno-unused-result",
             "-Wno-cast-function-type",
@@ -152,12 +152,12 @@
         }],
         ['OS=="mac"', {
           "cflags": [
-            "-std=c++20",
+            "-std=c++23",
             ""
           ],
 
           "cflags_cc": [
-            "-std=c++20",
+            "-std=c++23",
             ""
           ],
 
