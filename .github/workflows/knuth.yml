@@ -63,7 +63,7 @@ jobs:
           #                     ]}'
 
           MATRIX: '{"config":[{"name":"Linux - GCC 14 - NodeJS 20","nodejs_version":"20","os":"ubuntu-22.04","os_kind":"linux","march_id":"x64-ZLm9Pjh","test":"1", "compiler_version":"14", "docker_suffix":"-ubuntu20.04"},
-                              {"name":"macOS 14 (ARM) - NodeJS 20","nodejs_version":"20","os":"macos-14-arm64","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0","macos_version":"14.0"}
+                              {"name":"macOS 14 (ARM) - NodeJS 20","nodejs_version":"20","os":"macos-14","os_kind":"macos","march_id":"x64-ZLm9Pjh","arch":"armv8","test":"0","macos_version":"14.0"}
                               ]}'
         run: |
           echo "${MATRIX}"
