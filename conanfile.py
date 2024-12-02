@@ -12,7 +12,7 @@ class KnuthJsNative(ConanFile):
     description = "Bitcoin full node as a Javascript library"
     settings = "os", "compiler", "build_type", "arch"
 
-    requires = (("c-api/0.48.0"))
+    requires = (("c-api/0.52.0"))
 
     def configure(self):
         self.options["c-api/*"].march_id = "ZLm9Pjh"
