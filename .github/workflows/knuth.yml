@@ -200,8 +200,12 @@ jobs:
           pip install kthbuild --upgrade
           python3 -m pip install "conan>=2.0" --upgrade --ignore-installed
           conan --version
+          conan remote list
           # conan profile detect
           conan config install -t dir ./.conan
+          conan remote list
+          conan remote update conancenter --url="https://center2.conan.io"
+          conan remote list
 
           # conan user
 
