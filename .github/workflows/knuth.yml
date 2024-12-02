@@ -232,7 +232,7 @@ jobs:
 
           # conan remote add kth_temp https://packages.kth.cash/api || true
           conan profile detect
-          conan install . --build=missing -s compiler.cppstd=20
+          conan install . --build=missing -s compiler.cppstd=23
           # -o c-api/*:march_id=ZLm9Pjh
 
           echo "*** KTH_GHA_ARCH: ${KTH_GHA_ARCH}"
